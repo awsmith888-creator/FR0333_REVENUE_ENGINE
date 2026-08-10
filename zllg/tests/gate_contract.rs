@@ -22,7 +22,10 @@ fn structurally_valid_runtime_evidence_yields_verified() {
         is_simulation: false,
     };
 
-    assert_eq!(gate.evaluate_gate(Some(evidence)).unwrap(), GateState::Verified);
+    assert_eq!(
+        gate.evaluate_gate(Some(evidence)).unwrap(),
+        GateState::Verified
+    );
 }
 
 #[test]
