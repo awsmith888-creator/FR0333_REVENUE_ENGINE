@@ -1,0 +1,56 @@
+name: ZLLG Rust CI
+
+on:
+  push:
+    branches:
+      - zllg-1.0.1-prototype
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  zllg:
+    name: ZLLG Compile & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: zllg
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,rustfmt
+
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            zllg/target/
+          key: ${{ runner.os }}-zllg-cargo-${{ hashFiles('zllg/Cargo.lock', 'zllg/Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-zllg-cargo-
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Run structural check
+        run: cargo check --all-targets
+
+      - name: Run test suite
+        run: cargo test --all-targets --verbose
