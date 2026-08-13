@@ -73,9 +73,8 @@ impl AdobeRenderProvider {
     pub fn from_env() -> Result<Self, AdobeProviderError> {
         let client_id = env::var("FIREFLY_SERVICES_CLIENT_ID")
             .map_err(|_| AdobeProviderError::MissingCredential("FIREFLY_SERVICES_CLIENT_ID"))?;
-        let client_secret = env::var("FIREFLY_SERVICES_CLIENT_SECRET").map_err(|_| {
-            AdobeProviderError::MissingCredential("FIREFLY_SERVICES_CLIENT_SECRET")
-        })?;
+        let client_secret = env::var("FIREFLY_SERVICES_CLIENT_SECRET")
+            .map_err(|_| AdobeProviderError::MissingCredential("FIREFLY_SERVICES_CLIENT_SECRET"))?;
         Self::new(client_id, client_secret)
     }
 
