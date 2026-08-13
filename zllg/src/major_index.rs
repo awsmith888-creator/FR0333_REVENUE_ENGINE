@@ -372,14 +372,12 @@ mod tests {
         )
         .unwrap();
 
-        assert!(
-            update_role_metadata_without_reference_change(
-                &conn,
-                "FR0333-RAVEN-000001",
-                "OBSERVED"
-            )
-            .unwrap()
-        );
+        assert!(update_role_metadata_without_reference_change(
+            &conn,
+            "FR0333-RAVEN-000001",
+            "OBSERVED"
+        )
+        .unwrap());
 
         let reference: String = conn
             .query_row(
