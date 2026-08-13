@@ -193,10 +193,7 @@ mod tests {
         ));
         assert!(matches!(
             second,
-            AppendOutcome::Duplicate {
-                observation_id: [3u8; 16],
-                ..
-            }
+            AppendOutcome::Duplicate { observation_id, .. } if observation_id == [3u8; 16]
         ));
     }
 
