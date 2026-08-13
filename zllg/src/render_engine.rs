@@ -79,7 +79,8 @@ pub fn decode_image(bytes: Vec<u8>) -> Result<DecodedImage, RenderError> {
     }
     let format = guess_format(&bytes).map_err(|_| RenderError::UnsupportedImageFormat)?;
     let media_type = media_type_for(format).ok_or(RenderError::UnsupportedImageFormat)?;
-    let decoded = load_from_memory(&bytes).map_err(|error| RenderError::Decode(error.to_string()))?;
+    let decoded =
+        load_from_memory(&bytes).map_err(|error| RenderError::Decode(error.to_string()))?;
     let (width, height) = decoded.dimensions();
     Ok(DecodedImage {
         bytes,
@@ -123,20 +124,27 @@ fn media_type_for(format: ImageFormat) -> Option<&'static str> {
 
 #[cfg(test)]
 mod tests {
-    use std::io::Cursor;
-    use image::{DynamicImage, ImageFormat, RgbaImage};
     use super::*;
+    use image::{DynamicImage, ImageFormat, RgbaImage};
+    use std::io::Cursor;
 
-    struct MemoryProvider { bytes: Vec<u8> }
+    struct MemoryProvider {
+        bytes: Vec<u8>,
+    }
 
     impl RenderProvider for MemoryProvider {
         fn submit(&self, _request: &RenderRequest) -> Result<RenderJob, RenderError> {
-            Ok(RenderJob { job_id: "memory-job-1".to_string(), state: RenderState::Accepted })
+            Ok(RenderJob {
+                job_id: "memory-job-1".to_string(),
+                state: RenderState::Accepted,
+            })
         }
         fn status(&self, _job_id: &str) -> Result<RenderState, RenderError> {
             Ok(RenderState::ProviderSuccess)
         }
-        fn fetch(&self, _job_id: &str) -> Result<Vec<u8>, RenderError> { Ok(self.bytes.clone()) }
+        fn fetch(&self, _job_id: &str) -> Result<Vec<u8>, RenderError> {
+            Ok(self.bytes.clone())
+        }
     }
 
     fn png_bytes(width: u32, height: u32) -> Vec<u8> {
@@ -148,7 +156,9 @@ mod tests {
 
     #[test]
     fn provider_contract_fetches_and_decodes_real_image_bytes() {
-        let provider = MemoryProvider { bytes: png_bytes(9, 16) };
+        let provider = MemoryProvider {
+            bytes: png_bytes(9, 16),
+        };
         let decoded = fetch_and_decode(&provider, "memory-job-1").unwrap();
         assert_eq!((decoded.width, decoded.height), (9, 16));
         assert_eq!(decoded.media_type, "image/png");
@@ -158,13 +168,19 @@ mod tests {
     #[test]
     fn empty_provider_payload_is_held_as_error() {
         let provider = MemoryProvider { bytes: Vec::new() };
-        assert!(matches!(fetch_and_decode(&provider, "memory-job-1"), Err(RenderError::EmptyBytes)));
+        assert!(matches!(
+            fetch_and_decode(&provider, "memory-job-1"),
+            Err(RenderError::EmptyBytes)
+        ));
     }
 
     #[test]
     fn invalid_payload_does_not_promote_to_decoded_image() {
         let result = decode_image(b"not an image".to_vec());
-        assert!(matches!(result, Err(RenderError::UnsupportedImageFormat) | Err(RenderError::Decode(_))));
+        assert!(matches!(
+            result,
+            Err(RenderError::UnsupportedImageFormat) | Err(RenderError::Decode(_))
+        ));
     }
 
     #[test]
@@ -179,7 +195,10 @@ mod tests {
     #[test]
     fn non_nine_sixteen_is_held() {
         let decoded = decode_image(png_bytes(100, 100)).unwrap();
-        assert!(matches!(artifact_receipt(&decoded), Err(RenderError::InvalidAspectRatio { .. })));
+        assert!(matches!(
+            artifact_receipt(&decoded),
+            Err(RenderError::InvalidAspectRatio { .. })
+        ));
     }
 
     #[test]
