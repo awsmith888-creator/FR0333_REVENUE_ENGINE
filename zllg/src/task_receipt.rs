@@ -102,7 +102,10 @@ mod tests {
     fn committed_execution_produces_receipt_hash() {
         let receipt = build_receipt(input(b"canonical state")).unwrap();
         assert_eq!(receipt.task_state, TaskState::Receipted);
-        assert_eq!(receipt.resulting_state_hash, hash_canonical_state(b"canonical state"));
+        assert_eq!(
+            receipt.resulting_state_hash,
+            hash_canonical_state(b"canonical state")
+        );
     }
 
     #[test]
