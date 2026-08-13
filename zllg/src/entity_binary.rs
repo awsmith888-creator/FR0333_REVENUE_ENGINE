@@ -7,10 +7,7 @@ pub type RepairKey = [u8; 48];
 /// Layout:
 /// - bytes 0..16  = entity_id
 /// - bytes 16..48 = candidate_transition_hash
-pub fn repair_key(
-    entity_id: &EntityId,
-    candidate_transition_hash: &TransitionHash,
-) -> RepairKey {
+pub fn repair_key(entity_id: &EntityId, candidate_transition_hash: &TransitionHash) -> RepairKey {
     let mut key = [0u8; 48];
     key[..16].copy_from_slice(entity_id);
     key[16..].copy_from_slice(candidate_transition_hash);
