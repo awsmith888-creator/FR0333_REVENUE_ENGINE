@@ -40,6 +40,37 @@ jobs:
           docker logs fr0333-check
           exit 1
 
+      - name: Camera package contract check
+        run: |
+          curl -fsS http://127.0.0.1:18080/camera/package | tee camera-package.json
+          curl -fsS \
+            -H 'content-type: application/json' \
+            -d '{"source_ids":["river-2259"],"source_people_observed":0,"expected_people_output":0,"output_width_px":1080,"output_height_px":1920,"focus_distance_m":3.0}' \
+            http://127.0.0.1:18080/camera/validate | tee camera-validate-pass.json
+
+          reject_code=$(curl -sS -o camera-validate-reject.json -w '%{http_code}' \
+            -H 'content-type: application/json' \
+            -d '{"source_ids":["river-2259"],"source_people_observed":0,"expected_people_output":1,"allow_subject_carry_from_previous_job":true,"output_width_px":1080,"output_height_px":1920}' \
+            http://127.0.0.1:18080/camera/validate)
+          test "$reject_code" = "422"
+
+          python - <<'PY'
+          import json
+
+          with open('camera-package.json', encoding='utf-8') as f:
+              package = json.load(f)
+          with open('camera-validate-pass.json', encoding='utf-8') as f:
+              valid = json.load(f)
+
+          assert package['unit_system'] == 'SI_METRIC'
+          assert package['aspect_ratio'] == '9:16'
+          assert package['source_isolation'] == 'ONE_SOURCE_IMAGE_PER_OUTPUT'
+          assert package['subject_carry'] == 'BLOCKED_BY_DEFAULT'
+          assert valid['status'] == 'PASS'
+          assert valid['unit_system'] == 'SI_METRIC'
+          assert valid['normalized']['expected_people_output'] == 0
+          PY
+
       - name: Build receipt
         if: always()
         run: |
@@ -63,5 +94,8 @@ jobs:
             image-inspect.json
             image-tar.sha256
             healthz.json
+            camera-package.json
+            camera-validate-pass.json
+            camera-validate-reject.json
             FR0333_DOCKER_BUILD_RECEIPT.txt
           if-no-files-found: warn
