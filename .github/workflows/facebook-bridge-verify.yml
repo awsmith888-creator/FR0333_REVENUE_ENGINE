@@ -130,9 +130,9 @@ jobs:
           import json
           data=json.load(open('/tmp/receipts.json'))
           receipts=data['receipts']
-          assert any(r.get('receipt_type')=='WEBHOOK_VERIFICATION' and r.get('result')=='VERIFIED' and r.get('http_status')==200 for r in receipts)
-          assert any(r.get('receipt_type')=='WEBHOOK_DELIVERY' and r.get('signature_valid') is True and r.get('http_status')==200 for r in receipts)
-          assert any(r.get('receipt_type')=='WEBHOOK_DELIVERY' and r.get('signature_valid') is False and r.get('http_status')==401 for r in receipts)
+          assert any(r.get('receipt_type')=='META_GET_VERIFICATION' and r.get('result')=='VERIFIED' and r.get('http_status')==200 for r in receipts)
+          assert any(r.get('receipt_type')=='META_POST_DELIVERY' and r.get('signature_valid') is True and r.get('http_status')==200 for r in receipts)
+          assert any(r.get('receipt_type')=='META_POST_DELIVERY' and r.get('signature_valid') is False and r.get('http_status')==401 for r in receipts)
           PY
 
       - name: VERIFY runtime logs
