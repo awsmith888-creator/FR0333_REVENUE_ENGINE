@@ -5,6 +5,7 @@ from facebook_bridge import (
     bridge_manifest,
     ingest_webhook,
     recent_events,
+    recent_receipts,
     verify_webhook_subscription,
 )
 
@@ -56,3 +57,8 @@ async def facebook_webhook_ingest(request: Request):
 @app.get("/facebook/events", status_code=status.HTTP_200_OK)
 def facebook_events(limit: int = Query(default=25, ge=1, le=100)):
     return recent_events(limit)
+
+
+@app.get("/facebook/receipts", status_code=status.HTTP_200_OK)
+def facebook_receipts(limit: int = Query(default=25, ge=1, le=100)):
+    return recent_receipts(limit)
