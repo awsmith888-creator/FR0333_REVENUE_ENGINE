@@ -1,0 +1,146 @@
+name: Facebook Bridge Verify
+
+on:
+  pull_request:
+    paths:
+      - "facebook_bridge.py"
+      - "main.py"
+      - "requirements.txt"
+      - ".github/workflows/facebook-bridge-verify.yml"
+  workflow_dispatch:
+
+jobs:
+  verify-facebook-bridge:
+    runs-on: ubuntu-latest
+    env:
+      META_VERIFY_TOKEN: ci_verify_token_123456789
+      META_APP_SECRET: ci_app_secret_123456789
+      FACEBOOK_EVENT_LOG: /tmp/fr0333_facebook_events.jsonl
+      FACEBOOK_RECEIPT_LOG: /tmp/fr0333_facebook_receipts.jsonl
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Start FastAPI bridge
+        run: |
+          uvicorn main:app --host 127.0.0.1 --port 8000 > /tmp/uvicorn.log 2>&1 &
+          echo $! > /tmp/uvicorn.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/healthz >/tmp/health.json; then
+              break
+            fi
+            sleep 1
+          done
+          cat /tmp/health.json
+          grep -q 'FACEBOOK_ENGINE_BRIDGE.1' /tmp/health.json
+
+      - name: VERIFY status configuration
+        run: |
+          curl -fsS http://127.0.0.1:8000/facebook/status > /tmp/status.json
+          cat /tmp/status.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/status.json'))
+          assert data['bridge_version']=='FACEBOOK_ENGINE_BRIDGE.1'
+          assert data['verify_token_configured'] is True
+          assert data['app_secret_configured'] is True
+          PY
+
+      - name: VERIFY Meta GET challenge success
+        run: |
+          code=$(curl -sS -o /tmp/challenge.txt -w '%{http_code}' \
+            'http://127.0.0.1:8000/facebook/webhook?hub.mode=subscribe&hub.verify_token=ci_verify_token_123456789&hub.challenge=RAVEN_CHALLENGE_001')
+          test "$code" = "200"
+          test "$(cat /tmp/challenge.txt)" = "RAVEN_CHALLENGE_001"
+
+      - name: VERIFY Meta GET challenge rejection
+        run: |
+          code=$(curl -sS -o /tmp/bad_challenge.json -w '%{http_code}' \
+            'http://127.0.0.1:8000/facebook/webhook?hub.mode=subscribe&hub.verify_token=WRONG&hub.challenge=BAD')
+          test "$code" = "403"
+
+      - name: Build signed Meta Page payload
+        run: |
+          cat > /tmp/meta_event.json <<'JSON'
+          {"object":"page","entry":[{"id":"PAGE_TEST_001","time":1787424000,"changes":[{"field":"feed","value":{"item":"post","verb":"add","post_id":"PAGE_TEST_001_POST_001","sender":{"id":"PAGE_TEST_001"},"message":"FR0333 verification event","created_time":1787424000}}]}]}
+          JSON
+          python - <<'PY' > /tmp/signature.txt
+          import hashlib,hmac
+          body=open('/tmp/meta_event.json','rb').read()
+          print('sha256='+hmac.new(b'ci_app_secret_123456789',body,hashlib.sha256).hexdigest())
+          PY
+
+      - name: VERIFY signed Meta POST delivery
+        run: |
+          signature=$(cat /tmp/signature.txt)
+          code=$(curl -sS -o /tmp/post_response.json -w '%{http_code}' \
+            -H 'Content-Type: application/json' \
+            -H "X-Hub-Signature-256: $signature" \
+            --data-binary @/tmp/meta_event.json \
+            http://127.0.0.1:8000/facebook/webhook)
+          test "$code" = "200"
+          cat /tmp/post_response.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/post_response.json'))
+          assert data['received'] is True
+          assert data['events_ingested']==1
+          assert data['state']=='STAY_1'
+          PY
+
+      - name: VERIFY invalid signature rejection
+        run: |
+          code=$(curl -sS -o /tmp/bad_sig.json -w '%{http_code}' \
+            -H 'Content-Type: application/json' \
+            -H 'X-Hub-Signature-256: sha256=0000' \
+            --data-binary @/tmp/meta_event.json \
+            http://127.0.0.1:8000/facebook/webhook)
+          test "$code" = "401"
+
+      - name: VERIFY normalized Raven event
+        run: |
+          curl -fsS 'http://127.0.0.1:8000/facebook/events?limit=10' > /tmp/events.json
+          cat /tmp/events.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/events.json'))
+          assert data['count'] >= 1
+          event=data['events'][-1]
+          assert event['source']=='FACEBOOK_META'
+          assert event['evidence_class']=='OBSERVED'
+          assert event['raven_state']=='INTAKE'
+          assert event['promotion']=='NONE'
+          assert event['vector']['page_id']=='PAGE_TEST_001'
+          assert event['vector']['post_id']=='PAGE_TEST_001_POST_001'
+          PY
+
+      - name: VERIFY receipt ledger
+        run: |
+          curl -fsS 'http://127.0.0.1:8000/facebook/receipts?limit=20' > /tmp/receipts.json
+          cat /tmp/receipts.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/receipts.json'))
+          receipts=data['receipts']
+          assert any(r.get('receipt_type')=='WEBHOOK_VERIFICATION' and r.get('result')=='VERIFIED' and r.get('http_status')==200 for r in receipts)
+          assert any(r.get('receipt_type')=='WEBHOOK_DELIVERY' and r.get('signature_valid') is True and r.get('http_status')==200 for r in receipts)
+          assert any(r.get('receipt_type')=='WEBHOOK_DELIVERY' and r.get('signature_valid') is False and r.get('http_status')==401 for r in receipts)
+          PY
+
+      - name: VERIFY runtime logs
+        if: always()
+        run: |
+          echo '--- uvicorn ---'
+          cat /tmp/uvicorn.log || true
+          echo '--- events ---'
+          cat /tmp/fr0333_facebook_events.jsonl || true
+          echo '--- receipts ---'
+          cat /tmp/fr0333_facebook_receipts.jsonl || true
