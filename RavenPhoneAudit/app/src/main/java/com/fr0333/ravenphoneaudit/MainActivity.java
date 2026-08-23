@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
         gate.setPadding(0, dp(18), 0, dp(12));
         body.addView(gate);
 
-        addButton("CHECK SYSTEM UPDATE", v -> openIntent(new Intent(Settings.ACTION_SYSTEM_UPDATE_SETTINGS), Settings.ACTION_SETTINGS));
+        addButton("CHECK SYSTEM UPDATE", v -> openIntent(new Intent("android.settings.SYSTEM_UPDATE_SETTINGS"), Settings.ACTION_SETTINGS));
         addButton("OPEN PLAY SYSTEM UPDATE", v -> openIntent(new Intent("android.settings.MODULE_UPDATE_SETTINGS"), Settings.ACTION_SECURITY_SETTINGS));
         addButton("OPEN PLAY APP UPDATES", v -> openPlayUpdates());
         addButton("REFRESH AUDIT", v -> renderAuditRows());
