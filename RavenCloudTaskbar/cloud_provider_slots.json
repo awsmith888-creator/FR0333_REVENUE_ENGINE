@@ -1,0 +1,9 @@
+{
+  "providers": [
+    {"name": "AWS", "enabled": false, "account": null, "region": null},
+    {"name": "Azure", "enabled": false, "account": null, "region": null},
+    {"name": "Google Cloud", "enabled": false, "account": null, "region": null},
+    {"name": "Oracle Cloud", "enabled": false, "account": null, "region": null}
+  ],
+  "rule": "ENABLE_ONLY_AFTER_ACCOUNT_AND_ROUTE_EVIDENCE"
+}
