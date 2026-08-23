@@ -1,0 +1,119 @@
+{
+  "system": "FR0333_RAVEN_CLOUD_TASKBAR",
+  "version": "1.0.0",
+  "generated_at": "2026-08-23T07:57:00-04:00",
+  "state": "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED",
+  "humanlock": true,
+  "three_bars": ["STRUCTURE", "DISCIPLINE", "CONTINUITY"],
+  "zero_line_bus": "(((100.1.0.100.1)))",
+  "evidence_gate": "OBSERVED != CORRELATED != CAUSAL",
+  "cloud_policy": {
+    "default": "METADATA_FIRST",
+    "raw_private_evidence": "LOCAL_OR_EXPLICITLY_APPROVED_ONLY",
+    "hash_required": true,
+    "receipt_required": true,
+    "external_execution": "HUMAN_APPROVAL_REQUIRED"
+  },
+  "taskbars": [
+    {
+      "id": "TB.REPARATION.UPDATE",
+      "project": "FR0333_REPARATION_UPDATE_PACKAGE_v1",
+      "lane": "PACKAGE",
+      "state": "BUILT",
+      "evidence_state": "30_PLUS_70_EQUALS_100_LOCKED",
+      "execution_state": "LOCAL_ARTIFACT_READY",
+      "cloud_mode": "METADATA_AND_HASH",
+      "next_action": "REGISTER_PACKAGE_HASH_AND_RELEASE_RECEIPT"
+    },
+    {
+      "id": "TB.EVIDENCE.REGISTRY",
+      "project": "333.FB.SOURCE.0001",
+      "lane": "CONNECTION",
+      "state": "ACTIVE",
+      "evidence_state": "SEQUENTIAL_RECONSTRUCTION_ACTIVE",
+      "execution_state": "FRAME_APPEND_ONLY",
+      "cloud_mode": "METADATA_AND_SOURCE_POINTERS",
+      "next_action": "APPEND_NEXT_VERIFIED_FRAME_WITHOUT_BACKFILL"
+    },
+    {
+      "id": "TB.PHONE.AUDIT",
+      "project": "RavenPhoneAudit",
+      "lane": "KERNEL",
+      "state": "BUILT",
+      "evidence_state": "APK_BUILD_VERIFIED",
+      "execution_state": "DEVICE_INSTALL_REQUIRES_LOCAL_ACTION",
+      "cloud_mode": "BUILD_RECEIPTS_ONLY",
+      "next_action": "PRESERVE_APK_HASH_AND_DEVICE_SIDE_RESULT"
+    },
+    {
+      "id": "TB.BILLION.LEDGER",
+      "project": "FR0333_BILLION_LEDGER",
+      "lane": "NODE",
+      "state": "SOURCE_BUILT",
+      "evidence_state": "CORE_TESTS_10_OF_10_PASS_USER_SUPPLIED",
+      "execution_state": "APK_NOT_YET_VERIFIED_IN_THIS_LANE",
+      "cloud_mode": "LOCAL_ONLY_ENGINE_CLOUD_RECEIPTS",
+      "next_action": "COMPILE_APK_IN_VERIFIED_BUILD_LANE_THEN_HASH"
+    },
+    {
+      "id": "TB.RAVEN.SOPHIE",
+      "project": "RAVEN_SOPHIE_SEARCH_ENGINE",
+      "lane": "VECTOR",
+      "state": "PROTOTYPE",
+      "evidence_state": "ARCHITECTURE_PRESENT_NOT_DEPLOYED",
+      "execution_state": "HOLD",
+      "cloud_mode": "INDEX_METADATA_ONLY",
+      "next_action": "DEPLOY_ONLY_AFTER_AUTHENTICATED_STATE_AND_RECOVERY_TEST"
+    },
+    {
+      "id": "TB.SONAR",
+      "project": "SONAR",
+      "lane": "SONAR",
+      "state": "READY",
+      "evidence_state": "SOURCE_DISCOVERY_LANE",
+      "execution_state": "NO_AUTONOMOUS_PROMOTION",
+      "cloud_mode": "CLOUD_ELIGIBLE",
+      "next_action": "DISCOVER_THEN_VERIFY"
+    },
+    {
+      "id": "TB.VECTOR",
+      "project": "VECTOR",
+      "lane": "VECTOR",
+      "state": "READY",
+      "evidence_state": "TRANSFORM_AND_COMPARE",
+      "execution_state": "NO_AUTONOMOUS_PROMOTION",
+      "cloud_mode": "CLOUD_ELIGIBLE",
+      "next_action": "NORMALIZE_VERIFIED_INPUTS"
+    },
+    {
+      "id": "TB.KERNEL",
+      "project": "KERNEL",
+      "lane": "KERNEL",
+      "state": "READY",
+      "evidence_state": "LOGIC_GATE",
+      "execution_state": "HUMANLOCK",
+      "cloud_mode": "CLOUD_ELIGIBLE",
+      "next_action": "RUN_LOGIC_GATE_AND_ISSUE_RECEIPT"
+    },
+    {
+      "id": "TB.NODE",
+      "project": "PROJECT_0333_RECORD",
+      "lane": "NODE",
+      "state": "READY",
+      "evidence_state": "APPEND_ONLY_RECORD",
+      "execution_state": "HASH_REQUIRED",
+      "cloud_mode": "CLOUD_METADATA",
+      "next_action": "APPEND_RECORD_WITHOUT_REWRITING_HISTORY"
+    },
+    {
+      "id": "TB.CONNECTION",
+      "project": "SOURCE_EVIDENCE_LINK",
+      "lane": "CONNECTION",
+      "state": "READY",
+      "evidence_state": "TRACEBACK_REQUIRED",
+      "execution_state": "NO_ORPHAN_CLAIMS",
+      "cloud_mode": "CLOUD_METADATA",
+      "next_action": "LINK_SOURCE_TO_CLAIM_TO_RECEIPT"
+    }
+  ]
+}
