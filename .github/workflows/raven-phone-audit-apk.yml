@@ -1,6 +1,11 @@
 name: Raven Phone Audit APK
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'RavenPhoneAudit/**'
+      - '.github/workflows/raven-phone-audit-apk.yml'
   pull_request:
     paths:
       - 'RavenPhoneAudit/**'
