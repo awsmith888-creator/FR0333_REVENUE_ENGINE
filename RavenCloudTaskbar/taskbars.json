@@ -124,6 +124,16 @@
       "execution_state": "USER_DIRECTED_HOLD_HUMANLOCK",
       "cloud_mode": "METADATA_ONLY_RAW_PRIVATE_EVIDENCE_LOCAL",
       "next_action": "NONE_UNTIL_USER_RELEASES_HOLD"
+    },
+    {
+      "id": "TB.SEBRING.CASE.MONITORING",
+      "project": "SEBRING_CASE_RECORD_MONITOR_2026",
+      "lane": "MONITORING",
+      "state": "HOLD",
+      "evidence_state": "PUBLIC_RECORD_RECONSTRUCTION_PARTIAL_FOUR_CASE_NUMBERS_REGISTERED",
+      "execution_state": "MONITORING_BAR_DROPPED_HUMANLOCK_ACTIVE",
+      "cloud_mode": "METADATA_ONLY_NO_RAW_PRIVATE_EVIDENCE",
+      "next_action": "MONITORING_DISABLED_UNTIL_USER_RELEASES_HOLD"
     }
   ]
 }
