@@ -114,6 +114,16 @@
       "execution_state": "NO_ORPHAN_CLAIMS",
       "cloud_mode": "CLOUD_METADATA",
       "next_action": "LINK_SOURCE_TO_CLAIM_TO_RECEIPT"
+    },
+    {
+      "id": "TB.SEBRING.CASE.HOLD",
+      "project": "SEBRING_CASE_RECORD_REVIEW_2026",
+      "lane": "CONNECTION",
+      "state": "HOLD",
+      "evidence_state": "FOUR_CASE_NUMBERS_IDENTIFIED_PUBLIC_RECORD_RECONSTRUCTION_PARTIAL",
+      "execution_state": "USER_DIRECTED_HOLD_HUMANLOCK",
+      "cloud_mode": "METADATA_ONLY_RAW_PRIVATE_EVIDENCE_LOCAL",
+      "next_action": "NONE_UNTIL_USER_RELEASES_HOLD"
     }
   ]
 }
