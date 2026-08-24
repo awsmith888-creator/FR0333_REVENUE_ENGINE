@@ -1,23 +1,25 @@
 use image::{guess_format, load_from_memory, GenericImageView, ImageFormat};
+use serde::Serialize;
 use sha2::{Digest, Sha256};
 use thiserror::Error;
 
 pub type ArtifactId = [u8; 16];
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct RenderRequest {
     pub prompt: String,
     pub width: u32,
     pub height: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct RenderJob {
     pub job_id: String,
     pub state: RenderState,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum RenderState {
     Requested,
     Accepted,
@@ -34,7 +36,7 @@ pub struct DecodedImage {
     pub media_type: &'static str,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct ArtifactReceipt {
     pub sha256: [u8; 32],
     pub byte_len: u64,
@@ -57,12 +59,32 @@ pub enum RenderError {
     Decode(String),
     #[error("image dimensions are not 9:16: {width}x{height}")]
     InvalidAspectRatio { width: u32, height: u32 },
+    #[error("render request prompt is empty")]
+    EmptyPrompt,
+    #[error("render request dimensions are not 9:16: {width}x{height}")]
+    InvalidRequestAspectRatio { width: u32, height: u32 },
 }
 
 pub trait RenderProvider {
     fn submit(&self, request: &RenderRequest) -> Result<RenderJob, RenderError>;
     fn status(&self, job_id: &str) -> Result<RenderState, RenderError>;
     fn fetch(&self, job_id: &str) -> Result<Vec<u8>, RenderError>;
+}
+
+pub fn validate_render_request(request: &RenderRequest) -> Result<(), RenderError> {
+    if request.prompt.trim().is_empty() {
+        return Err(RenderError::EmptyPrompt);
+    }
+    if request.width == 0
+        || request.height == 0
+        || u64::from(request.width) * 16 != u64::from(request.height) * 9
+    {
+        return Err(RenderError::InvalidRequestAspectRatio {
+            width: request.width,
+            height: request.height,
+        });
+    }
+    Ok(())
 }
 
 pub fn fetch_and_decode<P: RenderProvider>(
@@ -210,5 +232,31 @@ mod tests {
         let first_hash = Sha256::digest(&first.bytes);
         let second_hash = Sha256::digest(&second_bytes);
         assert_ne!(first_hash[..], second_hash[..]);
+    }
+
+    #[test]
+    fn outbound_request_requires_nonempty_prompt_and_nine_sixteen() {
+        assert!(matches!(
+            validate_render_request(&RenderRequest {
+                prompt: " ".to_string(),
+                width: 1080,
+                height: 1920,
+            }),
+            Err(RenderError::EmptyPrompt)
+        ));
+        assert!(matches!(
+            validate_render_request(&RenderRequest {
+                prompt: "portrait".to_string(),
+                width: 1080,
+                height: 1080,
+            }),
+            Err(RenderError::InvalidRequestAspectRatio { .. })
+        ));
+        assert!(validate_render_request(&RenderRequest {
+            prompt: "portrait".to_string(),
+            width: 1080,
+            height: 1920,
+        })
+        .is_ok());
     }
 }

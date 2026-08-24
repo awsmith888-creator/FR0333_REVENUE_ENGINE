@@ -1,4 +1,6 @@
+pub mod adobe_alignment;
 pub mod adobe_provider;
+pub mod compatibility;
 pub mod entity_binary;
 pub mod evidence_gate;
 pub mod gate;

@@ -19,6 +19,7 @@ fn structurally_valid_runtime_evidence_yields_verified() {
     let evidence = EvidenceBlock {
         provenance_source: sandbox.join("build_manifest.json"),
         payload_hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855".into(),
+        payload: Vec::new(),
         is_simulation: false,
     };
 
@@ -34,6 +35,7 @@ fn simulation_cannot_impersonate_runtime() {
     let evidence = EvidenceBlock {
         provenance_source: sandbox.join("mock_artifact.json"),
         payload_hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855".into(),
+        payload: Vec::new(),
         is_simulation: true,
     };
 
@@ -50,6 +52,7 @@ fn malformed_digest_cannot_promote() {
     let evidence = EvidenceBlock {
         provenance_source: sandbox.join("bad_manifest.json"),
         payload_hash: "not-a-sha256".into(),
+        payload: Vec::new(),
         is_simulation: false,
     };
 
@@ -62,6 +65,7 @@ fn provenance_outside_sandbox_is_rejected() {
     let evidence = EvidenceBlock {
         provenance_source: PathBuf::from("/etc/passwd"),
         payload_hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855".into(),
+        payload: Vec::new(),
         is_simulation: false,
     };
 
@@ -69,5 +73,22 @@ fn provenance_outside_sandbox_is_rejected() {
         gate.evaluate_gate(Some(evidence)),
         Err(GateError::PathViolation(_))
     ));
+    assert_eq!(gate.state(), GateState::Hold);
+}
+
+#[test]
+fn declared_hash_must_match_exact_payload_bytes() {
+    let (mut gate, sandbox) = setup_clean_sandbox();
+    let evidence = EvidenceBlock {
+        provenance_source: sandbox.join("mismatched_manifest.json"),
+        payload_hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855".into(),
+        payload: b"not empty".to_vec(),
+        is_simulation: false,
+    };
+
+    assert_eq!(
+        gate.evaluate_gate(Some(evidence)),
+        Err(GateError::PayloadHashMismatch)
+    );
     assert_eq!(gate.state(), GateState::Hold);
 }

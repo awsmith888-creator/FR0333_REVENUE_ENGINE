@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
 use thiserror::Error;
 
@@ -8,6 +9,8 @@ pub enum GateError {
     SimulationImpersonation,
     #[error("provenance path is outside the sandbox: {0}")]
     PathViolation(PathBuf),
+    #[error("declared payload hash does not match the exact payload bytes")]
+    PayloadHashMismatch,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -21,6 +24,7 @@ pub enum GateState {
 pub struct EvidenceBlock {
     pub provenance_source: PathBuf,
     pub payload_hash: String,
+    pub payload: Vec<u8>,
     pub is_simulation: bool,
 }
 
@@ -60,16 +64,40 @@ impl ZeroLocalLogGate {
             return Err(GateError::SimulationImpersonation);
         }
 
-        // Prototype integrity rule only. A later implementation must parse and
-        // cryptographically verify the digest rather than trusting string length.
-        if block.payload_hash.len() != 64
-            || !block.payload_hash.chars().all(|c| c.is_ascii_hexdigit())
-        {
+        let Some(declared_hash) = decode_sha256(&block.payload_hash) else {
             self.state = GateState::Hold;
             return Ok(self.state);
+        };
+        let computed_hash: [u8; 32] = Sha256::digest(&block.payload).into();
+        if declared_hash != computed_hash {
+            self.state = GateState::Hold;
+            return Err(GateError::PayloadHashMismatch);
         }
 
         self.state = GateState::Verified;
         Ok(self.state)
+    }
+}
+
+fn decode_sha256(value: &str) -> Option<[u8; 32]> {
+    if value.len() != 64 {
+        return None;
+    }
+
+    let mut decoded = [0u8; 32];
+    for (index, pair) in value.as_bytes().as_chunks::<2>().0.iter().enumerate() {
+        let high = hex_value(pair[0])?;
+        let low = hex_value(pair[1])?;
+        decoded[index] = (high << 4) | low;
+    }
+    Some(decoded)
+}
+
+fn hex_value(value: u8) -> Option<u8> {
+    match value {
+        b'0'..=b'9' => Some(value - b'0'),
+        b'a'..=b'f' => Some(value - b'a' + 10),
+        b'A'..=b'F' => Some(value - b'A' + 10),
+        _ => None,
     }
 }
