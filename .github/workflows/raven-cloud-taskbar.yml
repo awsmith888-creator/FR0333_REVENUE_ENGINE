@@ -2,6 +2,8 @@ name: Raven Cloud Taskbar
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '26 * * * *'
   pull_request:
     paths:
       - 'RavenCloudTaskbar/**'
@@ -37,10 +39,58 @@ jobs:
           assert d['provisioning_state']=='NOT_PROVISIONED'
           print('PASS cloud credential boundary')
           PY
+
+      - name: Restore Raven monitoring state
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: actions/cache@v4
+        with:
+          path: .raven-cache
+          key: sebring-monitor-${{ github.run_id }}
+          restore-keys: |
+            sebring-monitor-
+
+      - name: Run Sebring public-record monitor
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: python RavenCloudTaskbar/monitor_sebring.py
+
+      - name: Write Raven monitoring summary
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('RavenCloudTaskbar/dist/sebring_monitor.json')
+          d=json.loads(p.read_text())
+          lines=[
+            '## Raven Monitoring Taskbar',
+            '',
+            f"**Clock (ET):** {d['observed_at_et']}",
+            f"**Changed since prior run:** {d['changed_since_prior_run']}",
+            f"**First run:** {d['first_run']}",
+            '',
+            '| Case | Present in public Sebring police log |',
+            '|---|---|',
+          ]
+          for case, present in d['case_presence_in_sebring_police_log'].items():
+              lines.append(f'| {case} | {present} |')
+          lines += ['', '**Evidence gate:** OBSERVED != CORRELATED != CAUSAL']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+              f.write('\n'.join(lines) + '\n')
+          PY
+
+      - name: Upload Raven monitoring receipt
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: FR0333-Raven-Sebring-Monitor-${{ github.run_id }}
+          path: RavenCloudTaskbar/dist/sebring_monitor.json
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Package taskbar artifact
         run: |
           cd RavenCloudTaskbar
-          zip -qr ../FR0333_RAVEN_CLOUD_TASKBAR_v1.zip dist README.md taskbars.json lumen_gateway.json cloud_provider_slots.json build.py
+          zip -qr ../FR0333_RAVEN_CLOUD_TASKBAR_v1.zip dist README.md taskbars.json lumen_gateway.json cloud_provider_slots.json build.py monitor_sebring.py
           cd ..
           sha256sum FR0333_RAVEN_CLOUD_TASKBAR_v1.zip > FR0333_RAVEN_CLOUD_TASKBAR_v1.zip.sha256
       - name: Upload taskbar artifact
