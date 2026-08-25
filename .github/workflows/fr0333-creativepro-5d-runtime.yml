@@ -1,0 +1,33 @@
+name: FR0333 CreativePro Adobe 5D Runtime Coverage
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
+      - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_runtime_vector.json'
+      - 'RavenCloudTaskbar/run_creativepro_5d_runtime.py'
+      - '.github/workflows/fr0333-creativepro-5d-runtime.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Run 5D runtime coverage engine
+        run: python RavenCloudTaskbar/run_creativepro_5d_runtime.py
+      - name: Upload runtime receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: FR0333-CreativePro-Adobe-5D-Runtime-${{ github.run_id }}
+          path: RavenCloudTaskbar/dist/fr0333_creativepro_adobe_5d_runtime_receipt.json
+          if-no-files-found: error
+          retention-days: 90
