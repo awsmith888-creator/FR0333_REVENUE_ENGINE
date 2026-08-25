@@ -25,7 +25,7 @@ Only `SOURCE_EVIDENCE_CLASS=PROVIDER_RECORD` can be normalized as an observed pr
 
 ## No automatic promotion
 
-A provider record is evidence that Cash App recorded something. It does not by itself prove legal settlement, reconciliation, deposit insurance, surety-bond coverage, revenue recognition, realized FR0333 value, ownership transfer, reserve amount, refund exposure, or chargeback exposure.
+A provider record is evidence that Cash App recorded something. It does not by itself prove legal settlement, reconciliation, deposit insurance, surety-bond coverage, revenue recognition, realized FR0333 value, ownership transfer, reserve amount, refund exposure, chargeback exposure, request time, or FR0333 observation time.
 
 Therefore the normalized runtime event defaults to:
 
@@ -40,8 +40,14 @@ Therefore the normalized runtime event defaults to:
 - `RESERVE_AMOUNT=UNKNOWN`
 - `AMOUNT_NET=UNKNOWN`
 - `VALUE_REALIZED=UNKNOWN`
+- `REQUESTED_AT=null`
+- `OBSERVED_AT=null`
 
 The raw provider `SOURCE_STATUS` is preserved separately and is never mapped directly to `SETTLED`.
+
+The provider `SOURCE_TIMESTAMP` is also preserved as source evidence only. It is not copied into `REQUESTED_AT` or `OBSERVED_AT`.
+
+`SOURCE_TIMESTAMP != REQUESTED_AT != OBSERVED_AT`
 
 ## Runtime relationship
 
