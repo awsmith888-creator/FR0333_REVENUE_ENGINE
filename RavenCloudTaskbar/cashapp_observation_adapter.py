@@ -85,10 +85,7 @@ def validate_provider_record(record: dict[str, Any]) -> dict[str, Any]:
     extra = sorted(set(record) - REQUIRED_FIELDS)
     promoted = sorted(set(extra) & FORBIDDEN_PROMOTION_FIELDS)
     if promoted:
-        raise ObservationValidationError(
-            "UNAUTHORIZED_PROMOTION_FIELD",
-            ",".join(promoted),
-        )
+        raise ObservationValidationError("UNAUTHORIZED_PROMOTION_FIELD", ",".join(promoted))
     if extra:
         raise ObservationValidationError("EXTRA_FIELDS", ",".join(extra))
 
@@ -137,10 +134,8 @@ def validate_provider_record(record: dict[str, Any]) -> dict[str, Any]:
 
 def normalize_cashapp_observation(record: dict[str, Any]) -> dict[str, Any]:
     source = validate_provider_record(record)
+    provider_pointer = f"{source['source_reference']}#sha256={source['source_document_hash']}"
 
-    provider_pointer = (
-        f"{source['source_reference']}#sha256={source['source_document_hash']}"
-    )
     runtime_event = {
         "event_id": f"OBS.CASHAPP.{source['source_event_id']}",
         "event_class": "OBSERVED_LIVE",
@@ -167,8 +162,8 @@ def normalize_cashapp_observation(record: dict[str, Any]) -> dict[str, Any]:
         "fdic_status": "NOT_VERIFIED",
         "encumbrance_status": "NOT_VERIFIED",
         "value_realized": "UNKNOWN",
-        "requested_at": source["source_timestamp"],
-        "observed_at": source["source_timestamp"],
+        "requested_at": None,
+        "observed_at": None,
         "settled_at": None,
         "reconciled_at": None,
         "source_evidence": [
@@ -211,6 +206,8 @@ def normalize_cashapp_observation(record: dict[str, Any]) -> dict[str, Any]:
             "provider_record_proves_value_realized": False,
             "absent_exposure_is_zero_exposure": False,
             "absent_reserve_is_zero_reserve": False,
+            "source_timestamp_is_requested_at": False,
+            "source_timestamp_is_observed_at": False,
         },
         "observation_receipt_hash": None,
     }
