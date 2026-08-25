@@ -12,15 +12,14 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "RavenCloudTaskbar" / "fr0333_revenue_auditance_runtime_schema.json"
 
-MONEY_FIELDS = (
+NUMERIC_MONEY_FIELDS = (
     "amount_gross",
     "fee_amount",
-    "refund_exposure",
-    "chargeback_exposure",
     "reserve_amount",
     "amount_net",
     "value_realized",
 )
+EXPOSURE_FIELDS = ("refund_exposure", "chargeback_exposure")
 
 ENUMS = {
     "event_class": {"SYNTHETIC", "OBSERVED_LIVE"},
@@ -60,6 +59,13 @@ def _decimal(event: dict[str, Any], field: str) -> Decimal:
     if value.as_tuple().exponent < -2:
         raise RuntimeValidationError("MONEY_PRECISION", f"{field} may have at most two decimal places")
     return value
+
+
+def _exposure(event: dict[str, Any], field: str) -> Decimal | None:
+    value = event.get(field)
+    if value == "UNKNOWN":
+        return None
+    return _decimal(event, field)
 
 
 def _parse_time(value: Any, field: str) -> datetime | None:
@@ -114,7 +120,10 @@ def validate_event(event: dict[str, Any], *, allow_live: bool = False) -> dict[s
         if not isinstance(event[field], str) or not event[field].strip():
             raise RuntimeValidationError("EMPTY_REQUIRED_TEXT", field)
 
-    money = {field: _decimal(event, field) for field in MONEY_FIELDS}
+    money = {field: _decimal(event, field) for field in NUMERIC_MONEY_FIELDS}
+    for field in EXPOSURE_FIELDS:
+        _exposure(event, field)
+
     expected_net = money["amount_gross"] - money["fee_amount"] - money["reserve_amount"]
     if expected_net < 0 or money["amount_net"] != expected_net:
         raise RuntimeValidationError(
@@ -198,6 +207,7 @@ def build_receipt(event: dict[str, Any], *, allow_live: bool = False) -> dict[st
             "reconciled_is_protected": False,
             "protected_is_insured": False,
             "unknown_protection_is_safe": False,
+            "unverified_exposure_is_zero_exposure": False,
         },
     }
 
