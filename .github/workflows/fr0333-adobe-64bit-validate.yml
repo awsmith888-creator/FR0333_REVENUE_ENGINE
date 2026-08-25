@@ -1,0 +1,30 @@
+name: FR0333 Adobe 64-bit Register Validate
+
+on:
+  push:
+    paths:
+      - 'specs/FR-0333-ADOBE-64BIT-REG.v1.0.5-RC.json'
+      - 'RavenCloudTaskbar/validate_adobe_64bit_reg.py'
+      - '.github/workflows/fr0333-adobe-64bit-validate.yml'
+  pull_request:
+    paths:
+      - 'specs/FR-0333-ADOBE-64BIT-REG.v1.0.5-RC.json'
+      - 'RavenCloudTaskbar/validate_adobe_64bit_reg.py'
+      - '.github/workflows/fr0333-adobe-64bit-validate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate FR-0333 Adobe 64-bit register
+        run: python RavenCloudTaskbar/validate_adobe_64bit_reg.py
