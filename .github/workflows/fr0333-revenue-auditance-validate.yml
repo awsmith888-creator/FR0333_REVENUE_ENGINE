@@ -1,0 +1,30 @@
+name: FR0333 Revenue Auditance 64-Bit Validate
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_hub_64bit.json'
+      - 'RavenCloudTaskbar/validate_revenue_auditance_hub.py'
+      - '.github/workflows/fr0333-revenue-auditance-validate.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_hub_64bit.json'
+      - 'RavenCloudTaskbar/validate_revenue_auditance_hub.py'
+      - '.github/workflows/fr0333-revenue-auditance-validate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate revenue auditance hub
+        run: python RavenCloudTaskbar/validate_revenue_auditance_hub.py
