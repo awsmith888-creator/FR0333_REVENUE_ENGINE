@@ -1,0 +1,172 @@
+{
+  "identifier": "FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001",
+  "version": "1.0.0",
+  "state": "INDEXED_SPEC_ACTIVE",
+  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system without promoting secondary claims to primary authority.",
+  "governing_gates": [
+    "100_PERCENT_MEANS_REQUIRED_LANE_COVERAGE_NOT_INFALLIBILITY",
+    "PRIMARY_SOURCE_GT_PROFESSIONAL_SECONDARY_GT_GENERAL_COMMENTARY",
+    "FOLLOWER_COUNT_NE_TECHNICAL_AUTHORITY",
+    "SOURCE_COUNT_NE_INDEPENDENT_SOURCE_COUNT",
+    "METADATA_NE_PROVENANCE_NE_AUTHENTICITY_NE_IDENTITY_NE_TRUTH",
+    "ACCESS_NE_AUTHORITY",
+    "MISSING_NE_ZERO",
+    "HOLD_NE_PASS",
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL"
+  ],
+  "five_dimensions": {
+    "D1_SOURCE_AUTHORITY": {
+      "function": "Rank and verify source authority before promotion.",
+      "required_controls": [
+        "source_class",
+        "primary_source_check",
+        "secondary_source_label",
+        "claim_date",
+        "source_url",
+        "source_independence",
+        "conflict_detection",
+        "promotion_state"
+      ]
+    },
+    "D2_PRODUCTION_WORKFLOW": {
+      "function": "Measure end-to-end creative production coverage.",
+      "required_controls": [
+        "create",
+        "edit",
+        "automate",
+        "accessibility",
+        "proof",
+        "publish",
+        "master_delivery_separation",
+        "reproducibility"
+      ]
+    },
+    "D3_FORENSICS_RIGHTS": {
+      "function": "Harden provenance, rights, lineage, and synthetic-image evidence.",
+      "required_controls": [
+        "source_lock",
+        "original_derivative_published_split",
+        "c2pa_signal",
+        "metadata_nontruth_rule",
+        "rights_state",
+        "regional_inspection",
+        "defect_vector",
+        "forensic_clear"
+      ]
+    },
+    "D4_ATTENTION_NETWORK": {
+      "function": "Measure scale without converting popularity into authority.",
+      "required_controls": [
+        "historical_reach",
+        "current_membership",
+        "community_reach",
+        "event_audience",
+        "partner_network",
+        "channel_count",
+        "unique_people_deduplication",
+        "time_window_normalization"
+      ]
+    },
+    "D5_ECONOMIC_RUNTIME": {
+      "function": "Connect free-first learning, costs, transactions, runtime receipts, and reinvestment.",
+      "required_controls": [
+        "free_first_path",
+        "price_capture",
+        "discount_math",
+        "commercial_rights_clearance",
+        "transaction_receipt",
+        "margin",
+        "runtime_receipt",
+        "community_reinvestment_state"
+      ]
+    }
+  },
+  "system_lanes": [
+    "LEARN",
+    "CREATE",
+    "VERIFY",
+    "PROVE",
+    "PUBLISH",
+    "MEASURE",
+    "TRANSACT",
+    "AUDIT",
+    "REINVEST",
+    "STAY"
+  ],
+  "coverage_formula": "valid_required_controls / applicable_required_controls",
+  "coverage_target": 1.0,
+  "coverage_rule": "A dimension can report 1.0 only when every applicable required control has an explicit PASS state; HOLD, UNKNOWN, NOT_OBSERVED, or CONFLICT never count as PASS.",
+  "creativepro_statistics": [
+    {
+      "metric": "historical_design_professionals_reached",
+      "value": "10M+",
+      "period": "since_1999",
+      "evidence_state": "CLAIMED_BY_CREATIVEPRO",
+      "source": "https://creativepro.com/"
+    },
+    {
+      "metric": "current_membership",
+      "value": "5K+",
+      "period": "current_page_state_2026-08",
+      "evidence_state": "CLAIMED_BY_CREATIVEPRO",
+      "source": "https://creativepro.com/become-a-member/"
+    },
+    {
+      "metric": "partner_social_channels",
+      "value": "10+",
+      "period": "current_partner_page_state_2026-08",
+      "evidence_state": "CLAIMED_BY_CREATIVEPRO",
+      "source": "https://creativepro.com/partners/"
+    },
+    {
+      "metric": "presentation_guild_member_events_per_year",
+      "value": "40+",
+      "period": "annual",
+      "evidence_state": "PARTNER_CLAIM_REPUBLISHED_BY_CREATIVEPRO",
+      "source": "https://creativepro.com/partners/"
+    },
+    {
+      "metric": "priint_global_organizations",
+      "value": "500+",
+      "period": "current_partner_page_state_2026-08",
+      "evidence_state": "PARTNER_CLAIM_REPUBLISHED_BY_CREATIVEPRO",
+      "source": "https://creativepro.com/partners/"
+    },
+    {
+      "metric": "design_ai_summit_part2_member_price_usd",
+      "value": 570,
+      "period": "2026-09-17_to_2026-09-18",
+      "evidence_state": "OBSERVED_ON_CREATIVEPRO_EVENT_PAGE",
+      "source": "https://creativepro.com/event/design-ai-summit-2026/"
+    },
+    {
+      "metric": "design_ai_summit_part2_nonmember_price_usd",
+      "value": 695,
+      "period": "2026-09-17_to_2026-09-18",
+      "evidence_state": "OBSERVED_ON_CREATIVEPRO_EVENT_PAGE",
+      "source": "https://creativepro.com/event/design-ai-summit-2026/"
+    },
+    {
+      "metric": "membership_price_usd",
+      "value": 78,
+      "period": "current_2026",
+      "evidence_state": "OBSERVED_ON_CREATIVEPRO_EVENT_PAGE",
+      "source": "https://creativepro.com/event/design-ai-summit-2026-april/"
+    },
+    {
+      "metric": "multi_day_member_discount_usd",
+      "value": 125,
+      "period": "current_2026",
+      "evidence_state": "OBSERVED_ON_CREATIVEPRO_EVENT_PAGE",
+      "source": "https://creativepro.com/event/design-ai-summit-2026-april/"
+    }
+  ],
+  "economic_rule": "FREE_FIRST_BEFORE_PAID_ACCESS_UNLESS_PAID_PATH_HAS_VERIFIED_POSITIVE_EXPECTED_VALUE",
+  "evidence_promotion": {
+    "creativepro": "PROFESSIONAL_SECONDARY",
+    "adobe_documentation": "PRIMARY_PRODUCT_AUTHORITY",
+    "standards_body": "PRIMARY_STANDARD_AUTHORITY",
+    "runtime_receipt": "OBSERVED_EXECUTION_EVIDENCE"
+  },
+  "output_chain": "SOURCE -> AUTHORITY -> WORKFLOW -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
+}
