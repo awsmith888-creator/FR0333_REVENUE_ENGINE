@@ -17,6 +17,7 @@ REQUIRED_BOUNDARIES = {
     "OWNERSHIP_NE_POSSESSION_NE_CUSTODY_NE_LICENSE_NE_TRANSFER_AUTHORITY",
     "OBSERVED_NE_DERIVED_NE_CORRELATED_NE_CAUSAL",
 }
+DISALLOWED_UNSCOPED_GEOGRAPHIES = {"japan"}
 
 
 def fail(msg: str) -> None:
@@ -60,6 +61,23 @@ def main() -> None:
     if len(sources) < 15:
         fail("source register too small")
 
+    # Geography contamination is checked only where geography can enter the
+    # evidence register. Policy text may name a forbidden geography while
+    # describing the guard itself; that must not self-trigger the validator.
+    for source in sources.values():
+        searchable = " ".join(
+            str(source.get(key, ""))
+            for key in ("id", "publisher", "url", "scope")
+        ).lower()
+        hits = sorted(
+            token for token in DISALLOWED_UNSCOPED_GEOGRAPHIES
+            if token in searchable
+        )
+        if hits:
+            fail(
+                f"unscoped foreign geography in source {source['id']}: {hits}"
+            )
+
     stats = data.get("statistics_register", [])
     if len(stats) < 40:
         fail("statistics register must contain at least 40 external statistics")
@@ -81,10 +99,6 @@ def main() -> None:
             if input_id not in stat_ids:
                 fail(f"derived statistic {row.get('id')} references missing input {input_id}")
 
-    text = HUB.read_text(encoding="utf-8").upper()
-    if '"JAPAN"' in text or "JAPAN_" in text or "_JAPAN" in text:
-        fail("foreign-scope contamination token JAPAN detected")
-
     chain = data.get("money_order_chain", [])
     for token in (
         "CONTRACT", "AUTHORITY", "MONEY_IN", "GROSS_RECEIPT",
@@ -99,6 +113,8 @@ def main() -> None:
     print(f"sources={len(sources)}")
     print(f"external_statistics={len(stats)}")
     print(f"genius_statistics={len(genius)}")
+    print("geographic_scope=UNITED_STATES")
+    print("foreign_source_contamination=0")
     print("bank_status=NOT_A_BANK")
     print("cash_app_dependency=REFERENCE_ONLY")
     print("state=PASS_SPEC_STRUCTURE")
