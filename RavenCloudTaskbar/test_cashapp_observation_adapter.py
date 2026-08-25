@@ -86,6 +86,16 @@ class CashAppObservationAdapterTests(unittest.TestCase):
         self.assertEqual(len(evidence), 1)
         self.assertEqual(evidence[0]["evidence_class"], "PROVIDER_RECORD")
 
+    def test_source_timestamp_does_not_promote_to_runtime_timestamps(self) -> None:
+        fixture = self.data["records"][0]["record"]
+        receipt = normalize_cashapp_observation(fixture)
+        event = receipt["normalized_runtime_event"]
+        self.assertEqual(receipt["source_record"]["source_timestamp"], fixture["source_timestamp"])
+        self.assertIsNone(event["requested_at"])
+        self.assertIsNone(event["observed_at"])
+        self.assertFalse(receipt["gates"]["source_timestamp_is_requested_at"])
+        self.assertFalse(receipt["gates"]["source_timestamp_is_observed_at"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
