@@ -52,6 +52,7 @@ class RevenueAuditanceRuntimeTests(unittest.TestCase):
         self.assertFalse(gates["protected_is_insured"])
         self.assertFalse(gates["unknown_protection_is_safe"])
         self.assertFalse(gates["unverified_exposure_is_zero_exposure"])
+        self.assertFalse(gates["unverified_money_state_is_zero"])
 
     def test_live_event_blocked_in_simulation_mode(self) -> None:
         event = dict(self.data["events"][0]["event"])
@@ -74,6 +75,25 @@ class RevenueAuditanceRuntimeTests(unittest.TestCase):
         self.assertEqual(validated["refund_exposure"], "UNKNOWN")
         self.assertEqual(validated["chargeback_exposure"], "UNKNOWN")
         self.assertEqual(validated["amount_net"], "200.00")
+
+    def test_unknown_reserve_forces_unknown_net_and_value_can_remain_unknown(self) -> None:
+        event = deepcopy(self.data["events"][1]["event"])
+        event["refund_exposure"] = "UNKNOWN"
+        event["chargeback_exposure"] = "UNKNOWN"
+        event["reserve_amount"] = "UNKNOWN"
+        event["amount_net"] = "UNKNOWN"
+        event["value_realized"] = "UNKNOWN"
+        validated = validate_event(event)
+        self.assertEqual(validated["reserve_amount"], "UNKNOWN")
+        self.assertEqual(validated["amount_net"], "UNKNOWN")
+        self.assertEqual(validated["value_realized"], "UNKNOWN")
+
+    def test_unknown_reserve_rejects_asserted_net(self) -> None:
+        event = deepcopy(self.data["events"][1]["event"])
+        event["reserve_amount"] = "UNKNOWN"
+        with self.assertRaises(RuntimeValidationError) as caught:
+            validate_event(event)
+        self.assertEqual(caught.exception.code, "UNKNOWN_RESERVE_REQUIRES_UNKNOWN_NET")
 
 
 if __name__ == "__main__":
