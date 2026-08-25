@@ -12,14 +12,10 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "RavenCloudTaskbar" / "fr0333_revenue_auditance_runtime_schema.json"
 
-NUMERIC_MONEY_FIELDS = (
-    "amount_gross",
-    "fee_amount",
-    "reserve_amount",
-    "amount_net",
-    "value_realized",
+REQUIRED_NUMERIC_MONEY_FIELDS = ("amount_gross", "fee_amount")
+UNCERTAIN_MONEY_FIELDS = (
+    "refund_exposure", "chargeback_exposure", "reserve_amount", "amount_net", "value_realized"
 )
-EXPOSURE_FIELDS = ("refund_exposure", "chargeback_exposure")
 
 ENUMS = {
     "event_class": {"SYNTHETIC", "OBSERVED_LIVE"},
@@ -61,9 +57,8 @@ def _decimal(event: dict[str, Any], field: str) -> Decimal:
     return value
 
 
-def _exposure(event: dict[str, Any], field: str) -> Decimal | None:
-    value = event.get(field)
-    if value == "UNKNOWN":
+def _money_or_unknown(event: dict[str, Any], field: str) -> Decimal | None:
+    if event.get(field) == "UNKNOWN":
         return None
     return _decimal(event, field)
 
@@ -120,16 +115,29 @@ def validate_event(event: dict[str, Any], *, allow_live: bool = False) -> dict[s
         if not isinstance(event[field], str) or not event[field].strip():
             raise RuntimeValidationError("EMPTY_REQUIRED_TEXT", field)
 
-    money = {field: _decimal(event, field) for field in NUMERIC_MONEY_FIELDS}
-    for field in EXPOSURE_FIELDS:
-        _exposure(event, field)
+    money = {field: _decimal(event, field) for field in REQUIRED_NUMERIC_MONEY_FIELDS}
+    uncertain = {field: _money_or_unknown(event, field) for field in UNCERTAIN_MONEY_FIELDS}
 
-    expected_net = money["amount_gross"] - money["fee_amount"] - money["reserve_amount"]
-    if expected_net < 0 or money["amount_net"] != expected_net:
-        raise RuntimeValidationError(
-            "NET_ARITHMETIC_MISMATCH",
-            f"amount_net={money['amount_net']} expected={expected_net}",
-        )
+    reserve = uncertain["reserve_amount"]
+    net = uncertain["amount_net"]
+    if reserve is None:
+        if net is not None:
+            raise RuntimeValidationError(
+                "UNKNOWN_RESERVE_REQUIRES_UNKNOWN_NET",
+                "amount_net cannot be asserted when reserve_amount is unknown",
+            )
+    else:
+        if net is None:
+            raise RuntimeValidationError(
+                "KNOWN_RESERVE_REQUIRES_NUMERIC_NET",
+                "amount_net must be numeric when reserve_amount is known",
+            )
+        expected_net = money["amount_gross"] - money["fee_amount"] - reserve
+        if expected_net < 0 or net != expected_net:
+            raise RuntimeValidationError(
+                "NET_ARITHMETIC_MISMATCH",
+                f"amount_net={net} expected={expected_net}",
+            )
 
     requested = _parse_time(event["requested_at"], "requested_at")
     observed = _parse_time(event["observed_at"], "observed_at")
@@ -208,6 +216,7 @@ def build_receipt(event: dict[str, Any], *, allow_live: bool = False) -> dict[st
             "protected_is_insured": False,
             "unknown_protection_is_safe": False,
             "unverified_exposure_is_zero_exposure": False,
+            "unverified_money_state_is_zero": False,
         },
     }
 
