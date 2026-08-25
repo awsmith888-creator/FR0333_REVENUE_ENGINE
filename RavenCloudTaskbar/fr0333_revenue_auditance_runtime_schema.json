@@ -2,42 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "FR0333.REVENUE.AUDITANCE.RUNTIME.001",
   "title": "FR0333 Revenue Auditance Money Event",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "state": "SIMULATION_SCHEMA_NOT_LIVE_MONEY_MOVEMENT",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "event_id",
-    "event_class",
-    "source_event_id",
-    "contract_id",
-    "contract_version",
-    "authority_id",
-    "source_rail",
-    "source_account_class",
-    "amount_gross",
-    "fee_amount",
-    "refund_exposure",
-    "chargeback_exposure",
-    "reserve_amount",
-    "amount_net",
-    "legal_owner_before",
-    "legal_owner_after",
-    "custodian",
-    "destination",
-    "settlement_status",
-    "reconciliation_status",
-    "bond_status",
-    "insurance_status",
-    "fdic_status",
-    "encumbrance_status",
-    "value_realized",
-    "requested_at",
-    "observed_at",
-    "settled_at",
-    "reconciled_at",
-    "source_evidence",
-    "receipt_hash"
+    "event_id", "event_class", "source_event_id", "contract_id", "contract_version",
+    "authority_id", "source_rail", "source_account_class", "amount_gross", "fee_amount",
+    "refund_exposure", "chargeback_exposure", "reserve_amount", "amount_net",
+    "legal_owner_before", "legal_owner_after", "custodian", "destination",
+    "settlement_status", "reconciliation_status", "bond_status", "insurance_status",
+    "fdic_status", "encumbrance_status", "value_realized", "requested_at", "observed_at",
+    "settled_at", "reconciled_at", "source_evidence", "receipt_hash"
   ],
   "properties": {
     "event_id": {"type": "string", "minLength": 1},
@@ -50,20 +26,10 @@
     "source_account_class": {"type": "string", "minLength": 1},
     "amount_gross": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
     "fee_amount": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
-    "refund_exposure": {
-      "anyOf": [
-        {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
-        {"const": "UNKNOWN"}
-      ]
-    },
-    "chargeback_exposure": {
-      "anyOf": [
-        {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
-        {"const": "UNKNOWN"}
-      ]
-    },
-    "reserve_amount": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
-    "amount_net": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
+    "refund_exposure": {"anyOf": [{"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"}, {"const": "UNKNOWN"}]},
+    "chargeback_exposure": {"anyOf": [{"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"}, {"const": "UNKNOWN"}]},
+    "reserve_amount": {"anyOf": [{"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"}, {"const": "UNKNOWN"}]},
+    "amount_net": {"anyOf": [{"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"}, {"const": "UNKNOWN"}]},
     "legal_owner_before": {"type": "string", "minLength": 1},
     "legal_owner_after": {"type": "string", "minLength": 1},
     "custodian": {"type": "string", "minLength": 1},
@@ -74,7 +40,7 @@
     "insurance_status": {"enum": ["NOT_APPLICABLE", "NOT_VERIFIED", "COVERED", "NOT_COVERED", "UNKNOWN"]},
     "fdic_status": {"enum": ["NOT_APPLICABLE", "NOT_VERIFIED", "ELIGIBLE_PASS_THROUGH", "INSURED", "NOT_INSURED", "UNKNOWN"]},
     "encumbrance_status": {"enum": ["UNENCUMBERED", "ENCUMBERED", "NOT_VERIFIED", "UNKNOWN"]},
-    "value_realized": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"},
+    "value_realized": {"anyOf": [{"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"}, {"const": "UNKNOWN"}]},
     "requested_at": {"type": "string", "minLength": 1},
     "observed_at": {"type": ["string", "null"]},
     "settled_at": {"type": ["string", "null"]},
@@ -103,6 +69,7 @@
     "TRANSACTION_VALUE_NE_REALIZED_FR0333_VALUE",
     "UNKNOWN_PROTECTION_STATE_EQ_UNKNOWN_NOT_SAFE",
     "UNVERIFIED_EXPOSURE_NE_ZERO_EXPOSURE",
+    "UNVERIFIED_MONEY_STATE_NE_ZERO",
     "SYNTHETIC_NE_LIVE_FINANCIAL_EXECUTION"
   ]
 }
