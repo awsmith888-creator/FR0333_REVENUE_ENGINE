@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 from revenue_auditance_runtime import RuntimeValidationError, build_receipt, receipt_hash, validate_event
@@ -50,6 +51,7 @@ class RevenueAuditanceRuntimeTests(unittest.TestCase):
         self.assertFalse(gates["reconciled_is_protected"])
         self.assertFalse(gates["protected_is_insured"])
         self.assertFalse(gates["unknown_protection_is_safe"])
+        self.assertFalse(gates["unverified_exposure_is_zero_exposure"])
 
     def test_live_event_blocked_in_simulation_mode(self) -> None:
         event = dict(self.data["events"][0]["event"])
@@ -63,6 +65,15 @@ class RevenueAuditanceRuntimeTests(unittest.TestCase):
         self.assertEqual(validated["bond_status"], "UNKNOWN")
         self.assertEqual(validated["insurance_status"], "UNKNOWN")
         self.assertEqual(validated["fdic_status"], "UNKNOWN")
+
+    def test_unknown_exposure_is_preserved(self) -> None:
+        event = deepcopy(self.data["events"][1]["event"])
+        event["refund_exposure"] = "UNKNOWN"
+        event["chargeback_exposure"] = "UNKNOWN"
+        validated = validate_event(event)
+        self.assertEqual(validated["refund_exposure"], "UNKNOWN")
+        self.assertEqual(validated["chargeback_exposure"], "UNKNOWN")
+        self.assertEqual(validated["amount_net"], "200.00")
 
 
 if __name__ == "__main__":
