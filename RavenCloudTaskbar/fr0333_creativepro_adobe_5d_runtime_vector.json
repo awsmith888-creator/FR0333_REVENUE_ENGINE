@@ -1,0 +1,83 @@
+{
+  "identifier": "FR0333.CREATIVEPRO.ADOBE.5D.RUNTIME.001",
+  "parent": "FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001",
+  "version": "1.0.0",
+  "observed_at_et": "2026-08-24T20:47:00-04:00",
+  "state": "PARTIAL_NOT_COMPLETE_STAY",
+  "status_vocabulary": ["PASS_RUNTIME","PASS_SPEC","HOLD","FAIL","UNKNOWN","NOT_OBSERVED","NOT_APPLICABLE","CONFLICT"],
+  "dimensions": {
+    "D1_SOURCE_AUTHORITY": {
+      "source_class": "PASS_RUNTIME",
+      "primary_source_check": "PASS_RUNTIME",
+      "secondary_source_label": "PASS_RUNTIME",
+      "claim_date": "PASS_RUNTIME",
+      "source_url": "PASS_RUNTIME",
+      "source_independence": "PASS_RUNTIME",
+      "conflict_detection": "PASS_RUNTIME",
+      "promotion_state": "PASS_RUNTIME"
+    },
+    "D2_PRODUCTION_WORKFLOW": {
+      "create": "HOLD",
+      "edit": "HOLD",
+      "automate": "HOLD",
+      "accessibility": "HOLD",
+      "proof": "HOLD",
+      "publish": "HOLD",
+      "master_delivery_separation": "PASS_SPEC",
+      "reproducibility": "HOLD"
+    },
+    "D3_FORENSICS_RIGHTS": {
+      "source_lock": "PASS_SPEC",
+      "original_derivative_published_split": "PASS_SPEC",
+      "c2pa_signal": "HOLD",
+      "metadata_nontruth_rule": "PASS_SPEC",
+      "rights_state": "HOLD",
+      "regional_inspection": "HOLD",
+      "defect_vector": "PASS_SPEC",
+      "forensic_clear": "HOLD"
+    },
+    "D4_ATTENTION_NETWORK": {
+      "historical_reach": "PASS_RUNTIME",
+      "current_membership": "PASS_RUNTIME",
+      "community_reach": "PASS_RUNTIME",
+      "event_audience": "HOLD",
+      "partner_network": "PASS_RUNTIME",
+      "channel_count": "PASS_RUNTIME",
+      "unique_people_deduplication": "HOLD",
+      "time_window_normalization": "PASS_RUNTIME"
+    },
+    "D5_ECONOMIC_RUNTIME": {
+      "free_first_path": "PASS_RUNTIME",
+      "price_capture": "PASS_RUNTIME",
+      "discount_math": "PASS_RUNTIME",
+      "commercial_rights_clearance": "HOLD",
+      "transaction_receipt": "NOT_OBSERVED",
+      "margin": "HOLD",
+      "runtime_receipt": "HOLD",
+      "community_reinvestment_state": "HOLD"
+    }
+  },
+  "receipts": {
+    "source_runtime": [
+      "creativepro.com root claim observed",
+      "creativepro.com membership claim observed",
+      "creativepro.com community page claim observed",
+      "creativepro.com partners page claim observed",
+      "creativepro.com Design + AI Summit pricing observed",
+      "creativepro.com free Photoshop + AI webinar page observed"
+    ],
+    "ci_runtime": [
+      "FR0333 CreativePro Adobe 5D Validate run #1 completed success"
+    ],
+    "market_runtime": [],
+    "transaction_runtime": [],
+    "asset_forensics_runtime": []
+  },
+  "promotion_rules": {
+    "PASS_RUNTIME": "Requires observed execution or current source-state receipt tied to the control.",
+    "PASS_SPEC": "Specification logic exists but runtime execution is not established.",
+    "HOLD": "Evidence required and not yet sufficient.",
+    "NOT_OBSERVED": "Expected runtime event has not occurred or has no receipt.",
+    "coverage_100": "Only runtime PASS controls count toward runtime coverage; PASS_SPEC never counts as runtime proof."
+  }
+}
