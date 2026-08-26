@@ -3,7 +3,7 @@
     "identifier": "FR-0333-ADOBE-64BIT-REG",
     "layer": "Measurement & Validation",
     "architecture_version": "1.0.5-RC",
-    "promotion_state": "HOLD_PENDING_EXECUTABLE_VALIDATION",
+    "promotion_state": "HOLD_PENDING_CI_REVALIDATION",
     "governing_constraints": [
       "METADATA != PROVENANCE != AUTHENTICITY != IDENTITY != TRUTH",
       "ACCESS != AUTHORITY",
@@ -25,7 +25,9 @@
       "PASS": "Execution proceeds; bit contribution valid",
       "ROUTE_UNVERIFIED": "Route to unverified lineage branch; do not reinterpret absent provenance as invalid provenance",
       "HALT_STREAM": "Block downstream trusted-verification path for this asset",
-      "HARD_PURGE": "Delete asset payload and unauthorized derived/telemetry data subject to verified retention obligations; retain only a non-source-derived minimal audit receipt when required"
+      "HARD_PURGE": "Delete asset payload and unauthorized derived/telemetry data subject to verified retention obligations; retain only a non-source-derived minimal audit receipt when required",
+      "HALT_STREAM_IF_APPLICABLE": "If the bit is applicable and validation fails, block the downstream trusted-verification path; when not applicable, preserve NULL/NOT_APPLICABLE and do not halt",
+      "HALT_STREAM_ON_INVALID_APPLICABLE_STATUS": "If an applicable status resolves to an invalid verification status, block the downstream trusted-verification path; when not applicable, preserve NOT_APPLICABLE and do not halt"
     },
     "x509_status": ["VALID", "EXPIRED", "REVOKED", "NOT_YET_VALID", "UNTRUSTED_ROOT", "CHAIN_INVALID", "MALFORMED", "UNKNOWN", "NOT_APPLICABLE"]
   },

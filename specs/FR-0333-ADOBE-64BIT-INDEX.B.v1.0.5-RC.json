@@ -1,0 +1,17 @@
+{
+  "identifier": "FR-0333-ADOBE-64BIT-INDEX.B",
+  "version": "1.0.5-RC",
+  "role": "REVERSE_RANGE_INDEX",
+  "source_spec": "FR-0333-ADOBE-64BIT-REG",
+  "expected_total_bits": 64,
+  "ranges": [
+    {"start": 1, "end": 8, "cluster": "CLUSTER_01_ORIGIN"},
+    {"start": 9, "end": 16, "cluster": "CLUSTER_02_INTEGRITY"},
+    {"start": 17, "end": 24, "cluster": "CLUSTER_03_EDIT_HISTORY"},
+    {"start": 25, "end": 32, "cluster": "CLUSTER_04_IDENTITY"},
+    {"start": 33, "end": 40, "cluster": "CLUSTER_05_RELATIONSHIP"},
+    {"start": 41, "end": 48, "cluster": "CLUSTER_06_AUTHENTICITY"},
+    {"start": 49, "end": 56, "cluster": "CLUSTER_07_POPULATION"},
+    {"start": 57, "end": 64, "cluster": "CLUSTER_08_ENGINE"}
+  ]
+}
