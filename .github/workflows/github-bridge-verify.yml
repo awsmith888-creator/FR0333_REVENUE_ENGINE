@@ -1,0 +1,245 @@
+name: GitHub Bridge Verify
+
+on:
+  pull_request:
+    paths:
+      - "github_bridge.py"
+      - "github_webhook_benchmark.py"
+      - "tests/test_github_bridge.py"
+      - "main.py"
+      - "Dockerfile"
+      - "requirements.txt"
+      - "GITHUB_WEBHOOK_BRIDGE_SETUP.md"
+      - "GITHUB_WEBHOOK_EVIDENCE.md"
+      - ".github/workflows/github-bridge-verify.yml"
+  workflow_dispatch:
+
+jobs:
+  verify-github-bridge:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_WEBHOOK_SECRET: ci-github-webhook-secret-0123456789abcdef
+      GITHUB_BRIDGE_READ_TOKEN: ci-github-read-token-0123456789abcdef
+      GITHUB_WEBHOOK_REPOSITORY: awsmith888-creator/FR0333_REVENUE_ENGINE
+      GITHUB_WEBHOOK_PULL_REQUEST: "1"
+      GITHUB_WEBHOOK_HEAD_BRANCH: zllg-1.0.1-prototype
+      GITHUB_WEBHOOK_BASE_BRANCH: main
+      GITHUB_WEBHOOK_DB: /tmp/fr0333_github_ci.sqlite3
+      GITHUB_LIVE_RESOLUTION: "false"
+      GITHUB_ALERT_STDOUT: "false"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Compile modules
+        run: python -m py_compile main.py github_bridge.py github_webhook_benchmark.py
+
+      - name: Run 64-case benchmark unit gate
+        run: python -m unittest discover -s tests -v
+
+      - name: Produce benchmark receipt
+        run: |
+          python github_webhook_benchmark.py --output /tmp/fr0333-github-benchmark.json >/tmp/fr0333-github-benchmark.stdout
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/fr0333-github-benchmark.json').read_text())
+          assert report['benchmark_state'] == 'EXECUTED_SIMULATED_FIXTURE'
+          assert report['fixture_count'] == 64
+          assert report['pass_count'] == 64
+          assert report['critical_failure_count'] == 0
+          assert report['probability_claimed'] is False
+          assert report['deployment_state'] == 'NOT_EXECUTED'
+          PY
+
+      - name: Start FastAPI receiver
+        run: |
+          uvicorn main:app --host 127.0.0.1 --port 8000 >/tmp/fr0333-uvicorn.log 2>&1 &
+          echo $! >/tmp/fr0333-uvicorn.pid
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/healthz >/tmp/fr0333-health.json; then
+              break
+            fi
+            sleep 1
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          health = json.loads(Path('/tmp/fr0333-health.json').read_text())
+          assert health['github_bridge'] == 'FR0333_GITHUB_WEBHOOK.99.1V.1'
+          PY
+
+      - name: Build signed GitHub ping
+        run: |
+          python - <<'PY'
+          import hashlib
+          import hmac
+          import json
+          from pathlib import Path
+          body = json.dumps(
+              {'repository': {'full_name': 'awsmith888-creator/FR0333_REVENUE_ENGINE'}},
+              sort_keys=True,
+              separators=(',', ':'),
+          ).encode()
+          Path('/tmp/github-ping.json').write_bytes(body)
+          digest = hmac.new(
+              b'ci-github-webhook-secret-0123456789abcdef', body, hashlib.sha256
+          ).hexdigest()
+          Path('/tmp/github-signature.txt').write_text('sha256=' + digest)
+          PY
+
+      - name: Verify signed delivery, replay, and collision gates
+        run: |
+          signature=$(tr -d '\n' </tmp/github-signature.txt)
+          delivery=891bda9d-5a35-47d2-a268-3aa58623a5ab
+          curl -fsS \
+            -H 'Content-Type: application/json' \
+            -H 'X-GitHub-Event: ping' \
+            -H "X-GitHub-Delivery: $delivery" \
+            -H "X-Hub-Signature-256: $signature" \
+            --data-binary @/tmp/github-ping.json \
+            http://127.0.0.1:8000/github/webhook >/tmp/github-first.json
+          curl -fsS \
+            -H 'Content-Type: application/json' \
+            -H 'X-GitHub-Event: ping' \
+            -H "X-GitHub-Delivery: $delivery" \
+            -H "X-Hub-Signature-256: $signature" \
+            --data-binary @/tmp/github-ping.json \
+            http://127.0.0.1:8000/github/webhook >/tmp/github-replay.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          first = json.loads(Path('/tmp/github-first.json').read_text())
+          replay = json.loads(Path('/tmp/github-replay.json').read_text())
+          assert first['outcome'] == 'ACCEPTED_TARGET'
+          assert first['duplicate'] is False
+          assert replay['duplicate'] is True
+          PY
+
+      - name: Verify actionable alert separation
+        run: |
+          python - <<'PY'
+          import hashlib
+          import hmac
+          import json
+          from pathlib import Path
+          body = json.dumps(
+              {
+                  'action': 'submitted',
+                  'repository': {'full_name': 'awsmith888-creator/FR0333_REVENUE_ENGINE'},
+                  'pull_request': {'number': 1},
+                  'review': {
+                      'id': 9001,
+                      'state': 'changes_requested',
+                      'commit_id': '0bfb49f90d893496162391a0dbea05a8e0367253',
+                      'body': 'untrusted review input',
+                  },
+                  'sender': {'login': 'ci-reviewer', 'id': 9002},
+              },
+              sort_keys=True,
+              separators=(',', ':'),
+          ).encode()
+          Path('/tmp/github-review.json').write_bytes(body)
+          digest = hmac.new(
+              b'ci-github-webhook-secret-0123456789abcdef', body, hashlib.sha256
+          ).hexdigest()
+          Path('/tmp/github-review-signature.txt').write_text('sha256=' + digest)
+          PY
+          signature=$(tr -d '\n' </tmp/github-review-signature.txt)
+          curl -fsS \
+            -H 'Content-Type: application/json' \
+            -H 'X-GitHub-Event: pull_request_review' \
+            -H 'X-GitHub-Delivery: e626230f-9c68-45b9-8e10-f5c7f48c743d' \
+            -H "X-Hub-Signature-256: $signature" \
+            --data-binary @/tmp/github-review.json \
+            http://127.0.0.1:8000/github/webhook >/tmp/github-review-response.json
+          curl -fsS \
+            -H 'X-FR0333-Read-Token: ci-github-read-token-0123456789abcdef' \
+            http://127.0.0.1:8000/github/alerts >/tmp/github-alerts.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          response = json.loads(Path('/tmp/github-review-response.json').read_text())
+          alerts = json.loads(Path('/tmp/github-alerts.json').read_text())['alerts']
+          assert response['alerts_created'] == 1
+          alert = alerts[0]
+          assert alert['kind'] == 'REVIEW_FEEDBACK_CHANGED'
+          assert alert['observed_delta']['review_state'] == 'changes_requested'
+          assert alert['evidence']['delivery_id'] == 'e626230f-9c68-45b9-8e10-f5c7f48c743d'
+          assert alert['interpretation']
+          assert alert['next_review_action']
+          assert 'untrusted review input' not in json.dumps(alert)
+          PY
+
+      - name: Verify invalid signature and protected telemetry
+        run: |
+          code=$(curl -sS -o /tmp/github-bad-signature.json -w '%{http_code}' \
+            -H 'Content-Type: application/json' \
+            -H 'X-GitHub-Event: ping' \
+            -H 'X-GitHub-Delivery: 97318291-a715-4f88-ada1-123a63a9a772' \
+            -H 'X-Hub-Signature-256: sha256=0000000000000000000000000000000000000000000000000000000000000000' \
+            --data-binary @/tmp/github-ping.json \
+            http://127.0.0.1:8000/github/webhook)
+          test "$code" = "401"
+          code=$(curl -sS -o /tmp/github-no-token.json -w '%{http_code}' \
+            http://127.0.0.1:8000/github/receipts)
+          test "$code" = "401"
+          curl -fsS \
+            -H 'X-FR0333-Read-Token: ci-github-read-token-0123456789abcdef' \
+            http://127.0.0.1:8000/github/receipts >/tmp/github-receipts.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/github-receipts.json').read_text())
+          assert data['count'] >= 3
+          assert any(item['outcome'] == 'ACCEPTED_TARGET' for item in data['receipts'])
+          assert any(item['outcome'] == 'DUPLICATE' for item in data['receipts'])
+          assert any(item['outcome'] == 'REJECTED_SIGNATURE' for item in data['receipts'])
+          PY
+
+      - name: Build deployable container
+        run: docker build -t fr0333-github-webhook:${{ github.sha }} .
+
+      - name: Verify container module completeness
+        run: |
+          docker run --rm \
+            -e GITHUB_WEBHOOK_SECRET=ci-github-webhook-secret-0123456789abcdef \
+            -e GITHUB_BRIDGE_READ_TOKEN=ci-github-read-token-0123456789abcdef \
+            -p 18080:8080 \
+            --name fr0333-github-webhook-ci \
+            fr0333-github-webhook:${{ github.sha }} >/tmp/fr0333-container.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:18080/healthz >/tmp/fr0333-container-health.json; then
+              break
+            fi
+            sleep 1
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          health = json.loads(Path('/tmp/fr0333-container-health.json').read_text())
+          assert health['facebook_bridge'] == 'FACEBOOK_ENGINE_BRIDGE.1'
+          assert health['github_bridge'] == 'FR0333_GITHUB_WEBHOOK.99.1V.1'
+          PY
+
+      - name: Stop verification processes
+        if: always()
+        run: |
+          if test -f /tmp/fr0333-uvicorn.pid; then kill "$(cat /tmp/fr0333-uvicorn.pid)" || true; fi
+          docker rm -f fr0333-github-webhook-ci || true
+
+      - name: Upload benchmark receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-github-webhook-benchmark
+          path: /tmp/fr0333-github-benchmark.json
+          if-no-files-found: error
