@@ -1,0 +1,63 @@
+{
+  "identifier": "FR-0333-ADOBE-64BIT-INDEX.D",
+  "version": "1.0.5-RC",
+  "role": "PURGE_LIFECYCLE_EVIDENCE_INDEX",
+  "source_spec": "FR-0333-ADOBE-64BIT-REG",
+  "cross_audits": [
+    "FR-0333-ADOBE-64BIT-INDEX.A",
+    "FR-0333-ADOBE-64BIT-INDEX.B",
+    "FR-0333-ADOBE-64BIT-INDEX.C"
+  ],
+  "runtime_fixture": "FR0333_HARD_PURGE_RUNTIME_001",
+  "evidence_boundaries": [
+    "PURGE_RUNTIME_CI_PASS != DEPLOYED_STORAGE_BACKEND_INTEGRATION",
+    "MINIMAL_AUDIT_RECEIPT != SOURCE_RETENTION",
+    "CONSENT_ABSENT != AUTHORIZATION_GRANTED",
+    "DELETION_CONFIRMED_IN_FIXTURE != EXTERNAL_PROVIDER_DELETION",
+    "BIT_62_HARD_PURGE != BIT_64_FEEDBACK_PERMISSION"
+  ],
+  "checks": [
+    {
+      "check_id": "PG_01_NO_CONSENT_TRIGGER",
+      "description": "Consent absent triggers HARD_PURGE and cannot be reinterpreted as authorization",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_62"]
+    },
+    {
+      "check_id": "PG_02_PAYLOAD_DELETION",
+      "description": "Source payload is removed when HARD_PURGE executes",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_62", "BIT_63"]
+    },
+    {
+      "check_id": "PG_03_DERIVED_TELEMETRY_DELETION",
+      "description": "Unauthorized derived and telemetry records are removed with the payload",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_63"]
+    },
+    {
+      "check_id": "PG_04_MINIMAL_RECEIPT",
+      "description": "Required audit receipt retains no source identifier, source hash, payload, or telemetry content",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_63"]
+    },
+    {
+      "check_id": "PG_05_CONSENT_PRESENT_NO_PURGE",
+      "description": "Valid consent does not invoke HARD_PURGE",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_62"]
+    },
+    {
+      "check_id": "PG_06_NO_RECEIPT_MODE",
+      "description": "When no audit receipt is required, purge leaves no retained record",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_63"]
+    },
+    {
+      "check_id": "PG_07_FEEDBACK_BLOCK_AFTER_PURGE",
+      "description": "Purged assets cannot feed downstream usefulness telemetry",
+      "evidence_class": "E_DER",
+      "observes_bits": ["BIT_62", "BIT_63", "BIT_64"]
+    }
+  ]
+}
