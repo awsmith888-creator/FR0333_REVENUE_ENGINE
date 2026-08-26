@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Request, Response, status
+from fastapi import BackgroundTasks, FastAPI, Header, Query, Request, Response, status
 
 from camera_package import CameraCaptureSpec, package_manifest, validate_camera_job
 from facebook_bridge import (
@@ -7,6 +7,16 @@ from facebook_bridge import (
     recent_events,
     recent_receipts,
     verify_webhook_subscription,
+)
+from github_bridge import (
+    get_github_bridge,
+    github_bridge_manifest,
+    github_metrics,
+    github_recent_alerts,
+    github_recent_events,
+    github_recent_receipts,
+    ingest_github_webhook,
+    resolve_github_state,
 )
 
 app = FastAPI(title="FR0333 Revenue Engine Pipeline")
@@ -20,6 +30,7 @@ def health_check():
         "receipt_anchor": "3e65819c1e4998397e92d8a917b9c13d2cccbc085ccdc5b3a633f29014399630",
         "camera_package": package_manifest()["package_version"],
         "facebook_bridge": bridge_manifest()["bridge_version"],
+        "github_bridge": github_bridge_manifest()["bridge_version"],
         "unit_system": "SI_METRIC",
     }
 
@@ -62,3 +73,55 @@ def facebook_events(limit: int = Query(default=25, ge=1, le=100)):
 @app.get("/facebook/receipts", status_code=status.HTTP_200_OK)
 def facebook_receipts(limit: int = Query(default=25, ge=1, le=100)):
     return recent_receipts(limit)
+
+
+@app.get("/github/status", status_code=status.HTTP_200_OK)
+def github_status():
+    return github_bridge_manifest()
+
+
+@app.post("/github/webhook", status_code=status.HTTP_200_OK)
+async def github_webhook_ingest(request: Request, background_tasks: BackgroundTasks):
+    result = await ingest_github_webhook(request)
+    if result.get("resolution_eligible"):
+        background_tasks.add_task(resolve_github_state, result["delivery_id"])
+    return result
+
+
+def _authorize_github_read(read_token: str | None) -> None:
+    get_github_bridge().authorize_read(read_token)
+
+
+@app.get("/github/alerts", status_code=status.HTTP_200_OK)
+def github_alerts(
+    limit: int = Query(default=25, ge=1, le=100),
+    read_token: str | None = Header(default=None, alias="X-FR0333-Read-Token"),
+):
+    _authorize_github_read(read_token)
+    return github_recent_alerts(limit)
+
+
+@app.get("/github/events", status_code=status.HTTP_200_OK)
+def github_events(
+    limit: int = Query(default=25, ge=1, le=100),
+    read_token: str | None = Header(default=None, alias="X-FR0333-Read-Token"),
+):
+    _authorize_github_read(read_token)
+    return github_recent_events(limit)
+
+
+@app.get("/github/receipts", status_code=status.HTTP_200_OK)
+def github_receipts(
+    limit: int = Query(default=25, ge=1, le=100),
+    read_token: str | None = Header(default=None, alias="X-FR0333-Read-Token"),
+):
+    _authorize_github_read(read_token)
+    return github_recent_receipts(limit)
+
+
+@app.get("/github/metrics", status_code=status.HTTP_200_OK)
+def github_bridge_metrics(
+    read_token: str | None = Header(default=None, alias="X-FR0333-Read-Token"),
+):
+    _authorize_github_read(read_token)
+    return github_metrics()
