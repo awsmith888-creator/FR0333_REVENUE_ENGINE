@@ -3,7 +3,7 @@
     "identifier": "FR-0333-ADOBE-64BIT-REG",
     "layer": "Measurement & Validation",
     "architecture_version": "1.0.5-RC",
-    "promotion_state": "HOLD_PENDING_CI_REVALIDATION",
+    "promotion_state": "SPEC_CI_VALIDATED/HOLD_PENDING_RUNTIME_VALIDATION",
     "governing_constraints": [
       "METADATA != PROVENANCE != AUTHENTICITY != IDENTITY != TRUTH",
       "ACCESS != AUTHORITY",
