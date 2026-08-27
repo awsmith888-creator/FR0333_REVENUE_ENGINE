@@ -1,9 +1,9 @@
 {
   "identifier": "FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001",
-  "version": "1.2.0",
-  "state": "INDEXED_SPEC_ACTIVE_RUNTIME_VECTOR_BOUND_LION_GATE",
+  "version": "1.3.0",
+  "state": "INDEXED_SPEC_ACTIVE_RUNTIME_VECTOR_BOUND_LION_GATE_DRONE_VISION_BOUND",
   "observed_at_et": "2026-08-27T13:50:00-04:00",
-  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, runtime proof, and narrative-power interpretation.",
+  "purpose": "Use CreativePro and verified source evidence to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, runtime proof, narrative interpretation, and computational-vision observation.",
   "governing_gates": [
     "100_PERCENT_MEANS_REQUIRED_LANE_COVERAGE_NOT_INFALLIBILITY",
     "PRIMARY_SOURCE_GT_PROFESSIONAL_SECONDARY_GT_GENERAL_COMMENTARY",
@@ -21,7 +21,14 @@
     "NARRATIVE_METAPHOR_NE_BIOLOGICAL_LAW",
     "INTERPRETATION_NE_OBSERVED_FACT",
     "DESTRUCTIVE_RHETORIC_NE_PRODUCTION_INSTRUCTION",
-    "QUIET_FRAME_REQUIRES_LATENT_FORCE_SIGNALS"
+    "QUIET_FRAME_REQUIRES_LATENT_FORCE_SIGNALS",
+    "CAPTURE_NE_INTERPRETATION",
+    "VISIBLE_OBJECT_NE_IDENTIFIED_OBJECT",
+    "TRACKED_OBJECT_NE_IDENTIFIED_PERSON",
+    "THERMAL_SIGNATURE_NE_HUMAN_IDENTITY",
+    "MEDIA_REPOST_NE_ORIGINAL_CAPTURE",
+    "TEXT_OVERLAY_NE_SOURCE_EVIDENCE",
+    "VISUAL_CORRELATION_NE_CAUSAL_PROOF"
   ],
   "five_dimensions": {
     "D1_SOURCE_AUTHORITY": {"function":"Rank and verify source authority before promotion.","required_controls":["source_class","primary_source_check","secondary_source_label","claim_date","source_url","source_independence","conflict_detection","promotion_state"]},
@@ -107,8 +114,81 @@
       "status": "PASS_SPEC"
     }
   },
+  "vision_family_bindings": {
+    "FR.0333.ADOBE.DRONE.VISION.0001": {
+      "chomp_record": "FR.0333.CHOMP.ADOBE.DRONE.0001",
+      "bone_record": "FR.0333.ADOBE.BONE.VISION.0001",
+      "upgrade_record": "FR.0333.ADOBE.5D.UPGRADE.0003",
+      "family": "COMPUTATIONAL_VISION",
+      "subfamily": "AERIAL_THERMAL_LOW_LIGHT_OBSERVATION",
+      "state": "BOUND_SPEC_EVIDENCE_BOUNDED",
+      "source_set": [
+        {"id":"SOURCE.01","type":"USER_SUPPLIED_SCREENSHOT","state":"OBSERVED_USER_SUPPLIED"},
+        {"id":"SOURCE.02","type":"YOUTUBE_SHORT","locator":"2pgXbG1Ptrk","state":"USER_SUPPLIED_REFERENCE_DIRECT_FETCH_UNVERIFIED"},
+        {"id":"SOURCE.03A","type":"EXTERNAL_CORROBORATION","publisher":"KOCO","url":"https://www.koco.com/article/oklahoma-city-police-use-drone-to-stop-dog-attack/73497937","state":"VERIFIED_CORROBORATION_2026_08_27"},
+        {"id":"SOURCE.03B","type":"EXTERNAL_CORROBORATION","publisher":"OFFICER.COM","url":"https://www.officer.com/command-hq/technology/security-surveillance/uav-uas/news/55399863/oklahoma-city-police-drone-helps-save-victim-during-attack-by-multiple-dogs","state":"VERIFIED_CORROBORATION_2026_08_27"}
+      ],
+      "incident_core": {
+        "agency": "OKLAHOMA_CITY_POLICE_DEPARTMENT",
+        "rtic_drone_used": "CORROBORATED",
+        "spotlight_intervention": "CORROBORATED",
+        "post_event_dog_tracking_to_residence": "CORROBORATED",
+        "identity_from_thermal_frame": "NOT_ESTABLISHED"
+      },
+      "adobe_bits": [
+        {"id":"BIT.ADOBE.DRONE.001","name":"AERIAL.CAMERA.SOURCE","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.002","name":"THERMAL.OR.INFRARED.APPEARANCE","state":"APPEARANCE_ONLY_SENSOR_MODE_UNVERIFIED"},
+        {"id":"BIT.ADOBE.DRONE.003","name":"LOW.LIGHT.SCENE","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.004","name":"MULTI.SUBJECT.SCENE","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.005","name":"HUMAN.SUBJECT.VISIBLE","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.006","name":"ANIMAL.SUBJECTS.VISIBLE","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.007","name":"SUBJECT.SEPARATION","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.008","name":"MOTION.TRACKING","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.009","name":"AERIAL.PERSPECTIVE","state":"BOUND"},
+        {"id":"BIT.ADOBE.DRONE.010","name":"SPOTLIGHT.INTERVENTION","state":"CORROBORATED"},
+        {"id":"BIT.ADOBE.DRONE.011","name":"POST.EVENT.TRACKING","state":"CORROBORATED"},
+        {"id":"BIT.ADOBE.DRONE.012","name":"SOURCE.AGENCY.OKLAHOMA.CITY.POLICE.DEPARTMENT","state":"CORROBORATED"},
+        {"id":"BIT.ADOBE.DRONE.013","name":"MEDIA.REPUBLISH.CNN.YOUTUBE.SHORT","state":"USER_SUPPLIED_REFERENCE"},
+        {"id":"BIT.ADOBE.DRONE.014","name":"TEXT.OVERLAY.PRESENT","state":"OBSERVED_USER_SUPPLIED"},
+        {"id":"BIT.ADOBE.DRONE.015","name":"SOCIAL.UI.PRESENT","state":"OBSERVED_USER_SUPPLIED"},
+        {"id":"BIT.ADOBE.DRONE.016","name":"VISUAL.EVIDENCE.NE.CAUSAL.PROOF","state":"GOVERNING_GATE"}
+      ],
+      "five_d_mapping": {
+        "X": ["SPATIAL.SCENE","AERIAL.POSITION","SUBJECT.LOCATION","SUBJECT.SEPARATION","TRACK.PATH"],
+        "Y": ["VISUAL.MEASUREMENT","THERMAL.CONTRAST","EDGE.SEPARATION","MOTION","VISIBILITY","NOISE","EXPOSURE"],
+        "Z": ["SOURCE.PROVENANCE","OKCPD.FOOTAGE","MEDIA.REPOST","YOUTUBE.SHORT","SCREENSHOT","EDIT.LAYER","TEXT.OVERLAY"],
+        "P": ["CONFIDENCE","SOURCE.MATCH","OBJECT.CLASSIFICATION","TRACK.CONTINUITY","CORROBORATION.STATE"],
+        "T": ["TIME","EVENT.SEQUENCE","DRONE.ARRIVAL","SPOTLIGHT.USE","DOG.MOVEMENT","TRACKING","POLICE.RESPONSE"]
+      },
+      "register_crosswalk": {
+        "CLUSTER.01.ORIGIN": [1,3,4,5,8],
+        "CLUSTER.02.INTEGRITY": [9,11,13],
+        "CLUSTER.03.EDIT_HISTORY": [17,18,19,20],
+        "CLUSTER.05.RELATIONSHIP": [33,34,37],
+        "CLUSTER.06.AUTHENTICITY": [41,42,43,44],
+        "CLUSTER.08.ENGINE": [57,59,60,61]
+      },
+      "bone_rules": [
+        "CAPTURE_NE_INTERPRETATION",
+        "VISIBLE_OBJECT_NE_IDENTIFIED_OBJECT",
+        "TRACKED_OBJECT_NE_IDENTIFIED_PERSON",
+        "THERMAL_SIGNATURE_NE_HUMAN_IDENTITY",
+        "MEDIA_REPOST_NE_ORIGINAL_CAPTURE",
+        "TEXT_OVERLAY_NE_SOURCE_EVIDENCE",
+        "VISUAL_CORRELATION_NE_CAUSAL_PROOF"
+      ],
+      "provenance_gate": {
+        "source_provenance": "PARTIAL",
+        "original_okcpd_file": "NOT_INGESTED",
+        "c2pa_manifest": "UNVERIFIED",
+        "adobe_runtime": "NOT_PROMOTED",
+        "rule": "SCENE_OBSERVATION_MAY_ADVANCE_WITH_SOURCE_LABELS_BUT_IDENTITY_AND_ORIGIN_CLAIMS_REQUIRE_STRONGER_RECEIPTS"
+      },
+      "bind_chain": ["SOURCE_LOCK","333.CATCH","VISUAL.ATOMIZE","SOURCE.CLASSIFY","5D.ADDRESS","64BIT.CROSSWALK","PROVENANCE.GATE","VISION.MEASUREMENT","CORROBORATION","ADOBE.BONE","CHOMP","STAY"]
+    }
+  },
   "runtime_state_model": ["PASS_RUNTIME","PASS_SPEC","HOLD","FAIL","UNKNOWN","NOT_OBSERVED","NOT_APPLICABLE","CONFLICT"],
   "economic_rule": "FREE_FIRST_BEFORE_PAID_ACCESS_UNLESS_PAID_PATH_HAS_VERIFIED_POSITIVE_EXPECTED_VALUE",
-  "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE","fictional_narrative":"CREATIVE_REFERENCE_NOT_CAUSAL_EVIDENCE"},
+  "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE","fictional_narrative":"CREATIVE_REFERENCE_NOT_CAUSAL_EVIDENCE","verified_news_corroboration":"SECONDARY_EVENT_CORROBORATION","user_supplied_screenshot":"DIRECT_USER_EVIDENCE_WITH_LIMITED_PROVENANCE"},
   "output_chain": "SOURCE -> AUTHORITY -> WORKFLOW -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
 }
