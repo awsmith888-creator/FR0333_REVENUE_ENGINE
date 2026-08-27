@@ -1,9 +1,9 @@
 {
   "identifier": "FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001",
-  "version": "1.1.0",
-  "state": "INDEXED_SPEC_ACTIVE_RUNTIME_VECTOR_BOUND",
+  "version": "1.2.0-RC",
+  "state": "INDEXED_SPEC_ACTIVE_5D_CALIBRATION_BOUND_RUNTIME_HOLD",
   "observed_at_et": "2026-08-24T20:47:00-04:00",
-  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, and runtime proof.",
+  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, runtime proof, 5D coordinates, and cross-rail promotion boundaries.",
   "governing_gates": [
     "100_PERCENT_MEANS_REQUIRED_LANE_COVERAGE_NOT_INFALLIBILITY",
     "PRIMARY_SOURCE_GT_PROFESSIONAL_SECONDARY_GT_GENERAL_COMMENTARY",
@@ -12,11 +12,38 @@
     "REPRODUCTION_COUNT_NE_INDEPENDENT_EVIDENCE_COUNT",
     "METADATA_NE_PROVENANCE_NE_AUTHENTICITY_NE_IDENTITY_NE_TRUTH",
     "ACCESS_NE_AUTHORITY",
+    "CRYPTOGRAPHIC_VALIDITY_NE_HUMAN_IDENTITY_NE_AUTHORIZATION",
+    "ABSENT_NE_INVALID_NE_CONFLICTING_NE_SUSPICIOUS_NE_PROVEN_FALSE",
     "MISSING_NE_ZERO",
     "HOLD_NE_PASS",
     "DEFINED_NE_CI_VALIDATED_NE_RUNTIME_PROVEN",
+    "DETECTOR_FAILURE_NE_SYNTHETIC_EVIDENCE",
+    "BYTE_MISMATCH_NE_TAMPER",
+    "RATING_NE_AVERAGE_AUDIENCE_NE_REACH",
+    "TV_AUDIENCE_NE_APP_USERS_NE_WEBSITE_USERS",
+    "WEATHER_IMPORTANCE_NE_FORECAST_ACCURACY",
+    "FORECAST_COMPREHENSION_NE_FORECAST_ACCURACY",
     "PRICE_LISTING_VERIFIED_NE_TRANSACTION_OBSERVED",
-    "OBSERVED_NE_CORRELATED_NE_CAUSAL"
+    "OBSERVED_NE_MEASURED_NE_DERIVED_NE_INFERRED_NE_CLAIMED",
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "NO_CROSS_RAIL_PROMOTION_WITHOUT_EVIDENCE"
+  ],
+  "evidence_classes": {
+    "E_OBS": "Observed raw source or telemetry capture",
+    "E_MES": "Measured value with explicit bounds or denominator",
+    "E_DER": "Deterministic multi-field derivation",
+    "E_INF": "Probabilistic or statistical inference",
+    "E_CLM": "Unverified claim from a person, vendor, tool, or source"
+  },
+  "value_states": [
+    "PRESENT",
+    "ABSENT",
+    "UNKNOWN",
+    "NOT_APPLICABLE",
+    "INVALID",
+    "CONFLICTING",
+    "SUSPICIOUS",
+    "PROVEN_FALSE"
   ],
   "five_dimensions": {
     "D1_SOURCE_AUTHORITY": {"function":"Rank and verify source authority before promotion.","required_controls":["source_class","primary_source_check","secondary_source_label","claim_date","source_url","source_independence","conflict_detection","promotion_state"]},
@@ -25,12 +52,68 @@
     "D4_ATTENTION_NETWORK": {"function":"Measure scale without converting popularity into authority.","required_controls":["historical_reach","current_membership","community_reach","event_audience","partner_network","channel_count","unique_people_deduplication","time_window_normalization"]},
     "D5_ECONOMIC_RUNTIME": {"function":"Connect free-first learning, costs, transactions, runtime receipts, and reinvestment.","required_controls":["free_first_path","price_capture","discount_math","commercial_rights_clearance","transaction_receipt","margin","runtime_receipt","community_reinvestment_state"]}
   },
+  "coordinate_5d": {
+    "X": "spatial_or_population_scope",
+    "Y": "measured_variable",
+    "Z": "source_product_or_evidence_layer",
+    "P": "probability_proportion_or_population_statistic",
+    "T": "time_horizon_or_revision",
+    "rule": "Every promoted statistical bit must have an X.Y.Z.P.T address or an explicit NOT_APPLICABLE state for a dimension."
+  },
+  "calibration_5d": {
+    "immutable_receipt_fields": ["observation_id","capture_timestamp","target_timestamp","source","payload_hash","revision_of"],
+    "metric_identity_fields": ["metric_name","numerator","denominator"],
+    "applicability_rule": "continuity and completeness use valid_applicable / total_applicable; NOT_APPLICABLE is excluded from denominator",
+    "zero_state_rule": "zero observations or zero validated pairs blocks performance statistics but does not zero unrelated populated rails",
+    "revision_rule": "later observation for same target creates a new observation_id and never overwrites the original receipt",
+    "detector_rule": "detector error, timeout, unsupported format, or unavailable model maps to UNKNOWN and never to synthetic score 1.0",
+    "tamper_rule": "byte mismatch is descriptive; tamper suspicion requires failed expected signed binding, invalid manifest, or other explicit contradictory integrity evidence"
+  },
+  "cross_rail_rules": [
+    "HUMAN_DEMAND_NE_FORECAST_ACCURACY",
+    "AUDIENCE_SIZE_NE_FORECAST_QUALITY",
+    "PROVENANCE_NE_HUMAN_IDENTITY",
+    "PROVENANCE_NE_TRUTH",
+    "SYNTHETIC_DETECTOR_NE_TRUTH",
+    "CRYPTOGRAPHIC_VALIDITY_NE_AUTHORIZATION",
+    "POPULARITY_NE_TECHNICAL_AUTHORITY"
+  ],
+  "weather_transfer_learning": {
+    "status": "ARCHITECTURAL_LESSONS_IMPORTED_NOT_WEATHER_DATA_MERGED",
+    "human_importance_bones": 8,
+    "human_statistical_bits": 16,
+    "five_d_weather_bits": 20,
+    "lessons": [
+      "separate product architecture from performance measurement",
+      "preserve metric denominator as part of metric identity",
+      "missing display or abstention is not a negative observation",
+      "audience reach, rating, average audience, app users, and website users are distinct measures",
+      "behavioral importance cannot promote accuracy",
+      "comprehension cannot promote accuracy",
+      "a zero-state in one rail does not erase populated evidence in another rail"
+    ],
+    "promotion_effect": "NONE_ON_ADOBE_RUNTIME_PROOF"
+  },
+  "adobe_64bit_alignment": {
+    "register": "FR-0333-ADOBE-64BIT-REG",
+    "source_version": "1.0.5-RC",
+    "clusters": 8,
+    "bits": 64,
+    "critical_hardening": [
+      "unsigned_or_manifest_absent_routes_unverified_instead_of_fabricating_invalidity",
+      "absence_unknown_not_applicable_invalid_conflicting_suspicious_proven_false_are_distinct",
+      "credential_binding_confidence_does_not_equal_human_identity",
+      "privacy_or_consent_failure_requires purge policy",
+      "detector_failure_does_not_equal synthetic evidence",
+      "applicability_denominators exclude non-applicable fields"
+    ]
+  },
   "system_lanes": ["LEARN","CREATE","VERIFY","PROVE","PUBLISH","MEASURE","TRANSACT","AUDIT","REINVEST","STAY"],
   "coverage": {
     "spec_formula": "defined_required_controls / required_controls",
     "runtime_formula": "runtime_pass_controls / applicable_runtime_controls",
     "target": 1.0,
-    "rule": "100% may be reported only with an explicit denominator. HOLD, UNKNOWN, NOT_OBSERVED, CONFLICT, FAIL, and NOT_APPLICABLE are never silently converted to zero or PASS."
+    "rule": "100% may be reported only with an explicit denominator. HOLD, UNKNOWN, NOT_OBSERVED, CONFLICT, FAIL, NOT_APPLICABLE, ABSENT, INVALID, SUSPICIOUS, and PROVEN_FALSE are never silently converted to zero or PASS."
   },
   "creativepro_statistics": [
     {"metric":"historical_design_professionals_reached","value":"10M+","period":"since_1999","evidence_state":"CURRENT_CREATIVEPRO_SOURCE_CLAIM","source":"https://creativepro.com/"},
@@ -55,8 +138,14 @@
     "community_display_warning": "26K+ repeated on four community tiles is one page-level claim pattern; do not sum to 104K unique people without independent channel counts.",
     "network_independence_rule": "N_sources != N_independent; repeated partner or community claims retain dependency lineage."
   },
-  "runtime_state_model": ["PASS_RUNTIME","PASS_SPEC","HOLD","FAIL","UNKNOWN","NOT_OBSERVED","NOT_APPLICABLE","CONFLICT"],
+  "runtime_state_model": ["PASS_RUNTIME","PASS_SPEC","HOLD","FAIL","UNKNOWN","NOT_OBSERVED","NOT_APPLICABLE","CONFLICT","ABSENT","INVALID","SUSPICIOUS","PROVEN_FALSE"],
+  "runtime_zero_state": {
+    "adobe_credential_runtime": "HOLD",
+    "external_image_generation_runtime": "HOLD",
+    "artifact_provenance_runtime": "HOLD",
+    "rule": "5D calibration and CI validation do not promote credential-backed or external runtime proof."
+  },
   "economic_rule": "FREE_FIRST_BEFORE_PAID_ACCESS_UNLESS_PAID_PATH_HAS_VERIFIED_POSITIVE_EXPECTED_VALUE",
   "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE"},
-  "output_chain": "SOURCE -> AUTHORITY -> WORKFLOW -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
+  "output_chain": "SOURCE -> AUTHORITY -> 5D_ADDRESS -> WORKFLOW -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
 }
