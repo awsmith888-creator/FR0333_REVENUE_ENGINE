@@ -1,0 +1,97 @@
+{
+  "identifier": "FR.0333.ADOBE.CAMERA.3.3.3.0001",
+  "version": "1.0.0",
+  "state": "ACTIVE_SPEC_BOUND_TO_FR0333_ENGINE",
+  "purpose": "Apply the FR0333 3.3.3 source-relation-verification catch to camera geometry and Adobe production decisions before output promotion.",
+  "triple_catch": {
+    "3.1": "SOURCE",
+    "3.2": "RELATION",
+    "3.3": "VERIFICATION",
+    "3.3.3": "SOURCE_PROCESSING_HUMAN_RECEPTION"
+  },
+  "camera_pipeline": {
+    "3.1_source_reality": [
+      "SUBJECT",
+      "SCENE",
+      "LIGHT",
+      "CAMERA_TO_SUBJECT_DISTANCE",
+      "SUBJECT_TO_BACKGROUND_DISTANCE",
+      "MOTION_STATE"
+    ],
+    "3.2_camera_representation": [
+      "FOCAL_LENGTH",
+      "CAMERA_POSITION",
+      "CAMERA_HEIGHT",
+      "CAMERA_ANGLE",
+      "PERSPECTIVE",
+      "SHUTTER_SPEED",
+      "DEPTH_OF_FIELD",
+      "FRAMING",
+      "CROP",
+      "DISPLAY_ASPECT_RATIO"
+    ],
+    "3.3_verify_output": [
+      "SUBJECT_SCALE",
+      "FACE_BODY_PROPORTIONS",
+      "GEOMETRY",
+      "DISTORTION",
+      "DEPTH",
+      "BACKGROUND_SCALE",
+      "LIGHT_DIRECTION",
+      "MOTION_RENDERING",
+      "COMPOSITION",
+      "SOURCE_TO_OUTPUT_LINEAGE"
+    ]
+  },
+  "governing_gates": [
+    "REALITY_NE_CAPTURE",
+    "CAPTURE_NE_REPRESENTATION",
+    "REPRESENTATION_NE_INTERPRETATION",
+    "INTERPRETATION_NE_BEHAVIOR",
+    "CORRELATION_NE_CAUSATION",
+    "FOCAL_LENGTH_NE_PERSPECTIVE_ALONE",
+    "CAMERA_POSITION_PLUS_DISTANCE_CONTROL_PERSPECTIVE",
+    "TELEPHOTO_NE_AUTOMATIC_FLATTENING",
+    "35MM_NE_ZERO_DISTORTION",
+    "SHUTTER_SPEED_CONTROLS_MOTION_RENDERING_NE_SCENE_GEOMETRY",
+    "TECHNICALLY_CLEAN_NE_GEOMETRICALLY_CORRECT"
+  ],
+  "production_defaults": {
+    "aspect_ratio": "9:16",
+    "human_scale": "REALISTIC",
+    "focal_length_policy": "SCENE_DEPENDENT_NOT_FIXED_35MM",
+    "camera_height_required": true,
+    "camera_angle_required": true,
+    "camera_distance_required": true,
+    "background_distance_required_when_relevant": true,
+    "unintended_wide_angle_stretch": "FAIL",
+    "unintended_telephoto_flattening": "FAIL",
+    "face_body_proportion_check": "REQUIRED",
+    "background_scale_check": "REQUIRED",
+    "light_direction_check": "REQUIRED",
+    "depth_check": "REQUIRED",
+    "triple_333_verification": "REQUIRED_BEFORE_PROMOTION"
+  },
+  "lens_selection_policy": {
+    "rule": "Choose virtual focal length from scene geometry, camera position, subject distance, and desired representation. Do not impose one focal length on portraits, full-body scenes, vehicles, interiors, action, and environmental scenes.",
+    "35mm": "AVAILABLE_NOT_DEFAULT_TRUTH_STANDARD",
+    "wide": "USE_ONLY_WHEN_SCENE_REQUIRES_FIELD_OF_VIEW_OR_INTENTIONAL_DEPTH_EXAGGERATION",
+    "normal": "USE_WHEN_BALANCED_FIELD_OF_VIEW_SUPPORTS_SCENE",
+    "telephoto": "USE_WHEN_DISTANCE_FRAMING_OR_SUBJECT_ISOLATION_REQUIRES_IT"
+  },
+  "promotion_gate": {
+    "source_state": "REQUIRED",
+    "relation_state": "REQUIRED",
+    "verification_state": "REQUIRED",
+    "pass_condition": "3_OF_3",
+    "failure_action": "HOLD_OUTPUT_AND_REVISE_CAMERA_PARAMETERS"
+  },
+  "engine_binding": {
+    "engine": "FR0333_REVENUE_ENGINE",
+    "subsystem": "RavenCloudTaskbar",
+    "adobe_role": "EXTERNAL_CREATIVE_EXECUTION_PROVIDER",
+    "ownership_boundary": "THIS_GATE_MODIFIES_FR0333_ENGINE_LOGIC_NOT_ADOBE_INTERNAL_ENGINE"
+  },
+  "chomp": "3.3.3",
+  "stay": true
+}
