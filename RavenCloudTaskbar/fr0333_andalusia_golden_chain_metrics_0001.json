@@ -1,6 +1,6 @@
 {
   "identifier": "FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
-  "state": "SOURCE_AUDITED_METRIC_CHAIN_ACTIVE_YEAR_INDEX_DECIMAL_BOUND",
+  "state": "SOURCE_AUDITED_METRIC_CHAIN_ACTIVE_FULL_GATE_RUN",
   "subject": "Andalusia, Alabama / Covington County historical-demographic metric rail",
   "source_lock": {
     "rule": "SOURCE_FIRST_THEN_METRIC_THEN_RELATION_THEN_PROMOTION",
@@ -23,7 +23,11 @@
     "CITY_STATISTIC_NE_COUNTY_STATISTIC",
     "SOURCE_DATE_NE_EVENT_DATE",
     "DERIVED_METRIC_REQUIRES_EXPLICIT_INPUTS",
-    "EVERY_HISTORICAL_YEAR_REQUIRES_DECIMAL_INDEX"
+    "EVERY_HISTORICAL_YEAR_REQUIRES_DECIMAL_INDEX",
+    "INDEX_TOKEN_IS_STRING",
+    "1.8_NE_1.80",
+    "TRAILING_ZERO_PRESERVATION_REQUIRED",
+    "EVERY_METRIC_REQUIRES_REFERENCE_POINT_AND_BULLETIN"
   ],
   "year_index": [
     {"index":"0.01","year":1839,"event_ref":"HIST.001","event":"Montezuma courthouse fire reported; move pressure documented","source":"SRC.001","state":"SUPPORTED"},
@@ -46,13 +50,14 @@
     {"index":"0.18","year":2025,"event_ref":"STAT.011","event":"Andalusia population estimate 8763; Covington County estimate 37947","source":"SRC.003","state":"ESTIMATE"},
     {"index":"0.19","year":2026,"event_ref":"STAT.001","event":"Reference year used for derived town-age calculations","source":"DERIVED_REFERENCE_YEAR","state":"DERIVED_REFERENCE"}
   ],
+  "ordered_year_reference_sequence": ["1.87","1.82","1.8","1.80","1.42","0.10"],
   "year_span_metrics": [
-    {"index":"1.87","from":1839,"to":2026,"value":187,"unit":"years","method":"2026-1839","meaning":"span from earliest indexed courthouse-fire event to reference year","class":"DERIVED"},
-    {"index":"1.82","from":1844,"to":2026,"value":182,"unit":"years","method":"2026-1844","meaning":"county-seat/post-office anchor age","class":"DERIVED"},
-    {"index":"1.80","from":1846,"to":2026,"value":180,"unit":"years","method":"2026-1846","meaning":"official town-name age","class":"DERIVED"},
-    {"index":"1.42","from":1884,"to":2026,"value":142,"unit":"years","method":"2026-1884","meaning":"formal incorporation age","class":"DERIVED"},
-    {"index":"0.10","from":1890,"to":1900,"value":10,"unit":"years","method":"1900-1890","meaning":"historical census comparison window","class":"DERIVED"},
-    {"index":"0.10","from":2010,"to":2020,"value":10,"unit":"years","method":"2020-2010","meaning":"modern decennial census comparison window","class":"DERIVED"}
+    {"index":"1.87","from":1839,"to":2026,"value":187,"unit":"years","method":"2026-1839","meaning":"span from earliest indexed courthouse-fire event to reference year","class":"DERIVED","role":"YEAR_SPAN_REFERENCE"},
+    {"index":"1.82","from":1844,"to":2026,"value":182,"unit":"years","method":"2026-1844","meaning":"county-seat/post-office anchor age","class":"DERIVED","role":"YEAR_SPAN_REFERENCE"},
+    {"index":"1.8","from":1846,"to":2026,"value":180,"unit":"years","method":"2026-1846","meaning":"one-eight reference point for the 180-year span","class":"DERIVED_REFERENCE_TOKEN","role":"REFERENCE_POINT"},
+    {"index":"1.80","from":1846,"to":2026,"value":180,"unit":"years","method":"2026-1846","meaning":"official town-name age exact span token","class":"DERIVED","role":"EXACT_YEAR_SPAN_INDEX"},
+    {"index":"1.42","from":1884,"to":2026,"value":142,"unit":"years","method":"2026-1884","meaning":"formal incorporation age","class":"DERIVED","role":"YEAR_SPAN_REFERENCE"},
+    {"index":"0.10","value":10,"unit":"years","meaning":"shared ten-year comparison-window reference token","class":"DERIVED_REFERENCE_TOKEN","role":"TEN_YEAR_REFERENCE"}
   ],
   "historical_timeline": [
     {"id":"HIST.001","year":1839,"year_index":"0.01","event":"Montezuma courthouse fire reported; legislation already introduced to move county seat","evidence":"SRC.001","state":"SUPPORTED"},
@@ -68,28 +73,28 @@
     {"id":"HIST.011","year":1916,"year_index":"0.13","event":"Current stone and marble courthouse replaced 1897 structure","evidence":"SRC.002","state":"SUPPORTED"}
   ],
   "metrics": [
-    {"id":"STAT.001","name":"years_since_formal_incorporation_at_2026","value":142,"unit":"years","span_index":"1.42","year_indexes":["0.07","0.19"],"method":"2026-1884","class":"DERIVED","source":"SRC.001"},
-    {"id":"STAT.002","name":"years_since_county_seat_post_office_anchor_at_2026","value":182,"unit":"years","span_index":"1.82","year_indexes":["0.03","0.19"],"method":"2026-1844","class":"DERIVED","source":"SRC.001"},
-    {"id":"STAT.003","name":"1890_population","value":270,"unit":"persons","class":"MEASURED_HISTORICAL_CENSUS","source":"SRC.004","year_index":"0.08"},
-    {"id":"STAT.004","name":"1900_population","value":551,"unit":"persons","class":"MEASURED_HISTORICAL_CENSUS","source":"SRC.004","year_index":"0.12"},
-    {"id":"STAT.005","name":"1890_to_1900_population_gain","value":281,"unit":"persons","method":"551-270","class":"DERIVED","sources":["STAT.003","STAT.004"],"year_indexes":["0.08","0.12"],"span_index":"0.10"},
-    {"id":"STAT.006","name":"1890_to_1900_population_ratio","value":"551:270","normalized":"2041:1000","class":"DERIVED","sources":["STAT.003","STAT.004"],"year_indexes":["0.08","0.12"],"span_index":"0.10"},
-    {"id":"STAT.007","name":"2010_population","value":9015,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.003","year_index":"0.14"},
-    {"id":"STAT.008","name":"2020_population","value":8805,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.003","year_index":"0.15"},
-    {"id":"STAT.009","name":"2010_to_2020_population_change","value":-210,"unit":"persons","method":"8805-9015","class":"DERIVED","sources":["STAT.007","STAT.008"],"year_indexes":["0.14","0.15"],"span_index":"0.10"},
-    {"id":"STAT.010","name":"2020_population_as_ratio_of_2010","value":"8805:9015","normalized":"977:1000","class":"DERIVED","sources":["STAT.007","STAT.008"],"year_indexes":["0.14","0.15"],"span_index":"0.10"},
-    {"id":"STAT.011","name":"2025_population_estimate","value":8763,"unit":"persons","class":"ESTIMATE","source":"SRC.003","year_index":"0.18"},
-    {"id":"STAT.012","name":"2025_estimate_vs_2020_census_change","value":-42,"unit":"persons","method":"8763-8805","class":"DERIVED_CROSS_SERIES_CAUTION","sources":["STAT.008","STAT.011"],"year_indexes":["0.15","0.18"]},
-    {"id":"STAT.013","name":"land_area_2020","value":"19.66","unit":"square_miles","class":"MEASURED","source":"SRC.003","year_index":"0.15"},
-    {"id":"STAT.014","name":"population_density_2020","value":"447.9","unit":"persons_per_square_mile","class":"MEASURED","source":"SRC.003","year_index":"0.15"},
-    {"id":"STAT.015","name":"median_household_income_2020_2024","value":42611,"unit":"2024_dollars","class":"ACS_ESTIMATE","source":"SRC.003","year_indexes":["0.15","0.17"]},
-    {"id":"STAT.016","name":"per_capita_income_2020_2024","value":24879,"unit":"2024_dollars","class":"ACS_ESTIMATE","source":"SRC.003","year_indexes":["0.15","0.17"]},
-    {"id":"STAT.017","name":"poverty_rate_2020_2024_per_1000","value":254,"unit":"persons_per_1000","method":"25.4_percent_normalized_to_per_1000","class":"DERIVED_FROM_ACS_RATE","source":"SRC.003","year_indexes":["0.15","0.17"]},
-    {"id":"STAT.018","name":"retail_sales_2022","value":436769000,"unit":"dollars","class":"MEASURED_BUSINESS_STATISTIC","source":"SRC.003","year_index":"0.16"},
-    {"id":"STAT.019","name":"retail_sales_per_capita_2022","value":49684,"unit":"dollars","class":"MEASURED_BUSINESS_STATISTIC","source":"SRC.003","year_index":"0.16"},
-    {"id":"STAT.020","name":"covington_county_2020_population","value":37570,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.006","year_index":"0.15"},
-    {"id":"STAT.021","name":"covington_county_2025_estimate","value":37947,"unit":"persons","class":"ESTIMATE","source":"SRC.006","year_index":"0.18"},
-    {"id":"STAT.022","name":"andalusia_share_of_covington_2020","value":"8805:37570","normalized":"234:1000","class":"DERIVED","sources":["STAT.008","STAT.020"],"year_index":"0.15"}
+    {"id":"STAT.001","reference_point":"A1","bulletin":"YEARS_SINCE_FORMAL_INCORPORATION_AT_2026","name":"years_since_formal_incorporation_at_2026","value":142,"unit":"years","span_index":"1.42","year_indexes":["0.07","0.19"],"method":"2026-1884","class":"DERIVED","source":"SRC.001"},
+    {"id":"STAT.002","reference_point":"B2","bulletin":"YEARS_SINCE_COUNTY_SEAT_POST_OFFICE_ANCHOR_AT_2026","name":"years_since_county_seat_post_office_anchor_at_2026","value":182,"unit":"years","span_index":"1.82","year_indexes":["0.03","0.19"],"method":"2026-1844","class":"DERIVED","source":"SRC.001"},
+    {"id":"STAT.003","reference_point":"C3","bulletin":"1890_POPULATION","name":"1890_population","value":270,"unit":"persons","class":"MEASURED_HISTORICAL_CENSUS","source":"SRC.004","year_index":"0.08"},
+    {"id":"STAT.004","reference_point":"D4","bulletin":"1900_POPULATION","name":"1900_population","value":551,"unit":"persons","class":"MEASURED_HISTORICAL_CENSUS","source":"SRC.004","year_index":"0.12"},
+    {"id":"STAT.005","reference_point":"E5","bulletin":"1890_TO_1900_POPULATION_GAIN","name":"1890_to_1900_population_gain","value":281,"unit":"persons","method":"551-270","class":"DERIVED","sources":["STAT.003","STAT.004"],"year_indexes":["0.08","0.12"],"span_index":"0.10"},
+    {"id":"STAT.006","reference_point":"F6","bulletin":"1890_TO_1900_POPULATION_RATIO","name":"1890_to_1900_population_ratio","value":"551:270","normalized":"2041:1000","class":"DERIVED","sources":["STAT.003","STAT.004"],"year_indexes":["0.08","0.12"],"span_index":"0.10"},
+    {"id":"STAT.007","reference_point":"G7","bulletin":"2010_POPULATION","name":"2010_population","value":9015,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.003","year_index":"0.14"},
+    {"id":"STAT.008","reference_point":"H8","bulletin":"2020_POPULATION","name":"2020_population","value":8805,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.003","year_index":"0.15"},
+    {"id":"STAT.009","reference_point":"I9","bulletin":"2010_TO_2020_POPULATION_CHANGE","name":"2010_to_2020_population_change","value":-210,"unit":"persons","method":"8805-9015","class":"DERIVED","sources":["STAT.007","STAT.008"],"year_indexes":["0.14","0.15"],"span_index":"0.10"},
+    {"id":"STAT.010","reference_point":"J10","bulletin":"2020_POPULATION_AS_RATIO_OF_2010","name":"2020_population_as_ratio_of_2010","value":"8805:9015","normalized":"977:1000","class":"DERIVED","sources":["STAT.007","STAT.008"],"year_indexes":["0.14","0.15"],"span_index":"0.10"},
+    {"id":"STAT.011","reference_point":"K11","bulletin":"2025_POPULATION_ESTIMATE","name":"2025_population_estimate","value":8763,"unit":"persons","class":"ESTIMATE","source":"SRC.003","year_index":"0.18"},
+    {"id":"STAT.012","reference_point":"L12","bulletin":"2025_ESTIMATE_VS_2020_CENSUS_CHANGE","name":"2025_estimate_vs_2020_census_change","value":-42,"unit":"persons","method":"8763-8805","class":"DERIVED_CROSS_SERIES_CAUTION","sources":["STAT.008","STAT.011"],"year_indexes":["0.15","0.18"]},
+    {"id":"STAT.013","reference_point":"M13","bulletin":"LAND_AREA_2020","name":"land_area_2020","value":"19.66","unit":"square_miles","class":"MEASURED","source":"SRC.003","year_index":"0.15"},
+    {"id":"STAT.014","reference_point":"N14","bulletin":"POPULATION_DENSITY_2020","name":"population_density_2020","value":"447.9","unit":"persons_per_square_mile","class":"MEASURED","source":"SRC.003","year_index":"0.15"},
+    {"id":"STAT.015","reference_point":"O15","bulletin":"MEDIAN_HOUSEHOLD_INCOME_2020_2024","name":"median_household_income_2020_2024","value":42611,"unit":"2024_dollars","class":"ACS_ESTIMATE","source":"SRC.003","year_indexes":["0.15","0.17"]},
+    {"id":"STAT.016","reference_point":"P16","bulletin":"PER_CAPITA_INCOME_2020_2024","name":"per_capita_income_2020_2024","value":24879,"unit":"2024_dollars","class":"ACS_ESTIMATE","source":"SRC.003","year_indexes":["0.15","0.17"]},
+    {"id":"STAT.017","reference_point":"Q17","bulletin":"POVERTY_RATE_2020_2024_PER_1000","name":"poverty_rate_2020_2024_per_1000","value":254,"unit":"persons_per_1000","method":"25.4_percent_normalized_to_per_1000","class":"DERIVED_FROM_ACS_RATE","source":"SRC.003","year_indexes":["0.15","0.17"]},
+    {"id":"STAT.018","reference_point":"R18","bulletin":"RETAIL_SALES_2022","name":"retail_sales_2022","value":436769000,"unit":"dollars","class":"MEASURED_BUSINESS_STATISTIC","source":"SRC.003","year_index":"0.16"},
+    {"id":"STAT.019","reference_point":"S19","bulletin":"RETAIL_SALES_PER_CAPITA_2022","name":"retail_sales_per_capita_2022","value":49684,"unit":"dollars","class":"MEASURED_BUSINESS_STATISTIC","source":"SRC.003","year_index":"0.16"},
+    {"id":"STAT.020","reference_point":"T20","bulletin":"COVINGTON_COUNTY_2020_POPULATION","name":"covington_county_2020_population","value":37570,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.006","year_index":"0.15"},
+    {"id":"STAT.021","reference_point":"U21","bulletin":"COVINGTON_COUNTY_2025_ESTIMATE","name":"covington_county_2025_estimate","value":37947,"unit":"persons","class":"ESTIMATE","source":"SRC.006","year_index":"0.18"},
+    {"id":"STAT.022","reference_point":"V22","bulletin":"ANDALUSIA_SHARE_OF_COVINGTON_2020","name":"andalusia_share_of_covington_2020","value":"8805:37570","normalized":"234:1000","class":"DERIVED","sources":["STAT.008","STAT.020"],"year_index":"0.15"}
   ],
   "structural_history": {
     "county_seat_relocation": "FLOOD_AND_FIRE_PRESSURE_SUPPORTED",
@@ -101,7 +106,10 @@
   "golden_chain": [
     "SOURCE_LOCK",
     "YEAR_INDEX",
+    "YEAR_REFERENCE_SEQUENCE",
     "YEAR_SPAN_INDEX",
+    "REFERENCE_POINT",
+    "BULLETIN",
     "DATE_LOCK",
     "PLACE_LOCK",
     "MEASURED_STATISTIC",
@@ -114,13 +122,33 @@
     "CHOMP",
     "STAY"
   ],
+  "run_gate": {
+    "source_ids":"PASS_6_OF_6",
+    "year_index":"PASS_19_OF_19",
+    "ordered_reference_sequence":"PASS_6_OF_6",
+    "exact_reference_sequence":["1.87","1.82","1.8","1.80","1.42","0.10"],
+    "one_eight_distinct_from_one_eight_zero":"PASS",
+    "trailing_zero_preserved":"PASS",
+    "span_arithmetic":"PASS_5_OF_5_CALCULABLE",
+    "ten_year_token_shared":"PASS",
+    "metric_reference_points":"PASS_22_OF_22",
+    "metric_bulletins":"PASS_22_OF_22",
+    "historical_year_crosswalk":"PASS_11_OF_11",
+    "metric_year_crosswalk":"PASS_22_OF_22",
+    "evidence_boundary":"PASS",
+    "direct_ancestral_signature":"HOLD_NOT_YET_SEARCHED",
+    "family_lineage":"HOLD_REQUIRES_NAME_LEVEL_RECORD_MATCH"
+  },
   "promotion_state": {
     "year_index":"PASS_19_OF_19_DECIMAL_INDEXED",
-    "year_span_index":"PASS_6_OF_6_DECIMAL_INDEXED",
+    "year_reference_sequence":"PASS_EXACT_STRING_SEQUENCE",
+    "year_span_index":"PASS_6_TOKEN_REFERENCE_SET",
     "town_history":"PASS_SOURCE_BOUNDED",
     "demographic_metrics":"PASS_WITH_CENSUS_VS_ESTIMATE_SEPARATION",
     "railroad_timber_relation":"PASS_ASSOCIATION_ONLY",
     "direct_ancestral_signature":"HOLD_NOT_YET_SEARCHED",
     "family_lineage":"HOLD_REQUIRES_NAME_LEVEL_RECORD_MATCH"
-  }
+  },
+  "chomp":"PASS",
+  "stay":"ACTIVE"
 }
