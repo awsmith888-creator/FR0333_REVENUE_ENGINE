@@ -1,52 +1,16 @@
 {
   "identifier": "FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
-  "state": "SOURCE_AUDITED_METRIC_CHAIN_ACTIVE",
+  "state": "SOURCE_AUDITED_METRIC_CHAIN_ACTIVE_YEAR_INDEX_BOUND",
   "subject": "Andalusia, Alabama / Covington County historical-demographic metric rail",
   "source_lock": {
     "rule": "SOURCE_FIRST_THEN_METRIC_THEN_RELATION_THEN_PROMOTION",
     "primary_and_high_authority_sources": [
-      {
-        "id": "SRC.AND.001",
-        "publisher": "City of Andalusia",
-        "url": "https://cp.cityofandalusia.com/community/history-of-andalusia.html",
-        "class": "LOCAL_GOVERNMENT_HISTORY",
-        "use": "county-seat move, post office, incorporation, courthouse chronology"
-      },
-      {
-        "id": "SRC.AND.002",
-        "publisher": "Encyclopedia of Alabama",
-        "url": "https://encyclopediaofalabama.org/article/andalusia/",
-        "class": "STATE_HISTORICAL_REFERENCE",
-        "use": "name chronology, courthouse fires, railroad, timber economy, historical population narrative"
-      },
-      {
-        "id": "SRC.AND.003",
-        "publisher": "U.S. Census Bureau QuickFacts",
-        "url": "https://www.census.gov/quickfacts/fact/table/andalusiacityalabama/LFE046223",
-        "class": "FEDERAL_STATISTICAL_PRIMARY",
-        "use": "2020 census, 2025 estimate, income, poverty, labor, retail, geography"
-      },
-      {
-        "id": "SRC.AND.004",
-        "publisher": "U.S. Census Bureau 1900 Bulletin 5",
-        "url": "https://www2.census.gov/library/publications/decennial/1900/bulletins/demographic/5-population-al.pdf",
-        "class": "FEDERAL_HISTORICAL_CENSUS_PRIMARY",
-        "use": "1890 and 1900 Andalusia population"
-      },
-      {
-        "id": "SRC.AND.005",
-        "publisher": "Encyclopedia of Alabama",
-        "url": "https://encyclopediaofalabama.org/article/covington-county/",
-        "class": "STATE_HISTORICAL_REFERENCE",
-        "use": "Montezuma, county-seat move, railroad isolation break, timber/turpentine boom"
-      },
-      {
-        "id": "SRC.AND.006",
-        "publisher": "U.S. Census Bureau QuickFacts",
-        "url": "https://www.census.gov/quickfacts/fact/table/covingtoncountyalabama/RHI525225",
-        "class": "FEDERAL_STATISTICAL_PRIMARY",
-        "use": "county population baseline and 2025 estimate"
-      }
+      {"id":"SRC.AND.001","publisher":"City of Andalusia","url":"https://cp.cityofandalusia.com/community/history-of-andalusia.html","class":"LOCAL_GOVERNMENT_HISTORY","use":"county-seat move, post office, incorporation, courthouse chronology"},
+      {"id":"SRC.AND.002","publisher":"Encyclopedia of Alabama","url":"https://encyclopediaofalabama.org/article/andalusia/","class":"STATE_HISTORICAL_REFERENCE","use":"name chronology, courthouse fires, railroad, timber economy, historical population narrative"},
+      {"id":"SRC.AND.003","publisher":"U.S. Census Bureau QuickFacts","url":"https://www.census.gov/quickfacts/fact/table/andalusiacityalabama/LFE046223","class":"FEDERAL_STATISTICAL_PRIMARY","use":"2020 census, 2025 estimate, income, poverty, labor, retail, geography"},
+      {"id":"SRC.AND.004","publisher":"U.S. Census Bureau 1900 Bulletin 5","url":"https://www2.census.gov/library/publications/decennial/1900/bulletins/demographic/5-population-al.pdf","class":"FEDERAL_HISTORICAL_CENSUS_PRIMARY","use":"1890 and 1900 Andalusia population"},
+      {"id":"SRC.AND.005","publisher":"Encyclopedia of Alabama","url":"https://encyclopediaofalabama.org/article/covington-county/","class":"STATE_HISTORICAL_REFERENCE","use":"Montezuma, county-seat move, railroad isolation break, timber/turpentine boom"},
+      {"id":"SRC.AND.006","publisher":"U.S. Census Bureau QuickFacts","url":"https://www.census.gov/quickfacts/fact/table/covingtoncountyalabama/RHI525225","class":"FEDERAL_STATISTICAL_PRIMARY","use":"county population baseline and 2025 estimate"}
     ]
   },
   "governing_gates": [
@@ -58,43 +22,74 @@
     "CENSUS_COUNT_NE_ESTIMATE",
     "CITY_STATISTIC_NE_COUNTY_STATISTIC",
     "SOURCE_DATE_NE_EVENT_DATE",
-    "DERIVED_METRIC_REQUIRES_EXPLICIT_INPUTS"
+    "DERIVED_METRIC_REQUIRES_EXPLICIT_INPUTS",
+    "EVERY_HISTORICAL_YEAR_REQUIRES_YEAR_INDEX"
+  ],
+  "year_index": [
+    {"year_id":"YEAR.AND.001","year":1839,"event_ref":"HIST.AND.001","event":"Montezuma courthouse fire reported; move pressure documented","source":"SRC.AND.001","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.002","year":1841,"event_ref":"HIST.AND.002","event":"Major flood / Harrison Freshet affecting Montezuma area","source":"SRC.AND.001","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.003","year":1844,"event_ref":"HIST.AND.003","event":"Andalusia established as county-seat/post-office location by July 18","source":"SRC.AND.001","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.004","year":1846,"event_ref":"HIST.AND.004","event":"Andalusia established as official town name","source":"SRC.AND.002","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.005","year":1865,"event_ref":"HIST.AND.005","event":"Andalusia courthouse burned","source":"SRC.AND.002","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.006","year":1878,"event_ref":"HIST.AND.006","event":"Replacement courthouse burned","source":"SRC.AND.002","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.007","year":1884,"event_ref":"HIST.AND.007","event":"Formal incorporation January 9","source":"SRC.AND.001","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.008","year":1890,"event_ref":"STAT.AND.003","event":"Federal census population 270","source":"SRC.AND.004","state":"MEASURED_HISTORICAL_CENSUS"},
+    {"year_id":"YEAR.AND.009","year":1895,"event_ref":"HIST.AND.008","event":"Replacement courthouse burned","source":"SRC.AND.002","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.010","year":1897,"event_ref":"HIST.AND.009","event":"Brick courthouse completed","source":"SRC.AND.002","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.011","year":1899,"event_ref":"HIST.AND.010","event":"Central of Georgia Railroad arrived","source":"SRC.AND.002","state":"SUPPORTED_ASSOCIATION"},
+    {"year_id":"YEAR.AND.012","year":1900,"event_ref":"STAT.AND.004","event":"Federal census population 551","source":"SRC.AND.004","state":"MEASURED_HISTORICAL_CENSUS"},
+    {"year_id":"YEAR.AND.013","year":1916,"event_ref":"HIST.AND.011","event":"Current stone and marble courthouse replaced 1897 structure","source":"SRC.AND.002","state":"SUPPORTED"},
+    {"year_id":"YEAR.AND.014","year":2010,"event_ref":"STAT.AND.007","event":"Decennial census population 9015","source":"SRC.AND.003","state":"MEASURED_CENSUS"},
+    {"year_id":"YEAR.AND.015","year":2020,"event_ref":"STAT.AND.008","event":"Decennial census population 8805; land area and density baseline","source":"SRC.AND.003","state":"MEASURED_CENSUS"},
+    {"year_id":"YEAR.AND.016","year":2022,"event_ref":"STAT.AND.018","event":"Retail sales 436769000 dollars; retail sales per capita 49684 dollars","source":"SRC.AND.003","state":"MEASURED_BUSINESS_STATISTIC"},
+    {"year_id":"YEAR.AND.017","year":2024,"event_ref":"STAT.AND.015","event":"Dollar basis for 2020-2024 ACS income figures","source":"SRC.AND.003","state":"STATISTICAL_PERIOD_END"},
+    {"year_id":"YEAR.AND.018","year":2025,"event_ref":"STAT.AND.011","event":"Andalusia population estimate 8763; Covington County estimate 37947","source":"SRC.AND.003","state":"ESTIMATE"},
+    {"year_id":"YEAR.AND.019","year":2026,"event_ref":"STAT.AND.001","event":"Reference year used for derived town-age calculations","source":"DERIVED_REFERENCE_YEAR","state":"DERIVED_REFERENCE"}
+  ],
+  "year_span_metrics": [
+    {"id":"YEARSPAN.AND.001","from":1839,"to":2026,"value":187,"unit":"years","method":"2026-1839","meaning":"span from earliest indexed courthouse-fire event to reference year","class":"DERIVED"},
+    {"id":"YEARSPAN.AND.002","from":1844,"to":2026,"value":182,"unit":"years","method":"2026-1844","meaning":"county-seat/post-office anchor age","class":"DERIVED"},
+    {"id":"YEARSPAN.AND.003","from":1846,"to":2026,"value":180,"unit":"years","method":"2026-1846","meaning":"official town-name age","class":"DERIVED"},
+    {"id":"YEARSPAN.AND.004","from":1884,"to":2026,"value":142,"unit":"years","method":"2026-1884","meaning":"formal incorporation age","class":"DERIVED"},
+    {"id":"YEARSPAN.AND.005","from":1890,"to":1900,"value":10,"unit":"years","method":"1900-1890","meaning":"historical census comparison window","class":"DERIVED"},
+    {"id":"YEARSPAN.AND.006","from":2010,"to":2020,"value":10,"unit":"years","method":"2020-2010","meaning":"modern decennial census comparison window","class":"DERIVED"}
   ],
   "historical_timeline": [
-    {"year": 1839, "event": "Montezuma courthouse fire reported; legislation already introduced to move county seat", "evidence": "SRC.AND.001", "state": "SUPPORTED"},
-    {"year": 1844, "event": "Andalusia established as county-seat/post-office location by July 18", "evidence": "SRC.AND.001", "state": "SUPPORTED"},
-    {"year": 1846, "event": "Andalusia had become official town name", "evidence": "SRC.AND.002", "state": "SUPPORTED"},
-    {"year": 1865, "event": "Andalusia courthouse burned", "evidence": "SRC.AND.002", "state": "SUPPORTED"},
-    {"year": 1878, "event": "Replacement courthouse burned", "evidence": "SRC.AND.002", "state": "SUPPORTED"},
-    {"year": 1884, "event": "Formal incorporation on January 9", "evidence": "SRC.AND.001", "state": "SUPPORTED"},
-    {"year": 1895, "event": "Replacement courthouse burned", "evidence": "SRC.AND.002", "state": "SUPPORTED"},
-    {"year": 1897, "event": "Brick courthouse completed", "evidence": "SRC.AND.002", "state": "SUPPORTED"},
-    {"year": 1899, "event": "Central of Georgia Railroad arrived; later Louisville and Nashville line followed", "evidence": "SRC.AND.002", "state": "SUPPORTED"},
-    {"year": 1916, "event": "Current stone and marble courthouse replaced 1897 structure", "evidence": "SRC.AND.002", "state": "SUPPORTED"}
+    {"id":"HIST.AND.001","year":1839,"year_index":"YEAR.AND.001","event":"Montezuma courthouse fire reported; legislation already introduced to move county seat","evidence":"SRC.AND.001","state":"SUPPORTED"},
+    {"id":"HIST.AND.002","year":1841,"year_index":"YEAR.AND.002","event":"Major flood / Harrison Freshet affecting Montezuma area","evidence":"SRC.AND.001","state":"SUPPORTED"},
+    {"id":"HIST.AND.003","year":1844,"year_index":"YEAR.AND.003","event":"Andalusia established as county-seat/post-office location by July 18","evidence":"SRC.AND.001","state":"SUPPORTED"},
+    {"id":"HIST.AND.004","year":1846,"year_index":"YEAR.AND.004","event":"Andalusia had become official town name","evidence":"SRC.AND.002","state":"SUPPORTED"},
+    {"id":"HIST.AND.005","year":1865,"year_index":"YEAR.AND.005","event":"Andalusia courthouse burned","evidence":"SRC.AND.002","state":"SUPPORTED"},
+    {"id":"HIST.AND.006","year":1878,"year_index":"YEAR.AND.006","event":"Replacement courthouse burned","evidence":"SRC.AND.002","state":"SUPPORTED"},
+    {"id":"HIST.AND.007","year":1884,"year_index":"YEAR.AND.007","event":"Formal incorporation on January 9","evidence":"SRC.AND.001","state":"SUPPORTED"},
+    {"id":"HIST.AND.008","year":1895,"year_index":"YEAR.AND.009","event":"Replacement courthouse burned","evidence":"SRC.AND.002","state":"SUPPORTED"},
+    {"id":"HIST.AND.009","year":1897,"year_index":"YEAR.AND.010","event":"Brick courthouse completed","evidence":"SRC.AND.002","state":"SUPPORTED"},
+    {"id":"HIST.AND.010","year":1899,"year_index":"YEAR.AND.011","event":"Central of Georgia Railroad arrived; later Louisville and Nashville line followed","evidence":"SRC.AND.002","state":"SUPPORTED"},
+    {"id":"HIST.AND.011","year":1916,"year_index":"YEAR.AND.013","event":"Current stone and marble courthouse replaced 1897 structure","evidence":"SRC.AND.002","state":"SUPPORTED"}
   ],
   "metrics": [
-    {"id": "STAT.AND.001", "name": "years_since_formal_incorporation_at_2026", "value": 142, "unit": "years", "method": "2026-1884", "class": "DERIVED", "source": "SRC.AND.001"},
-    {"id": "STAT.AND.002", "name": "years_since_county_seat_post_office_anchor_at_2026", "value": 182, "unit": "years", "method": "2026-1844", "class": "DERIVED", "source": "SRC.AND.001"},
-    {"id": "STAT.AND.003", "name": "1890_population", "value": 270, "unit": "persons", "class": "MEASURED_HISTORICAL_CENSUS", "source": "SRC.AND.004"},
-    {"id": "STAT.AND.004", "name": "1900_population", "value": 551, "unit": "persons", "class": "MEASURED_HISTORICAL_CENSUS", "source": "SRC.AND.004"},
-    {"id": "STAT.AND.005", "name": "1890_to_1900_population_gain", "value": 281, "unit": "persons", "method": "551-270", "class": "DERIVED", "sources": ["STAT.AND.003", "STAT.AND.004"]},
-    {"id": "STAT.AND.006", "name": "1890_to_1900_population_ratio", "value": "551:270", "normalized": "2041:1000", "class": "DERIVED", "sources": ["STAT.AND.003", "STAT.AND.004"]},
-    {"id": "STAT.AND.007", "name": "2010_population", "value": 9015, "unit": "persons", "class": "MEASURED_CENSUS", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.008", "name": "2020_population", "value": 8805, "unit": "persons", "class": "MEASURED_CENSUS", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.009", "name": "2010_to_2020_population_change", "value": -210, "unit": "persons", "method": "8805-9015", "class": "DERIVED", "sources": ["STAT.AND.007", "STAT.AND.008"]},
-    {"id": "STAT.AND.010", "name": "2020_population_as_ratio_of_2010", "value": "8805:9015", "normalized": "977:1000", "class": "DERIVED", "sources": ["STAT.AND.007", "STAT.AND.008"]},
-    {"id": "STAT.AND.011", "name": "2025_population_estimate", "value": 8763, "unit": "persons", "class": "ESTIMATE", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.012", "name": "2025_estimate_vs_2020_census_change", "value": -42, "unit": "persons", "method": "8763-8805", "class": "DERIVED_CROSS_SERIES_CAUTION", "sources": ["STAT.AND.008", "STAT.AND.011"]},
-    {"id": "STAT.AND.013", "name": "land_area_2020", "value": "19.66", "unit": "square_miles", "class": "MEASURED", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.014", "name": "population_density_2020", "value": "447.9", "unit": "persons_per_square_mile", "class": "MEASURED", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.015", "name": "median_household_income_2020_2024", "value": 42611, "unit": "2024_dollars", "class": "ACS_ESTIMATE", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.016", "name": "per_capita_income_2020_2024", "value": 24879, "unit": "2024_dollars", "class": "ACS_ESTIMATE", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.017", "name": "poverty_rate_2020_2024_per_1000", "value": 254, "unit": "persons_per_1000", "method": "25.4_percent_normalized_to_per_1000", "class": "DERIVED_FROM_ACS_RATE", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.018", "name": "retail_sales_2022", "value": 436769000, "unit": "dollars", "class": "MEASURED_BUSINESS_STATISTIC", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.019", "name": "retail_sales_per_capita_2022", "value": 49684, "unit": "dollars", "class": "MEASURED_BUSINESS_STATISTIC", "source": "SRC.AND.003"},
-    {"id": "STAT.AND.020", "name": "covington_county_2020_population", "value": 37570, "unit": "persons", "class": "MEASURED_CENSUS", "source": "SRC.AND.006"},
-    {"id": "STAT.AND.021", "name": "covington_county_2025_estimate", "value": 37947, "unit": "persons", "class": "ESTIMATE", "source": "SRC.AND.006"},
-    {"id": "STAT.AND.022", "name": "andalusia_share_of_covington_2020", "value": "8805:37570", "normalized": "234:1000", "class": "DERIVED", "sources": ["STAT.AND.008", "STAT.AND.020"]}
+    {"id":"STAT.AND.001","name":"years_since_formal_incorporation_at_2026","value":142,"unit":"years","method":"2026-1884","class":"DERIVED","source":"SRC.AND.001","year_indexes":["YEAR.AND.007","YEAR.AND.019"]},
+    {"id":"STAT.AND.002","name":"years_since_county_seat_post_office_anchor_at_2026","value":182,"unit":"years","method":"2026-1844","class":"DERIVED","source":"SRC.AND.001","year_indexes":["YEAR.AND.003","YEAR.AND.019"]},
+    {"id":"STAT.AND.003","name":"1890_population","value":270,"unit":"persons","class":"MEASURED_HISTORICAL_CENSUS","source":"SRC.AND.004","year_index":"YEAR.AND.008"},
+    {"id":"STAT.AND.004","name":"1900_population","value":551,"unit":"persons","class":"MEASURED_HISTORICAL_CENSUS","source":"SRC.AND.004","year_index":"YEAR.AND.012"},
+    {"id":"STAT.AND.005","name":"1890_to_1900_population_gain","value":281,"unit":"persons","method":"551-270","class":"DERIVED","sources":["STAT.AND.003","STAT.AND.004"],"year_indexes":["YEAR.AND.008","YEAR.AND.012"]},
+    {"id":"STAT.AND.006","name":"1890_to_1900_population_ratio","value":"551:270","normalized":"2041:1000","class":"DERIVED","sources":["STAT.AND.003","STAT.AND.004"],"year_indexes":["YEAR.AND.008","YEAR.AND.012"]},
+    {"id":"STAT.AND.007","name":"2010_population","value":9015,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.AND.003","year_index":"YEAR.AND.014"},
+    {"id":"STAT.AND.008","name":"2020_population","value":8805,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.AND.003","year_index":"YEAR.AND.015"},
+    {"id":"STAT.AND.009","name":"2010_to_2020_population_change","value":-210,"unit":"persons","method":"8805-9015","class":"DERIVED","sources":["STAT.AND.007","STAT.AND.008"],"year_indexes":["YEAR.AND.014","YEAR.AND.015"]},
+    {"id":"STAT.AND.010","name":"2020_population_as_ratio_of_2010","value":"8805:9015","normalized":"977:1000","class":"DERIVED","sources":["STAT.AND.007","STAT.AND.008"],"year_indexes":["YEAR.AND.014","YEAR.AND.015"]},
+    {"id":"STAT.AND.011","name":"2025_population_estimate","value":8763,"unit":"persons","class":"ESTIMATE","source":"SRC.AND.003","year_index":"YEAR.AND.018"},
+    {"id":"STAT.AND.012","name":"2025_estimate_vs_2020_census_change","value":-42,"unit":"persons","method":"8763-8805","class":"DERIVED_CROSS_SERIES_CAUTION","sources":["STAT.AND.008","STAT.AND.011"],"year_indexes":["YEAR.AND.015","YEAR.AND.018"]},
+    {"id":"STAT.AND.013","name":"land_area_2020","value":"19.66","unit":"square_miles","class":"MEASURED","source":"SRC.AND.003","year_index":"YEAR.AND.015"},
+    {"id":"STAT.AND.014","name":"population_density_2020","value":"447.9","unit":"persons_per_square_mile","class":"MEASURED","source":"SRC.AND.003","year_index":"YEAR.AND.015"},
+    {"id":"STAT.AND.015","name":"median_household_income_2020_2024","value":42611,"unit":"2024_dollars","class":"ACS_ESTIMATE","source":"SRC.AND.003","year_indexes":["YEAR.AND.015","YEAR.AND.017"]},
+    {"id":"STAT.AND.016","name":"per_capita_income_2020_2024","value":24879,"unit":"2024_dollars","class":"ACS_ESTIMATE","source":"SRC.AND.003","year_indexes":["YEAR.AND.015","YEAR.AND.017"]},
+    {"id":"STAT.AND.017","name":"poverty_rate_2020_2024_per_1000","value":254,"unit":"persons_per_1000","method":"25.4_percent_normalized_to_per_1000","class":"DERIVED_FROM_ACS_RATE","source":"SRC.AND.003","year_indexes":["YEAR.AND.015","YEAR.AND.017"]},
+    {"id":"STAT.AND.018","name":"retail_sales_2022","value":436769000,"unit":"dollars","class":"MEASURED_BUSINESS_STATISTIC","source":"SRC.AND.003","year_index":"YEAR.AND.016"},
+    {"id":"STAT.AND.019","name":"retail_sales_per_capita_2022","value":49684,"unit":"dollars","class":"MEASURED_BUSINESS_STATISTIC","source":"SRC.AND.003","year_index":"YEAR.AND.016"},
+    {"id":"STAT.AND.020","name":"covington_county_2020_population","value":37570,"unit":"persons","class":"MEASURED_CENSUS","source":"SRC.AND.006","year_index":"YEAR.AND.015"},
+    {"id":"STAT.AND.021","name":"covington_county_2025_estimate","value":37947,"unit":"persons","class":"ESTIMATE","source":"SRC.AND.006","year_index":"YEAR.AND.018"},
+    {"id":"STAT.AND.022","name":"andalusia_share_of_covington_2020","value":"8805:37570","normalized":"234:1000","class":"DERIVED","sources":["STAT.AND.008","STAT.AND.020"],"year_index":"YEAR.AND.015"}
   ],
   "structural_history": {
     "county_seat_relocation": "FLOOD_AND_FIRE_PRESSURE_SUPPORTED",
@@ -105,6 +100,7 @@
   },
   "golden_chain": [
     "SOURCE_LOCK",
+    "YEAR_INDEX",
     "DATE_LOCK",
     "PLACE_LOCK",
     "MEASURED_STATISTIC",
@@ -118,10 +114,11 @@
     "STAY"
   ],
   "promotion_state": {
-    "town_history": "PASS_SOURCE_BOUNDED",
-    "demographic_metrics": "PASS_WITH_CENSUS_VS_ESTIMATE_SEPARATION",
-    "railroad_timber_relation": "PASS_ASSOCIATION_ONLY",
-    "direct_ancestral_signature": "HOLD_NOT_YET_SEARCHED",
-    "family_lineage": "HOLD_REQUIRES_NAME_LEVEL_RECORD_MATCH"
+    "year_index":"PASS_19_OF_19_INDEXED",
+    "town_history":"PASS_SOURCE_BOUNDED",
+    "demographic_metrics":"PASS_WITH_CENSUS_VS_ESTIMATE_SEPARATION",
+    "railroad_timber_relation":"PASS_ASSOCIATION_ONLY",
+    "direct_ancestral_signature":"HOLD_NOT_YET_SEARCHED",
+    "family_lineage":"HOLD_REQUIRES_NAME_LEVEL_RECORD_MATCH"
   }
 }
