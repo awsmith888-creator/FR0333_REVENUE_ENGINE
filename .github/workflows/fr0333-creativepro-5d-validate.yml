@@ -5,6 +5,17 @@ on:
     paths:
       - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
+      - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
+      - 'fr0333/adobe_5d_engine.py'
+      - 'tests/test_adobe_5d_engine.py'
+      - '.github/workflows/fr0333-creativepro-5d-validate.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
+      - 'RavenCloudTaskbar/validate_creativepro_5d.py'
+      - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
+      - 'fr0333/adobe_5d_engine.py'
+      - 'tests/test_adobe_5d_engine.py'
       - '.github/workflows/fr0333-creativepro-5d-validate.yml'
   workflow_dispatch:
 
@@ -21,5 +32,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Validate 5D hardener
+      - name: Validate 5D index hardener
         run: python RavenCloudTaskbar/validate_creativepro_5d.py
+      - name: Validate Adobe 5D calibration engine
+        run: python RavenCloudTaskbar/validate_adobe_5d_calibration.py
+      - name: Compile calibration engine
+        run: python -m py_compile fr0333/adobe_5d_engine.py RavenCloudTaskbar/validate_creativepro_5d.py RavenCloudTaskbar/validate_adobe_5d_calibration.py
