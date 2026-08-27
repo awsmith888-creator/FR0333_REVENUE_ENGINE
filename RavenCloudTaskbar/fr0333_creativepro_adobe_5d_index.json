@@ -1,9 +1,9 @@
 {
   "identifier": "FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001",
-  "version": "1.1.0",
-  "state": "INDEXED_SPEC_ACTIVE_RUNTIME_VECTOR_BOUND",
-  "observed_at_et": "2026-08-24T20:47:00-04:00",
-  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, and runtime proof.",
+  "version": "1.2.0",
+  "state": "INDEXED_SPEC_ACTIVE_RUNTIME_VECTOR_BOUND_LION_GATE",
+  "observed_at_et": "2026-08-27T13:50:00-04:00",
+  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, runtime proof, and narrative-power interpretation.",
   "governing_gates": [
     "100_PERCENT_MEANS_REQUIRED_LANE_COVERAGE_NOT_INFALLIBILITY",
     "PRIMARY_SOURCE_GT_PROFESSIONAL_SECONDARY_GT_GENERAL_COMMENTARY",
@@ -16,7 +16,12 @@
     "HOLD_NE_PASS",
     "DEFINED_NE_CI_VALIDATED_NE_RUNTIME_PROVEN",
     "PRICE_LISTING_VERIFIED_NE_TRANSACTION_OBSERVED",
-    "OBSERVED_NE_CORRELATED_NE_CAUSAL"
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "STILLNESS_NE_INCAPACITY",
+    "NARRATIVE_METAPHOR_NE_BIOLOGICAL_LAW",
+    "INTERPRETATION_NE_OBSERVED_FACT",
+    "DESTRUCTIVE_RHETORIC_NE_PRODUCTION_INSTRUCTION",
+    "QUIET_FRAME_REQUIRES_LATENT_FORCE_SIGNALS"
   ],
   "five_dimensions": {
     "D1_SOURCE_AUTHORITY": {"function":"Rank and verify source authority before promotion.","required_controls":["source_class","primary_source_check","secondary_source_label","claim_date","source_url","source_independence","conflict_detection","promotion_state"]},
@@ -55,8 +60,55 @@
     "community_display_warning": "26K+ repeated on four community tiles is one page-level claim pattern; do not sum to 104K unique people without independent channel counts.",
     "network_independence_rule": "N_sources != N_independent; repeated partner or community claims retain dependency lineage."
   },
+  "legacy_registry_bridge": {
+    "source_registry": "FR-0333-ADOBE-64BIT-REG",
+    "source_version": "1.0.5-RC",
+    "semantic_fix_state": "8_OF_8_CLOSED_SPEC",
+    "local_retest_state": "8_OF_8_PASS_LOCAL",
+    "external_adobe_runtime": "HOLD_UNTIL_CREDENTIAL_BACKED_RECEIPT",
+    "promotion_rule": "SPEC_FIX_CLOSURE_NE_EXTERNAL_RUNTIME_PROMOTION"
+  },
+  "semantic_fixes": [
+    {"id":"DF-0001","before":"ROUTE_UNVERIFIED","after":"ROUTE_ISOLATION_FILTER","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0002","before":"TIMESTAMP_SENTINEL","after":"EXPLICIT_BOUNDS_CHECK","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0003","before":"TAMPER_BINDING","after":"NARROW_CRYPTO_SCOPE","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0004","before":"SIGNER_SEMANTICS","after":"NON_HUMAN_SIGNATURE_FORCE","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0005","before":"X509_EKU_CONFLATION","after":"APPLICATION_AUTH_DECOUPLING","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0006","before":"DETECTOR_FAILURE_MODE","after":"FAIL_CLOSED_VALIDATION","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0007","before":"APPLICABILITY_DENOMINATOR","after":"EXPLICIT_DENOMINATOR_INJECTION","state":"CLOSED_SPEC","retest":"PASS_LOCAL"},
+    {"id":"DF-0008","before":"PURGE_RECEIPT_LEAK","after":"ANONYMIZED_PURGE_RECEIPT","state":"CLOSED_SPEC","retest":"PASS_LOCAL"}
+  ],
+  "narrative_power_gate": {
+    "record_id": "FR.0333.ADOBE.NARRATIVE.POWER.0001",
+    "genius_bit_candidate": "0016",
+    "core_rule": "STILLNESS_NE_INCAPACITY",
+    "source_work": "Poolhall Junkies (2002)",
+    "source_character": "Mike",
+    "source_actor": "Christopher Walken",
+    "source_verification": [
+      {"source_class":"ENTERTAINMENT_REFERENCE","url":"https://www.imdb.com/title/tt0273982/characters/nm0000686/","state":"VERIFIED_ATTRIBUTION_AND_SPEECH"},
+      {"source_class":"PROFESSIONAL_SECONDARY","url":"https://www.moviemaker.com/christopher-walken-dune-poolhall-junkies/","state":"VERIFIED_LION_SPEECH_CONTEXT"}
+    ],
+    "evidence_boundary": {
+      "fictional_metaphor": "OBSERVED_IN_SOURCE",
+      "stillness_to_latent_power": "DERIVED_CREATIVE_PRINCIPLE",
+      "david_comparison": "INTERPRETATION",
+      "five_finger_freddy_plus_2": "INTERNAL_METAPHOR_NOT_EXTERNAL_EVIDENCE",
+      "genetic_makeup_built_to_destroy": "QUARANTINED_UNSUPPORTED_BIOLOGICAL_CLAIM",
+      "total_eradication": "QUARANTINED_RHETORICAL_EXAGGERATION"
+    },
+    "nine_sixteen_quiet_authority_spec": {
+      "target_ratio": "9:16",
+      "required_signals": 3,
+      "eligible_signals": ["posture_control","gaze_control","lighting_hierarchy","environmental_reaction","perspective_dominance","prop_control","negative_space_control","occlusion_tension"],
+      "background_rule": "BACKGROUND_ACTIVITY_SUBORDINATE_TO_PRIMARY_AUTHORITY",
+      "action_rule": "DO_NOT_ADD_ACTION_CLUTTER_TO_SIMULATE_POWER",
+      "escalation_rule": "ESCALATION_REQUIRES_NARRATIVE_EVIDENCE",
+      "status": "PASS_SPEC"
+    }
+  },
   "runtime_state_model": ["PASS_RUNTIME","PASS_SPEC","HOLD","FAIL","UNKNOWN","NOT_OBSERVED","NOT_APPLICABLE","CONFLICT"],
   "economic_rule": "FREE_FIRST_BEFORE_PAID_ACCESS_UNLESS_PAID_PATH_HAS_VERIFIED_POSITIVE_EXPECTED_VALUE",
-  "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE"},
+  "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE","fictional_narrative":"CREATIVE_REFERENCE_NOT_CAUSAL_EVIDENCE"},
   "output_chain": "SOURCE -> AUTHORITY -> WORKFLOW -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
 }
