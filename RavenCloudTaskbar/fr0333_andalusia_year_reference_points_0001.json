@@ -1,27 +1,36 @@
 {
   "identifier": "FR.0333.ANDALUSIA.YEAR.REFERENCE.POINTS.0001",
   "parent": "FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
-  "state": "REFERENCE_POINTS_BOUND",
-  "rule": "EVERY_YEAR_SPAN_INDEX_REQUIRES_DISTINCT_REFERENCE_POINT_AND_BULLETIN",
+  "state": "REFERENCE_POINTS_BOUND_EXACT_STRING_SEQUENCE",
+  "rule": "INDEX_TOKENS_ARE_STRING_IDENTIFIERS; TRAILING_ZERO_IS_SEMANTIC_AND_MUST_NOT_BE_NORMALIZED",
+  "ordered_reference_sequence": [
+    "1.87",
+    "1.82",
+    "1.8",
+    "1.80",
+    "1.42",
+    "0.10"
+  ],
   "reference_points": [
-    {"span_index":"1.87","years":187,"from":1839,"to":2026,"reference_point":"A1","bulletin":"EARLIEST_INDEXED_COURTHOUSE_FIRE_TO_2026"},
-    {"span_index":"1.82","years":182,"from":1844,"to":2026,"reference_point":"B2","bulletin":"COUNTY_SEAT_POST_OFFICE_ANCHOR_TO_2026"},
-    {"span_index":"1.80","years":180,"from":1846,"to":2026,"reference_point":"C3","bulletin":"OFFICIAL_TOWN_NAME_TO_2026"},
-    {"span_index":"1.42","years":142,"from":1884,"to":2026,"reference_point":"D4","bulletin":"FORMAL_INCORPORATION_TO_2026"},
-    {"span_index":"0.10","years":10,"from":1890,"to":1900,"reference_point":"E5","bulletin":"HISTORICAL_CENSUS_WINDOW"},
-    {"span_index":"0.10","years":10,"from":2010,"to":2020,"reference_point":"F6","bulletin":"MODERN_DECENNIAL_CENSUS_WINDOW"}
+    {"index":"1.87","years":187,"from":1839,"to":2026,"role":"YEAR_SPAN_REFERENCE","bulletin":"EARLIEST_INDEXED_COURTHOUSE_FIRE_TO_2026"},
+    {"index":"1.82","years":182,"from":1844,"to":2026,"role":"YEAR_SPAN_REFERENCE","bulletin":"COUNTY_SEAT_POST_OFFICE_ANCHOR_TO_2026"},
+    {"index":"1.8","years":180,"from":1846,"to":2026,"role":"REFERENCE_POINT","bulletin":"ONE_EIGHT_REFERENCE_POINT"},
+    {"index":"1.80","years":180,"from":1846,"to":2026,"role":"EXACT_YEAR_SPAN_INDEX","bulletin":"OFFICIAL_TOWN_NAME_TO_2026"},
+    {"index":"1.42","years":142,"from":1884,"to":2026,"role":"YEAR_SPAN_REFERENCE","bulletin":"FORMAL_INCORPORATION_TO_2026"},
+    {"index":"0.10","years":10,"role":"TEN_YEAR_REFERENCE","bulletin":"TEN_YEAR_WINDOW_REFERENCE"}
   ],
-  "collision_rule": "SPAN_INDEX_MAY_REPEAT_ONLY_WHEN_REFERENCE_POINT_DIFFERS",
-  "critical_18x_binding": [
-    {"span_index":"1.87","reference_point":"A1"},
-    {"span_index":"1.82","reference_point":"B2"},
-    {"span_index":"1.80","reference_point":"C3"}
-  ],
+  "critical_binding": {
+    "1.8_ne_1.80": true,
+    "meaning": "1.8 and 1.80 are distinct index tokens even when their numeric magnitude is equal",
+    "normalization": "FORBIDDEN",
+    "trailing_zero_preservation": "REQUIRED"
+  },
   "gate": {
-    "reference_points_present":"PASS_6_OF_6",
-    "eighteen_series_reference_points":"PASS_3_OF_3",
-    "duplicate_0.10_disambiguated":"PASS",
-    "bulletins_present":"PASS_6_OF_6"
+    "ordered_sequence_exact":"PASS_6_OF_6",
+    "one_eight_reference_present":"PASS",
+    "one_eight_zero_exact_span_present":"PASS",
+    "trailing_zero_preserved":"PASS",
+    "numeric_collapse_blocked":"PASS"
   },
   "chomp":"PASS",
   "stay":"ACTIVE"
