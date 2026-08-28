@@ -1,0 +1,60 @@
+name: FR0333 Revenue Auditance Runtime Validate
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_runtime_schema.json'
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_runtime_fixtures.json'
+      - 'RavenCloudTaskbar/revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/test_revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/generate_revenue_auditance_receipts.py'
+      - '.github/workflows/fr0333-revenue-auditance-runtime.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_runtime_schema.json'
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_runtime_fixtures.json'
+      - 'RavenCloudTaskbar/revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/test_revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/generate_revenue_auditance_receipts.py'
+      - '.github/workflows/fr0333-revenue-auditance-runtime.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  simulation-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run runtime gate tests
+        run: python RavenCloudTaskbar/test_revenue_auditance_runtime.py
+
+      - name: Generate synthetic receipts
+        run: python RavenCloudTaskbar/generate_revenue_auditance_receipts.py
+
+      - name: Assert no live execution promotion
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('RavenCloudTaskbar/generated_revenue_auditance_receipts.json')
+          data = json.loads(p.read_text())
+          assert data['live_money_movement'] == 0
+          assert data['live_financial_execution'] == 0
+          assert data['state'] == 'SIMULATION_VERIFIED_CANDIDATE'
+          print('promotion_ceiling=SIMULATION_VERIFIED_CANDIDATE')
+          PY
+
+      - name: Upload synthetic receipt evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-revenue-auditance-synthetic-receipts
+          path: RavenCloudTaskbar/generated_revenue_auditance_receipts.json
+          if-no-files-found: error

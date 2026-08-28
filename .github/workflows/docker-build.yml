@@ -1,0 +1,173 @@
+name: FR0333 Docker Build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Show Docker version
+        run: docker version
+
+      - name: Build FR0333 image
+        run: |
+          docker build \
+            --iidfile image-id.txt \
+            -t fr0333-revenue-engine:${GITHUB_SHA} \
+            .
+          docker image inspect fr0333-revenue-engine:${GITHUB_SHA} > image-inspect.json
+          docker save fr0333-revenue-engine:${GITHUB_SHA} -o fr0333-revenue-engine.tar
+          sha256sum fr0333-revenue-engine.tar > image-tar.sha256
+
+      - name: Runtime health check
+        run: |
+          docker run -d --name fr0333-check fr0333-revenue-engine:${GITHUB_SHA}
+          healthy=0
+          for i in {1..30}; do
+            if docker exec fr0333-check python -c 'import urllib.request,sys; sys.stdout.write(urllib.request.urlopen("http://127.0.0.1:8080/healthz", timeout=2).read().decode())' > healthz.json 2> healthz.err; then
+              healthy=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$healthy" != "1" ]; then
+            docker ps -a > docker-ps.txt
+            docker logs fr0333-check > docker-logs.txt 2>&1 || true
+            cat healthz.err || true
+            cat docker-logs.txt || true
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          with open('healthz.json', encoding='utf-8') as f:
+              health = json.load(f)
+          assert health['status'] == 'ACTIVE'
+          assert health['camera_package'] == 'FR0333-CAMERA-PACKAGE-v2.0.0'
+          assert health['unit_system'] == 'SI_METRIC'
+          PY
+
+      - name: Camera package contract check
+        run: |
+          docker exec fr0333-check python -c 'import urllib.request,sys; sys.stdout.write(urllib.request.urlopen("http://127.0.0.1:8080/camera/package", timeout=2).read().decode())' > camera-package.json
+
+          docker exec -i fr0333-check python - <<'PY' > camera-validate-pass.json
+          import json
+          import urllib.request
+
+          payload = {
+              'source_ids': ['river-2259'],
+              'source_people_observed': 0,
+              'expected_people_output': 0,
+              'output_width_px': 1080,
+              'output_height_px': 1920,
+              'focus_distance_m': 3.0,
+          }
+          request = urllib.request.Request(
+              'http://127.0.0.1:8080/camera/validate',
+              data=json.dumps(payload).encode(),
+              headers={'content-type': 'application/json'},
+              method='POST',
+          )
+          with urllib.request.urlopen(request, timeout=2) as response:
+              print(response.read().decode(), end='')
+          PY
+
+          docker exec -i fr0333-check python - <<'PY' > camera-validate-reject.json
+          import json
+          import urllib.error
+          import urllib.request
+
+          payload = {
+              'source_ids': ['river-2259'],
+              'source_people_observed': 0,
+              'expected_people_output': 1,
+              'allow_subject_carry_from_previous_job': True,
+              'output_width_px': 1080,
+              'output_height_px': 1920,
+          }
+          request = urllib.request.Request(
+              'http://127.0.0.1:8080/camera/validate',
+              data=json.dumps(payload).encode(),
+              headers={'content-type': 'application/json'},
+              method='POST',
+          )
+          try:
+              urllib.request.urlopen(request, timeout=2)
+              raise SystemExit('invalid subject-carry request unexpectedly passed')
+          except urllib.error.HTTPError as exc:
+              assert exc.code == 422, exc.code
+              print(exc.read().decode(), end='')
+          PY
+
+          python - <<'PY'
+          import json
+
+          with open('camera-package.json', encoding='utf-8') as f:
+              package = json.load(f)
+          with open('camera-validate-pass.json', encoding='utf-8') as f:
+              valid = json.load(f)
+          with open('camera-validate-reject.json', encoding='utf-8') as f:
+              rejected = json.load(f)
+
+          assert package['unit_system'] == 'SI_METRIC'
+          assert package['aspect_ratio'] == '9:16'
+          assert package['source_isolation'] == 'ONE_SOURCE_IMAGE_PER_OUTPUT'
+          assert package['subject_carry'] == 'BLOCKED_BY_DEFAULT'
+          assert package['metric_fields'] == {
+              'length_small': 'mm',
+              'distance': 'm',
+              'time': 's',
+              'angle': 'rad',
+              'temperature': 'K',
+              'illuminance': 'lx',
+              'frame_rate': 'Hz',
+              'resolution': 'px',
+          }
+          assert valid['status'] == 'PASS'
+          assert valid['unit_system'] == 'SI_METRIC'
+          assert valid['normalized']['expected_people_output'] == 0
+          assert rejected['detail']
+          PY
+
+      - name: Build receipt
+        if: always()
+        run: |
+          docker ps -a > docker-ps.txt 2>&1 || true
+          docker logs fr0333-check > docker-logs.txt 2>&1 || true
+          {
+            echo "GITHUB_SHA=${GITHUB_SHA}"
+            echo -n "IMAGE_ID="
+            cat image-id.txt 2>/dev/null || true
+            echo
+            echo -n "TAR_SHA256="
+            cut -d' ' -f1 image-tar.sha256 2>/dev/null || true
+            echo
+          } > FR0333_DOCKER_BUILD_RECEIPT.txt
+
+      - name: Upload build evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: fr0333-docker-build-${{ github.sha }}
+          path: |
+            image-id.txt
+            image-inspect.json
+            image-tar.sha256
+            healthz.json
+            healthz.err
+            camera-package.json
+            camera-validate-pass.json
+            camera-validate-reject.json
+            docker-ps.txt
+            docker-logs.txt
+            FR0333_DOCKER_BUILD_RECEIPT.txt
+          if-no-files-found: warn

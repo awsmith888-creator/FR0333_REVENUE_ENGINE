@@ -1,0 +1,30 @@
+{
+  "provider": "Lumen",
+  "product": "Multi-Cloud Gateway",
+  "role": "PRIVATE_MULTICLOUD_TRANSPORT_AND_ROUTING_LAYER",
+  "evidence_state": "OFFICIAL_PRODUCT_CAPABILITY_VERIFIED",
+  "provisioning_state": "NOT_PROVISIONED",
+  "official_product": "https://www.lumen.com/en-us/services/multi-cloud-gateway.html",
+  "official_docs": "https://docs.lumen.com/multi-cloud-gateway/",
+  "capabilities": [
+    "centralized virtual Layer-3 routing",
+    "gateway interfaces",
+    "Fabric Connections",
+    "BGP peering",
+    "prefix lists and routing policy",
+    "static routes",
+    "private connectivity between clouds, data centers and enterprise sites",
+    "portal/API provisioning"
+  ],
+  "raven_boundary": {
+    "taskbar_is_control_plane": true,
+    "lumen_is_transport_layer": true,
+    "no_vendor_lock_on_project_state": true,
+    "local_only_projects_remain_local": true,
+    "cloud_receipts_may_store_hashes_and_status": true
+  },
+  "credentials": "NOT_STORED",
+  "tenant_id": null,
+  "gateway_id": null,
+  "interfaces": []
+}

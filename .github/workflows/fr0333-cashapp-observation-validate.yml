@@ -1,0 +1,84 @@
+name: FR0333 Cash App Observation Read-Only Validate
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_runtime_schema.json'
+      - 'RavenCloudTaskbar/revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/test_revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/fr0333_cashapp_observation_schema.json'
+      - 'RavenCloudTaskbar/fr0333_cashapp_observation_fixtures.json'
+      - 'RavenCloudTaskbar/cashapp_observation_adapter.py'
+      - 'RavenCloudTaskbar/test_cashapp_observation_adapter.py'
+      - 'RavenCloudTaskbar/generate_cashapp_observation_receipts.py'
+      - '.github/workflows/fr0333-cashapp-observation-validate.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_revenue_auditance_runtime_schema.json'
+      - 'RavenCloudTaskbar/revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/test_revenue_auditance_runtime.py'
+      - 'RavenCloudTaskbar/fr0333_cashapp_observation_schema.json'
+      - 'RavenCloudTaskbar/fr0333_cashapp_observation_fixtures.json'
+      - 'RavenCloudTaskbar/cashapp_observation_adapter.py'
+      - 'RavenCloudTaskbar/test_cashapp_observation_adapter.py'
+      - 'RavenCloudTaskbar/generate_cashapp_observation_receipts.py'
+      - '.github/workflows/fr0333-cashapp-observation-validate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  read-only-observation-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run base runtime gates
+        run: python RavenCloudTaskbar/test_revenue_auditance_runtime.py
+
+      - name: Run Cash App observation gates
+        run: python RavenCloudTaskbar/test_cashapp_observation_adapter.py
+
+      - name: Generate observation receipts
+        run: python RavenCloudTaskbar/generate_cashapp_observation_receipts.py
+
+      - name: Assert read-only authority ceiling
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('RavenCloudTaskbar/generated_cashapp_observation_receipts.json')
+          data = json.loads(p.read_text())
+          assert data['state'] == 'READ_ONLY_CI_CANDIDATE'
+          assert data['live_money_movement'] == 0
+          assert data['live_financial_execution'] == 0
+          assert data['authority_to_move_funds'] is False
+          assert data['real_cash_app_credentials_used'] == 0
+          assert data['real_cash_app_api_calls'] == 0
+          assert data['provider_records_normalized'] == 2
+          assert data['expected_failures_matched'] == 5
+          for receipt in data['provider_record_receipts']:
+              event = receipt['normalized_runtime_event']
+              assert event['settlement_status'] == 'UNKNOWN'
+              assert event['reconciliation_status'] == 'NOT_RECONCILED'
+              assert event['fdic_status'] == 'NOT_VERIFIED'
+              assert event['bond_status'] == 'NOT_VERIFIED'
+              assert event['insurance_status'] == 'NOT_VERIFIED'
+              assert event['reserve_amount'] == 'UNKNOWN'
+              assert event['amount_net'] == 'UNKNOWN'
+              assert event['value_realized'] == 'UNKNOWN'
+          print('promotion_ceiling=READ_ONLY_PROVIDER_OBSERVATION_CI_VERIFIED_CANDIDATE')
+          PY
+
+      - name: Upload observation receipt evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-cashapp-read-only-observation-receipts
+          path: RavenCloudTaskbar/generated_cashapp_observation_receipts.json
+          if-no-files-found: error

@@ -1,0 +1,139 @@
+{
+  "identifier": "FR0333.REVENUE.AUDITANCE.CASHAPP.OBSERVATION.001.FIXTURES",
+  "version": "0.1.0",
+  "state": "SYNTHETIC_PROVIDER_RECORD_FIXTURES_ONLY",
+  "records": [
+    {
+      "name": "pass_provider_record_completed_status_not_promoted",
+      "expect": "PASS",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.SYN.001",
+        "source_record_type": "PAYMENT_RECORD",
+        "source_timestamp": "2026-08-25T12:40:00-04:00",
+        "source_amount": "100.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["SYNTHETIC_PARTY_A", "SYNTHETIC_PARTY_B"],
+        "source_fee": "0.00",
+        "source_reference": "fixture://cashapp/CA.SYN.001",
+        "source_document_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_evidence_class": "PROVIDER_RECORD"
+      }
+    },
+    {
+      "name": "pass_provider_record_with_fee_unknown_reserve",
+      "expect": "PASS",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.SYN.002",
+        "source_record_type": "TRANSFER_RECORD",
+        "source_timestamp": "2026-08-25T12:41:00-04:00",
+        "source_amount": "250.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["SYNTHETIC_PARTY_C"],
+        "source_fee": "2.50",
+        "source_reference": "fixture://cashapp/CA.SYN.002",
+        "source_document_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_evidence_class": "PROVIDER_RECORD"
+      }
+    },
+    {
+      "name": "fail_screenshot_only",
+      "expect": "FAIL",
+      "failure_code": "SCREENSHOT_NOT_PROVIDER_VERIFIED",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.FAIL.001",
+        "source_record_type": "SCREENSHOT",
+        "source_timestamp": "2026-08-25T12:42:00-04:00",
+        "source_amount": "10.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["A", "B"],
+        "source_fee": "0.00",
+        "source_reference": "fixture://cashapp/CA.FAIL.001",
+        "source_document_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "source_evidence_class": "SCREENSHOT"
+      }
+    },
+    {
+      "name": "fail_invalid_document_hash",
+      "expect": "FAIL",
+      "failure_code": "INVALID_DOCUMENT_HASH",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.FAIL.002",
+        "source_record_type": "PAYMENT_RECORD",
+        "source_timestamp": "2026-08-25T12:43:00-04:00",
+        "source_amount": "10.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["A", "B"],
+        "source_fee": "0.00",
+        "source_reference": "fixture://cashapp/CA.FAIL.002",
+        "source_document_hash": "not-a-sha256",
+        "source_evidence_class": "PROVIDER_RECORD"
+      }
+    },
+    {
+      "name": "fail_attempted_fdic_promotion",
+      "expect": "FAIL",
+      "failure_code": "UNAUTHORIZED_PROMOTION_FIELD",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.FAIL.003",
+        "source_record_type": "PAYMENT_RECORD",
+        "source_timestamp": "2026-08-25T12:44:00-04:00",
+        "source_amount": "10.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["A", "B"],
+        "source_fee": "0.00",
+        "source_reference": "fixture://cashapp/CA.FAIL.003",
+        "source_document_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "source_evidence_class": "PROVIDER_RECORD",
+        "fdic_status": "INSURED"
+      }
+    },
+    {
+      "name": "fail_fee_exceeds_source_amount",
+      "expect": "FAIL",
+      "failure_code": "FEE_EXCEEDS_SOURCE_AMOUNT",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.FAIL.004",
+        "source_record_type": "TRANSFER_RECORD",
+        "source_timestamp": "2026-08-25T12:45:00-04:00",
+        "source_amount": "10.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["A"],
+        "source_fee": "11.00",
+        "source_reference": "fixture://cashapp/CA.FAIL.004",
+        "source_document_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "source_evidence_class": "PROVIDER_RECORD"
+      }
+    },
+    {
+      "name": "fail_user_asserted_not_provider_record",
+      "expect": "FAIL",
+      "failure_code": "PROVIDER_RECORD_REQUIRED",
+      "record": {
+        "provider": "CASH_APP",
+        "mode": "READ_ONLY",
+        "source_event_id": "CA.FAIL.005",
+        "source_record_type": "USER_NOTE",
+        "source_timestamp": "2026-08-25T12:46:00-04:00",
+        "source_amount": "10.00",
+        "source_status": "COMPLETED",
+        "source_parties": ["A", "B"],
+        "source_fee": "0.00",
+        "source_reference": "fixture://cashapp/CA.FAIL.005",
+        "source_document_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "source_evidence_class": "USER_ASSERTED"
+      }
+    }
+  ]
+}
