@@ -1,8 +1,8 @@
 {
   "identifier": "FR.0333.DELTA.REFERENCE.POINT.SPEC.0001",
   "state": "HARD_LOCK",
-  "canonical_symbol": "∆",
-  "canonical_grammar": "1.∆.1.<ADDRESS>",
+  "canonical_symbol_codepoint": "U+2206",
+  "canonical_grammar_ascii": "1.<DELTA_U+2206>.1.<ADDRESS_DIGITS>",
   "field_order": [
     "GOVERNING_REFERENCE",
     "DELTA_CONTROL",
