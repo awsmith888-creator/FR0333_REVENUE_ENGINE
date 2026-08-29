@@ -1,0 +1,118 @@
+{
+  "identifier": "FR0333.CRYPTO.VOICE.1.7.369.7.1",
+  "version": "0.1.0-RC",
+  "state": "DEFINED_IMPLEMENTED_RUNTIME_NOT_YET_CI_PROVEN",
+  "namespace": "FR.0333",
+  "flow": "1.7.369.7.1",
+  "purpose": "Bind FR-0333 semantic identity, LETTER.NUMBER addressing, SHA-256 integrity, ECDSA signatures, key identity, and parent-hash lineage without replacing the Adobe 5D index.",
+  "integration_rule": "ADDITIVE_INDEX_LANE_ONLY_ADOBE_CORE_NOT_REPLACED",
+  "coordinate_5d": "X.24.Y.25.Z.26.P.16.T.20",
+  "alphabet_reference": {
+    "A": 1,
+    "B": 2,
+    "C": 3,
+    "D": 4,
+    "E": 5,
+    "F": 6,
+    "G": 7,
+    "H": 8,
+    "I": 9,
+    "J": 10,
+    "K": 11,
+    "L": 12,
+    "M": 13,
+    "N": 14,
+    "O": 15,
+    "P": 16,
+    "Q": 17,
+    "R": 18,
+    "S": 19,
+    "T": 20,
+    "U": 21,
+    "V": 22,
+    "W": 23,
+    "X": 24,
+    "Y": 25,
+    "Z": 26
+  },
+  "bound_vocabulary": {
+    "RAW": "R.18.A.01.W.23",
+    "TRN": "T.20.R.18.N.14",
+    "LOG": "L.12.O.15.G.07",
+    "FND": "F.06.N.14.D.04",
+    "HYP": "H.08.Y.25.P.16",
+    "INF": "I.09.N.14.F.06",
+    "ACT": "A.01.C.03.T.20",
+    "MET": "M.13.E.05.T.20",
+    "REV": "R.18.E.05.V.22",
+    "HASH": "H.08.A.01.S.19.H.08",
+    "SIG": "S.19.I.09.G.07",
+    "KEY": "K.11.E.05.Y.25",
+    "STATE": "S.19.T.20.A.01.T.20.E.05"
+  },
+  "crypto_suite": {
+    "CRY.01": {
+      "name": "HASH_ENGINE",
+      "algorithm": "SHA-256",
+      "function": "Deterministically hash canonical UTF-8 JSON payloads."
+    },
+    "CRY.02": {
+      "name": "DIGITAL_SIGNATURE",
+      "algorithm": "ECDSA-P256-SHA256",
+      "function": "Authenticate canonical record bytes using an authorized signing key."
+    },
+    "CRY.03": {
+      "name": "KEY_IDENTITY",
+      "function": "Bind a signature to a public-key identifier; rotation and revocation policy remain a separate control plane."
+    },
+    "CRY.04": {
+      "name": "LINEAGE_STATE",
+      "function": "Bind child records to parent hashes and detect broken or missing ancestry."
+    }
+  },
+  "kernels": {
+    "CRY.K01": "HASH",
+    "CRY.K02": "SIGNATURE",
+    "CRY.K03": "KEY_IDENTITY",
+    "CRY.K04": "LINEAGE"
+  },
+  "canonical_serialization": {
+    "format": "UTF-8 JSON",
+    "keys": "SORTED",
+    "separators": "COMPACT",
+    "unicode": "PRESERVED",
+    "hidden_transformations": "PROHIBITED"
+  },
+  "gate_order": [
+    "VOICE.GRAMMAR.CHECK",
+    "ALPHA.NUMERIC.CHECK",
+    "SYSTEM.ID.CHECK",
+    "REFERENCE.POINT.CHECK",
+    "HASH.CHECK",
+    "SIGNATURE.CHECK",
+    "LINEAGE.CHECK"
+  ],
+  "error_registry": {
+    "GATE.ERR.01": "FOREIGN.INPUT",
+    "GATE.ERR.02": "INTEGRITY.UNVERIFIED",
+    "GATE.ERR.03": "ALTERED.RECORD",
+    "GATE.ERR.04": "ORIGIN.UNAUTHENTICATED",
+    "GATE.ERR.05": "UNAUTHENTICATED.RECORD",
+    "GATE.ERR.06": "PARENT.MISSING",
+    "GATE.ERR.07": "LINEAGE.BROKEN",
+    "GATE.ERR.08": "SYNTAX.INVALID",
+    "GATE.ERR.09": "UNRECOGNIZED.SYSTEM"
+  },
+  "truth_boundary": [
+    "HASH_MATCH_MEANS_BYTE_LEVEL_CANONICAL_INTEGRITY_NOT_FACTUAL_TRUTH",
+    "VALID_SIGNATURE_MEANS_AUTHORIZED_KEY_SIGNATURE_NOT_HUMAN_IDENTITY",
+    "CRYPTOGRAPHIC_VALIDITY_NE_AUTHORIZATION_UNLESS_KEY_POLICY_CONFIRMS_AUTHORIZATION",
+    "PARENT_HASH_CHAIN_MEANS_HISTORY_LINKAGE_NOT_EXTERNAL_TRUTH",
+    "DEFINED_NE_CI_VALIDATED_NE_RUNTIME_PROVEN"
+  ],
+  "economic_lane": {
+    "state": "PRESERVED_NOT_ACTIVE_FOCUS",
+    "rule": "CRYPTO_LANE_MUST_NOT_DELETE_OR_ZERO_ECONOMIC_KERNEL_OR_ECONOMIC_EVIDENCE"
+  },
+  "output_chain": "VOICE -> LETTER.NUMBER -> SYSTEM.ID -> REFERENCE.POINT -> CRY.K01 -> CRY.K02 -> CRY.K03 -> CRY.K04 -> X.24.Y.25.Z.26.P.16.T.20 -> ADOBE.INDEX -> 99.1V -> AUDIT -> STAY"
+}
