@@ -1,0 +1,92 @@
+{
+  "register_id": "FR.0333.GENIUS.POLICE.CONTACT.SOURCES.0001",
+  "purpose": "Preserve statistical source semantics and prevent descriptive police-contact variables from being promoted into legal conclusions without qualifying evidence.",
+  "research_pointer": {
+    "pointer_id": "FR.0333.GENIUS.POLICE.CONTACT.POINTER.0001",
+    "source_type": "USER_SUPPLIED_MEDIA_POINTER",
+    "url": "https://youtube.com/shorts/OMixK470PQo",
+    "role": "RESEARCH_POINTER_ONLY",
+    "legal_classification": "NOT_ASSESSED",
+    "causal_link_to_fragment_watch": "HOLD",
+    "note": "The media item is a discovery trigger only. It is not national prevalence evidence and does not establish lawful self-defense."
+  },
+  "reviewed_sources": [
+    {
+      "source_id": "BJS_PPCS_2022",
+      "agency": "Bureau of Justice Statistics",
+      "title": "Contacts Between Police and the Public, 2022",
+      "published": "2024-10-04",
+      "url": "https://bjs.ojp.gov/library/publications/contacts-between-police-and-public-2022",
+      "source_class": "NATIONALLY_REPRESENTATIVE_SELF_REPORT_SURVEY",
+      "observed_statistics": {
+        "us_residents_age_16_plus_with_police_contact_2022": 49200000,
+        "share_percent": 19
+      },
+      "semantic_boundary": [
+        "Measures reported police contact and respondent perceptions.",
+        "Does not by itself establish whether force was legally justified or whether civilian force was lawful self-defense."
+      ]
+    },
+    {
+      "source_id": "FBI_NUOF",
+      "agency": "Federal Bureau of Investigation",
+      "title": "National Use-of-Force Data Collection",
+      "url": "https://www.fbi.gov/how-we-can-help-you/more-fbi-services-and-information/ucr/use-of-force",
+      "source_class": "LAW_ENFORCEMENT_AGENCY_REPORTED_STATISTICAL_COLLECTION",
+      "measured_variables": [
+        "law_enforcement_use_of_force",
+        "subject_resistance",
+        "subject_threat",
+        "weapon_involvement"
+      ],
+      "semantic_boundary": [
+        "The FBI states that this collection does not assess or report whether officers acted lawfully or followed department policy.",
+        "Resistance, threat, or weapon-involvement variables are descriptive and cannot be promoted to a legal conclusion by this register."
+      ],
+      "coverage_note": {
+        "period": "2024-07-01/2025-06-30",
+        "law_enforcement_population_coverage_percent": 78,
+        "public_release_threshold_percent": 80,
+        "national_incident_count_status": "NOT_RELEASED_BELOW_THRESHOLD",
+        "source_url": "https://www.fbi.gov/news/press-releases/fbi-releases-use-of-force-data-update"
+      }
+    },
+    {
+      "source_id": "FBI_LEOKA_2024",
+      "agency": "Federal Bureau of Investigation",
+      "title": "Law Enforcement Officers Assaulted, 2024",
+      "url": "https://cde.ucr.cjis.gov/LATEST/resources/reports/Officers%20Killed%20and%20Assaulted%20in%20the%20Line%20of%20Duty%2C%202024%20Special%20Report.pdf",
+      "source_class": "LAW_ENFORCEMENT_AGENCY_REPORTED_STATISTICAL_COLLECTION",
+      "observed_statistics": {
+        "reporting_agencies": 11784,
+        "officers_employed_by_reporting_agencies": 634770,
+        "reported_assaulted_victim_officers": 85730,
+        "reported_assault_rate_per_100_officers": 13.5,
+        "comparison_2015_reported_assaulted_victim_officers": 52448,
+        "comparison_2015_rate_per_100_officers": 9.0
+      },
+      "derived_statistics": {
+        "reported_assault_count_change_2015_to_2024_percent": 63.46,
+        "reported_assault_rate_change_2015_to_2024_percent": 50.0
+      },
+      "status_note": "The May 2025 special report describes 2024 assault data as preliminary and subject to change before later LEOKA tables.",
+      "semantic_boundary": [
+        "Officer-assault reporting is not equivalent to a legal finding that a civilian committed an unlawful attack.",
+        "This source alone cannot identify lawful civilian self-defense against police."
+      ]
+    }
+  ],
+  "bounded_gap_finding": {
+    "claim": "No direct variable for legally established civilian self-defense against police was identified in the reviewed BJS PPCS, FBI National Use-of-Force, and FBI LEOKA source families.",
+    "status": "SUPPORTED_WITHIN_REVIEWED_DATASETS",
+    "exhaustiveness": "NOT_EXHAUSTIVE_OF_ALL_US_COURTS_STATES_OR_DATA_SYSTEMS"
+  },
+  "not_equal_gates": [
+    "OFFICER_ASSAULT_REPORTED != UNLAWFUL_CIVILIAN_ATTACK",
+    "SUBJECT_RESISTANCE_REPORTED != OFFICER_ASSAULT_REPORTED",
+    "SUBJECT_RESISTANCE_REPORTED != SELF_DEFENSE_ESTABLISHED",
+    "PERCEIVED_EXCESSIVE_FORCE != ILLEGAL_POLICE_FORCE_ESTABLISHED",
+    "CRIMINAL_CHARGE != CONVICTION",
+    "RESEARCH_POINTER_ONLY != NATIONAL_PREVALENCE_EVIDENCE"
+  ]
+}
