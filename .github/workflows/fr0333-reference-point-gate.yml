@@ -1,0 +1,21 @@
+name: FR0333 Reference Point Gate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'fix/reference-point-*'
+
+jobs:
+  reference-point-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run unit tests
+        run: python -m unittest RavenCloudTaskbar/test_fr0333_reference_point_gate.py -v
+      - name: Scan full repository
+        run: python RavenCloudTaskbar/fr0333_reference_point_gate.py
