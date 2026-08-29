@@ -4,17 +4,23 @@ on:
   push:
     paths:
       - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
+      - 'RavenCloudTaskbar/fr0333_crypto_voice_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
       - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
+      - 'RavenCloudTaskbar/validate_crypto_voice.py'
       - 'fr0333/adobe_5d_engine.py'
+      - 'fr0333/crypto_voice_engine.py'
       - 'tests/test_adobe_5d_engine.py'
       - '.github/workflows/fr0333-creativepro-5d-validate.yml'
   pull_request:
     paths:
       - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
+      - 'RavenCloudTaskbar/fr0333_crypto_voice_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
       - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
+      - 'RavenCloudTaskbar/validate_crypto_voice.py'
       - 'fr0333/adobe_5d_engine.py'
+      - 'fr0333/crypto_voice_engine.py'
       - 'tests/test_adobe_5d_engine.py'
       - '.github/workflows/fr0333-creativepro-5d-validate.yml'
   workflow_dispatch:
@@ -32,9 +38,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Install runtime dependencies
+        run: python -m pip install -r requirements.txt
       - name: Validate 5D index hardener
         run: python RavenCloudTaskbar/validate_creativepro_5d.py
       - name: Validate Adobe 5D calibration engine
         run: python RavenCloudTaskbar/validate_adobe_5d_calibration.py
-      - name: Compile calibration engine
-        run: python -m py_compile fr0333/adobe_5d_engine.py RavenCloudTaskbar/validate_creativepro_5d.py RavenCloudTaskbar/validate_adobe_5d_calibration.py
+      - name: Validate FR-0333 cryptographic voice kernels
+        run: python RavenCloudTaskbar/validate_crypto_voice.py
+      - name: Compile calibration and crypto engines
+        run: python -m py_compile fr0333/adobe_5d_engine.py fr0333/crypto_voice_engine.py RavenCloudTaskbar/validate_creativepro_5d.py RavenCloudTaskbar/validate_adobe_5d_calibration.py RavenCloudTaskbar/validate_crypto_voice.py
