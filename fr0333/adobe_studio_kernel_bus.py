@@ -6,6 +6,32 @@ from typing import Tuple
 
 
 FLOW = "1.7.369.7.1"
+K_ALPHA = "K.11"
+
+
+@dataclass(frozen=True)
+class KernelIndex:
+    slot: int
+    label: str
+
+    @property
+    def system_id(self) -> str:
+        return f"{K_ALPHA}.{self.slot:02d}"
+
+    @property
+    def reference_point(self) -> str:
+        return f"{self.system_id}.000.1"
+
+    @property
+    def flow_address(self) -> str:
+        return f"{self.system_id}.{FLOW}"
+
+
+K01_INDEX = KernelIndex(1, "SOURCE.KERNEL")
+K02_INDEX = KernelIndex(2, "METRIC.KERNEL")
+K03_INDEX = KernelIndex(3, "PROBABILITY.KERNEL")
+K04_INDEX = KernelIndex(4, "LOGIC.KERNEL")
+KERNEL_INDEX = (K01_INDEX, K02_INDEX, K03_INDEX, K04_INDEX)
 
 
 class KernelRoute(str, Enum):
@@ -38,72 +64,85 @@ class KernelPacket:
 
 
 class SourceKernelK01:
-    address = f"K01.{FLOW}"
+    index = K01_INDEX
+    address = index.flow_address
+    reference_point = index.reference_point
 
     def process(self, packet: KernelPacket) -> KernelPacket:
+        prefix = self.index.system_id
         if packet.flow != FLOW:
-            return packet.mark("K01.FLOW_MISMATCH", route=KernelRoute.HALT_STREAM)
+            return packet.mark(f"{prefix}.FLOW_MISMATCH", route=KernelRoute.HALT_STREAM)
         if not packet.source_ref:
-            return packet.mark("K01.SOURCE_MISSING", route=KernelRoute.ROUTE_UNVERIFIED)
+            return packet.mark(f"{prefix}.SOURCE_MISSING", route=KernelRoute.ROUTE_UNVERIFIED)
         if not packet.provenance_verified:
-            return packet.mark("K01.PROVENANCE_UNVERIFIED", route=KernelRoute.ROUTE_UNVERIFIED)
-        return packet.mark("K01.PROVENANCE_MATCH")
+            return packet.mark(f"{prefix}.PROVENANCE_UNVERIFIED", route=KernelRoute.ROUTE_UNVERIFIED)
+        return packet.mark(f"{prefix}.PROVENANCE_MATCH")
 
 
 class MetricKernelK02:
-    address = f"K02.{FLOW}"
+    index = K02_INDEX
+    address = index.flow_address
+    reference_point = index.reference_point
     logical_slot_limit = 64
 
     def process(self, packet: KernelPacket) -> KernelPacket:
+        prefix = self.index.system_id
         if packet.route in {KernelRoute.HARD_PURGE, KernelRoute.HALT_STREAM}:
-            return packet.mark("K02.BYPASS_TERMINAL")
+            return packet.mark(f"{prefix}.BYPASS_TERMINAL")
         if packet.logical_slots != self.logical_slot_limit:
-            return packet.mark("K02.LOGICAL_SLOT_MISMATCH", route=KernelRoute.HALT_STREAM)
+            return packet.mark(f"{prefix}.LOGICAL_SLOT_MISMATCH", route=KernelRoute.HALT_STREAM)
         if packet.physical_bits_derived:
-            return packet.mark("K02.PHYSICAL_BIT_COERCION", route=KernelRoute.HALT_STREAM)
-        return packet.mark("K02.DIMENSIONAL_GUARD_PASS")
+            return packet.mark(f"{prefix}.PHYSICAL_BIT_COERCION", route=KernelRoute.HALT_STREAM)
+        return packet.mark(f"{prefix}.DIMENSIONAL_GUARD_PASS")
 
 
 class ProbabilityKernelK03:
-    address = f"K03.{FLOW}"
+    index = K03_INDEX
+    address = index.flow_address
+    reference_point = index.reference_point
     variance_limit = 0.01
 
     def process(self, packet: KernelPacket) -> KernelPacket:
+        prefix = self.index.system_id
         if packet.route in {KernelRoute.HARD_PURGE, KernelRoute.HALT_STREAM}:
-            return packet.mark("K03.BYPASS_TERMINAL")
+            return packet.mark(f"{prefix}.BYPASS_TERMINAL")
         if packet.probability_variance < 0.0 or packet.probability_variance > self.variance_limit:
-            return packet.mark("K03.VARIANCE_LIMIT_FAIL", route=KernelRoute.HALT_STREAM)
-        return packet.mark("K03.STATE_EVALUATION_PASS")
+            return packet.mark(f"{prefix}.VARIANCE_LIMIT_FAIL", route=KernelRoute.HALT_STREAM)
+        return packet.mark(f"{prefix}.STATE_EVALUATION_PASS")
 
 
 class LogicKernelK04:
-    address = f"K04.{FLOW}"
+    index = K04_INDEX
+    address = index.flow_address
+    reference_point = index.reference_point
 
     def process(self, packet: KernelPacket) -> KernelPacket:
-        # HARD_PURGE has absolute dominance.
+        prefix = self.index.system_id
         if not packet.bit_62_valid or not packet.bit_63_valid:
-            return packet.mark("K04.HARD_PURGE", route=KernelRoute.HARD_PURGE)
+            return packet.mark(f"{prefix}.HARD_PURGE", route=KernelRoute.HARD_PURGE)
         if packet.termination_trigger:
-            return packet.mark("K04.TERMINATION_TRIGGER", route=KernelRoute.HALT_STREAM)
+            return packet.mark(f"{prefix}.TERMINATION_TRIGGER", route=KernelRoute.HALT_STREAM)
         if packet.route is KernelRoute.HALT_STREAM:
-            return packet.mark("K04.FAIL_CLOSED")
+            return packet.mark(f"{prefix}.FAIL_CLOSED")
         if packet.route is KernelRoute.ROUTE_UNVERIFIED:
-            return packet.mark("K04.ROUTE_UNVERIFIED")
+            return packet.mark(f"{prefix}.ROUTE_UNVERIFIED")
         if packet.signature_match != 1.0:
-            return packet.mark("K04.SIGNATURE_FAIL_CLOSED", route=KernelRoute.ROUTE_UNVERIFIED)
+            return packet.mark(f"{prefix}.SIGNATURE_FAIL_CLOSED", route=KernelRoute.ROUTE_UNVERIFIED)
         if not packet.provenance_verified:
-            return packet.mark("K04.PROVENANCE_FAIL_CLOSED", route=KernelRoute.ROUTE_UNVERIFIED)
+            return packet.mark(f"{prefix}.PROVENANCE_FAIL_CLOSED", route=KernelRoute.ROUTE_UNVERIFIED)
         if not packet.image_execution_enabled:
-            return packet.mark("K04.K05_STATIC_STAY_HOLD", route=KernelRoute.STAY_HOLD)
-        return packet.mark("K04.PASS_STREAM", route=KernelRoute.PASS_STREAM)
+            return packet.mark(f"{prefix}.K05_STATIC_STAY_HOLD", route=KernelRoute.STAY_HOLD)
+        return packet.mark(f"{prefix}.PASS_STREAM", route=KernelRoute.PASS_STREAM)
 
 
 class AdobeStudioKernelBus:
     """Deterministic K01 -> K02 -> K03 -> K04 coordination bus.
 
-    This is an executable coordination layer, not evidence of a live Adobe
-    credential-backed runtime. Each kernel receives the exact packet emitted by
-    the previous kernel and appends an immutable trace event.
+    Canonical kernel index:
+      K01 = K.11.01 / K.11.01.000.1 / K.11.01.1.7.369.7.1
+      K02 = K.11.02 / K.11.02.000.1 / K.11.02.1.7.369.7.1
+      K03 = K.11.03 / K.11.03.000.1 / K.11.03.1.7.369.7.1
+      K04 = K.11.04 / K.11.04.000.1 / K.11.04.1.7.369.7.1
     """
 
     def __init__(self) -> None:
@@ -124,6 +163,12 @@ class AdobeStudioKernelBus:
 __all__ = [
     "AdobeStudioKernelBus",
     "FLOW",
+    "K01_INDEX",
+    "K02_INDEX",
+    "K03_INDEX",
+    "K04_INDEX",
+    "KERNEL_INDEX",
+    "KernelIndex",
     "KernelPacket",
     "KernelRoute",
     "LogicKernelK04",
