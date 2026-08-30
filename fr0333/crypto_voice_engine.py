@@ -5,9 +5,9 @@ FR-0333 records a deterministic canonical form, SHA-256 integrity binding,
 ECDSA P-256 signatures, and parent-hash lineage checks.
 
 Grammar law: alphabetic coordinates use LETTER.NUMBER, e.g.
-X.24.Y.25.Z.26.P.16.T.20.
+X.24.Y.25.Z.26.P.16.T.20. Numeric reference values use structural three-digit
+groups separated by dots; commas and decimal/radix interpretation are forbidden.
 """
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -17,11 +17,17 @@ import json
 import re
 from typing import Any, Mapping
 
-
 FLOW = "1.7.369.7.1"
 VOICE_NAMESPACE = "FR.0333"
 COORDINATE_5D = "X.24.Y.25.Z.26.P.16.T.20"
-
+CANONICAL_SCHEMA_VERSION = "000.1"
+CANONICAL_FIELD_ORDER = (
+    "schema_version", "system_id", "flow", "reference_point", "observation_id",
+    "record_type", "value", "unit", "scale", "minor_unit_value", "numerator",
+    "denominator", "probability_scale", "evidence_class", "value_state", "x",
+    "y", "z", "p", "t", "timestamp", "source", "revision_of", "parent_hash",
+    "key_id",
+)
 
 class CryptoState(str, Enum):
     AUTHENTIC = "AUTHENTIC"
@@ -35,54 +41,58 @@ class CryptoState(str, Enum):
     UNAUTHENTICATED_RECORD = "UNAUTHENTICATED.RECORD"
     PARENT_MISSING = "PARENT.MISSING"
 
-
 class CryptoKernel(str, Enum):
     HASH = "CRY.K01.HASH"
     SIGNATURE = "CRY.K02.SIGNATURE"
     KEY_IDENTITY = "CRY.K03.KEY.IDENTITY"
     LINEAGE = "CRY.K04.LINEAGE"
 
-
 ALPHA_POSITION = {chr(ord("A") + i): i + 1 for i in range(26)}
 BOUND_TOKEN_RE = re.compile(r"^(?:[A-Z]\.\d{2})(?:\.[A-Z]\.\d{2})*$")
+NUMERIC_REFERENCE_RE = re.compile(r"^(?:0|[1-9]\d{0,2})(?:\.\d{3})+$")
 
 
 def alpha_bound(text: str) -> str:
-    """Convert letters to FR-0333 LETTER.NUMBER grammar.
-
-    Example: RAW -> R.18.A.01.W.23.
-    """
     if not text or not text.isalpha():
         raise ValueError("alpha_bound accepts letters only")
-    return ".".join(f"{ch}.{ALPHA_POSITION[ch]}" if ALPHA_POSITION[ch] >= 10 else f"{ch}.0{ALPHA_POSITION[ch]}" for ch in text.upper())
+    return ".".join(f"{ch}.{ALPHA_POSITION[ch]:02d}" for ch in text.upper())
 
 
 def validate_bound_token(token: str) -> bool:
-    """Validate both syntax and the actual A=01..Z=26 binding."""
     if not BOUND_TOKEN_RE.fullmatch(token):
         return False
     parts = token.split(".")
-    for i in range(0, len(parts), 2):
-        letter = parts[i]
-        number = int(parts[i + 1])
-        if ALPHA_POSITION.get(letter) != number:
-            return False
-    return True
+    return all(ALPHA_POSITION.get(parts[i]) == int(parts[i + 1]) for i in range(0, len(parts), 2))
+
+
+def validate_numeric_reference(value: str) -> bool:
+    """Validate structural integer grouping. A dot is never a radix point."""
+    if not isinstance(value, str) or "," in value:
+        return False
+    return NUMERIC_REFERENCE_RE.fullmatch(value) is not None
+
+
+def require_numeric_reference(value: str) -> None:
+    if "," in value:
+        raise ValueError("GATE.ERR.01:FOREIGN.INPUT:COMMA.PROHIBITED")
+    if not validate_numeric_reference(value):
+        raise ValueError("GATE.ERR.01:MALFORMED.REFERENCE.GROUP")
 
 
 def canonical_bytes(payload: Mapping[str, Any]) -> bytes:
-    """Deterministic UTF-8 JSON serialization used for hashing/signing.
-
-    Keys are sorted and whitespace is removed. Crypto seal fields are not
-    implicitly stripped; callers must pass the exact payload they intend to
-    bind. This avoids hidden transformations.
-    """
-    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    """Serialize only the explicit constitutional field order; fail closed."""
+    unknown = set(payload) - set(CANONICAL_FIELD_ORDER)
+    missing = set(CANONICAL_FIELD_ORDER) - set(payload)
+    if unknown:
+        raise ValueError("GATE.ERR.02:UNKNOWN.FIELD")
+    if missing:
+        raise ValueError("GATE.ERR.02:MISSING.REQUIRED.FIELD")
+    ordered = {key: payload[key] for key in CANONICAL_FIELD_ORDER}
+    return json.dumps(ordered, sort_keys=False, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
 
 
 def sha256_hex(payload: Mapping[str, Any]) -> str:
     return hashlib.sha256(canonical_bytes(payload)).hexdigest()
-
 
 @dataclass(frozen=True)
 class CryptoSeal:
@@ -91,7 +101,6 @@ class CryptoSeal:
     public_key_id: str | None
     parent_hash: str | None = None
     algorithm: str = "ECDSA-P256-SHA256"
-
 
 @dataclass(frozen=True)
 class FR0333Record:
@@ -105,19 +114,31 @@ class FR0333Record:
     data: Mapping[str, Any] = field(default_factory=dict)
     parent_hash: str | None = None
 
-    def payload(self) -> dict[str, Any]:
+    def payload(self, key_id: str | None = None) -> dict[str, Any]:
+        data = dict(self.data)
         return {
-            "namespace": VOICE_NAMESPACE,
-            "flow": FLOW,
-            "object_address": self.object_address,
+            "schema_version": CANONICAL_SCHEMA_VERSION,
             "system_id": self.system_id,
+            "flow": FLOW,
             "reference_point": self.reference_point,
-            "coordinate": self.coordinate,
-            "record_type": self.record_type,
             "observation_id": self.observation_id,
+            "record_type": self.record_type,
+            "value": data.get("value"),
+            "unit": data.get("unit"),
+            "scale": data.get("scale"),
+            "minor_unit_value": data.get("minor_unit_value"),
+            "numerator": data.get("numerator"),
+            "denominator": data.get("denominator"),
+            "probability_scale": data.get("probability_scale"),
+            "evidence_class": data.get("evidence_class"),
+            "value_state": data.get("value_state"),
+            "x": data.get("x"), "y": data.get("y"), "z": data.get("z"),
+            "p": data.get("p"), "t": data.get("t"),
             "timestamp": self.timestamp,
-            "data": dict(self.data),
+            "source": data.get("source"),
+            "revision_of": data.get("revision_of"),
             "parent_hash": self.parent_hash,
+            "key_id": key_id,
         }
 
     def validate_structure(self) -> None:
@@ -125,58 +146,46 @@ class FR0333Record:
             raise ValueError(CryptoState.FOREIGN_INPUT.value)
         if FLOW not in self.object_address:
             raise ValueError(CryptoState.UNRECOGNIZED_SYSTEM.value)
-        if self.coordinate != COORDINATE_5D:
-            raise ValueError(CryptoState.SYNTAX_INVALID.value)
-        if not validate_bound_token(self.record_type):
+        if self.coordinate != COORDINATE_5D or not validate_bound_token(self.record_type):
             raise ValueError(CryptoState.SYNTAX_INVALID.value)
         if not self.reference_point:
             raise ValueError(CryptoState.LINEAGE_BROKEN.value)
-
+        for field_name in ("value", "minor_unit_value", "denominator"):
+            value = self.data.get(field_name)
+            if value is not None:
+                require_numeric_reference(value)
 
 class CryptoVoiceEngine:
-    """Four-kernel cryptographic lane for FR-0333 records."""
-
     @staticmethod
-    def hash_record(record: FR0333Record) -> str:
+    def hash_record(record: FR0333Record, public_key_id: str | None = None) -> str:
         record.validate_structure()
-        return sha256_hex(record.payload())
+        return sha256_hex(record.payload(public_key_id))
 
     @staticmethod
     def sign_record(record: FR0333Record, signing_key: Any, public_key_id: str) -> CryptoSeal:
-        """Sign canonical record bytes using python-ecdsa SigningKey.
-
-        The repository already pins ecdsa==0.19.0. The method accepts an
-        ecdsa.SigningKey object without importing the dependency at module load.
-        """
         record.validate_structure()
-        digest = CryptoVoiceEngine.hash_record(record)
-        signature = signing_key.sign_deterministic(
-            canonical_bytes(record.payload()),
-            hashfunc=hashlib.sha256,
-        )
-        return CryptoSeal(
-            hash_hex=digest,
-            signature_hex=signature.hex(),
-            public_key_id=public_key_id,
-            parent_hash=record.parent_hash,
-        )
+        payload = record.payload(public_key_id)
+        digest = sha256_hex(payload)
+        signature = signing_key.sign_deterministic(canonical_bytes(payload), hashfunc=hashlib.sha256)
+        return CryptoSeal(digest, signature.hex(), public_key_id, record.parent_hash)
 
     @staticmethod
     def verify_hash(record: FR0333Record, seal: CryptoSeal) -> CryptoState:
         if not seal.hash_hex:
             return CryptoState.INTEGRITY_UNVERIFIED
-        return CryptoState.AUTHENTIC if CryptoVoiceEngine.hash_record(record) == seal.hash_hex else CryptoState.ALTERED_RECORD
+        try:
+            digest = CryptoVoiceEngine.hash_record(record, seal.public_key_id)
+        except ValueError:
+            return CryptoState.ALTERED_RECORD
+        return CryptoState.AUTHENTIC if digest == seal.hash_hex else CryptoState.ALTERED_RECORD
 
     @staticmethod
     def verify_signature(record: FR0333Record, seal: CryptoSeal, verifying_key: Any) -> CryptoState:
         if not seal.signature_hex or not seal.public_key_id:
             return CryptoState.ORIGIN_UNAUTHENTICATED
         try:
-            valid = verifying_key.verify(
-                bytes.fromhex(seal.signature_hex),
-                canonical_bytes(record.payload()),
-                hashfunc=hashlib.sha256,
-            )
+            record.validate_structure()
+            valid = verifying_key.verify(bytes.fromhex(seal.signature_hex), canonical_bytes(record.payload(seal.public_key_id)), hashfunc=hashlib.sha256)
         except Exception:
             return CryptoState.UNAUTHENTICATED_RECORD
         return CryptoState.AUTHENTIC if valid else CryptoState.UNAUTHENTICATED_RECORD
@@ -198,12 +207,7 @@ class CryptoVoiceEngine:
                 return CryptoState(str(exc))
             except ValueError:
                 return CryptoState.SYNTAX_INVALID
-
-        for check in (
-            CryptoVoiceEngine.verify_hash(record, seal),
-            CryptoVoiceEngine.verify_signature(record, seal, verifying_key),
-            CryptoVoiceEngine.verify_lineage(record, parent_seal),
-        ):
+        for check in (CryptoVoiceEngine.verify_hash(record, seal), CryptoVoiceEngine.verify_signature(record, seal, verifying_key), CryptoVoiceEngine.verify_lineage(record, parent_seal)):
             if check is not CryptoState.AUTHENTIC:
                 return check
         return CryptoState.AUTHENTIC
