@@ -7,10 +7,13 @@ on:
       - 'RavenCloudTaskbar/fr0333_crypto_voice_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
       - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
+      - 'RavenCloudTaskbar/validate_adobe_studio_kernel_bus.py'
       - 'RavenCloudTaskbar/validate_crypto_voice.py'
       - 'fr0333/adobe_5d_engine.py'
+      - 'fr0333/adobe_studio_kernel_bus.py'
       - 'fr0333/crypto_voice_engine.py'
       - 'tests/test_adobe_5d_engine.py'
+      - 'tests/test_adobe_studio_kernel_bus.py'
       - '.github/workflows/fr0333-creativepro-5d-validate.yml'
   pull_request:
     paths:
@@ -18,10 +21,13 @@ on:
       - 'RavenCloudTaskbar/fr0333_crypto_voice_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
       - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
+      - 'RavenCloudTaskbar/validate_adobe_studio_kernel_bus.py'
       - 'RavenCloudTaskbar/validate_crypto_voice.py'
       - 'fr0333/adobe_5d_engine.py'
+      - 'fr0333/adobe_studio_kernel_bus.py'
       - 'fr0333/crypto_voice_engine.py'
       - 'tests/test_adobe_5d_engine.py'
+      - 'tests/test_adobe_studio_kernel_bus.py'
       - '.github/workflows/fr0333-creativepro-5d-validate.yml'
   workflow_dispatch:
 
@@ -46,7 +52,11 @@ jobs:
         run: python RavenCloudTaskbar/validate_creativepro_5d.py
       - name: Validate Adobe 5D calibration engine
         run: python RavenCloudTaskbar/validate_adobe_5d_calibration.py
+      - name: Validate Adobe Studio K01-K04 coordination bus
+        run: python RavenCloudTaskbar/validate_adobe_studio_kernel_bus.py
+      - name: Run Adobe Studio kernel bus tests
+        run: python -m pytest -q tests/test_adobe_studio_kernel_bus.py
       - name: Validate FR-0333 cryptographic voice kernels
         run: python RavenCloudTaskbar/validate_crypto_voice.py
-      - name: Compile calibration and crypto engines
-        run: python -m py_compile fr0333/adobe_5d_engine.py fr0333/crypto_voice_engine.py RavenCloudTaskbar/validate_creativepro_5d.py RavenCloudTaskbar/validate_adobe_5d_calibration.py RavenCloudTaskbar/validate_crypto_voice.py
+      - name: Compile calibration, Studio bus, and crypto engines
+        run: python -m py_compile fr0333/adobe_5d_engine.py fr0333/adobe_studio_kernel_bus.py fr0333/crypto_voice_engine.py RavenCloudTaskbar/validate_creativepro_5d.py RavenCloudTaskbar/validate_adobe_5d_calibration.py RavenCloudTaskbar/validate_adobe_studio_kernel_bus.py RavenCloudTaskbar/validate_crypto_voice.py
