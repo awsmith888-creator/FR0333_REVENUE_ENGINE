@@ -6,7 +6,7 @@ from typing import Tuple
 
 
 FLOW = "1.7.369.7.1"
-K_ALPHA = "K.11"
+K_ALPHA = "K.11.0"
 
 
 @dataclass(frozen=True)
@@ -16,7 +16,7 @@ class KernelIndex:
 
     @property
     def system_id(self) -> str:
-        return f"{K_ALPHA}.{self.slot:02d}"
+        return f"{K_ALPHA}.{self.slot}"
 
     @property
     def reference_point(self) -> str:
@@ -31,7 +31,8 @@ K01_INDEX = KernelIndex(1, "SOURCE.KERNEL")
 K02_INDEX = KernelIndex(2, "METRIC.KERNEL")
 K03_INDEX = KernelIndex(3, "PROBABILITY.KERNEL")
 K04_INDEX = KernelIndex(4, "LOGIC.KERNEL")
-KERNEL_INDEX = (K01_INDEX, K02_INDEX, K03_INDEX, K04_INDEX)
+K05_INDEX = KernelIndex(5, "CONTAINMENT.KERNEL")
+KERNEL_INDEX = (K01_INDEX, K02_INDEX, K03_INDEX, K04_INDEX, K05_INDEX)
 
 
 class KernelRoute(str, Enum):
@@ -130,19 +131,32 @@ class LogicKernelK04:
             return packet.mark(f"{prefix}.SIGNATURE_FAIL_CLOSED", route=KernelRoute.ROUTE_UNVERIFIED)
         if not packet.provenance_verified:
             return packet.mark(f"{prefix}.PROVENANCE_FAIL_CLOSED", route=KernelRoute.ROUTE_UNVERIFIED)
+        return packet.mark(f"{prefix}.LOGIC_GATE_PASS")
+
+
+class ContainmentKernelK05:
+    index = K05_INDEX
+    address = index.flow_address
+    reference_point = index.reference_point
+
+    def process(self, packet: KernelPacket) -> KernelPacket:
+        prefix = self.index.system_id
+        if packet.route is KernelRoute.HARD_PURGE:
+            return packet.mark(f"{prefix}.BYPASS_HARD_PURGE")
+        if packet.route is KernelRoute.HALT_STREAM:
+            return packet.mark(f"{prefix}.BYPASS_HALT_STREAM")
+        if packet.route is KernelRoute.ROUTE_UNVERIFIED:
+            return packet.mark(f"{prefix}.ISOLATE_UNVERIFIED")
         if not packet.image_execution_enabled:
-            return packet.mark(f"{prefix}.K05_STATIC_STAY_HOLD", route=KernelRoute.STAY_HOLD)
+            return packet.mark(f"{prefix}.STATIC_STAY_HOLD", route=KernelRoute.STAY_HOLD)
         return packet.mark(f"{prefix}.PASS_STREAM", route=KernelRoute.PASS_STREAM)
 
 
 class AdobeStudioKernelBus:
-    """Deterministic K01 -> K02 -> K03 -> K04 coordination bus.
+    """Deterministic K.11.0.1 -> K.11.0.5 coordination bus.
 
-    Canonical kernel index:
-      K01 = K.11.01 / K.11.01.000.1 / K.11.01.1.7.369.7.1
-      K02 = K.11.02 / K.11.02.000.1 / K.11.02.1.7.369.7.1
-      K03 = K.11.03 / K.11.03.000.1 / K.11.03.1.7.369.7.1
-      K04 = K.11.04 / K.11.04.000.1 / K.11.04.1.7.369.7.1
+    This executable coordination layer does not itself prove a live,
+    credential-backed Adobe runtime. Baselines remain immutable .000.1 anchors.
     """
 
     def __init__(self) -> None:
@@ -151,6 +165,7 @@ class AdobeStudioKernelBus:
             MetricKernelK02(),
             ProbabilityKernelK03(),
             LogicKernelK04(),
+            ContainmentKernelK05(),
         )
 
     def process(self, packet: KernelPacket) -> KernelPacket:
@@ -162,11 +177,13 @@ class AdobeStudioKernelBus:
 
 __all__ = [
     "AdobeStudioKernelBus",
+    "ContainmentKernelK05",
     "FLOW",
     "K01_INDEX",
     "K02_INDEX",
     "K03_INDEX",
     "K04_INDEX",
+    "K05_INDEX",
     "KERNEL_INDEX",
     "KernelIndex",
     "KernelPacket",
