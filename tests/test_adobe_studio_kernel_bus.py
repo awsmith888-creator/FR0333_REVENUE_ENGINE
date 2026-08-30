@@ -1,4 +1,30 @@
-from fr0333.adobe_studio_kernel_bus import AdobeStudioKernelBus, KernelPacket, KernelRoute
+from fr0333.adobe_studio_kernel_bus import (
+    AdobeStudioKernelBus,
+    KERNEL_INDEX,
+    KernelPacket,
+    KernelRoute,
+)
+
+
+def test_kernel_index_is_canonical_and_reference_bound():
+    assert tuple(entry.system_id for entry in KERNEL_INDEX) == (
+        "K.11.01",
+        "K.11.02",
+        "K.11.03",
+        "K.11.04",
+    )
+    assert tuple(entry.reference_point for entry in KERNEL_INDEX) == (
+        "K.11.01.000.1",
+        "K.11.02.000.1",
+        "K.11.03.000.1",
+        "K.11.04.000.1",
+    )
+    assert tuple(entry.flow_address for entry in KERNEL_INDEX) == (
+        "K.11.01.1.7.369.7.1",
+        "K.11.02.1.7.369.7.1",
+        "K.11.03.1.7.369.7.1",
+        "K.11.04.1.7.369.7.1",
+    )
 
 
 def test_static_hold_when_image_execution_disabled():
@@ -11,7 +37,7 @@ def test_static_hold_when_image_execution_disabled():
         )
     )
     assert result.route is KernelRoute.STAY_HOLD
-    assert result.trace[-1] == "K04.K05_STATIC_STAY_HOLD"
+    assert result.trace[-1] == "K.11.04.K05_STATIC_STAY_HOLD"
 
 
 def test_hard_purge_dominates_privacy_failure():
@@ -70,8 +96,8 @@ def test_verified_packet_can_pass_when_execution_explicitly_enabled():
     )
     assert result.route is KernelRoute.PASS_STREAM
     assert result.trace == (
-        "K01.PROVENANCE_MATCH",
-        "K02.DIMENSIONAL_GUARD_PASS",
-        "K03.STATE_EVALUATION_PASS",
-        "K04.PASS_STREAM",
+        "K.11.01.PROVENANCE_MATCH",
+        "K.11.02.DIMENSIONAL_GUARD_PASS",
+        "K.11.03.STATE_EVALUATION_PASS",
+        "K.11.04.PASS_STREAM",
     )
