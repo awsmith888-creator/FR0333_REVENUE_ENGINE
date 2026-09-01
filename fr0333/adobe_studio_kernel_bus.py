@@ -57,6 +57,16 @@ class KernelPacket:
     bit_63_valid: bool = True
     termination_trigger: bool = False
     image_execution_enabled: bool = False
+
+    # Image-production containment contract. A requested batch must resolve to
+    # one unique asset id per output; an unrequested collage is a hard stop.
+    requested_outputs: int = 1
+    isolated_output_ids: Tuple[str, ...] = ("OUT.001",)
+    collage_requested: bool = False
+    collage_detected: bool = False
+    identity_lock_required: bool = False
+    identity_anchor_present: bool = True
+
     route: KernelRoute = KernelRoute.STAY_HOLD
     trace: Tuple[str, ...] = field(default_factory=tuple)
 
@@ -147,16 +157,34 @@ class ContainmentKernelK05:
             return packet.mark(f"{prefix}.BYPASS_HALT_STREAM")
         if packet.route is KernelRoute.ROUTE_UNVERIFIED:
             return packet.mark(f"{prefix}.ISOLATE_UNVERIFIED")
+
+        if packet.requested_outputs < 1:
+            return packet.mark(f"{prefix}.INVALID_OUTPUT_COUNT", route=KernelRoute.HALT_STREAM)
+
+        if packet.collage_detected and not packet.collage_requested:
+            return packet.mark(f"{prefix}.UNREQUESTED_COLLAGE", route=KernelRoute.HALT_STREAM)
+
+        if len(packet.isolated_output_ids) != packet.requested_outputs:
+            return packet.mark(f"{prefix}.OUTPUT_COUNT_MISMATCH", route=KernelRoute.HALT_STREAM)
+
+        if len(set(packet.isolated_output_ids)) != packet.requested_outputs:
+            return packet.mark(f"{prefix}.OUTPUT_ID_REUSE", route=KernelRoute.HALT_STREAM)
+
+        if packet.identity_lock_required and not packet.identity_anchor_present:
+            return packet.mark(f"{prefix}.IDENTITY_ANCHOR_MISSING", route=KernelRoute.ROUTE_UNVERIFIED)
+
         if not packet.image_execution_enabled:
             return packet.mark(f"{prefix}.STATIC_STAY_HOLD", route=KernelRoute.STAY_HOLD)
-        return packet.mark(f"{prefix}.PASS_STREAM", route=KernelRoute.PASS_STREAM)
+
+        return packet.mark(f"{prefix}.ISOLATION_PASS", route=KernelRoute.PASS_STREAM)
 
 
 class AdobeStudioKernelBus:
     """Deterministic K.11.0.1 -> K.11.0.5 coordination bus.
 
-    This executable coordination layer does not itself prove a live,
-    credential-backed Adobe runtime. Baselines remain immutable .000.1 anchors.
+    The bus validates image-batch isolation and identity-anchor requirements,
+    but it does not by itself prove a live credential-backed Adobe runtime.
+    Baselines remain immutable .000.1 anchors.
     """
 
     def __init__(self) -> None:
