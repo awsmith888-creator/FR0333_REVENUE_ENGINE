@@ -75,5 +75,55 @@ def test_verified_packet_can_pass_through_logic_into_containment():
         "K.11.0.2.DIMENSIONAL_GUARD_PASS",
         "K.11.0.3.STATE_EVALUATION_PASS",
         "K.11.0.4.LOGIC_GATE_PASS",
-        "K.11.0.5.PASS_STREAM",
+        "K.11.0.5.ISOLATION_PASS",
     )
+
+
+def test_ten_output_batch_requires_ten_unique_assets():
+    ids = tuple(f"OUT.{i:03d}" for i in range(1, 11))
+    result = AdobeStudioKernelBus().process(KernelPacket(
+        packet_id="T.007", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, requested_outputs=10,
+        isolated_output_ids=ids,
+    ))
+    assert result.route is KernelRoute.PASS_STREAM
+    assert result.trace[-1] == "K.11.0.5.ISOLATION_PASS"
+
+
+def test_output_count_mismatch_halts():
+    result = AdobeStudioKernelBus().process(KernelPacket(
+        packet_id="T.008", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, requested_outputs=10,
+        isolated_output_ids=("OUT.001",),
+    ))
+    assert result.route is KernelRoute.HALT_STREAM
+    assert result.trace[-1] == "K.11.0.5.OUTPUT_COUNT_MISMATCH"
+
+
+def test_output_id_reuse_halts():
+    result = AdobeStudioKernelBus().process(KernelPacket(
+        packet_id="T.009", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, requested_outputs=2,
+        isolated_output_ids=("OUT.001", "OUT.001"),
+    ))
+    assert result.route is KernelRoute.HALT_STREAM
+    assert result.trace[-1] == "K.11.0.5.OUTPUT_ID_REUSE"
+
+
+def test_unrequested_collage_halts():
+    result = AdobeStudioKernelBus().process(KernelPacket(
+        packet_id="T.010", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, collage_detected=True,
+    ))
+    assert result.route is KernelRoute.HALT_STREAM
+    assert result.trace[-1] == "K.11.0.5.UNREQUESTED_COLLAGE"
+
+
+def test_identity_lock_requires_anchor():
+    result = AdobeStudioKernelBus().process(KernelPacket(
+        packet_id="T.011", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, identity_lock_required=True,
+        identity_anchor_present=False,
+    ))
+    assert result.route is KernelRoute.ROUTE_UNVERIFIED
+    assert result.trace[-1] == "K.11.0.5.IDENTITY_ANCHOR_MISSING"
