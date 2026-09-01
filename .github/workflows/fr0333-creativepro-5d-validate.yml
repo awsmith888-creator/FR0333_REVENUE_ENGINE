@@ -50,8 +50,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install runtime dependencies
-        run: python -m pip install -r requirements.txt
+      - name: Install runtime and test dependencies
+        run: python -m pip install -r requirements.txt pytest==8.3.5
       - name: Validate 5D index hardener and Google pointer register
         run: python RavenCloudTaskbar/validate_creativepro_5d.py
       - name: Validate Adobe 5D calibration engine
