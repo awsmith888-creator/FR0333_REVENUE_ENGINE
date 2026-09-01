@@ -6,6 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "RavenCloudTaskbar" / "fr0333_creativepro_adobe_5d_index.json"
+GOOGLE_INDEX = ROOT / "RavenCloudTaskbar" / "FR0333_GOOGLE_CLOUD_FREE_INDEX_0002.txt"
+GOOGLE_POINTERS = ROOT / "RavenCloudTaskbar" / "FR0333_GOOGLE_CLOUD_FREE_POINTERS_0002.json"
 
 EXPECTED_DIMENSIONS = {
     "D1_SOURCE_AUTHORITY",
@@ -36,6 +38,10 @@ REQUIRED_GATES = {
     "OBSERVED_NE_MEASURED_NE_DERIVED_NE_INFERRED_NE_CLAIMED",
     "OBSERVED_NE_CORRELATED_NE_CAUSAL",
     "NO_CROSS_RAIL_PROMOTION_WITHOUT_EVIDENCE",
+    "REQUESTED_OUTPUT_COUNT_EQ_UNIQUE_OUTPUT_ASSET_COUNT",
+    "UNREQUESTED_COLLAGE_NE_VALID_MULTI_OUTPUT_BATCH",
+    "IDENTITY_LOCK_REQUIRES_SOURCE_ANCHOR",
+    "OUTPUT_ID_REUSE_NE_SEPARATE_ASSET",
 }
 REQUIRED_RUNTIME_STATES = {
     "PASS_RUNTIME", "PASS_SPEC", "HOLD", "FAIL", "UNKNOWN",
@@ -48,16 +54,88 @@ REQUIRED_VALUE_STATES = {
     "CONFLICTING", "SUSPICIOUS", "PROVEN_FALSE"
 }
 REQUIRED_5D_KEYS = {"X", "Y", "Z", "P", "T", "rule"}
+REQUIRED_IMAGE_HARDENING = {
+    "requested_output_count_must_equal_unique_isolated_output_count",
+    "identity_locked_generation_requires_explicit_source_anchor",
+}
+EXPECTED_GOOGLE_VALUES = [
+    "300", "90", "20", "30", "28", "9", "1", "180000",
+    "50", "360000", "100", "400", "20", "2", "512", "1",
+    "10", "2500", "1", "100", "10000", "50", "1000000", "5000",
+    "2000000", "360000", "180000", "1", "2000000", "400000", "200000", "5",
+    "5", "5", "50", "50", "5", "5000", "50000", "100",
+    "1000", "1", "30", "1", "3", "100", "1", "50000",
+    "20000", "20000", "10", "1", "10", "10000", "6", "10000",
+    "3", "60", "1000", "100000", "5000", "2000", "5000", "350000",
+]
 
 
 def fail(message: str) -> None:
     raise SystemExit(f"FAIL: {message}")
 
 
+def validate_google_register() -> None:
+    if not GOOGLE_INDEX.exists():
+        fail("Google Cloud numeric index missing")
+    if not GOOGLE_POINTERS.exists():
+        fail("Google Cloud pointer map missing")
+
+    lines = [line.strip() for line in GOOGLE_INDEX.read_text(encoding="utf-8").splitlines()]
+    if not lines or lines[0] != "FR.0333.GOOGLE.CLOUD.FREE.INDEX.0002":
+        fail("unexpected Google Cloud index header")
+
+    numeric_lines: list[str] = []
+    for line in lines[1:]:
+        if line == "64.64":
+            break
+        if line:
+            numeric_lines.append(line)
+
+    if len(numeric_lines) != 64:
+        fail(f"Google Cloud register must contain 64 numeric positions; got {len(numeric_lines)}")
+
+    for position, (line, expected_value) in enumerate(zip(numeric_lines, EXPECTED_GOOGLE_VALUES), start=1):
+        prefix = f"{position:02d}."
+        if not line.startswith(prefix):
+            fail(f"Google Cloud position {position:02d} malformed: {line}")
+        raw_value = line[len(prefix):]
+        if not raw_value or any(part == "" or not part.isdigit() for part in raw_value.split(".")):
+            fail(f"Google Cloud position {position:02d} is not dotted numeric data: {line}")
+        compact = raw_value.replace(".", "")
+        if compact != expected_value:
+            fail(f"Google Cloud position {position:02d} value mismatch: {compact} != {expected_value}")
+
+    if "STATE.LOCKED" not in lines or "DECIMAL.COLLISION.RETIRED" not in lines:
+        fail("Google Cloud index lock markers missing")
+
+    pointer_data = json.loads(GOOGLE_POINTERS.read_text(encoding="utf-8"))
+    if pointer_data.get("index") != "FR.0333.GOOGLE.CLOUD.FREE.INDEX.0002":
+        fail("Google pointer map index binding mismatch")
+    pointers = pointer_data.get("pointers", {})
+    if len(pointers) != 64:
+        fail(f"Google pointer map must bind 64 positions; got {len(pointers)}")
+
+    for position, expected_value in enumerate(EXPECTED_GOOGLE_VALUES, start=1):
+        key = f"{position:02d}"
+        row = pointers.get(key)
+        if not row:
+            fail(f"Google pointer missing position {key}")
+        if str(row.get("value")) != expected_value:
+            fail(f"Google pointer value mismatch at {key}")
+        if not row.get("metric") or not row.get("unit") or not row.get("source"):
+            fail(f"Google pointer incomplete at {key}")
+
+    artifact = pointers["15"]
+    if artifact.get("source_value") != "0.5_GiB":
+        fail("Artifact Registry source decimal must remain explicit")
+    if artifact.get("derivation") != "0.5_x_1024_MiB_per_GiB":
+        fail("Artifact Registry 512 MiB derivation missing")
+
+
 def main() -> None:
     data = json.loads(INDEX.read_text(encoding="utf-8"))
 
-    if data.get("version") != "1.2.0-RC":
+    if data.get("version") != "1.2.1-RC":
         fail(f"unexpected version: {data.get('version')}")
 
     dims = data.get("five_dimensions", {})
@@ -114,6 +192,33 @@ def main() -> None:
         fail("Adobe 64-bit register binding missing")
     if alignment.get("clusters") != 8 or alignment.get("bits") != 64:
         fail("Adobe register must remain 8 clusters / 64 bits")
+    if alignment.get("semantic_fixes") != 8:
+        fail("Adobe semantic fix count must be exactly 8")
+    hardening = alignment.get("critical_hardening", [])
+    if len(hardening) != 8 or len(set(hardening)) != 8:
+        fail("Adobe critical hardening must contain 8 unique fixes")
+    if not REQUIRED_IMAGE_HARDENING.issubset(set(hardening)):
+        fail("Adobe image-output hardening invariants missing")
+
+    image_contract = data.get("image_production_contract", {})
+    if image_contract.get("promotion_effect") != "NONE_ON_CREDENTIAL_BACKED_ADOBE_RUNTIME_PROOF":
+        fail("image contract cannot promote Adobe runtime proof")
+    for key in (
+        "single_asset_rule", "batch_rule", "collage_rule", "identity_rule",
+        "output_reuse_rule", "default_master"
+    ):
+        if not image_contract.get(key):
+            fail(f"image production contract missing {key}")
+
+    google = data.get("google_cloud_free_pointer", {})
+    if google.get("index") != "FR.0333.GOOGLE.CLOUD.FREE.INDEX.0002":
+        fail("Google Cloud pointer index mismatch")
+    if google.get("pointer_only") is not True:
+        fail("Google Cloud crosswalk must remain pointer-only")
+    if google.get("promotion_effect") != "NONE_ON_ADOBE_RUNTIME_PROOF":
+        fail("Google Cloud pointer cannot promote Adobe runtime proof")
+    if google.get("artifact_registry_decimal_resolution") != "0.5_GiB_EQUALS_512_MiB":
+        fail("Artifact Registry decimal collision resolution missing")
 
     coverage = data.get("coverage", {})
     if coverage.get("target") != 1.0:
@@ -151,12 +256,24 @@ def main() -> None:
             fail(f"CreativePro statistics source outside boundary: {row['source']}")
 
     gs = data.get("genius_statistics", {})
-    if gs.get("summit_member_price_advantage_usd") != 125:
-        fail("price advantage statistic mismatch")
-    if gs.get("membership_cost_usd") != 78:
-        fail("membership cost statistic mismatch")
-    if gs.get("net_savings_if_membership_bought_only_for_one_qualifying_125_discount_usd") != 47:
-        fail("net savings statistic mismatch")
+    required_genius = {
+        "summit_member_price_advantage_usd": 125,
+        "membership_cost_usd": 78,
+        "net_savings_if_membership_bought_only_for_one_qualifying_125_discount_usd": 47,
+        "google_trial_credit_usd": 300,
+        "google_trial_days": 90,
+        "google_agent_runtime_vcpu_seconds_per_month": 180000,
+        "google_agent_runtime_hours_per_month": 50,
+        "google_cloud_run_requests_per_month": 2000000,
+        "google_kms_active_key_versions_per_month": 100,
+        "google_kms_crypto_operations_per_month": 10000,
+        "google_artifact_registry_free_mib_per_month": 512,
+    }
+    for key, expected in required_genius.items():
+        if gs.get(key) != expected:
+            fail(f"Genius statistic mismatch for {key}: {gs.get(key)} != {expected}")
+    if gs.get("google_pointer_promotion_effect") != "NONE_ON_ADOBE_RUNTIME_PROOF":
+        fail("Genius Google pointer cannot promote Adobe runtime proof")
 
     zero = data.get("runtime_zero_state", {})
     for key in (
@@ -170,6 +287,8 @@ def main() -> None:
     if total_controls != 40:
         fail(f"required control count must remain 40; got {total_controls}")
 
+    validate_google_register()
+
     print("FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001")
     print(f"version={data.get('version')}")
     print(f"dimensions={len(dims)}/5")
@@ -180,12 +299,14 @@ def main() -> None:
     print("value_states=8/8")
     print("coordinate_5d=X.Y.Z.P.T")
     print("adobe_64bit=64/64")
-    print("weather_bones=8")
-    print("weather_statistical_bits=16")
-    print("weather_5d_bits=20")
+    print("adobe_semantic_fixes=8/8")
+    print("image_isolation_contract=BOUND")
+    print("google_cloud_free_index=64/64")
+    print("google_cloud_pointers=64/64")
+    print("artifact_registry_decimal_collision=RESOLVED_TO_512_MiB")
     print("runtime_proof=HOLD")
     print("coverage_semantics=EXPLICIT_DENOMINATOR_AND_APPLICABILITY_REQUIRED")
-    print("state=PASS_SPEC_STRUCTURE_V1_2_RC")
+    print("state=PASS_SPEC_STRUCTURE_V1_2_1_RC")
 
 
 if __name__ == "__main__":
