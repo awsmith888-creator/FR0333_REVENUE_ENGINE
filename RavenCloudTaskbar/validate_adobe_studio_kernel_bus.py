@@ -69,14 +69,57 @@ def main() -> None:
     assert pass_stream.route is KernelRoute.PASS_STREAM
     assert pass_stream.trace[-2:] == (
         "K.11.0.4.LOGIC_GATE_PASS",
-        "K.11.0.5.PASS_STREAM",
+        "K.11.0.5.ISOLATION_PASS",
     )
+
+    ten_ids = tuple(f"OUT.{i:03d}" for i in range(1, 11))
+    ten = bus.process(KernelPacket(
+        packet_id="OBS.007", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, requested_outputs=10,
+        isolated_output_ids=ten_ids,
+    ))
+    assert ten.route is KernelRoute.PASS_STREAM
+    assert ten.trace[-1] == "K.11.0.5.ISOLATION_PASS"
+
+    count_mismatch = bus.process(KernelPacket(
+        packet_id="OBS.008", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, requested_outputs=10,
+        isolated_output_ids=("OUT.001",),
+    ))
+    assert count_mismatch.route is KernelRoute.HALT_STREAM
+    assert count_mismatch.trace[-1] == "K.11.0.5.OUTPUT_COUNT_MISMATCH"
+
+    reused = bus.process(KernelPacket(
+        packet_id="OBS.009", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, requested_outputs=2,
+        isolated_output_ids=("OUT.001", "OUT.001"),
+    ))
+    assert reused.route is KernelRoute.HALT_STREAM
+    assert reused.trace[-1] == "K.11.0.5.OUTPUT_ID_REUSE"
+
+    collage = bus.process(KernelPacket(
+        packet_id="OBS.010", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, collage_detected=True,
+    ))
+    assert collage.route is KernelRoute.HALT_STREAM
+    assert collage.trace[-1] == "K.11.0.5.UNREQUESTED_COLLAGE"
+
+    identity = bus.process(KernelPacket(
+        packet_id="OBS.011", source_ref="SOURCE.TEST", provenance_verified=True,
+        image_execution_enabled=True, identity_lock_required=True,
+        identity_anchor_present=False,
+    ))
+    assert identity.route is KernelRoute.ROUTE_UNVERIFIED
+    assert identity.trace[-1] == "K.11.0.5.IDENTITY_ANCHOR_MISSING"
 
     print("ADOBE.STUDIO.KERNEL.BUS PASS")
     print("FLOW 1.7.369.7.1")
     print("K.11.0.1 -> K.11.0.2 -> K.11.0.3 -> K.11.0.4 -> K.11.0.5 INDEXED")
     print("REFERENCE.POINTS .000.1 BOUND")
     print("K.11.0.5 STATIC_STAY_HOLD RESPECTED")
+    print("K.11.0.5 IMAGE_ISOLATION 10_OF_10 PASS")
+    print("K.11.0.5 UNREQUESTED_COLLAGE FAIL_CLOSED")
+    print("K.11.0.5 IDENTITY_ANCHOR FAIL_CLOSED")
 
 
 if __name__ == "__main__":
