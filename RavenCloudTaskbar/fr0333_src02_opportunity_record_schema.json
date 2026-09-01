@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.DEEP.SEARCH.SRC02.OPPORTUNITYRECORD.001",
+  "title": "FR0333 SRC02 OpportunityRecord",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "opportunity_record_version",
+    "opportunity_id",
+    "run_id",
+    "candidate_key",
+    "title",
+    "qualification_state",
+    "scam_risk_state",
+    "pricing_state",
+    "funding_state",
+    "source_refs",
+    "claims",
+    "unresolved_gaps",
+    "humanlock"
+  ],
+  "properties": {
+    "opportunity_record_version": {"const": "SRC02.OpportunityRecord.1"},
+    "opportunity_id": {"type": "string", "pattern": "^SRC02-OPP-[A-Fa-f0-9]{16}$"},
+    "run_id": {"type": "string", "minLength": 1},
+    "candidate_key": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "qualification_state": {"enum": ["QUALIFIED", "REJECTED", "HOLD", "UNSCREENED"]},
+    "scam_risk_state": {"enum": ["PASS", "FAIL", "HOLD", "NOT_SCREENED"]},
+    "pricing_state": {"enum": ["VERIFIED", "PARTIAL", "NOT_REQUIRED", "HOLD", "NOT_OBSERVED"]},
+    "funding_state": {"enum": ["VERIFIED", "PARTIAL", "NOT_REQUIRED", "HOLD", "NOT_OBSERVED"]},
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "content_sha256"],
+        "properties": {
+          "source_id": {"type": "string", "pattern": "^SRC02-SRC-[A-Fa-f0-9]{16}$"},
+          "content_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "field", "value", "evidence_state", "evidence_refs"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "field": {"type": "string", "minLength": 1},
+          "value": {},
+          "evidence_state": {"enum": ["VERIFIED", "PARTIAL", "CONTRADICTED", "HOLD", "UNSOURCED"]},
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "selector"],
+              "properties": {
+                "source_id": {"type": "string", "pattern": "^SRC02-SRC-[A-Fa-f0-9]{16}$"},
+                "selector": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    },
+    "unresolved_gaps": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "humanlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "actor", "decided_at"],
+      "properties": {
+        "state": {"enum": ["PENDING", "APPROVED", "REJECTED"]},
+        "actor": {"type": ["string", "null"]},
+        "decided_at": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  },
+  "hard_gates": [
+    "OPPORTUNITY_EVIDENCE_REFERENCES_SOURCEOBJECT",
+    "OPPORTUNITY_RECORD_MUST_NOT_REWRITE_RAW_SOURCE",
+    "UNSOURCED_NE_VERIFIED",
+    "HUMANLOCK_REQUIRED_FOR_FINAL_PROMOTION",
+    "SCENARIO_NOT_FORECAST"
+  ]
+}
