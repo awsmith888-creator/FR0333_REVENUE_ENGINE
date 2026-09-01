@@ -1,9 +1,9 @@
 {
   "identifier": "FR0333.CREATIVEPRO.ADOBE.5D.HARDENER.001",
-  "version": "1.2.0-RC",
-  "state": "INDEXED_SPEC_ACTIVE_5D_CALIBRATION_BOUND_RUNTIME_HOLD",
-  "observed_at_et": "2026-08-24T20:47:00-04:00",
-  "purpose": "Use CreativePro as a professional secondary-source network to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, runtime proof, 5D coordinates, and cross-rail promotion boundaries.",
+  "version": "1.2.1-RC",
+  "state": "INDEXED_SPEC_ACTIVE_5D_CALIBRATION_IMAGE_CONTAINMENT_BOUND_RUNTIME_HOLD",
+  "observed_at_et": "2026-08-31T20:37:00-04:00",
+  "purpose": "Use CreativePro, first-party product documentation, and bounded Genius statistics to harden the Adobe/FR-0333 production system while separating source claims, derived statistics, CI validation, runtime proof, 5D coordinates, image-output isolation, and cross-rail promotion boundaries.",
   "governing_gates": [
     "100_PERCENT_MEANS_REQUIRED_LANE_COVERAGE_NOT_INFALLIBILITY",
     "PRIMARY_SOURCE_GT_PROFESSIONAL_SECONDARY_GT_GENERAL_COMMENTARY",
@@ -26,7 +26,11 @@
     "PRICE_LISTING_VERIFIED_NE_TRANSACTION_OBSERVED",
     "OBSERVED_NE_MEASURED_NE_DERIVED_NE_INFERRED_NE_CLAIMED",
     "OBSERVED_NE_CORRELATED_NE_CAUSAL",
-    "NO_CROSS_RAIL_PROMOTION_WITHOUT_EVIDENCE"
+    "NO_CROSS_RAIL_PROMOTION_WITHOUT_EVIDENCE",
+    "REQUESTED_OUTPUT_COUNT_EQ_UNIQUE_OUTPUT_ASSET_COUNT",
+    "UNREQUESTED_COLLAGE_NE_VALID_MULTI_OUTPUT_BATCH",
+    "IDENTITY_LOCK_REQUIRES_SOURCE_ANCHOR",
+    "OUTPUT_ID_REUSE_NE_SEPARATE_ASSET"
   ],
   "evidence_classes": {
     "E_OBS": "Observed raw source or telemetry capture",
@@ -99,14 +103,48 @@
     "source_version": "1.0.5-RC",
     "clusters": 8,
     "bits": 64,
+    "semantic_fixes": 8,
     "critical_hardening": [
       "unsigned_or_manifest_absent_routes_unverified_instead_of_fabricating_invalidity",
       "absence_unknown_not_applicable_invalid_conflicting_suspicious_proven_false_are_distinct",
       "credential_binding_confidence_does_not_equal_human_identity",
-      "privacy_or_consent_failure_requires purge policy",
-      "detector_failure_does_not_equal synthetic evidence",
-      "applicability_denominators exclude non-applicable fields"
+      "privacy_or_consent_failure_requires_purge_policy",
+      "detector_failure_does_not_equal_synthetic_evidence",
+      "applicability_denominators_exclude_non_applicable_fields",
+      "requested_output_count_must_equal_unique_isolated_output_count",
+      "identity_locked_generation_requires_explicit_source_anchor"
     ]
+  },
+  "image_production_contract": {
+    "state": "SPEC_BOUND_EXECUTABLE_VALIDATION_ADDED_RUNTIME_NOT_PROMOTED",
+    "single_asset_rule": "one requested output equals one unique isolated output asset",
+    "batch_rule": "N requested outputs require N unique output asset identifiers",
+    "collage_rule": "collage detection halts when collage was not explicitly requested",
+    "identity_rule": "identity-locked generation routes unverified when its source anchor is absent",
+    "output_reuse_rule": "duplicate output asset identifiers halt the stream",
+    "default_master": "1080x1920_9x16",
+    "promotion_effect": "NONE_ON_CREDENTIAL_BACKED_ADOBE_RUNTIME_PROOF"
+  },
+  "google_cloud_free_pointer": {
+    "index": "FR.0333.GOOGLE.CLOUD.FREE.INDEX.0002",
+    "source_class": "GOOGLE.CLOUD.FIRST_PARTY_DOCUMENTATION",
+    "source": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+    "observed_date": "2026-08-31",
+    "pointer_only": true,
+    "artifact_registry_decimal_resolution": "0.5_GiB_EQUALS_512_MiB",
+    "promotion_effect": "NONE_ON_ADOBE_RUNTIME_PROOF",
+    "selected_numeric_pointers": {
+      "trial_credit_usd": 300,
+      "trial_days": 90,
+      "agent_runtime_vcpu_seconds_month": 180000,
+      "agent_runtime_hours_month": 50,
+      "agent_runtime_gib_seconds_month": 360000,
+      "agent_runtime_memory_hours_month": 100,
+      "cloud_run_requests_month": 2000000,
+      "artifact_registry_free_mib_month": 512,
+      "kms_key_versions_month": 100,
+      "kms_crypto_operations_month": 10000
+    }
   },
   "system_lanes": ["LEARN","CREATE","VERIFY","PROVE","PUBLISH","MEASURE","TRANSACT","AUDIT","REINVEST","STAY"],
   "coverage": {
@@ -135,6 +173,15 @@
     "member_price_as_fraction_of_nonmember_price": 0.8201438849,
     "gross_discount_fraction_of_nonmember_price": 0.1798561151,
     "net_savings_fraction_of_nonmember_price_after_membership_cost": 0.0676258993,
+    "google_trial_credit_usd": 300,
+    "google_trial_days": 90,
+    "google_agent_runtime_vcpu_seconds_per_month": 180000,
+    "google_agent_runtime_hours_per_month": 50,
+    "google_cloud_run_requests_per_month": 2000000,
+    "google_kms_active_key_versions_per_month": 100,
+    "google_kms_crypto_operations_per_month": 10000,
+    "google_artifact_registry_free_mib_per_month": 512,
+    "google_pointer_promotion_effect": "NONE_ON_ADOBE_RUNTIME_PROOF",
     "community_display_warning": "26K+ repeated on four community tiles is one page-level claim pattern; do not sum to 104K unique people without independent channel counts.",
     "network_independence_rule": "N_sources != N_independent; repeated partner or community claims retain dependency lineage."
   },
@@ -143,9 +190,9 @@
     "adobe_credential_runtime": "HOLD",
     "external_image_generation_runtime": "HOLD",
     "artifact_provenance_runtime": "HOLD",
-    "rule": "5D calibration and CI validation do not promote credential-backed or external runtime proof."
+    "rule": "5D calibration, CI validation, image containment, Genius statistics, and Google Cloud pointers do not promote credential-backed or external runtime proof."
   },
   "economic_rule": "FREE_FIRST_BEFORE_PAID_ACCESS_UNLESS_PAID_PATH_HAS_VERIFIED_POSITIVE_EXPECTED_VALUE",
-  "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE"},
-  "output_chain": "SOURCE -> AUTHORITY -> 5D_ADDRESS -> WORKFLOW -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
+  "evidence_promotion": {"creativepro":"PROFESSIONAL_SECONDARY","adobe_documentation":"PRIMARY_PRODUCT_AUTHORITY","google_cloud_documentation":"PRIMARY_PRODUCT_AUTHORITY_POINTER_ONLY","standards_body":"PRIMARY_STANDARD_AUTHORITY","runtime_receipt":"OBSERVED_EXECUTION_EVIDENCE"},
+  "output_chain": "SOURCE -> AUTHORITY -> 5D_ADDRESS -> WORKFLOW -> IMAGE_ISOLATION -> FORENSICS -> ATTENTION -> ECONOMICS -> RECEIPT -> STAY"
 }
