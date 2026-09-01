@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
+      - 'RavenCloudTaskbar/FR0333_GOOGLE_CLOUD_FREE_INDEX_0002.txt'
+      - 'RavenCloudTaskbar/FR0333_GOOGLE_CLOUD_FREE_POINTERS_0002.json'
       - 'RavenCloudTaskbar/fr0333_crypto_voice_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
       - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
@@ -18,6 +20,8 @@ on:
   pull_request:
     paths:
       - 'RavenCloudTaskbar/fr0333_creativepro_adobe_5d_index.json'
+      - 'RavenCloudTaskbar/FR0333_GOOGLE_CLOUD_FREE_INDEX_0002.txt'
+      - 'RavenCloudTaskbar/FR0333_GOOGLE_CLOUD_FREE_POINTERS_0002.json'
       - 'RavenCloudTaskbar/fr0333_crypto_voice_index.json'
       - 'RavenCloudTaskbar/validate_creativepro_5d.py'
       - 'RavenCloudTaskbar/validate_adobe_5d_calibration.py'
@@ -48,11 +52,11 @@ jobs:
           python-version: '3.12'
       - name: Install runtime dependencies
         run: python -m pip install -r requirements.txt
-      - name: Validate 5D index hardener
+      - name: Validate 5D index hardener and Google pointer register
         run: python RavenCloudTaskbar/validate_creativepro_5d.py
       - name: Validate Adobe 5D calibration engine
         run: python RavenCloudTaskbar/validate_adobe_5d_calibration.py
-      - name: Validate Adobe Studio K01-K04 coordination bus
+      - name: Validate Adobe Studio K01-K05 coordination bus
         run: python RavenCloudTaskbar/validate_adobe_studio_kernel_bus.py
       - name: Run Adobe Studio kernel bus tests
         run: python -m pytest -q tests/test_adobe_studio_kernel_bus.py
