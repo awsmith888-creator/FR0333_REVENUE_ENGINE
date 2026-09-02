@@ -1,0 +1,84 @@
+{
+  "matrix_id": "FR.0333.ADOBE.10.5.RUNTIME.MATRIX.0001",
+  "architecture_version": "10.5_CANONICAL",
+  "slot_count": 10,
+  "batch_rule": "10_OF_10_REQUIRED",
+  "cases": [
+    {
+      "case_id": "TC_01_SUCCESS_10_OF_10",
+      "condition": "all 10 slots allocated, attempted, successful, single-panel, correct aspect, correct subject, readback pass, receipt match, no contradiction",
+      "expected_batch_state": "PASS_CANDIDATE",
+      "expected_zero_lion": "ALLOW"
+    },
+    {
+      "case_id": "TC_02_PARTIAL_FAILURE_9_OF_10",
+      "condition": "9 successful slot receipts + 1 failure receipt",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "HOLD",
+      "preserve_successful_evidence": true,
+      "fabricate_replacement": false
+    },
+    {
+      "case_id": "TC_03_DUPLICATE_OUTPUT",
+      "condition": "two slot records resolve to same primary asset id or same asset sha256 where independent output is required",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "DENY",
+      "forbidden_action": "DUPLICATE_FILL"
+    },
+    {
+      "case_id": "TC_04_COLLAGE_CONTACT_SHEET_MULTIPANEL",
+      "condition": "any slot primary output composition class is COLLAGE, CONTACT_SHEET, or MULTIPANEL",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "DENY"
+    },
+    {
+      "case_id": "TC_05_WRONG_ASPECT",
+      "condition": "any returned primary output aspect ratio is not 9:16",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "DENY"
+    },
+    {
+      "case_id": "TC_06_WRONG_SUBJECT",
+      "condition": "any slot fails the frozen subject/intent contract",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "DENY"
+    },
+    {
+      "case_id": "TC_07_CONTRADICTION",
+      "condition": "contradiction register contains one or more unresolved contradictions for a slot or batch",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "HOLD"
+    },
+    {
+      "case_id": "TC_08_RECEIPT_MISMATCH",
+      "condition": "output hash does not match receipt-bound output hash or receipt chain is incomplete",
+      "expected_batch_state": "HOLD",
+      "expected_zero_lion": "DENY"
+    }
+  ],
+  "count_invariants": {
+    "REQUESTED_SLOTS": 10,
+    "ALLOCATED_SLOTS": 10,
+    "ATTEMPTED_SLOTS": 10,
+    "SUCCESSFUL_EXECUTIONS": 10,
+    "PRIMARY_OUTPUTS_RETURNED": 10,
+    "READBACK_PASS_COUNT": 10,
+    "RECEIPT_COUNT": 10,
+    "ZERO_LION_PASS_COUNT": 10
+  },
+  "uniqueness_invariants": {
+    "slot_unique_key": "batch_id + slot_id",
+    "one_slot_one_job": true,
+    "one_slot_one_primary_asset": true,
+    "one_slot_one_receipt_chain": true,
+    "duplicate_primary_asset_across_slots": "DENY"
+  },
+  "evidence_boundaries": [
+    "EXECUTION_SUCCESS != OUTPUT_VERIFICATION",
+    "OUTPUT_VERIFICATION != PROMOTION_AUTHORITY",
+    "SIMULATION_PASS != IMPLEMENTATION_PASS",
+    "LOCAL_PASS != CI_PASS",
+    "CI_PASS != EXTERNAL_RUNTIME_PASS",
+    "TEST_RECEIPT != DEPLOYMENT_RECEIPT"
+  ]
+}
