@@ -1,0 +1,31 @@
+{
+  "system": "FR-0333-ADOBE-64BIT-REG",
+  "architecture_version": "10.0",
+  "status": "SPEC_COMPILED",
+  "control_plane": "FR-0333",
+  "creative_substrate": "ADOBE_EXECUTION_ADAPTER",
+  "evidence_boundary": "DEFINED != CI_VALIDATED != EXTERNAL_RUNTIME_PROVEN",
+  "planes": [
+    {"id":"0.1","name":"SOURCE_PLANE","mode":"LOCK_IMMUTABLE"},
+    {"id":"0.2","name":"INTENT_PLANE","mode":"ATOMIZE"},
+    {"id":"0.3","name":"ASSET_PLANE","mode":"REGISTER"},
+    {"id":"0.4","name":"CREATIVE_EXECUTION_PLANE","mode":"ACTION_GRAPH"},
+    {"id":"0.5","name":"BATCH_PLANE","mode":"ORCHESTRATOR"},
+    {"id":"0.6","name":"EVIDENCE_PLANE","mode":"ZERO_LION_LOGIC"},
+    {"id":"0.7","name":"VALIDATION_PLANE","mode":"ROUND_TRIP"},
+    {"id":"0.8","name":"RECEIPT_PLANE","mode":"CHAIN_VERIFY"},
+    {"id":"0.9","name":"PROMOTION_PLANE","mode":"HUMANLOCK_GATED"}
+  ],
+  "invariants": {
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "requested_count_equals_output_count": true,
+    "independent_asset_per_slot": true,
+    "collage_allowed": false,
+    "duplicate_asset_ids_allowed": false,
+    "legacy_unmanaged_v1_allowed": false,
+    "humanlock_required_for_promotion": true,
+    "synthetic_assertion_is_evidence": false
+  },
+  "receipt_fields": ["batch_id","slot_id","source_digest","intent_digest","action_digest","output_digest","validation_state","promotion_state"]
+}
