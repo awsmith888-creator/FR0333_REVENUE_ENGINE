@@ -1,0 +1,22 @@
+{
+  "receipt_id": "FR0333.EXTERNAL.AUDIT.ANDROIDPOLICE.2026.09.01.0001",
+  "control_boundary": "FR.0333.AUDIT.CONTROL.BOUNDARY",
+  "external_system": "Android Police",
+  "source_type": "USER_SUPPLIED_SCREENSHOT",
+  "captured_artifact_sha256": "a1684e0064f3cf3233b0ec71ab13ccd5330e5e7761449ed95fd4e96a1ed6dcf5",
+  "observed": {
+    "site": "Android Police",
+    "headline": "Swapping my morning scroll for Gemini turned out to be a brilliant move",
+    "author": "Anu Joy",
+    "published_display": "Sep 1, 2026, 1:00 PM EDT"
+  },
+  "evidence_class": "E_OBS",
+  "verification_state": "SOURCE_OBSERVED",
+  "promotion_state": "HOLD",
+  "reason": "Screenshot verifies the visible article identity metadata only; article-body behavioral claims require direct article/source verification before promotion.",
+  "ownership_boundary": {
+    "external_system_not_authorship": true,
+    "external_confirmation_not_ownership_transfer": true,
+    "citation_not_control": true
+  }
+}
