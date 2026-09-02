@@ -4,8 +4,8 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from fr0333_weather_persistence import WeatherBindingStore
-from fr0333_weather_statistics import (
+from RavenCloudTaskbar.fr0333_weather_persistence import WeatherBindingStore
+from RavenCloudTaskbar.fr0333_weather_statistics import (
     ADOBE_LOGICAL_SLOT_COUNT,
     EvidenceClass,
     GeoPoint,
