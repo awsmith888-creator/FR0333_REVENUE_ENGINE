@@ -1,0 +1,60 @@
+{
+  "engine_id": "FR.0333.AUDIT.CONTROL.BOUNDARY",
+  "version": "1.0.0",
+  "owner_system": "FR.0333",
+  "purpose": "Prevent unsupported internal inference from being promoted to audit fact while preserving admissible external corroboration without transferring authorship, ownership, or control.",
+  "control_boundary": {
+    "external_audit": {
+      "class": "SOURCE.BACKED.CONFIRMATION",
+      "admissibility": "ADMISSIBLE.WHEN.VERIFIABLE",
+      "promotion_requires": ["SOURCE", "VERIFICATION", "EVIDENCE.CLASS", "RECEIPT"]
+    },
+    "raven_internal_inference": {
+      "class": "NON.AUDIT.FINDING",
+      "promotion_state": "HYPOTHESIS.ONLY"
+    },
+    "raven_future_role": ["PRESERVE", "CROSS_CHECK", "CLASSIFY", "TRACE"]
+  },
+  "invariants": [
+    "EXTERNAL.SYSTEM != AUTHORSHIP",
+    "EXTERNAL.CONFIRMATION != OWNERSHIP.TRANSFER",
+    "INTERNAL.INFERENCE != VERIFIED.AUDIT",
+    "CITATION != CONTROL"
+  ],
+  "promotion_gate": {
+    "operator": "ALL_REQUIRED",
+    "required": ["SOURCE", "VERIFICATION", "EVIDENCE.CLASS", "RECEIPT"],
+    "on_failure": "HOLD"
+  },
+  "genius_statistics": {
+    "metrics": [
+      {"metric_id": "GENIUS.AUDIT.01", "name": "UNSUPPORTED_INFERENCE_EVENTS", "direction": "LOWER_IS_BETTER", "numerator": "unsupported_inference_events", "denominator": "all_audit_findings"},
+      {"metric_id": "GENIUS.AUDIT.02", "name": "EXTERNAL_CORROBORATION_ADMISSIBILITY_RATE", "direction": "HIGHER_IS_BETTER", "numerator": "externally_corroborated_findings_passing_gate", "denominator": "external_corroboration_submissions"},
+      {"metric_id": "GENIUS.AUDIT.03", "name": "INDEPENDENT_CROSS_CHECK_SUCCESS_RATE", "direction": "HIGHER_IS_BETTER", "numerator": "successful_independent_cross_checks", "denominator": "cross_checks_attempted"},
+      {"metric_id": "GENIUS.AUDIT.04", "name": "CONTRADICTION_CAPTURE_RATE", "direction": "HIGHER_IS_BETTER", "numerator": "contradictions_preserved", "denominator": "contradictions_detected"},
+      {"metric_id": "GENIUS.AUDIT.05", "name": "FALSE_PROMOTION_RATE", "direction": "LOWER_IS_BETTER", "numerator": "false_promotions", "denominator": "all_promotions"},
+      {"metric_id": "GENIUS.AUDIT.06", "name": "UNRESOLVED_HOLD_RATE", "direction": "LOWER_IS_BETTER", "numerator": "unresolved_holds", "denominator": "all_findings"},
+      {"metric_id": "GENIUS.AUDIT.07", "name": "RECEIPT_COMPLETENESS_RATE", "direction": "HIGHER_IS_BETTER", "numerator": "findings_with_complete_receipts", "denominator": "findings_requiring_receipts"},
+      {"metric_id": "GENIUS.AUDIT.08", "name": "SOURCE_LINEAGE_COMPLETENESS_RATE", "direction": "HIGHER_IS_BETTER", "numerator": "findings_with_complete_source_lineage", "denominator": "all_audit_findings"}
+    ],
+    "undefined_denominator_state": "NOT_EVALUABLE",
+    "zero_is_not_unknown": true,
+    "historical_backfill_required_for_baseline": true
+  },
+  "external_audit_receipt": {
+    "required_fields": [
+      "receipt_id",
+      "external_system",
+      "captured_at_utc",
+      "source_reference",
+      "source_digest",
+      "claim_id",
+      "claim_text",
+      "evidence_class",
+      "verification_method",
+      "verification_result",
+      "chain_of_custody",
+      "promotion_state"
+    ]
+  }
+}
