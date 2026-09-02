@@ -1,0 +1,55 @@
+name: Node 24 Action Compatibility
+
+on:
+  push:
+    paths:
+      - '.github/workflows/**'
+      - '**/action.yml'
+      - '**/action.yaml'
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - '**/action.yml'
+      - '**/action.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  node24-action-compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@v5
+
+      - name: Reject known Node 20 action references
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -d '' workflow_files < <(
+            find .github/workflows -type f \( -name '*.yml' -o -name '*.yaml' \) -print0
+          )
+          mapfile -d '' action_files < <(
+            find . -type f \( -name 'action.yml' -o -name 'action.yaml' \)               -not -path './.git/*' -print0
+          )
+
+          status=0
+
+          if grep -nHE             'uses:[[:space:]]*actions/checkout@v([1-4])([^0-9]|$)|uses:[[:space:]]*actions/setup-python@v([1-5])([^0-9]|$)'             "${workflow_files[@]}"; then
+            echo '::error::Node-20-era checkout/setup-python major detected. Use checkout@v5+ and setup-python@v6+.'
+            status=1
+          fi
+
+          if grep -nHE             'ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION'             "${workflow_files[@]}"; then
+            echo '::error::The temporary insecure Node runtime opt-out is prohibited.'
+            status=1
+          fi
+
+          if (("${#action_files[@]}" > 0)) && grep -nHE             'using:[[:space:]]*['"'"'"]?node20['"'"'"]?([[:space:]]|$)'             "${action_files[@]}"; then
+            echo '::error::Local JavaScript action still declares runs.using node20.'
+            status=1
+          fi
+
+          exit "$status"
