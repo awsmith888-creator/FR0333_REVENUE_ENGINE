@@ -1,0 +1,69 @@
+{
+  "identifier": "FR-0333-ADOBE-64BIT-INDEX.C",
+  "version": "1.0.5-RC",
+  "role": "RUNTIME_EVIDENCE_INDEX",
+  "source_spec": "FR-0333-ADOBE-64BIT-REG",
+  "cross_audits": [
+    "FR-0333-ADOBE-64BIT-INDEX.A",
+    "FR-0333-ADOBE-64BIT-INDEX.B"
+  ],
+  "runtime_fixture": "FR0333_C2PA_RUNTIME_001",
+  "tool_pin": {
+    "name": "c2patool",
+    "version": "0.27.15",
+    "release_tag": "c2patool-v0.27.15",
+    "linux_x86_64_url": "https://github.com/contentauth/c2pa-rs/releases/download/c2patool-v0.27.15/c2patool-v0.27.15-x86_64-unknown-linux-gnu.tar.gz",
+    "linux_x86_64_sha256": "7a035b727a6cdda8ad08d98fe94b3c20febee4aea4e7c1de02571b295730faf0"
+  },
+  "evidence_boundaries": [
+    "C2PA_TEST_SIGNER_RUNTIME != ADOBE_PRODUCTION_SIGNER_RUNTIME",
+    "STRUCTURAL_SIGNATURE_VALIDATION != HUMAN_IDENTITY",
+    "TEST_CERTIFICATE != PRODUCTION_TRUST",
+    "C2PA_RUNTIME_CI_PASS != DEPLOYMENT",
+    "TAMPER_SIGNAL != PROOF_OF_INTENT"
+  ],
+  "checks": [
+    {
+      "check_id": "RT_01_TOOL_PIN",
+      "description": "Pinned c2patool version and release digest verified before execution",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_57"]
+    },
+    {
+      "check_id": "RT_02_SIGN_ROUNDTRIP",
+      "description": "Create-intent manifest is signed into a real SVG asset and read back",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_11", "BIT_12", "BIT_13", "BIT_14", "BIT_37", "BIT_41", "BIT_42", "BIT_57", "BIT_58"]
+    },
+    {
+      "check_id": "RT_03_ASSERTION_ROUNDTRIP",
+      "description": "FR-0333 runtime assertion survives manifest embedding and parsing",
+      "evidence_class": "E_OBS",
+      "observes_bits": ["BIT_13", "BIT_14", "BIT_41"]
+    },
+    {
+      "check_id": "RT_04_CERT_EXTRACTION",
+      "description": "C2PA signing certificate chain is extractable without treating it as human identity",
+      "evidence_class": "E_OBS",
+      "observes_bits": ["BIT_25", "BIT_27", "BIT_30"]
+    },
+    {
+      "check_id": "RT_05_HASH_RECEIPT",
+      "description": "Source, signed, and tampered asset SHA-256 values are independently measured",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_07", "BIT_09", "BIT_10", "BIT_59"]
+    },
+    {
+      "check_id": "RT_06_TAMPER_NEGATIVE",
+      "description": "A same-length post-signing source-byte mutation produces a validator mismatch signal",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_10", "BIT_16", "BIT_37", "BIT_44", "BIT_58"]
+    },
+    {
+      "check_id": "RT_07_RECEIPT_BOUNDARY",
+      "description": "Machine receipt preserves test-signer and production-credential boundaries",
+      "evidence_class": "E_DER",
+      "observes_bits": ["BIT_26", "BIT_31", "BIT_32", "BIT_39", "BIT_63"]
+    }
+  ]
+}
