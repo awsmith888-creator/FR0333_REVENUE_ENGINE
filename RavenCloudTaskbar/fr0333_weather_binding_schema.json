@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.WEATHER.STATISTICS.BINDING.1",
+  "title": "FR-0333 Weather Statistical Sidecar Binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rail",
+    "version",
+    "adobe_logical_slot_count",
+    "population_observation",
+    "weather_observation",
+    "binding",
+    "permitted_uses",
+    "prohibited_predicates",
+    "relationship"
+  ],
+  "properties": {
+    "rail": {"const": "FR0333.WEATHER.STATISTICS.RAIL"},
+    "version": {"const": "1.0.5-FINAL"},
+    "adobe_logical_slot_count": {"const": 64},
+    "population_observation": {"type": "object"},
+    "weather_observation": {
+      "type": "object",
+      "required": [
+        "weather_id",
+        "timestamp",
+        "location",
+        "evidence_class",
+        "source_name",
+        "source_origin",
+        "source_capture_sha256"
+      ],
+      "properties": {
+        "evidence_class": {"enum": ["E_OBS", "E_MES"]},
+        "source_capture_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+      }
+    },
+    "binding": {
+      "type": "object",
+      "required": [
+        "population_observation_id",
+        "weather_id",
+        "weather_evidence_class",
+        "time_delta_seconds",
+        "distance_km",
+        "match_score",
+        "relationship"
+      ],
+      "properties": {
+        "time_delta_seconds": {"type": "number", "minimum": 0},
+        "distance_km": {"type": "number", "minimum": 0},
+        "match_score": {"type": "number", "minimum": 0},
+        "relationship": {"const": "CONTEXT_ONLY"}
+      }
+    },
+    "permitted_uses": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "TEMPORAL_BASELINE",
+          "ENVIRONMENTAL_COVARIATE",
+          "CORRELATION_ANALYSIS",
+          "ANOMALY_CONTEXT",
+          "POPULATION_NORMALIZATION",
+          "EVENT_COMPARISON"
+        ]
+      }
+    },
+    "prohibited_predicates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_provenance",
+        "asset_authenticity",
+        "identity",
+        "authorization",
+        "causation"
+      ],
+      "properties": {
+        "asset_provenance": {"const": true},
+        "asset_authenticity": {"const": true},
+        "identity": {"const": true},
+        "authorization": {"const": true},
+        "causation": {"const": true}
+      }
+    },
+    "relationship": {"enum": ["CONTEXT_ONLY", "CORRELATION_ONLY_NOT_CAUSATION"]}
+  },
+  "hard_gates": [
+    "WEATHER_SIDE_CAR_NE_SLOT_65",
+    "WEATHER_NE_ASSET_PROVENANCE",
+    "WEATHER_NE_ASSET_AUTHENTICITY",
+    "WEATHER_NE_IDENTITY",
+    "WEATHER_NE_AUTHORIZATION",
+    "WEATHER_CORRELATION_NE_CAUSATION"
+  ]
+}
