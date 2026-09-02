@@ -33,5 +33,4 @@ jobs:
       - name: Validate schema JSON
         run: python -m json.tool RavenCloudTaskbar/fr0333_weather_binding_schema.json >/dev/null
       - name: Run weather boundary tests
-        working-directory: RavenCloudTaskbar
-        run: python -m unittest -v test_fr0333_weather_statistics.py
+        run: python -m unittest -v RavenCloudTaskbar.test_fr0333_weather_statistics
