@@ -42,7 +42,7 @@ jobs:
             status=1
           fi
 
-          if grep -nHE             'ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION'             "${workflow_files[@]}"; then
+          if grep -nHE             "ACTIONS_ALLOW_USE_UNSECURE_"'NODE_VERSION'             "${workflow_files[@]}"; then
             echo '::error::The temporary insecure Node runtime opt-out is prohibited.'
             status=1
           fi
