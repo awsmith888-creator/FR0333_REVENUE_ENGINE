@@ -1,0 +1,44 @@
+name: FR0333 Zero Lion Corroboration Gate
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/corroboration_gate.py'
+      - 'RavenCloudTaskbar/test_corroboration_gate.py'
+      - 'RavenCloudTaskbar/fr0333_corroboration_gate_schema.json'
+      - 'RavenCloudTaskbar/fixtures/**/*corroboration*.json'
+      - '.github/workflows/fr0333-zero-lion-corroboration.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/corroboration_gate.py'
+      - 'RavenCloudTaskbar/test_corroboration_gate.py'
+      - 'RavenCloudTaskbar/fr0333_corroboration_gate_schema.json'
+      - 'RavenCloudTaskbar/fixtures/**/*corroboration*.json'
+      - '.github/workflows/fr0333-zero-lion-corroboration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  enforce-corroboration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Run six corroboration kernels
+        working-directory: RavenCloudTaskbar
+        run: python -m unittest -v test_corroboration_gate.py
+      - name: Enforce Brown calibration fixture
+        working-directory: RavenCloudTaskbar
+        run: |
+          python corroboration_gate.py             fixtures/jaylen_brown_corroboration_record.json             --receipt corroboration_gate_receipt.json
+      - name: Upload enforcement receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: zero-lion-corroboration-receipt
+          path: RavenCloudTaskbar/corroboration_gate_receipt.json
