@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR.0333.ADOBE.10.5.SLOT.RECEIPT",
+  "title": "FR-0333 Adobe 10.5 SlotReceipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "architecture_version",
+    "batch_id",
+    "slot_id",
+    "requested",
+    "allocated",
+    "attempted",
+    "execution_state",
+    "primary_output",
+    "readback",
+    "receipt_chain",
+    "zero_lion",
+    "evidence",
+    "contradictions"
+  ],
+  "properties": {
+    "architecture_version": {"const": "10.5_CANONICAL"},
+    "batch_id": {"type": "string", "minLength": 1},
+    "slot_id": {"type": "string", "pattern": "^(0[1-9]|10)$"},
+    "requested": {"const": true},
+    "allocated": {"const": true},
+    "attempted": {"type": "boolean"},
+    "execution_state": {"enum": ["SUCCESS", "FAILURE", "NOT_ATTEMPTED"]},
+    "primary_output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["returned", "asset_id", "asset_sha256", "aspect_ratio", "subject_match", "composition_class"],
+      "properties": {
+        "returned": {"type": "boolean"},
+        "asset_id": {"type": ["string", "null"]},
+        "asset_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "aspect_ratio": {"type": ["string", "null"]},
+        "subject_match": {"type": ["boolean", "null"]},
+        "composition_class": {"enum": ["SINGLE_PANEL", "COLLAGE", "CONTACT_SHEET", "MULTIPANEL", null]}
+      }
+    },
+    "readback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["performed", "pass"],
+      "properties": {
+        "performed": {"type": "boolean"},
+        "pass": {"type": "boolean"}
+      }
+    },
+    "receipt_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_id", "receipt_sha256", "chain_complete", "output_hash_matches"],
+      "properties": {
+        "receipt_id": {"type": "string", "minLength": 1},
+        "receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "chain_complete": {"type": "boolean"},
+        "output_hash_matches": {"type": "boolean"}
+      }
+    },
+    "zero_lion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pass", "promotion_action"],
+      "properties": {
+        "pass": {"type": "boolean"},
+        "promotion_action": {"enum": ["ALLOW", "HOLD", "DENY"]}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_class", "evidence_state", "validation_state", "provenance", "receipts"],
+      "properties": {
+        "evidence_class": {"type": "string", "minLength": 1},
+        "evidence_state": {"enum": ["OBSERVED", "MEASURED", "DERIVED", "INFERRED", "ABSENT", "CONFLICTING", "SUSPICIOUS", "PROVEN_FALSE"]},
+        "validation_state": {"enum": ["PASS", "HOLD", "FAIL"]},
+        "provenance": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "receipts": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"execution_state": {"const": "SUCCESS"}}},
+      "then": {
+        "properties": {
+          "attempted": {"const": true},
+          "primary_output": {
+            "properties": {
+              "returned": {"const": true},
+              "composition_class": {"const": "SINGLE_PANEL"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"zero_lion": {"properties": {"promotion_action": {"const": "ALLOW"}}}}},
+      "then": {
+        "properties": {
+          "execution_state": {"const": "SUCCESS"},
+          "primary_output": {
+            "properties": {
+              "returned": {"const": true},
+              "aspect_ratio": {"const": "9:16"},
+              "subject_match": {"const": true},
+              "composition_class": {"const": "SINGLE_PANEL"}
+            }
+          },
+          "readback": {"properties": {"performed": {"const": true}, "pass": {"const": true}}},
+          "receipt_chain": {"properties": {"chain_complete": {"const": true}, "output_hash_matches": {"const": true}}},
+          "zero_lion": {"properties": {"pass": {"const": true}}},
+          "contradictions": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"primary_output": {"properties": {"composition_class": {"enum": ["COLLAGE", "CONTACT_SHEET", "MULTIPANEL"]}}}}},
+      "then": {"properties": {"zero_lion": {"properties": {"pass": {"const": false}, "promotion_action": {"enum": ["HOLD", "DENY"]}}}}}
+    }
+  ],
+  "x-fr0333-batch-rules": {
+    "unique_key": ["batch_id", "slot_id"],
+    "requested_slots": 10,
+    "allocated_slots": 10,
+    "attempted_slots": 10,
+    "successful_executions": 10,
+    "primary_outputs_returned": 10,
+    "readback_pass_count": 10,
+    "receipt_count": 10,
+    "zero_lion_pass_count": 10,
+    "batch_pass_candidate_expression": "REQUESTED_SLOTS == ALLOCATED_SLOTS == ATTEMPTED_SLOTS == SUCCESSFUL_EXECUTIONS == PRIMARY_OUTPUTS_RETURNED == READBACK_PASS_COUNT == RECEIPT_COUNT == ZERO_LION_PASS_COUNT == 10",
+    "forbidden": ["COLLAGE", "CONTACT_SHEET", "MULTIPANEL", "DUPLICATE_FILL", "MISSING_SLOT_FILL", "COUNT_SUBSTITUTION"]
+  }
+}
