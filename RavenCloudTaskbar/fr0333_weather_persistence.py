@@ -4,7 +4,10 @@ import json
 import sqlite3
 from pathlib import Path
 
-from fr0333_weather_statistics import JoinedStatisticalContext, export_statistical_context
+from RavenCloudTaskbar.fr0333_weather_statistics import (
+    JoinedStatisticalContext,
+    export_statistical_context,
+)
 
 
 class WeatherBindingStore:
