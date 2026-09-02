@@ -1,0 +1,81 @@
+{
+  "run_id": "FR0333-SRC02-LABELED-EVAL-0001",
+  "query_id": "Q.LABELED.0001",
+  "started_at": "2026-09-02T08:00:00-04:00",
+  "retrieved_at": "2026-09-02T08:00:01-04:00",
+  "retrieval_method": "USER_SUPPLIED",
+  "execution_class": "CONTROLLED_INTERNAL_EVALUATION",
+  "raw_sources": [
+    {
+      "uri": "https://example.gov/opportunity?id=7&utm_source=evaluation",
+      "source_class": "PRIMARY",
+      "title": "Controlled official opportunity source",
+      "publisher": "Example Agency",
+      "published_at": "2026-09-02T07:30:00-04:00",
+      "raw_content": "Funding amount is 100. Deadline is unresolved.",
+      "capture_pointer": "fixture://src02-labeled-evaluation/0"
+    },
+    {
+      "uri": "https://example.gov/opportunity?id=7",
+      "source_class": "PRIMARY",
+      "title": "Controlled duplicate capture",
+      "publisher": "Example Agency",
+      "published_at": "2026-09-02T07:30:00-04:00",
+      "raw_content": "Funding amount is 100. Deadline is unresolved.",
+      "capture_pointer": "fixture://src02-labeled-evaluation/1"
+    },
+    {
+      "uri": "https://news.example.com/controlled-report",
+      "source_class": "SECONDARY",
+      "title": "Controlled independent report",
+      "publisher": "Example News",
+      "published_at": "2026-09-02T07:45:00-04:00",
+      "raw_content": "Funding amount 100 is corroborated. Deadline differs across records.",
+      "capture_pointer": "fixture://src02-labeled-evaluation/2"
+    }
+  ],
+  "opportunities": [
+    {
+      "candidate_key": "controlled-opportunity",
+      "title": "Controlled Opportunity",
+      "qualification_state": "HOLD",
+      "scam_risk_state": "PASS",
+      "pricing_state": "NOT_REQUIRED",
+      "funding_state": "VERIFIED",
+      "source_indexes": [0, 2],
+      "claims": [
+        {
+          "claim_id": "funding",
+          "field": "funding",
+          "value": "100",
+          "evidence_state": "VERIFIED",
+          "evidence_refs": [
+            {"retrieval_index": 0, "selector": "Funding amount is 100"},
+            {"retrieval_index": 2, "selector": "Funding amount 100 is corroborated"}
+          ]
+        },
+        {
+          "claim_id": "deadline",
+          "field": "deadline",
+          "value": null,
+          "evidence_state": "CONTRADICTED",
+          "evidence_refs": [
+            {"retrieval_index": 0, "selector": "Deadline is unresolved"},
+            {"retrieval_index": 2, "selector": "Deadline differs across records"}
+          ]
+        }
+      ],
+      "unresolved_gaps": ["deadline"],
+      "humanlock": {
+        "state": "PENDING",
+        "actor": null,
+        "decided_at": null
+      }
+    }
+  ],
+  "scoring_labels": {
+    "known_contradiction_total": 1,
+    "required_claim_fields": ["funding", "deadline"],
+    "adjudications": []
+  }
+}
