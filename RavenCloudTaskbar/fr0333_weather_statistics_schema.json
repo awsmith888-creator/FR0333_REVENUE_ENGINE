@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.WEATHER.STATISTICS.RAIL.1.0.5-FINAL",
+  "title": "FR0333 Weather Statistical Context Binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rail",
+    "version",
+    "adobe_logical_slot_count",
+    "population_observation_id",
+    "weather_id",
+    "weather_evidence_class",
+    "population_timestamp_utc",
+    "weather_timestamp_utc",
+    "population_location",
+    "weather_location",
+    "weather_source_name",
+    "time_delta_seconds",
+    "distance_km",
+    "match_score",
+    "relationship",
+    "governing_law"
+  ],
+  "properties": {
+    "rail": {"const": "FR0333.WEATHER.STATISTICS.RAIL"},
+    "version": {"const": "1.0.5-FINAL"},
+    "adobe_logical_slot_count": {"const": 64},
+    "population_observation_id": {"type": "string", "minLength": 1},
+    "weather_id": {"type": "string", "minLength": 1},
+    "weather_evidence_class": {"enum": ["E_OBS", "E_MES"]},
+    "population_timestamp_utc": {"type": "string", "format": "date-time"},
+    "weather_timestamp_utc": {"type": "string", "format": "date-time"},
+    "population_location": {"$ref": "#/$defs/geoPoint"},
+    "weather_location": {"$ref": "#/$defs/geoPoint"},
+    "weather_source_name": {"type": "string", "minLength": 1},
+    "time_delta_seconds": {"type": "number", "minimum": 0},
+    "distance_km": {"type": "number", "minimum": 0},
+    "match_score": {"type": "number", "minimum": 0},
+    "relationship": {
+      "enum": ["CONTEXT_ONLY", "CORRELATION_ONLY_NOT_CAUSATION"]
+    },
+    "governing_law": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "weather_ne_provenance",
+        "weather_ne_authenticity",
+        "weather_ne_identity",
+        "weather_ne_authorization",
+        "weather_correlation_ne_causation"
+      ],
+      "properties": {
+        "weather_ne_provenance": {"const": true},
+        "weather_ne_authenticity": {"const": true},
+        "weather_ne_identity": {"const": true},
+        "weather_ne_authorization": {"const": true},
+        "weather_correlation_ne_causation": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "geoPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+        "longitude": {"type": "number", "minimum": -180, "maximum": 180}
+      }
+    }
+  }
+}
