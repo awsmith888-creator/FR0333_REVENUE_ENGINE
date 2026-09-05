@@ -1,0 +1,78 @@
+{
+  "record_id": "FR0333.RUNTIME.FAILURE.TAXONOMY.0.2",
+  "state": "FROZEN_BASELINE_AFTER_ECHO",
+  "predecessor": "FR0333.RUNTIME.FAILURE.TAXONOMY.0.1",
+  "predecessor_mutation": 0,
+  "amendments": [
+    {
+      "id": "AMENDMENT-2026-09-05-CHALL_FIX",
+      "superseded": "IMAGE_PIPELINE_STATE = QUOTA_BLOCKED",
+      "active": "IMAGE_PIPELINE_STATE = AUTHORIZATION_FAILED.CREDENTIAL_EXPIRED"
+    }
+  ],
+  "taxonomy": {
+    "0.1.QUOTA": [
+      "ACCOUNT_QUOTA",
+      "SESSION_QUOTA",
+      "ROUTE_QUOTA",
+      "PROVIDER_QUOTA",
+      "SCOPE_UNKNOWN"
+    ],
+    "0.2.TIMEOUT": [
+      "CLIENT_TIMEOUT",
+      "TOOL_TIMEOUT",
+      "PROVIDER_TIMEOUT",
+      "UPSTREAM_TIMEOUT",
+      "SCOPE_UNKNOWN"
+    ],
+    "0.3.AUTHORIZATION": [
+      "AUTH_REQUIRED",
+      "PERMISSION_DENIED",
+      "ENTITLEMENT_REQUIRED",
+      "CREDENTIAL_EXPIRED"
+    ],
+    "0.4.AVAILABILITY": [
+      "ROUTE_UNAVAILABLE",
+      "PROVIDER_UNAVAILABLE",
+      "SERVICE_DEGRADED",
+      "GLOBAL_OUTAGE_UNESTABLISHED"
+    ],
+    "0.5.INPUT": [
+      "INVALID_REQUEST",
+      "UNSUPPORTED_OPERATION",
+      "MALFORMED_PAYLOAD",
+      "POLICY_REJECTION"
+    ],
+    "0.6.RUNTIME": [
+      "EXECUTION_ERROR",
+      "DEPENDENCY_ERROR",
+      "UNKNOWN_RUNTIME_ERROR"
+    ],
+    "0.7.EVIDENCE": [
+      "UI_RUNTIME_CONFLICT",
+      "RESET_TIME_CONFLICT",
+      "SCOPE_CONFLICT",
+      "FAILURE_CLASS_CONFLICT"
+    ],
+    "0.8.PAYLOAD": [
+      "SCHEMA_VIOLATION",
+      "REQUIRED_FIELD_MISSING",
+      "TYPE_MISMATCH",
+      "ENUM_VIOLATION",
+      "NULLABILITY_VIOLATION",
+      "MALFORMED_SERIALIZATION",
+      "SEMANTIC_PAYLOAD_CONFLICT"
+    ]
+  },
+  "verified_cases": [
+    "ALPHA",
+    "BRAVO",
+    "CHARLIE",
+    "DELTA",
+    "CASCADE.0001",
+    "CASCADE.0002",
+    "ECHO"
+  ],
+  "freeze_rule": "FUTURE_CHANGES_REQUIRE_VERSIONED_DELTA_OR_SUCCESSOR",
+  "completion_invariant": "HTTP.200 != VALID.PAYLOAD != VERIFIED.DELIVERABLE != COMPLETED.TASK"
+}
