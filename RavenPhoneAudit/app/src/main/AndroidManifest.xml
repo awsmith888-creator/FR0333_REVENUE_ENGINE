@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".RavenAuditApplication"
         android:allowBackup="false"
         android:label="Raven Phone Audit"
         android:theme="@style/AppTheme"
