@@ -1,0 +1,10 @@
+{
+  "authority": "com.fr0333.ravenphoneaudit.telemetry",
+  "provider_class": "com.fr0333.ravenphoneaudit.provider.InternalTelemetryChannel",
+  "receipt_uri": "content://com.fr0333.ravenphoneaudit.telemetry/receipts",
+  "expected_spec_version": "0.2",
+  "expected_spec_hash": "1419f8152205bdca006bcd8c63526909ac0f17ee6fa122ad56954da5297c9818",
+  "channel_name": "secure_telemetry_manifest_receipt_channel",
+  "schema_version": "1.0",
+  "fail_closed": true
+}
