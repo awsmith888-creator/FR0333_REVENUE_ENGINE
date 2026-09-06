@@ -1,0 +1,17 @@
+{
+  "identifier": "FR-0333-ADOBE-64BIT-INDEX.A",
+  "version": "1.0.5-RC",
+  "role": "FORWARD_CLUSTER_INDEX",
+  "source_spec": "FR-0333-ADOBE-64BIT-REG",
+  "expected_total_bits": 64,
+  "clusters": {
+    "CLUSTER_01_ORIGIN": {"start": 1, "end": 8, "count": 8},
+    "CLUSTER_02_INTEGRITY": {"start": 9, "end": 16, "count": 8},
+    "CLUSTER_03_EDIT_HISTORY": {"start": 17, "end": 24, "count": 8},
+    "CLUSTER_04_IDENTITY": {"start": 25, "end": 32, "count": 8},
+    "CLUSTER_05_RELATIONSHIP": {"start": 33, "end": 40, "count": 8},
+    "CLUSTER_06_AUTHENTICITY": {"start": 41, "end": 48, "count": 8},
+    "CLUSTER_07_POPULATION": {"start": 49, "end": 56, "count": 8},
+    "CLUSTER_08_ENGINE": {"start": 57, "end": 64, "count": 8}
+  }
+}

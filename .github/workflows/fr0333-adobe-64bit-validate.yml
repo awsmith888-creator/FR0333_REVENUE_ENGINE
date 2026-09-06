@@ -1,0 +1,130 @@
+name: FR0333 Adobe 64-bit Register Validate
+
+on:
+  push:
+    paths:
+      - 'specs/FR-0333-ADOBE-64BIT-REG.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.A.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.B.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.C.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.D.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.E.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-PROMOTION.v1.0.5-RC.json'
+      - 'RavenCloudTaskbar/validate_adobe_64bit_reg.py'
+      - 'RavenCloudTaskbar/audit_adobe_64bit_indexes.py'
+      - 'RavenCloudTaskbar/validate_adobe_c2pa_runtime.py'
+      - 'RavenCloudTaskbar/audit_adobe_c2pa_runtime_index.py'
+      - 'RavenCloudTaskbar/adobe_purge_runtime.py'
+      - 'RavenCloudTaskbar/audit_adobe_purge_index.py'
+      - 'RavenCloudTaskbar/validate_adobe_purge_runtime.py'
+      - 'RavenCloudTaskbar/audit_adobe_production_evidence_index.py'
+      - 'RavenCloudTaskbar/validate_adobe_production_evidence.py'
+      - '.github/workflows/fr0333-adobe-64bit-validate.yml'
+  pull_request:
+    paths:
+      - 'specs/FR-0333-ADOBE-64BIT-REG.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.A.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.B.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.C.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.D.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-INDEX.E.v1.0.5-RC.json'
+      - 'specs/FR-0333-ADOBE-64BIT-PROMOTION.v1.0.5-RC.json'
+      - 'RavenCloudTaskbar/validate_adobe_64bit_reg.py'
+      - 'RavenCloudTaskbar/audit_adobe_64bit_indexes.py'
+      - 'RavenCloudTaskbar/validate_adobe_c2pa_runtime.py'
+      - 'RavenCloudTaskbar/audit_adobe_c2pa_runtime_index.py'
+      - 'RavenCloudTaskbar/adobe_purge_runtime.py'
+      - 'RavenCloudTaskbar/audit_adobe_purge_index.py'
+      - 'RavenCloudTaskbar/validate_adobe_purge_runtime.py'
+      - 'RavenCloudTaskbar/audit_adobe_production_evidence_index.py'
+      - 'RavenCloudTaskbar/validate_adobe_production_evidence.py'
+      - '.github/workflows/fr0333-adobe-64bit-validate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Validate FR-0333 Adobe 64-bit register
+        run: python RavenCloudTaskbar/validate_adobe_64bit_reg.py
+
+      - name: Cross-audit FR-0333 Adobe 64-bit indexes A and B
+        run: python RavenCloudTaskbar/audit_adobe_64bit_indexes.py
+
+      - name: Cross-audit FR-0333 Adobe runtime index C
+        run: python RavenCloudTaskbar/audit_adobe_c2pa_runtime_index.py
+
+      - name: Cross-audit FR-0333 Adobe purge index D
+        run: python RavenCloudTaskbar/audit_adobe_purge_index.py
+
+      - name: Cross-audit FR-0333 Adobe production index E
+        run: python RavenCloudTaskbar/audit_adobe_production_evidence_index.py
+
+      - name: Install pinned c2patool
+        shell: bash
+        run: |
+          set -euo pipefail
+          INDEX='specs/FR-0333-ADOBE-64BIT-INDEX.C.v1.0.5-RC.json'
+          URL="$(python -c "import json; print(json.load(open('$INDEX'))['tool_pin']['linux_x86_64_url'])")"
+          SHA="$(python -c "import json; print(json.load(open('$INDEX'))['tool_pin']['linux_x86_64_sha256'])")"
+          ARCHIVE="$RUNNER_TEMP/c2patool.tar.gz"
+          DEST="$RUNNER_TEMP/c2patool"
+          curl -L --fail --retry 3 --retry-delay 2 "$URL" -o "$ARCHIVE"
+          echo "$SHA  $ARCHIVE" | sha256sum -c -
+          mkdir -p "$DEST"
+          tar -xzf "$ARCHIVE" -C "$DEST"
+          BIN="$(find "$DEST" -type f -name c2patool -print -quit)"
+          test -n "$BIN"
+          chmod +x "$BIN"
+          "$BIN" --version
+          echo "C2PATOOL=$BIN" >> "$GITHUB_ENV"
+
+      - name: Execute real C2PA sign-read-tamper runtime gate
+        run: >
+          python RavenCloudTaskbar/validate_adobe_c2pa_runtime.py
+          --c2patool "$C2PATOOL"
+          --receipt artifacts/fr0333_adobe_c2pa_runtime_receipt.json
+
+      - name: Execute HARD_PURGE lifecycle runtime gate
+        run: >
+          python RavenCloudTaskbar/validate_adobe_purge_runtime.py
+          --receipt artifacts/fr0333_adobe_purge_runtime_receipt.json
+
+      - name: Prove Adobe production gate rejects labelled test signer
+        run: >
+          python RavenCloudTaskbar/validate_adobe_production_evidence.py
+          --c2patool "$C2PATOOL"
+          --self-test
+          --receipt artifacts/fr0333_adobe_production_gate_selftest_receipt.json
+
+      - name: Upload C2PA runtime receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-adobe-c2pa-runtime-receipt
+          path: artifacts/fr0333_adobe_c2pa_runtime_receipt.json
+          if-no-files-found: error
+
+      - name: Upload HARD_PURGE runtime receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-adobe-hard-purge-runtime-receipt
+          path: artifacts/fr0333_adobe_purge_runtime_receipt.json
+          if-no-files-found: error
+
+      - name: Upload Adobe production gate self-test receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-adobe-production-gate-selftest-receipt
+          path: artifacts/fr0333_adobe_production_gate_selftest_receipt.json
+          if-no-files-found: error
