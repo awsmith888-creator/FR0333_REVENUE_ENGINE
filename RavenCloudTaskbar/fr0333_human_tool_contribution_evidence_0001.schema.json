@@ -1,0 +1,513 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
+  "title": "FR0333 Human Tool Contribution Evidence Record",
+  "version": "1.0.0",
+  "state": "SPECIFICATION",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "state",
+    "humanlock",
+    "runtime",
+    "promotion",
+    "source_classification",
+    "rails"
+  ],
+  "properties": {
+    "record_id": {
+      "const": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001"
+    },
+    "state": {
+      "const": "SPECIFICATION"
+    },
+    "humanlock": {
+      "const": true
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "receipt"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "NOT.ESTABLISHED.UNTIL.RECEIPT",
+            "ESTABLISHED.BY.AUTHENTICATED.RECEIPT"
+          ]
+        },
+        "receipt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "promotion": {
+      "const": "CLAIM.SPECIFIC"
+    },
+    "source_classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_name",
+        "evidence_class",
+        "classification_basis",
+        "source_name_used_to_auto_promote"
+      ],
+      "properties": {
+        "source_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_name_used_to_auto_promote": {
+          "const": false
+        }
+      }
+    },
+    "rails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "C.01.ATTRIBUTION",
+        "C.02.ACCESSIBILITY",
+        "C.03.EXECUTION",
+        "C.04.SOURCE.EXTRACTION",
+        "C.05.VERIFICATION"
+      ],
+      "properties": {
+        "C.01.ATTRIBUTION": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applicable",
+            "terminal_state",
+            "evidence_class",
+            "work_performed",
+            "work_credited",
+            "contribution_receipt",
+            "attribution_receipt"
+          ],
+          "properties": {
+            "applicable": {
+              "type": "boolean"
+            },
+            "terminal_state": {
+              "enum": [
+                "T.20.PASS",
+                "U.21.HOLD",
+                "F.6.REJECT"
+              ]
+            },
+            "evidence_class": {
+              "type": "string",
+              "minLength": 1
+            },
+            "work_performed": {
+              "type": "boolean"
+            },
+            "work_credited": {
+              "type": "boolean"
+            },
+            "contribution_receipt": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "attribution_receipt": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "C.02.ACCESSIBILITY": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applicable",
+            "terminal_state",
+            "evidence_class",
+            "content_created",
+            "output_complete",
+            "alt_text_state",
+            "contrast_check_state",
+            "accessibility_gate"
+          ],
+          "properties": {
+            "applicable": {
+              "type": "boolean"
+            },
+            "terminal_state": {
+              "enum": [
+                "T.20.PASS",
+                "U.21.HOLD",
+                "F.6.REJECT"
+              ]
+            },
+            "evidence_class": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content_created": {
+              "type": "boolean"
+            },
+            "output_complete": {
+              "type": "boolean"
+            },
+            "alt_text_state": {
+              "enum": [
+                "COMPLETE",
+                "INCOMPLETE",
+                "NOT.APPLICABLE"
+              ]
+            },
+            "contrast_check_state": {
+              "enum": [
+                "PASS",
+                "FAIL",
+                "NOT.APPLICABLE"
+              ]
+            },
+            "accessibility_gate": {
+              "enum": [
+                "PASS",
+                "HOLD",
+                "NOT.APPLICABLE"
+              ]
+            }
+          }
+        },
+        "C.03.EXECUTION": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applicable",
+            "terminal_state",
+            "evidence_class",
+            "configured",
+            "executed",
+            "command_visible",
+            "authorization_state",
+            "runtime_receipt"
+          ],
+          "properties": {
+            "applicable": {
+              "type": "boolean"
+            },
+            "terminal_state": {
+              "enum": [
+                "T.20.PASS",
+                "U.21.HOLD",
+                "F.6.REJECT"
+              ]
+            },
+            "evidence_class": {
+              "type": "string",
+              "minLength": 1
+            },
+            "configured": {
+              "type": "boolean"
+            },
+            "executed": {
+              "type": "boolean"
+            },
+            "command_visible": {
+              "type": "boolean"
+            },
+            "authorization_state": {
+              "enum": [
+                "AUTHORIZED",
+                "DENIED",
+                "UNKNOWN",
+                "NOT.APPLICABLE"
+              ]
+            },
+            "runtime_receipt": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "C.04.SOURCE.EXTRACTION": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applicable",
+            "terminal_state",
+            "evidence_class",
+            "source_present",
+            "extraction_complete",
+            "extracted_payload_hash",
+            "claim_promotion"
+          ],
+          "properties": {
+            "applicable": {
+              "type": "boolean"
+            },
+            "terminal_state": {
+              "enum": [
+                "T.20.PASS",
+                "U.21.HOLD",
+                "F.6.REJECT"
+              ]
+            },
+            "evidence_class": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_present": {
+              "type": "boolean"
+            },
+            "extraction_complete": {
+              "type": "boolean"
+            },
+            "extracted_payload_hash": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claim_promotion": {
+              "enum": [
+                "CLAIM.SPECIFIC",
+                "HOLD",
+                "REJECTED"
+              ]
+            }
+          }
+        },
+        "C.05.VERIFICATION": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applicable",
+            "terminal_state",
+            "evidence_class",
+            "claim_published",
+            "source_relationship",
+            "verification_class",
+            "independent_corroboration_receipt",
+            "claim_promotion"
+          ],
+          "properties": {
+            "applicable": {
+              "type": "boolean"
+            },
+            "terminal_state": {
+              "enum": [
+                "T.20.PASS",
+                "U.21.HOLD",
+                "F.6.REJECT"
+              ]
+            },
+            "evidence_class": {
+              "type": "string",
+              "minLength": 1
+            },
+            "claim_published": {
+              "type": "boolean"
+            },
+            "source_relationship": {
+              "enum": [
+                "VENDOR",
+                "INDEPENDENT",
+                "PRIMARY.OFFICIAL",
+                "COMMUNITY",
+                "UNKNOWN"
+              ]
+            },
+            "verification_class": {
+              "enum": [
+                "VERIFIED.HISTORICAL",
+                "PRIMARY.OFFICIAL",
+                "COMMUNITY.FEATURE.REQUEST",
+                "UNREADABLE.BUFFER",
+                "VENDOR.SURVEY.DATA",
+                "INDEPENDENT.OUTCOME.STUDY",
+                "UNVERIFIED"
+              ]
+            },
+            "independent_corroboration_receipt": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claim_promotion": {
+              "enum": [
+                "CLAIM.SPECIFIC",
+                "HOLD",
+                "REJECTED"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-fr0333-terminal-states": [
+    "T.20.PASS",
+    "U.21.HOLD",
+    "F.6.REJECT"
+  ],
+  "x-fr0333-hard-invariants": [
+    "WORK.PERFORMED != WORK.CREDITED",
+    "TOOL.CONFIGURED != TOOL.EXECUTED",
+    "COMMAND.VISIBLE != RUNTIME.RECEIPT",
+    "CONTENT.CREATED != CONTENT.ACCESSIBLE",
+    "SOURCE.PRESENT != CONTENT.EXTRACTED",
+    "VENDOR.CLAIM != INDEPENDENT.VERIFICATION",
+    "CLAIM.PUBLISHED != CLAIM.VERIFIED",
+    "EVIDENCE.CLASS MUST.NOT AUTO.PROMOTE BASED.ON SOURCE.NAME"
+  ],
+  "x-fr0333-runtime-boundary": {
+    "local_schema_pass_ne_authenticated_runtime": true,
+    "ci_pass_ne_external_runtime_execution": true,
+    "runtime_receipt_required_for_established_runtime": true
+  },
+  "x-fr0333-rail-contracts": {
+    "C.01.ATTRIBUTION": {
+      "pass_when": {
+        "work_performed": true,
+        "work_credited": true,
+        "contribution_receipt": "NONEMPTY",
+        "attribution_receipt": "NONEMPTY"
+      },
+      "reject_when": [
+        {
+          "work_performed": false,
+          "work_credited": true
+        }
+      ],
+      "otherwise": "U.21.HOLD"
+    },
+    "C.02.ACCESSIBILITY": {
+      "pass_when": {
+        "content_created": true,
+        "output_complete": true,
+        "alt_text_state": "COMPLETE",
+        "contrast_check_state": "PASS",
+        "accessibility_gate": "PASS"
+      },
+      "reject_when": [
+        {
+          "accessibility_gate": "PASS",
+          "output_complete": false
+        },
+        {
+          "accessibility_gate": "PASS",
+          "alt_text_state": "INCOMPLETE"
+        },
+        {
+          "accessibility_gate": "PASS",
+          "contrast_check_state": "FAIL"
+        }
+      ],
+      "otherwise": "U.21.HOLD"
+    },
+    "C.03.EXECUTION": {
+      "pass_when": {
+        "configured": true,
+        "executed": true,
+        "authorization_state": "AUTHORIZED",
+        "runtime_receipt": "NONEMPTY"
+      },
+      "reject_when": [
+        {
+          "executed": false,
+          "runtime_receipt": "NONEMPTY"
+        },
+        {
+          "authorization_state": "DENIED",
+          "runtime_receipt": "NONEMPTY"
+        }
+      ],
+      "otherwise": "U.21.HOLD"
+    },
+    "C.04.SOURCE.EXTRACTION": {
+      "pass_when": {
+        "source_present": true,
+        "extraction_complete": true,
+        "extracted_payload_hash": "SHA256",
+        "claim_promotion": "CLAIM.SPECIFIC"
+      },
+      "reject_when": [
+        {
+          "extraction_complete": false,
+          "claim_promotion": "CLAIM.SPECIFIC"
+        },
+        {
+          "source_present": false,
+          "extraction_complete": true
+        }
+      ],
+      "hold_when": [
+        {
+          "source_present": true,
+          "extraction_complete": false,
+          "claim_promotion": "HOLD"
+        }
+      ],
+      "otherwise": "U.21.HOLD"
+    },
+    "C.05.VERIFICATION": {
+      "pass_any": [
+        {
+          "source_relationship": "VENDOR",
+          "verification_class": "VENDOR.SURVEY.DATA",
+          "claim_promotion": "CLAIM.SPECIFIC"
+        },
+        {
+          "source_relationship": "INDEPENDENT",
+          "verification_class": "INDEPENDENT.OUTCOME.STUDY",
+          "independent_corroboration_receipt": "NONEMPTY",
+          "claim_promotion": "CLAIM.SPECIFIC"
+        },
+        {
+          "verification_class": "VERIFIED.HISTORICAL",
+          "claim_promotion": "CLAIM.SPECIFIC"
+        },
+        {
+          "verification_class": "PRIMARY.OFFICIAL",
+          "claim_promotion": "CLAIM.SPECIFIC"
+        },
+        {
+          "verification_class": "COMMUNITY.FEATURE.REQUEST",
+          "claim_promotion": "HOLD"
+        },
+        {
+          "verification_class": "UNREADABLE.BUFFER",
+          "claim_promotion": "HOLD"
+        }
+      ],
+      "reject_when": [
+        {
+          "source_relationship": "VENDOR",
+          "verification_class": "INDEPENDENT.OUTCOME.STUDY"
+        },
+        {
+          "source_relationship": "INDEPENDENT",
+          "verification_class": "VENDOR.SURVEY.DATA"
+        }
+      ],
+      "otherwise": "U.21.HOLD"
+    }
+  }
+}
