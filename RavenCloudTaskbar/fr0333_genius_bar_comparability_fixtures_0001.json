@@ -1,0 +1,58 @@
+{
+  "id": "FR0333.COMPARABILITY.NORMALIZATION.TESTS.0001",
+  "version": "1.0.0",
+  "state": "SPECIFICATION.FROZEN",
+  "canonicalization_version": "CANONICAL.JSON.V1",
+  "base_record": {
+    "metric_id": "018f4f1e-7c51-7a12-8a34-112233445566",
+    "source_id": "SRC.001",
+    "source_timestamp": "2026-09-11T21:00:00Z",
+    "source_unit": "PERCENT",
+    "source_semantics": {"operator": "RELATIVE.INCREASE", "raw_expression": "grew by 71"},
+    "source_value": 71,
+    "source_range": null,
+    "semantic_type": "RELATIVE.INCREASE",
+    "denominator_id": "US.ADULTS.BASE",
+    "reference_frame": {"base_reference": 100, "field_base": null},
+    "current_reference": {"value": 171, "lower_bound": null, "upper_bound": null},
+    "precision_profile": {
+      "source_qualifier": "EXACT",
+      "precision_state": "EXACT",
+      "uncertainty_lower": null,
+      "uncertainty_upper": null,
+      "rounding_rule": "NONE"
+    },
+    "segmentation_architecture": {
+      "segment_schema_id": null,
+      "segment_id": null,
+      "partition_type": "NOT.APPLICABLE",
+      "aggregation_rule": "NON.ADDITIVE",
+      "weight_basis": null
+    },
+    "comparability_metadata": {
+      "construct_id": "AD.SUPPORTED.EXPOSURE",
+      "population_id": "U.S. ADULTS",
+      "time_basis_id": "Q4.2025",
+      "method_compatibility_class": "TV.VIEWING.SHARE.V1"
+    },
+    "transform_rule": "RELATIVE.INCREASE.BASE100",
+    "transform_version": "v1.0",
+    "transformation_receipt": null,
+    "comparability_key": null,
+    "gate_state": "U.21.HOLD"
+  },
+  "cases": [
+    {"id": "N.01", "purpose": "RELATIVE.INCREASE maps BASE.100 to CURRENT.171", "expected_gate": "T.20.PASS"},
+    {"id": "N.02", "purpose": "OF.BASELINE 71 maps to CURRENT.71 DELTA.-29", "expected_gate": "T.20.PASS"},
+    {"id": "N.03", "purpose": "COMPOSITION.SHARE 74.2 preserves digits under FIELD.100", "expected_gate": "T.20.PASS"},
+    {"id": "N.04", "purpose": "same number with different semantic type generates isolated comparability keys", "expected_gate": "T.20.PASS"},
+    {"id": "N.05", "purpose": "missing denominator cannot normalize", "expected_gate": "U.21.HOLD"},
+    {"id": "N.06", "purpose": "source semantic operator contradicts encoded semantic type", "expected_gate": "F.6.REJECT"},
+    {"id": "N.07", "purpose": "normalized value without transformation receipt is held", "expected_gate": "U.21.HOLD"},
+    {"id": "N.08", "purpose": "APPROX survives normalization and exact-only consumer holds", "expected_normalization_gate": "T.20.PASS", "expected_consumer_gate": "U.21.HOLD"},
+    {"id": "N.09", "purpose": "range bounds reconstruct without midpoint invention", "expected_gate": "T.20.PASS"},
+    {"id": "N.10", "purpose": "time-basis difference fractures comparability key", "expected_gate": "U.21.HOLD"},
+    {"id": "N.11", "purpose": "denominator difference fractures comparability key", "expected_gate": "U.21.HOLD"},
+    {"id": "N.12", "purpose": "inverse transform corruption is rejected", "expected_gate": "F.6.REJECT"}
+  ]
+}
