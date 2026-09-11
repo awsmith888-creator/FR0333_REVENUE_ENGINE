@@ -1,6 +1,8 @@
 # FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001
 
 **State:** `SPECIFICATION`  
+**Golden Chain:** `GC.SB.0028` (`REGISTERED.DRAFT.UNMERGED`)  
+**Predecessor gate:** `GC.SB.0027 MUST EXIST BEFORE 0028 PROMOTION`  
 **HumanLock:** `ACTIVE`  
 **Runtime:** `NOT.ESTABLISHED.UNTIL.RECEIPT`  
 **Promotion:** `CLAIM.SPECIFIC`
@@ -61,9 +63,13 @@ SOURCE.PRESENT != CONTENT.EXTRACTED
 VENDOR.CLAIM != INDEPENDENT.VERIFICATION
 CLAIM.PUBLISHED != CLAIM.VERIFIED
 EVIDENCE.CLASS MUST.NOT AUTO.PROMOTE BASED.ON SOURCE.NAME
+OBSERVATION.AGREEMENT != STATISTICAL.INDEPENDENCE
+UNKNOWN != PASS
+SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE
+GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT
 ```
 
-The final invariant is enforced as a global rejection condition: `source_name_used_to_auto_promote` must always be false.
+The source-name invariant is enforced as a global rejection condition: `source_name_used_to_auto_promote` must always be false.
 
 ## Rails
 
@@ -97,6 +103,42 @@ Vendor survey data can pass only as correctly classified vendor evidence. It can
 
 An `INDEPENDENT.OUTCOME.STUDY` pass requires an independent source relationship and a corroboration receipt.
 
+## Linked specification — transcript confidence
+
+`FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001` v0.12 is a child reference of this rail.
+
+Its controlling boundaries are:
+
+```text
+RAW.ASR.CONFIDENCE != CALIBRATED.EXACTNESS.PROBABILITY
+OBSERVATION.AGREEMENT != STATISTICAL.INDEPENDENCE
+UNFITTED.C12 = UNKNOWN
+UNKNOWN != PASS
+R.4.CRITICAL -> HUMAN.AUTHORIZATION.REQUIRED
+```
+
+The `.85/.95/.99` thresholds remain initial specification values only. They may not be promoted to runtime thresholds until fitted and evaluated against human-adjudicated, speaker-separated and call-separated calibration data. Cross-engine evaluation of the same audio is useful corroboration but is not presumed statistically independent.
+
+## Linked governing reference — public benefit human-centered layer
+
+`FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001` v0.20 remains parented to `SYSTEM.ROOT` and is linked here as a governing reference.
+
+```text
+STRICT.SYSTEM -> COMPASSIONATE.INTERFACE
+ABSORB.COMPLEXITY.PROTECT.ACCESS
+FALSE.DENIAL.RATE = CONTROLLING.PUBLIC.BENEFIT.FAILURE.METRIC
+SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE
+NO.SILENT.DENIAL
+```
+
+`U.21.HOLD` is protective: system uncertainty cannot itself trigger an automatic adverse action. Existing access may be preserved only when applicable law, policy, and program authority permit it; the system never invents continuation authority.
+
+## Golden Chain package
+
+`fr0333_golden_chain_gc_sb_0028.json` binds the primary evidence rail, transcript-confidence child reference, public-benefit governing reference, and three SHA-256-bound North Star visual artifacts.
+
+The visual artifacts are symbolic design assets. They are explicitly `NOT.EVIDENCE` and cannot promote any factual or runtime claim.
+
 ## Evidence boundary
 
 A source name, institution, publisher, repository, signature, or vendor brand does not determine evidence class. Evidence class is claim-specific and must be justified by an explicit classification basis.
@@ -106,5 +148,6 @@ A source name, institution, publisher, repository, signature, or vendor brand do
 ```text
 LOCAL.SCHEMA.PASS != AUTHENTICATED.RUNTIME
 CI.PASS != EXTERNAL.RUNTIME.EXECUTION
+GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT
 RUNTIME.RECEIPT = null UNTIL AUTHENTICATED.RUNTIME IS OBSERVED
 ```
