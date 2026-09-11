@@ -46,6 +46,15 @@
       "role": "LONDON.RAVEN.SMITH.EMBLEM.SYMBOLIC.NOT.EVIDENCE"
     }
   ],
+  "text_artifacts": [
+    {
+      "name": "LONDON_RAVEN_SMITH_NORTH_STAR.md",
+      "sha256": "6c284a4ebc51f35d3c5966777d6159ff19f0c6db1f5b82a56fdec8d6c2e8301f",
+      "library_path": "/FR0333/GoldenChain/GC.SB.0028/LONDON_RAVEN_SMITH_NORTH_STAR.md",
+      "repository_path": "RavenCloudTaskbar/LONDON_RAVEN_SMITH_NORTH_STAR.md",
+      "role": "SYMBOLIC.ARTIFACT.NOT.EVIDENCE"
+    }
+  ],
   "hard_boundaries": [
     "CI.PASS != EXTERNAL.RUNTIME",
     "SYMBOLIC.ARTIFACT != EVIDENCE",
