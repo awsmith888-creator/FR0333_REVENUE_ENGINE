@@ -11,26 +11,47 @@ from RavenCloudTaskbar.ai_image_tool_metrics import (
 
 
 class AIImageToolMetricsTests(unittest.TestCase):
-    def change(self, state=EvidenceState.VERIFIED_RELEASE, receipt="RUN.001"):
+    def change(
+        self,
+        state=EvidenceState.VERIFIED_RELEASE,
+        availability_receipt="AVAILABLE.001",
+        runtime_receipt=None,
+        capability=Capability.OUTPUT_9_16,
+        consequence=3,
+    ):
         return ToolChange(
             record_id="AIT.0001",
             tool="TEST.TOOL",
-            capability=Capability.OUTPUT_9_16,
+            capability=capability,
             observed_at=datetime(2026, 9, 11, tzinfo=timezone.utc),
             evidence_state=state,
-            consequence=3,
+            consequence=consequence,
             source_url="https://example.test/release",
             change="Native portrait output added",
             workflow_effect="Removes manual crop step",
-            runtime_receipt=receipt,
+            availability_receipt=availability_receipt,
+            runtime_receipt=runtime_receipt,
         )
 
     def test_golden_chain_binding(self):
         self.assertEqual(GOLDEN_CHAIN_ID, "GC.SB.0027")
 
-    def test_verified_release_requires_runtime_receipt(self):
+    def test_verified_release_requires_availability_receipt(self):
         with self.assertRaises(ValueError):
-            self.change(receipt=None)
+            self.change(availability_receipt=None)
+
+    def test_release_availability_does_not_imply_runtime_verification(self):
+        record = self.change()
+        self.assertFalse(record.runtime_verified)
+
+    def test_verified_runtime_reliability_requires_runtime_receipt(self):
+        with self.assertRaises(ValueError):
+            self.change(capability=Capability.RUNTIME_RELIABILITY)
+        record = self.change(
+            capability=Capability.RUNTIME_RELIABILITY,
+            runtime_receipt="RUN.001",
+        )
+        self.assertTrue(record.runtime_verified)
 
     def test_evidence_lanes_remain_separate(self):
         preview = ToolChange(
@@ -53,7 +74,21 @@ class AIImageToolMetricsTests(unittest.TestCase):
         record = self.change()
         self.assertEqual(record.metric, 9)
         report = compile_report([record])
-        self.assertEqual(report["capability_metric_totals"]["OUTPUT_9_16"], 9)
+        self.assertEqual(
+            report["capability_metrics_by_evidence"]["VERIFIED_RELEASE"]["OUTPUT_9_16"],
+            9,
+        )
+
+    def test_cross_lane_totals_are_not_emitted(self):
+        report = compile_report([self.change()])
+        self.assertNotIn("capability_metric_totals", report)
+        self.assertTrue(report["gate"]["cross_lane_aggregation_forbidden"])
+
+    def test_non_integer_consequence_rejected(self):
+        with self.assertRaises(TypeError):
+            self.change(consequence=2.5)
+        with self.assertRaises(TypeError):
+            self.change(consequence=True)
 
     def test_duplicate_ids_rejected(self):
         with self.assertRaises(ValueError):

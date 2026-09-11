@@ -46,6 +46,7 @@ class ToolChange:
     source_url: str
     change: str
     workflow_effect: str
+    availability_receipt: str | None = None
     runtime_receipt: str | None = None
 
     def __post_init__(self) -> None:
@@ -54,16 +55,28 @@ class ToolChange:
         if self.observed_at.tzinfo is None or self.observed_at.utcoffset() is None:
             raise ValueError("observed_at must be timezone-aware")
         object.__setattr__(self, "observed_at", self.observed_at.astimezone(timezone.utc))
+        if isinstance(self.consequence, bool) or not isinstance(self.consequence, int):
+            raise TypeError("consequence must be an integer")
         if not 0 <= self.consequence <= 3:
             raise ValueError("consequence must be an integer from 0 through 3")
         if not self.source_url.startswith(("https://", "http://")):
             raise ValueError("source_url must be an HTTP(S) URL")
-        if self.evidence_state is EvidenceState.VERIFIED_RELEASE and not self.runtime_receipt:
-            raise ValueError("VERIFIED_RELEASE requires a runtime_receipt")
+        if self.evidence_state is EvidenceState.VERIFIED_RELEASE and not self.availability_receipt:
+            raise ValueError("VERIFIED_RELEASE requires an availability_receipt")
+        if (
+            self.evidence_state is EvidenceState.VERIFIED_RELEASE
+            and self.capability is Capability.RUNTIME_RELIABILITY
+            and not self.runtime_receipt
+        ):
+            raise ValueError("verified RUNTIME_RELIABILITY requires a runtime_receipt")
 
     @property
     def metric(self) -> int:
         return EVIDENCE_WEIGHT[self.evidence_state] * self.consequence
+
+    @property
+    def runtime_verified(self) -> bool:
+        return self.runtime_receipt is not None
 
 
 def compile_report(changes: Iterable[ToolChange]) -> dict[str, object]:
@@ -72,27 +85,33 @@ def compile_report(changes: Iterable[ToolChange]) -> dict[str, object]:
         raise ValueError("record_id values must be unique")
 
     lanes = {state.value: [] for state in EvidenceState}
-    capability_totals = {capability.value: 0 for capability in Capability}
+    metrics_by_evidence = {
+        state.value: {capability.value: 0 for capability in Capability}
+        for state in EvidenceState
+    }
     for item in records:
         serialized = asdict(item)
         serialized["capability"] = item.capability.value
         serialized["evidence_state"] = item.evidence_state.value
         serialized["observed_at"] = item.observed_at.isoformat()
         serialized["metric"] = item.metric
+        serialized["runtime_verified"] = item.runtime_verified
         lanes[item.evidence_state.value].append(serialized)
-        capability_totals[item.capability.value] += item.metric
+        metrics_by_evidence[item.evidence_state.value][item.capability.value] += item.metric
 
     return {
         "module": MODULE_ID,
         "golden_chain": GOLDEN_CHAIN_ID,
         "version": VERSION,
         "record_count": len(records),
-        "capability_metric_totals": capability_totals,
+        "capability_metrics_by_evidence": metrics_by_evidence,
         "evidence_lanes": lanes,
         "gate": {
             "verified_release_ne_preview": True,
             "preview_ne_vendor_claim": True,
             "vendor_claim_ne_runtime_receipt": True,
+            "release_availability_ne_runtime_verification": True,
+            "cross_lane_aggregation_forbidden": True,
             "observed_ne_correlated_ne_causal": True,
         },
     }

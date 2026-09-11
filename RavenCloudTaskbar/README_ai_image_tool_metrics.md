@@ -12,7 +12,7 @@ It is a manual, runnable metrics rail. It does not create a scheduled task, moni
 - Batch and split workflows
 - Runtime reliability
 
-Each change receives a consequence rank from `0` through `3`. Evidence weights are `3` for a verified release, `2` for a preview, `1` for a vendor claim, and `0` for unverified material. The deterministic metric is evidence weight multiplied by consequence, producing `0` through `9`. It is not a percentage.
+Each change receives a consequence rank from `0` through `3`. Evidence weights are `3` for a verified release, `2` for a preview, `1` for a vendor claim, and `0` for unverified material. The deterministic metric is evidence weight multiplied by consequence, producing `0` through `9`. It is not a percentage. Metrics are totaled only inside their evidence lane; no combined total may mix verified releases with previews or claims.
 
 ## Evidence gate
 
@@ -20,7 +20,7 @@ Each change receives a consequence rank from `0` through `3`. Evidence weights a
 
 `OBSERVED != CORRELATED != CAUSAL`
 
-A verified release requires a runtime receipt. A release announcement without runtime evidence remains a vendor claim or preview. Records remain separated by evidence lane in every compiled report.
+A verified release requires an availability receipt. Release availability does not establish runtime verification. Runtime reliability requires its own runtime receipt before it may enter the verified-release lane. Records remain separated by evidence lane in every compiled report.
 
 ## Run
 
