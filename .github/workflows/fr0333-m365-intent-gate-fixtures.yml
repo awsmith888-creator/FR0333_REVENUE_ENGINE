@@ -25,5 +25,7 @@ jobs:
           python -m json.tool M365IntentGate/receipt.json >/dev/null
       - name: Run deterministic fixture tests
         run: python -m unittest M365IntentGate.test_m365_intent_gate_metrics -v
+      - name: Run deterministic review-policy tests
+        run: python -m unittest M365IntentGate.test_review_policy -v
       - name: Rebuild and compare receipt
         run: python -m M365IntentGate.run_fixture_suite > /tmp/receipt.json && cmp /tmp/receipt.json M365IntentGate/receipt.json
