@@ -39,7 +39,7 @@ Hard boundaries include `TOOL.CONFIGURED != TOOL.EXECUTED`, `SOURCE.PRESENT != C
 
 ## Golden Chain GC.SB.0028 package
 
-The evidence gate is now registered in the draft Golden Chain package `GC.SB.0028` as `FR0333.HUMAN.CENTERED.EVIDENCE.ACCESS.PACKAGE.0001`.
+The evidence gate is registered in the draft Golden Chain package `GC.SB.0028` as `FR0333.HUMAN.CENTERED.EVIDENCE.ACCESS.PACKAGE.0001`.
 
 Linked specifications:
 
@@ -50,6 +50,28 @@ Three North Star visual artifacts are hash-bound in `fr0333_golden_chain_gc_sb_0
 
 `GC.SB.0028` remains `REGISTERED.DRAFT.UNMERGED`. Promotion requires `GC.SB.0027` to exist in target history first, preserving Golden Chain order.
 
-The base local fixture suite is 10 tests and the extension suite adds 12 deterministic tests. These establish schema/spec behavior only. `RUNTIME = NOT.ESTABLISHED.UNTIL.RECEIPT` remains controlling; neither local validation nor CI can manufacture an authenticated external runtime receipt.
+The base local fixture suite is 10 tests and the human-centered extension suite adds 12 deterministic tests. These establish schema/spec behavior only. `RUNTIME = NOT.ESTABLISHED.UNTIL.RECEIPT` remains controlling; neither local validation nor CI can manufacture an authenticated external runtime receipt.
 
-See `README_human_tool_contribution_evidence.md`, `human_tool_contribution_evidence_inventory.json`, and `fr0333_golden_chain_gc_sb_0028.json`.
+## Golden Chain GC.SB.0029 public-litigation evidence register
+
+`FR0333.TRUMP.BBC.DEFAMATION.LITIGATION.EVIDENCE.0001` is registered at draft position `GC.SB.0029` with predecessor `GC.SB.0028`.
+
+The record preserves the public procedural state of *Donald J. Trump v. British Broadcasting Corporation et al.* while preventing procedural events or party positions from being promoted into final merits conclusions.
+
+Controlling boundaries:
+
+```text
+ACKNOWLEDGED.MISLEADING.EDIT != DEFAMATION.LIABILITY
+DISCOVERY.RESISTANCE != FEAR.PROVEN
+AMENDED.DAMAGES.THEORY != MOTIVE.PROVEN
+ACTIVE.CASE != FINAL.WINNER
+TRIAL.SCHEDULED != LIABILITY.ESTABLISHED
+PARTY.ASSERTION != COURT.FINDING
+PROCEDURAL.DELAY != MERITS.VICTORY
+```
+
+Current register state is `U.21.HOLD` because liability, final damages and final outcome remain unresolved. `GC.SB.0029` is `REGISTERED.DRAFT.UNMERGED`; it cannot be promoted until `GC.SB.0028` exists in target history and the current head passes review and CI.
+
+The litigation rail adds 12 deterministic evidence-boundary tests. Combined expected validation count for this package is now 34 tests: 10 base, 12 human-centered extension, and 12 litigation-evidence tests.
+
+See `human_tool_contribution_evidence_inventory.json`, `fr0333_trump_bbc_litigation_evidence_0001.json`, `fr0333_golden_chain_gc_sb_0029.json`, and `test_trump_bbc_litigation_evidence.py`.
