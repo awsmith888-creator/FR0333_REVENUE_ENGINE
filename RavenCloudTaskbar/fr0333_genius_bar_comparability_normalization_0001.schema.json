@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fr0333:genius-bar:comparability-normalization:0001",
+  "title": "FR0333.GENIUS.BAR.COMPARABILITY.NORMALIZATION.0001",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metric_id",
+    "source_id",
+    "source_timestamp",
+    "source_unit",
+    "source_semantics",
+    "source_value",
+    "source_range",
+    "semantic_type",
+    "denominator_id",
+    "reference_frame",
+    "current_reference",
+    "precision_profile",
+    "segmentation_architecture",
+    "comparability_metadata",
+    "transform_rule",
+    "transform_version",
+    "transformation_receipt",
+    "comparability_key",
+    "gate_state"
+  ],
+  "properties": {
+    "metric_id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "source_id": {"type": "string", "minLength": 1},
+    "source_timestamp": {"type": "string", "format": "date-time"},
+    "source_unit": {"type": "string", "not": {"pattern": "%"}},
+    "source_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operator", "raw_expression"],
+      "properties": {
+        "operator": {"enum": ["RELATIVE.INCREASE", "OF.BASELINE", "COMPOSITION.SHARE"]},
+        "raw_expression": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_value": {"type": ["number", "null"]},
+    "source_range": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lower", "upper"],
+          "properties": {
+            "lower": {"type": "number"},
+            "upper": {"type": "number"}
+          }
+        }
+      ]
+    },
+    "semantic_type": {"enum": ["RELATIVE.INCREASE", "OF.BASELINE", "COMPOSITION.SHARE"]},
+    "denominator_id": {"type": "string", "minLength": 1},
+    "reference_frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_reference", "field_base"],
+      "properties": {
+        "base_reference": {"type": ["number", "null"]},
+        "field_base": {"type": ["number", "null"]}
+      }
+    },
+    "current_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "lower_bound", "upper_bound"],
+      "properties": {
+        "value": {"type": ["number", "null"]},
+        "lower_bound": {"type": ["number", "null"]},
+        "upper_bound": {"type": ["number", "null"]}
+      }
+    },
+    "precision_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_qualifier", "precision_state", "uncertainty_lower", "uncertainty_upper", "rounding_rule"],
+      "properties": {
+        "source_qualifier": {"enum": ["EXACT", "APPROX", "RANGE", "LOWER.BOUND", "UPPER.BOUND"]},
+        "precision_state": {"enum": ["EXACT", "APPROX"]},
+        "uncertainty_lower": {"type": ["number", "null"]},
+        "uncertainty_upper": {"type": ["number", "null"]},
+        "rounding_rule": {"enum": ["NONE", "HALF_UP_2", "HALF_UP_4"]}
+      }
+    },
+    "segmentation_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["segment_schema_id", "segment_id", "partition_type", "aggregation_rule", "weight_basis"],
+      "properties": {
+        "segment_schema_id": {"type": ["string", "null"]},
+        "segment_id": {"type": ["string", "null"]},
+        "partition_type": {"enum": ["EXCLUSIVE", "OVERLAPPING", "NOT.APPLICABLE"]},
+        "aggregation_rule": {"enum": ["SUMMABLE", "NON.ADDITIVE", "WEIGHTED.AVERAGE"]},
+        "weight_basis": {"type": ["string", "null"]}
+      }
+    },
+    "comparability_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["construct_id", "population_id", "time_basis_id", "method_compatibility_class"],
+      "properties": {
+        "construct_id": {"type": "string", "minLength": 1},
+        "population_id": {"type": "string", "minLength": 1},
+        "time_basis_id": {"type": "string", "minLength": 1},
+        "method_compatibility_class": {"type": "string", "minLength": 1}
+      }
+    },
+    "transform_rule": {"enum": ["RELATIVE.INCREASE.BASE100", "OF.BASELINE.BASE100", "COMPOSITION.SHARE.FIELD100"]},
+    "transform_version": {"type": "string", "pattern": "^v[0-9]+\\.[0-9]+$"},
+    "transformation_receipt": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "semantic_type",
+            "source_qualifier",
+            "transform_rule",
+            "transform_version",
+            "base_used",
+            "field_base_used",
+            "source_value_snapshot",
+            "source_range_snapshot",
+            "current_reference_snapshot",
+            "canonicalization_version"
+          ],
+          "properties": {
+            "semantic_type": {"enum": ["RELATIVE.INCREASE", "OF.BASELINE", "COMPOSITION.SHARE"]},
+            "source_qualifier": {"enum": ["EXACT", "APPROX", "RANGE", "LOWER.BOUND", "UPPER.BOUND"]},
+            "transform_rule": {"type": "string"},
+            "transform_version": {"type": "string"},
+            "base_used": {"type": ["number", "null"]},
+            "field_base_used": {"type": ["number", "null"]},
+            "source_value_snapshot": {"type": ["number", "null"]},
+            "source_range_snapshot": {"type": ["object", "null"]},
+            "current_reference_snapshot": {"type": "object"},
+            "canonicalization_version": {"const": "CANONICAL.JSON.V1"}
+          }
+        }
+      ]
+    },
+    "comparability_key": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "gate_state": {"enum": ["U.21.HOLD", "F.6.REJECT", "T.20.PASS"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"semantic_type": {"const": "COMPOSITION.SHARE"}}},
+      "then": {
+        "properties": {
+          "reference_frame": {
+            "properties": {
+              "base_reference": {"type": "null"},
+              "field_base": {"const": 100}
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "reference_frame": {
+            "properties": {
+              "base_reference": {"const": 100},
+              "field_base": {"type": "null"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"precision_profile": {"properties": {"source_qualifier": {"const": "RANGE"}}}}},
+      "then": {
+        "properties": {
+          "source_value": {"type": "null"},
+          "source_range": {"type": "object"},
+          "current_reference": {
+            "properties": {
+              "value": {"type": "null"},
+              "lower_bound": {"type": "number"},
+              "upper_bound": {"type": "number"}
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "source_value": {"type": "number"},
+          "source_range": {"type": "null"},
+          "current_reference": {"properties": {"value": {"type": "number"}}}
+        }
+      }
+    }
+  ]
+}
