@@ -1,0 +1,50 @@
+{
+  "golden_chain_id": "GC.SB.0030",
+  "state": "REGISTERED.DRAFT.UNMERGED",
+  "predecessor": "GC.SB.0029",
+  "predecessor_requirement": "GC.SB.0029 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0030 IS PROMOTED",
+  "package_id": "FR0333.GENIUS.BAR.COMPARABILITY.NORMALIZATION.0001",
+  "classification": "MEASUREMENT.NORMALIZATION.AND.SEMANTIC.BINDING",
+  "humanlock": true,
+  "promotion": "HOLD.UNTIL.PREDECESSOR.MERGE.ORDER.REVIEW.AND.CURRENT.CI.SATISFIED",
+  "state_machine": ["T.20.PASS", "U.21.HOLD", "F.6.REJECT"],
+  "pipeline": [
+    "RAW.STATISTIC",
+    "STRUCTURAL.SCHEMA",
+    "SEMANTIC.INVARIANT.VALIDATOR",
+    "DENOMINATOR.LOCK",
+    "REFERENCE.FRAME.LOCK",
+    "NORMALIZE",
+    "REVERSIBILITY.GATE",
+    "CANONICAL.JSON.V1",
+    "SHA256.COMPARABILITY.KEY",
+    "CONSUMER.CAPABILITY.GATE",
+    "OUTPUT.REPORT"
+  ],
+  "implementation_files": [
+    "RavenCloudTaskbar/fr0333_genius_bar_comparability_normalization_0001.schema.json",
+    "RavenCloudTaskbar/fr0333_genius_bar_comparability_normalization_0001.py",
+    "RavenCloudTaskbar/fr0333_genius_bar_comparability_fixtures_0001.json",
+    "RavenCloudTaskbar/test_fr0333_genius_bar_comparability_normalization.py"
+  ],
+  "hard_boundaries": [
+    "DATABASE.NORMALIZATION.ANALOGY != MEASUREMENT.NORMALIZATION.PROOF",
+    "EXACT.CANONICAL.DECIMAL.EQUALITY != RAW.BYTE.IDENTITY",
+    "FORMATTING.DIFFERENCE != SEMANTIC.DIFFERENCE",
+    "RAW.STATE != CANONICAL.STATE",
+    "NUMERIC.IDENTITY != SEMANTIC.IDENTITY",
+    "REVERSIBLE.REPRESENTATION != EXACT.UNDERLYING.TRUTH",
+    "VALID.RECORD != VALID.FOR.EVERY.USE",
+    "NORMALIZED != COMPARABLE",
+    "COMPARABLE != CONSUMER.COMPATIBLE",
+    "SCHEMA.VALID != SEMANTICALLY.VALID",
+    "SPECIFICATION.PASS != IMPLEMENTATION.PASS",
+    "IMPLEMENTATION.PASS != RUNTIME.ENFORCEMENT",
+    "HASH_BOUND.RECEIPT != CRYPTOGRAPHICALLY.SIGNED.RECEIPT"
+  ],
+  "receipt_policy": {
+    "ci_receipt_class": "HASH_BOUND.DETERMINISTIC.EXECUTION.RECEIPT",
+    "cryptographic_signature": "NOT.ESTABLISHED",
+    "external_runtime": "NOT.ESTABLISHED"
+  }
+}
