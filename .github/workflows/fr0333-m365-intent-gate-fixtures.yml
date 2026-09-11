@@ -1,0 +1,29 @@
+name: FR0333 M365 Intent Gate Fixtures
+
+on:
+  pull_request:
+    paths:
+      - "M365IntentGate/**"
+      - ".github/workflows/fr0333-m365-intent-gate-fixtures.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate JSON
+        run: |
+          python -m json.tool M365IntentGate/fixtures.json >/dev/null
+          python -m json.tool M365IntentGate/inventory.json >/dev/null
+          python -m json.tool M365IntentGate/receipt.json >/dev/null
+      - name: Run deterministic fixture tests
+        run: python -m unittest M365IntentGate.test_m365_intent_gate_metrics -v
+      - name: Rebuild and compare receipt
+        run: python -m M365IntentGate.run_fixture_suite > /tmp/receipt.json && cmp /tmp/receipt.json M365IntentGate/receipt.json
