@@ -1,7 +1,7 @@
 {
   "id": "FR0333.AI.IMAGE.TOOL.METRICS.0001",
   "golden_chain_id": "GC.SB.0027",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "state": "LOCAL_TEST_VERIFIED",
   "purpose": "Measure consequential image-generation and photo-editing workflow changes without promoting previews or vendor claims to verified releases.",
   "capabilities": [
@@ -24,5 +24,17 @@
   "runtime_gate": "RELEASE_AVAILABILITY_DOES_NOT_ESTABLISH_RUNTIME_VERIFICATION",
   "automation": "NONE",
   "humanlock": true,
-  "governing_gate": "VERIFIED_RELEASE != PREVIEW != VENDOR_CLAIM; OBSERVED != CORRELATED != CAUSAL"
+  "governing_gate": "VERIFIED_RELEASE != PREVIEW != VENDOR_CLAIM; OBSERVED != CORRELATED != CAUSAL",
+  "child_reference_packs": [
+    {
+      "id": "FR0333.ADOBE.MARIAH.CAREY.CHOMP.0001",
+      "version": "1.0.0",
+      "state": "LOCAL_TEST_VERIFIED",
+      "binding": "CHILD_REFERENCE_PACK_NO_NEW_GLOBAL_POSITION",
+      "bits": 60,
+      "holds": 7,
+      "usage_scope": "REFERENCE_CONTEXT_ONLY",
+      "external_adobe_runtime_claimed": false
+    }
+  ]
 }
