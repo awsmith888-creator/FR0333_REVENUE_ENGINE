@@ -8,6 +8,10 @@ on:
       - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.py'
       - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_fixtures.json'
       - 'RavenCloudTaskbar/test_human_tool_contribution_evidence.py'
+      - 'RavenCloudTaskbar/fr0333_transcript_confidence_humanlock_0001.json'
+      - 'RavenCloudTaskbar/fr0333_public_benefit_human_centered_0001.json'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0028.json'
+      - 'RavenCloudTaskbar/test_human_centered_extensions.py'
       - 'RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json'
       - '.github/workflows/fr0333-human-tool-evidence-validate.yml'
   push:
@@ -18,6 +22,10 @@ on:
       - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.py'
       - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_fixtures.json'
       - 'RavenCloudTaskbar/test_human_tool_contribution_evidence.py'
+      - 'RavenCloudTaskbar/fr0333_transcript_confidence_humanlock_0001.json'
+      - 'RavenCloudTaskbar/fr0333_public_benefit_human_centered_0001.json'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0028.json'
+      - 'RavenCloudTaskbar/test_human_centered_extensions.py'
       - 'RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json'
       - '.github/workflows/fr0333-human-tool-evidence-validate.yml'
 
@@ -39,18 +47,25 @@ jobs:
           python -m json.tool RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.schema.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_fixtures.json >/dev/null
           python -m json.tool RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_transcript_confidence_humanlock_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_public_benefit_human_centered_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0028.json >/dev/null
       - name: Run deterministic gate tests
         run: |
           cd RavenCloudTaskbar
-          python -m unittest -v test_human_tool_contribution_evidence.py
+          python -m unittest -v test_human_tool_contribution_evidence.py test_human_centered_extensions.py
       - name: Write evidence boundary summary
         run: |
           cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
-          ## FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001
+          ## FR0333 Human-Centered Evidence Package
 
-          - Schema and fixtures parse as JSON.
-          - Deterministic C.01-C.05 validator tests passed.
-          - CI validates schema behavior only.
+          - `FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001` schema and fixtures validate.
+          - `FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001` v0.12 validates as SPECIFICATION.
+          - `FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001` v0.20 validates as SYSTEM.ROOT governing reference.
+          - `GC.SB.0028` manifest parses and remains REGISTERED.DRAFT.UNMERGED.
+          - 22 deterministic tests are expected across base and extension suites.
+          - CI validates schema/spec behavior only.
           - CI does not establish authenticated external runtime execution.
           - `RUNTIME.RECEIPT` remains unestablished until separately observed.
+          - `GC.SB.0027` must exist in target history before `GC.SB.0028` promotion.
           EOF
