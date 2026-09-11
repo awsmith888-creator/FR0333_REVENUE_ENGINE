@@ -1,0 +1,57 @@
+{
+  "golden_chain_id": "GC.SB.0028",
+  "state": "REGISTERED.DRAFT.UNMERGED",
+  "predecessor": "GC.SB.0027",
+  "predecessor_requirement": "GC.SB.0027 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0028 IS PROMOTED",
+  "package_id": "FR0333.HUMAN.CENTERED.EVIDENCE.ACCESS.PACKAGE.0001",
+  "humanlock": true,
+  "promotion": "HOLD.UNTIL.MERGE.ORDER.AND.REVIEW.SATISFIED",
+  "primary_module": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
+  "linked_modules": [
+    {
+      "id": "FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001",
+      "version": "0.12",
+      "relationship": "CHILD.REFERENCE",
+      "state": "SPECIFICATION"
+    },
+    {
+      "id": "FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001",
+      "version": "0.20",
+      "relationship": "SYSTEM.ROOT.GOVERNING.REFERENCE",
+      "state": "SPECIFICATION"
+    }
+  ],
+  "north_star": {
+    "design_maxim": "STRICT.SYSTEM -> COMPASSIONATE.INTERFACE",
+    "objective": "ABSORB.COMPLEXITY.PROTECT.ACCESS",
+    "mission": "USE RIGOROUS SYSTEMS SO PEOPLE DO NOT HAVE TO FIGHT THE SYSTEM ALONE"
+  },
+  "visual_artifacts": [
+    {
+      "name": "north_star_a_brighter_tomorrow.png",
+      "sha256": "4e373650867979d9e3e2c91984c34c72629f95c6e6ba14825f4af96a6cdaf1c6",
+      "library_path": "/FR0333/GoldenChain/GC.SB.0028/north_star_a_brighter_tomorrow.png",
+      "role": "SYMBOLIC.ARTIFACT.NOT.EVIDENCE"
+    },
+    {
+      "name": "luminous_cosmic_compass_rose.png",
+      "sha256": "beab4e5c8c37742e601957b50bca2f44b72fa55f5acf6ca0a14d991db8fa67fe",
+      "library_path": "/FR0333/GoldenChain/GC.SB.0028/luminous_cosmic_compass_rose.png",
+      "role": "SYMBOLIC.ARTIFACT.NOT.EVIDENCE"
+    },
+    {
+      "name": "celestial_raven_compass_emblem.png",
+      "sha256": "79b5333218c86030dd14f19ca3336185b7d3dbc55a6b527a003d629cc220ee27",
+      "library_path": "/FR0333/GoldenChain/GC.SB.0028/celestial_raven_compass_emblem.png",
+      "role": "LONDON.RAVEN.SMITH.EMBLEM.SYMBOLIC.NOT.EVIDENCE"
+    }
+  ],
+  "hard_boundaries": [
+    "CI.PASS != EXTERNAL.RUNTIME",
+    "SYMBOLIC.ARTIFACT != EVIDENCE",
+    "AGREEMENT != PROOF",
+    "UNKNOWN != PASS",
+    "SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE",
+    "GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT"
+  ]
+}
