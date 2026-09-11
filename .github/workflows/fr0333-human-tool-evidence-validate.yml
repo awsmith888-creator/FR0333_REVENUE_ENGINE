@@ -1,0 +1,56 @@
+name: FR0333 Human Tool Contribution Evidence Validate
+
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/README_human_tool_contribution_evidence.md'
+      - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.schema.json'
+      - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.py'
+      - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_fixtures.json'
+      - 'RavenCloudTaskbar/test_human_tool_contribution_evidence.py'
+      - 'RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json'
+      - '.github/workflows/fr0333-human-tool-evidence-validate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'RavenCloudTaskbar/README_human_tool_contribution_evidence.md'
+      - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.schema.json'
+      - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.py'
+      - 'RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_fixtures.json'
+      - 'RavenCloudTaskbar/test_human_tool_contribution_evidence.py'
+      - 'RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json'
+      - '.github/workflows/fr0333-human-tool-evidence-validate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate JSON payloads
+        run: |
+          python -m json.tool RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_0001.schema.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_human_tool_contribution_evidence_fixtures.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json >/dev/null
+      - name: Run deterministic gate tests
+        run: |
+          cd RavenCloudTaskbar
+          python -m unittest -v test_human_tool_contribution_evidence.py
+      - name: Write evidence boundary summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ## FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001
+
+          - Schema and fixtures parse as JSON.
+          - Deterministic C.01-C.05 validator tests passed.
+          - CI validates schema behavior only.
+          - CI does not establish authenticated external runtime execution.
+          - `RUNTIME.RECEIPT` remains unestablished until separately observed.
+          EOF
