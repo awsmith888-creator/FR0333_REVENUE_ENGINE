@@ -1,0 +1,25 @@
+{
+  "id": "FR0333.AI.IMAGE.TOOL.METRICS.0001",
+  "golden_chain_id": "GC.SB.0027",
+  "version": "1.0.0",
+  "state": "LOCAL_RUNTIME_VERIFIED",
+  "purpose": "Measure consequential image-generation and photo-editing workflow changes without promoting previews or vendor claims to verified releases.",
+  "capabilities": [
+    "IDENTITY_PRESERVATION",
+    "REMASTERING",
+    "OUTPUT_9_16",
+    "BATCH_SPLIT",
+    "RUNTIME_RELIABILITY"
+  ],
+  "evidence_states": [
+    "VERIFIED_RELEASE",
+    "PREVIEW",
+    "VENDOR_CLAIM",
+    "UNVERIFIED"
+  ],
+  "metric_formula": "EVIDENCE_WEIGHT_TIMES_CONSEQUENCE",
+  "metric_range": "0.9",
+  "automation": "NONE",
+  "humanlock": true,
+  "governing_gate": "VERIFIED_RELEASE != PREVIEW != VENDOR_CLAIM; OBSERVED != CORRELATED != CAUSAL"
+}
