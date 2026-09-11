@@ -1,7 +1,7 @@
 {
   "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
   "version": "1.1.0",
-  "state": "SPECIFICATION_CI_REVALIDATION_PENDING",
+  "state": "SPECIFICATION_CI_GATE_ACTIVE",
   "golden_chain_position": "GC.SB.0028",
   "golden_chain_state": "REGISTERED.DRAFT.UNMERGED",
   "golden_chain_predecessor": "GC.SB.0027",
@@ -49,12 +49,15 @@
   "local_verification": {
     "base_tests": 10,
     "extension_tests": 12,
-    "expected_total": 22,
-    "scope": "SCHEMA_AND_SPEC_DRIVEN_LOCAL_FIXTURES"
+    "verified_total": 22,
+    "failed": 0,
+    "scope": "SCHEMA_AND_SPEC_DRIVEN_FIXTURES"
   },
   "ci_verification": {
-    "state": "PENDING_CURRENT_HEAD",
-    "run_id": null
+    "state": "CI.GATE.ACTIVE",
+    "last_observed_success_run_id": 34627020613,
+    "last_observed_success_head": "b8bc664afdc758c961c49f3d484ded81d387ecb1",
+    "policy": "EVERY MUTATED HEAD MUST PASS BEFORE PROMOTION"
   },
   "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
   "source_name_auto_promotion": "FORBIDDEN",
