@@ -1,6 +1,6 @@
 {
   "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "state": "SPECIFICATION_CI_GATE_ACTIVE",
   "golden_chain_position": "GC.SB.0028",
   "golden_chain_state": "REGISTERED.DRAFT.UNMERGED",
@@ -65,13 +65,16 @@
     "base_tests": 10,
     "human_centered_extension_tests": 12,
     "litigation_evidence_tests": 12,
-    "expected_total": 34,
+    "verified_total": 34,
+    "failed": 0,
     "scope": "SCHEMA_SPEC_AND_EVIDENCE_BOUNDARY_FIXTURES"
   },
   "ci_verification": {
-    "state": "PENDING_CURRENT_HEAD",
-    "last_observed_success_run_id": 34627330684,
-    "last_observed_success_head": "67919a84537a2d0091f6919f52468b5cf318a31f",
+    "state": "CI.GATE.ACTIVE",
+    "last_observed_success_run_id": 34649894393,
+    "last_observed_success_run_number": 20,
+    "last_observed_success_head": "ade17ef531ba99f7e025744c968998f86c907920",
+    "current_head_receipt_is_external_to_inventory_commit": true,
     "policy": "EVERY MUTATED HEAD MUST PASS BEFORE PROMOTION"
   },
   "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
