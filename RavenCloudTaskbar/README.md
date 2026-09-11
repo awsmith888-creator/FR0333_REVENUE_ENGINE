@@ -72,6 +72,37 @@ PROCEDURAL.DELAY != MERITS.VICTORY
 
 Current register state is `U.21.HOLD` because liability, final damages and final outcome remain unresolved. `GC.SB.0029` is `REGISTERED.DRAFT.UNMERGED`; it cannot be promoted until `GC.SB.0028` exists in target history and the current head passes review and CI.
 
-The litigation rail adds 12 deterministic evidence-boundary tests. Combined expected validation count for this package is now 34 tests: 10 base, 12 human-centered extension, and 12 litigation-evidence tests.
+The litigation rail adds 12 deterministic evidence-boundary tests. Combined expected validation count before the Genius Bar rail is 34 tests: 10 base, 12 human-centered extension, and 12 litigation-evidence tests.
 
-See `human_tool_contribution_evidence_inventory.json`, `fr0333_trump_bbc_litigation_evidence_0001.json`, `fr0333_golden_chain_gc_sb_0029.json`, and `test_trump_bbc_litigation_evidence.py`.
+## Golden Chain GC.SB.0030 Genius Bar comparability-normalization rail
+
+`FR0333.GENIUS.BAR.COMPARABILITY.NORMALIZATION.0001` is registered at draft position `GC.SB.0030` with predecessor `GC.SB.0029`.
+
+Its controlling pipeline is:
+
+`RAW.STATISTIC → STRUCTURAL.SCHEMA → SEMANTIC.INVARIANT.VALIDATOR → DENOMINATOR.LOCK → REFERENCE.FRAME.LOCK → NORMALIZE → REVERSIBILITY.GATE → CANONICAL.JSON.V1 → SHA256.COMPARABILITY.KEY → CONSUMER.CAPABILITY.GATE → OUTPUT.REPORT`
+
+The rail enforces measurement normalization and semantic binding. Database normalization is retained only as a conceptual analogue; it is not treated as independent validation of the FR0333 measurement rules.
+
+Controlling boundaries include:
+
+```text
+EXACT.CANONICAL.DECIMAL.EQUALITY != RAW.BYTE.IDENTITY
+FORMATTING.DIFFERENCE != SEMANTIC.DIFFERENCE
+RAW.STATE != CANONICAL.STATE
+NUMERIC.IDENTITY != SEMANTIC.IDENTITY
+REVERSIBLE.REPRESENTATION != EXACT.UNDERLYING.TRUTH
+VALID.RECORD != VALID.FOR.EVERY.USE
+NORMALIZED != COMPARABLE
+COMPARABLE != CONSUMER.COMPATIBLE
+SCHEMA.VALID != SEMANTICALLY.VALID
+SPECIFICATION.PASS != IMPLEMENTATION.PASS
+IMPLEMENTATION.PASS != RUNTIME.ENFORCEMENT
+HASH_BOUND.RECEIPT != CRYPTOGRAPHICALLY.SIGNED.RECEIPT
+```
+
+The implementation adds a strict Draft 2020-12 JSON Schema, semantic/inverse validator, versioned canonical JSON serialization, SHA-256 comparability key, consumer precision-laundering gate, N.01–N.12 adversarial fixtures, range/partition checks, and deterministic unsigned receipt generation. The new suite adds 19 tests, bringing the expected combined deterministic count to 53.
+
+`GC.SB.0030` remains `REGISTERED.DRAFT.UNMERGED`. Promotion requires `GC.SB.0029` in target history plus successful exact-head CI. CI proves repository behavior only; external runtime enforcement and cryptographic signing remain unestablished.
+
+See `README_genius_bar_comparability_normalization.md`, `fr0333_genius_bar_comparability_normalization_0001.schema.json`, `fr0333_genius_bar_comparability_normalization_0001.py`, `fr0333_genius_bar_comparability_fixtures_0001.json`, `test_fr0333_genius_bar_comparability_normalization.py`, and `fr0333_golden_chain_gc_sb_0030.json`.
