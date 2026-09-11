@@ -1,0 +1,107 @@
+{
+  "id": "FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001",
+  "version": "0.12",
+  "state": "SPECIFICATION",
+  "revision": "EVIDENCE.BOUNDED.CALIBRATION.LOCKED",
+  "parent": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
+  "humanlock": true,
+  "runtime": "NOT.ESTABLISHED.UNTIL.CALIBRATED.RECEIPT",
+  "core_invariants": [
+    "RAW.ASR.CONFIDENCE != CALIBRATED.EXACTNESS.PROBABILITY",
+    "OBSERVATION.AGREEMENT != STATISTICAL.INDEPENDENCE",
+    "AGREEMENT = EVIDENCE",
+    "AGREEMENT != PROOF",
+    "TWO.MATCHING.GUESSES != ONE.VERIFIED.FACT",
+    "UNFITTED.C12 = UNKNOWN",
+    "UNKNOWN != ZERO",
+    "UNKNOWN != PASS",
+    "HIGH.CONFIDENCE != VALID.DATA",
+    "VALID.DATA != AUTHORIZED.ACTION",
+    "UNCERTAIN.INPUT -> VERIFY.OR.HUMANLOCK",
+    "UNCERTAIN.INPUT -/-> MODEL.INFERENCE -> EXECUTE"
+  ],
+  "confidence_definition": {
+    "symbol": "C_S",
+    "meaning": "P(entire critical span is exact | audio, ASR pipeline, validation data)",
+    "unit": "CRITICAL_SPAN",
+    "global_wer_is_sufficient": false
+  },
+  "risk_thresholds": {
+    "calibration_state": "INITIAL_SPEC_ONLY_NOT_RUNTIME_CALIBRATED",
+    "R.1.LOW": {
+      "auto_execute_min": 0.85,
+      "confirmation_min": 0.70,
+      "humanlock_below": 0.70
+    },
+    "R.2.MEDIUM": {
+      "auto_execute_min": 0.95,
+      "confirmation_min": 0.85,
+      "humanlock_below": 0.85
+    },
+    "R.3.HIGH": {
+      "auto_execute_min": 0.99,
+      "confirmation_min": 0.95,
+      "humanlock_below": 0.95,
+      "independent_validation_required": true
+    },
+    "R.4.CRITICAL": {
+      "confidence_only_auto_execute": false,
+      "human_authorization_required": true
+    }
+  },
+  "capture_classes": {
+    "REPEATED.OBSERVATION": "same or materially shared speaker/channel/acoustic/engine conditions; correlation expected",
+    "CROSS_ENGINE.OBSERVATION": "same source audio evaluated by different ASR engines; useful disagreement evidence but not presumed statistically independent",
+    "SEPARATE.CAPTURE.CROSS_ENGINE": "separate capture evaluated by a different engine; lower shared-error risk but independence still must be measured",
+    "MULTIMODAL.CORROBORATION": "separate modality or authenticated structural source; independence is claim-specific and must be demonstrated"
+  },
+  "independence_rule": "INDEPENDENCE MUST BE MEASURED; CHANNEL OR MODEL DIFFERENCE ALONE DOES NOT ESTABLISH IT",
+  "repeat_back_loop": [
+    "TRANSCRIPT.AMBIGUITY.DETECTED",
+    "REQUEST.REPEAT",
+    "SECOND.OBSERVATION",
+    "AGREEMENT.TEST",
+    "RECALIBRATE.IF.FITTED",
+    "EVALUATE.RISK.THRESHOLD",
+    "HUMANLOCK.WHEN.REQUIRED"
+  ],
+  "pre_calibration_fallback": {
+    "matching_observations": "AGREEMENT.CONFIRMED",
+    "C12": "UNKNOWN",
+    "terminal_state": "U.21.HOLD",
+    "humanlock": true
+  },
+  "joint_recalibration_model": {
+    "form": "logit(C12)=b0+b1*logit(C1)+b2*logit(C2)+b3*A+b4*V+b5*R+b6*X",
+    "A": "indicator of O1 == O2",
+    "V": "structural/context validation state",
+    "R": "risk-class coefficient",
+    "X": "audio-quality and field-characteristic vector",
+    "coefficients": "UNFITTED",
+    "promotion_rule": "NO NUMERIC C12 UNTIL HUMAN-ADJUDICATED CALIBRATION"
+  },
+  "calibration_metrics": [
+    "EXACT.SPAN.ERROR.RATE",
+    "FALSE.PASS.RATE",
+    "FALSE.HOLD.RATE",
+    "HUMANLOCK.INTERVENTION.RATE",
+    "BRIER.SCORE",
+    "RELIABILITY.CURVE"
+  ],
+  "controlling_high_risk_metric": "FALSE.PASS.RATE",
+  "dataset_requirements": [
+    "PSEUDONYMOUS.SPEAKER.ID",
+    "FIELD.TYPE",
+    "RISK.CLASS",
+    "GROUND.TRUTH.HUMAN.ADJUDICATED",
+    "EXACT.SPAN.MATCH",
+    "RAW.CONFIDENCE",
+    "STRUCTURAL.VALIDATION",
+    "CONTEXT.VALIDATION",
+    "AUDIO.QUALITY.METADATA",
+    "SPEAKER.SEPARATED.SPLITS",
+    "CALL.SEPARATED.SPLITS"
+  ],
+  "terminal_states": ["T.20.PASS", "U.21.HOLD", "F.6.REJECT"],
+  "golden_chain_binding": "CHILD.REFERENCE.GC.SB.0028"
+}
