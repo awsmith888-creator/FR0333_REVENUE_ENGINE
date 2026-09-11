@@ -1,0 +1,56 @@
+{
+  "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
+  "version": "1.0.0",
+  "state": "LOCAL_FIXTURE_VERIFIED_CI_PENDING",
+  "golden_chain_position": "UNASSIGNED",
+  "humanlock": true,
+  "promotion": "CLAIM.SPECIFIC",
+  "runtime": {
+    "state": "NOT.ESTABLISHED.UNTIL.RECEIPT",
+    "receipt": null
+  },
+  "pipeline": [
+    "HUMAN.CONTRIBUTION",
+    "TOOL",
+    "EXECUTION",
+    "EVIDENCE",
+    "ACCESSIBILITY",
+    "ATTRIBUTION",
+    "RECEIPT"
+  ],
+  "rails": [
+    "C.01.ATTRIBUTION",
+    "C.02.ACCESSIBILITY",
+    "C.03.EXECUTION",
+    "C.04.SOURCE.EXTRACTION",
+    "C.05.VERIFICATION"
+  ],
+  "terminal_states": [
+    "T.20.PASS",
+    "U.21.HOLD",
+    "F.6.REJECT"
+  ],
+  "local_verification": {
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "scope": "SCHEMA_DRIVEN_LOCAL_FIXTURES_ONLY"
+  },
+  "ci_verification": {
+    "state": "PENDING",
+    "run_id": null,
+    "head_sha": null
+  },
+  "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
+  "source_name_auto_promotion": "FORBIDDEN",
+  "hard_invariants": [
+    "WORK.PERFORMED != WORK.CREDITED",
+    "TOOL.CONFIGURED != TOOL.EXECUTED",
+    "COMMAND.VISIBLE != RUNTIME.RECEIPT",
+    "CONTENT.CREATED != CONTENT.ACCESSIBLE",
+    "SOURCE.PRESENT != CONTENT.EXTRACTED",
+    "VENDOR.CLAIM != INDEPENDENT.VERIFICATION",
+    "CLAIM.PUBLISHED != CLAIM.VERIFIED",
+    "EVIDENCE.CLASS MUST.NOT AUTO.PROMOTE BASED.ON SOURCE.NAME"
+  ]
+}
