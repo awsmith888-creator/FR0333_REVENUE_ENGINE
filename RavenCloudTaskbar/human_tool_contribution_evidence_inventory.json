@@ -1,6 +1,6 @@
 {
   "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "state": "SPECIFICATION_CI_GATE_ACTIVE",
   "golden_chain_position": "GC.SB.0028",
   "golden_chain_state": "REGISTERED.DRAFT.UNMERGED",
@@ -41,6 +41,21 @@
       "binding": "SYSTEM.ROOT.GOVERNING.REFERENCE"
     }
   ],
+  "linked_case_evidence": [
+    {
+      "id": "FR0333.TRUMP.BBC.DEFAMATION.LITIGATION.EVIDENCE.0001",
+      "version": "1.0.0",
+      "golden_chain_position": "GC.SB.0029",
+      "golden_chain_predecessor": "GC.SB.0028",
+      "state": "SPECIFICATION.EVIDENCE_BOUNDED",
+      "terminal_state": "U.21.HOLD",
+      "case_status": "ACTIVE",
+      "record_path": "RavenCloudTaskbar/fr0333_trump_bbc_litigation_evidence_0001.json",
+      "chain_path": "RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0029.json",
+      "test_path": "RavenCloudTaskbar/test_trump_bbc_litigation_evidence.py",
+      "promotion_gate": "GC.SB.0028 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0029 PROMOTION"
+    }
+  ],
   "terminal_states": [
     "T.20.PASS",
     "U.21.HOLD",
@@ -48,15 +63,15 @@
   ],
   "local_verification": {
     "base_tests": 10,
-    "extension_tests": 12,
-    "verified_total": 22,
-    "failed": 0,
-    "scope": "SCHEMA_AND_SPEC_DRIVEN_FIXTURES"
+    "human_centered_extension_tests": 12,
+    "litigation_evidence_tests": 12,
+    "expected_total": 34,
+    "scope": "SCHEMA_SPEC_AND_EVIDENCE_BOUNDARY_FIXTURES"
   },
   "ci_verification": {
-    "state": "CI.GATE.ACTIVE",
-    "last_observed_success_run_id": 34627020613,
-    "last_observed_success_head": "b8bc664afdc758c961c49f3d484ded81d387ecb1",
+    "state": "PENDING_CURRENT_HEAD",
+    "last_observed_success_run_id": 34627330684,
+    "last_observed_success_head": "67919a84537a2d0091f6919f52468b5cf318a31f",
     "policy": "EVERY MUTATED HEAD MUST PASS BEFORE PROMOTION"
   },
   "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
@@ -73,6 +88,10 @@
     "OBSERVATION.AGREEMENT != STATISTICAL.INDEPENDENCE",
     "UNKNOWN != PASS",
     "SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE",
+    "ACKNOWLEDGED.MISLEADING.EDIT != DEFAMATION.LIABILITY",
+    "DISCOVERY.RESISTANCE != FEAR.PROVEN",
+    "AMENDED.DAMAGES.THEORY != MOTIVE.PROVEN",
+    "ACTIVE.CASE != FINAL.WINNER",
     "GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT"
   ]
 }
