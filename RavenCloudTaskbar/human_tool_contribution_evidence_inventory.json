@@ -1,8 +1,10 @@
 {
   "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
-  "version": "1.0.0",
-  "state": "LOCAL_FIXTURE_VERIFIED_CI_PENDING",
-  "golden_chain_position": "UNASSIGNED",
+  "version": "1.1.0",
+  "state": "SPECIFICATION_CI_REVALIDATION_PENDING",
+  "golden_chain_position": "GC.SB.0028",
+  "golden_chain_state": "REGISTERED.DRAFT.UNMERGED",
+  "golden_chain_predecessor": "GC.SB.0027",
   "humanlock": true,
   "promotion": "CLAIM.SPECIFIC",
   "runtime": {
@@ -25,21 +27,34 @@
     "C.04.SOURCE.EXTRACTION",
     "C.05.VERIFICATION"
   ],
+  "linked_specs": [
+    {
+      "id": "FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001",
+      "version": "0.12",
+      "state": "SPECIFICATION",
+      "binding": "CHILD.REFERENCE"
+    },
+    {
+      "id": "FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001",
+      "version": "0.20",
+      "state": "SPECIFICATION",
+      "binding": "SYSTEM.ROOT.GOVERNING.REFERENCE"
+    }
+  ],
   "terminal_states": [
     "T.20.PASS",
     "U.21.HOLD",
     "F.6.REJECT"
   ],
   "local_verification": {
-    "tests": 10,
-    "passed": 10,
-    "failed": 0,
-    "scope": "SCHEMA_DRIVEN_LOCAL_FIXTURES_ONLY"
+    "base_tests": 10,
+    "extension_tests": 12,
+    "expected_total": 22,
+    "scope": "SCHEMA_AND_SPEC_DRIVEN_LOCAL_FIXTURES"
   },
   "ci_verification": {
-    "state": "PENDING",
-    "run_id": null,
-    "head_sha": null
+    "state": "PENDING_CURRENT_HEAD",
+    "run_id": null
   },
   "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
   "source_name_auto_promotion": "FORBIDDEN",
@@ -51,6 +66,10 @@
     "SOURCE.PRESENT != CONTENT.EXTRACTED",
     "VENDOR.CLAIM != INDEPENDENT.VERIFICATION",
     "CLAIM.PUBLISHED != CLAIM.VERIFIED",
-    "EVIDENCE.CLASS MUST.NOT AUTO.PROMOTE BASED.ON SOURCE.NAME"
+    "EVIDENCE.CLASS MUST.NOT AUTO.PROMOTE BASED.ON SOURCE.NAME",
+    "OBSERVATION.AGREEMENT != STATISTICAL.INDEPENDENCE",
+    "UNKNOWN != PASS",
+    "SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE",
+    "GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT"
   ]
 }
