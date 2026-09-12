@@ -1,0 +1,101 @@
+{
+  "identifier": "FR0333.IMAGE.QUALITY.GATE.0003",
+  "supersedes": "FR0333.IMAGE.QUALITY.GATE.0002",
+  "state": "ACTIVE_SPEC_WITH_SINGLE_ADOBE_RUNTIME_WITNESS",
+  "humanlock": true,
+  "purpose": "Prevent technically valid but visually artificial image outputs from promotion by requiring photorealism, physical coherence, visual readback, and user-intent checks.",
+  "reference_scale": {
+    "name": "QUALITY.REFERENCE.0.9",
+    "percent_symbols_prohibited": true,
+    "minimum_promotable_reference": 8
+  },
+  "queue_contract": {
+    "n_in_equals_n_out": true,
+    "one_run_one_canvas_one_image": true,
+    "independent_9_16_canvas_per_slot": true,
+    "collage": "REJECT",
+    "duplicate_output": "REJECT",
+    "count_mismatch": "REJECT"
+  },
+  "mode_gate": {
+    "edit_request_with_source": "EDIT_SOURCE",
+    "remake_multiple_inputs": "ONE_OUTPUT_PER_INPUT_INDEPENDENT",
+    "new_generation_request": "GENERATE_NEW",
+    "edit_ne_regenerate": true,
+    "remaster_ne_reinvent": true,
+    "source_identity_lock_required_when_identity_is_part_of_intent": true
+  },
+  "photorealism_dimensions": [
+    "IDENTITY.FIDELITY",
+    "ANATOMY.FACE.HANDS",
+    "VEHICLE.MECHANICAL.GEOMETRY",
+    "LOAD.BALANCE.CONTACT.PHYSICS",
+    "CAMERA.GEOMETRY",
+    "MOTION.BLUR.COHERENCE",
+    "LIGHT.SHADOW.REFLECTION",
+    "MATERIAL.TEXTURE.REALISM",
+    "BACKGROUND.SCALE.DEPTH",
+    "CROP.FRAME.INTEGRITY",
+    "ARTIFACT.TEXT.LOGO.CONTROL",
+    "AESTHETIC.COHERENCE",
+    "USER.INTENT.MATCH",
+    "VISUAL.READBACK"
+  ],
+  "adobe_execution_defaults": {
+    "generation_prompt_reasoner": "quality",
+    "edit_prompt_reasoner": "quality",
+    "target_resolution_level": "4MP",
+    "output_format": "png",
+    "post_edit_visual_readback": "REQUIRED",
+    "structural_realism_requires_structural_edit_or_regeneration": true,
+    "tone_only_change_cannot_prove_geometry_or_physics_repair": true,
+    "generic_realism_edit_without_readback_pass": "HOLD"
+  },
+  "promotion_gate": {
+    "all_required": true,
+    "identity_reference_min": 8,
+    "anatomy_reference_min": 8,
+    "vehicle_geometry_reference_min": 8,
+    "physics_reference_min": 8,
+    "camera_geometry_reference_min": 8,
+    "lighting_reference_min": 8,
+    "material_realism_reference_min": 8,
+    "crop_reference_min": 8,
+    "artifact_control_reference_min": 8,
+    "aesthetic_reference_min": 8,
+    "user_intent_reference_min": 8,
+    "visual_readback_required": true,
+    "user_reject_overrides_promotion": true,
+    "runtime_receipt_required_for_external_execution_claim": true
+  },
+  "hard_boundaries": [
+    "TECHNICALLY.CLEAN != HIGH.QUALITY",
+    "PHOTOREALISTIC.STYLE != PHYSICALLY.COHERENT",
+    "TONE.IMPROVEMENT != STRUCTURAL.REALISM.REPAIR",
+    "GENERATION.SUCCESS != QUALITY.PASS",
+    "ADOBE.CONNECTOR.SUCCESS != USER.ACCEPTANCE",
+    "LOCAL.TEST.PASS != ADOBE.RUNTIME.PASS",
+    "ADOBE.CONNECTOR.AVAILABLE != IMAGE.QUALITY.VERIFIED",
+    "QUEUE.PASS != AESTHETIC.PASS",
+    "VISUAL.READBACK.HOLD = OUTPUT.HOLD",
+    "USER.REJECT = OUTPUT.HOLD"
+  ],
+  "runtime_receipt_binding": "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json",
+  "camera_gate_binding": "FR.0333.ADOBE.CAMERA.3.3.3.0001",
+  "golden_chain_route": [
+    "SOURCE_LOCK",
+    "INTENT_COMPILE",
+    "QUEUE_GATE",
+    "MODE_GATE",
+    "IDENTITY_GATE",
+    "CAMERA_333_GATE",
+    "MECHANICAL_PHYSICS_GATE",
+    "QUALITY_REFERENCE_GATE",
+    "VISUAL_READBACK",
+    "HUMANLOCK",
+    "OUTPUT_GATE",
+    "RECEIPT",
+    "CHOMP",
+    "STAY"
+  ]
+}
