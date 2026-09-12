@@ -3,7 +3,8 @@
   "state": "APPEND_ONLY_INDEX",
   "public_index": [
     "0.1.FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
-    "0.2.FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001"
+    "0.2.FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+    "0.3.FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001"
   ],
   "entries": [
     {
@@ -17,13 +18,21 @@
       "identifier": "FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
       "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json",
       "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.3",
+      "identifier": "FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_two_lane_highway_0001.json",
+      "state": "PROMOTED_WORKING_SPEC_RUNTIME_HOLD"
     }
   ],
   "rules": [
     "APPEND_ONLY",
     "NO_RENUMBERING_PRIOR_ENTRIES",
     "SOURCE_LOCK_REQUIRED",
+    "REFERENCE_POINT_LOCK_REQUIRED",
     "GENIUS_GATE_REQUIRED",
-    "HUMANLOCK_REQUIRED_FOR_PROMOTION"
+    "HUMANLOCK_REQUIRED_FOR_PROMOTION",
+    "RUNTIME_CLAIM_REQUIRES_EMPIRICAL_RECEIPT"
   ]
 }
