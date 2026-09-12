@@ -1,0 +1,35 @@
+name: FR0333 AI Frontier Evolution Anatomy Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_ai_frontier_evolution_anatomy_0001.json"
+      - "RavenCloudTaskbar/fr0333_ai_frontier_evolution_anatomy_genius.py"
+      - "RavenCloudTaskbar/test_fr0333_ai_frontier_evolution_anatomy_genius.py"
+      - "RavenCloudTaskbar/README_ai_frontier_evolution_anatomy_0001.md"
+      - "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json"
+      - "RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json"
+      - ".github/workflows/fr0333-ai-frontier-evolution-anatomy-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate evolution anatomy JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_ai_frontier_evolution_anatomy_0001.json >/dev/null
+      - name: Validate Golden Chain index JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_golden_chain_index_0001.json >/dev/null
+      - name: Validate Golden Chain inventory JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json >/dev/null
+      - name: Run evolution anatomy Genius rail
+        run: python RavenCloudTaskbar/fr0333_ai_frontier_evolution_anatomy_genius.py
+      - name: Run evolution anatomy tests
+        run: python RavenCloudTaskbar/test_fr0333_ai_frontier_evolution_anatomy_genius.py
