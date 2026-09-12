@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
 TASKBARS = ROOT / "taskbars.json"
 LUMEN = ROOT / "lumen_gateway.json"
+IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0002.json"
 
 REQUIRED_TASKBAR_FIELDS = {
     "id", "project", "lane", "state", "evidence_state",
@@ -26,6 +27,7 @@ def sha256(path: Path) -> str:
 def load_and_validate():
     taskbars = json.loads(TASKBARS.read_text(encoding="utf-8"))
     lumen = json.loads(LUMEN.read_text(encoding="utf-8"))
+    image_quality = json.loads(IMAGE_QUALITY.read_text(encoding="utf-8"))
     assert taskbars["humanlock"] is True
     assert taskbars["state"] == "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED"
     assert taskbars["evidence_gate"] == "OBSERVED != CORRELATED != CAUSAL"
@@ -37,7 +39,26 @@ def load_and_validate():
         ids.add(item["id"])
     assert lumen["provisioning_state"] == "NOT_PROVISIONED"
     assert lumen["credentials"] == "NOT_STORED"
-    return taskbars, lumen
+    assert image_quality["humanlock"] is True
+    assert image_quality["reference_scale"]["percent_symbols_prohibited"] is True
+    assert image_quality["reference_scale"]["minimum_promotable_reference"] == 8
+    queue = image_quality["queue_contract"]
+    assert queue["n_in_equals_n_out"] is True
+    assert queue["one_run_one_canvas_one_image"] is True
+    assert queue["independent_9_16_canvas_per_slot"] is True
+    assert queue["collage"] == "REJECT"
+    assert queue["duplicate_output"] == "REJECT"
+    assert queue["count_mismatch"] == "REJECT"
+    promo = image_quality["promotion_gate"]
+    for field in (
+        "identity_reference_min", "geometry_reference_min", "crop_reference_min",
+        "artifact_control_reference_min", "aesthetic_reference_min", "user_intent_reference_min"
+    ):
+        assert promo[field] >= 8, f"quality threshold too low: {field}={promo[field]}"
+    assert promo["user_reject_overrides_promotion"] is True
+    assert promo["runtime_receipt_required_for_external_execution_claim"] is True
+    assert "USER.REJECT = OUTPUT.HOLD" in image_quality["hard_boundaries"]
+    return taskbars, lumen, image_quality
 
 
 def card(item):
@@ -92,15 +113,25 @@ footer{{margin-top:20px;color:var(--muted);font-family:ui-monospace,monospace;fo
 
 
 def main():
-    taskbars, lumen = load_and_validate()
+    taskbars, lumen, image_quality = load_and_validate()
     DIST.mkdir(exist_ok=True)
     (DIST / "index.html").write_text(build_html(taskbars, lumen), encoding="utf-8")
     (DIST / "taskbars.json").write_text(json.dumps(taskbars, indent=2) + "\n", encoding="utf-8")
     (DIST / "lumen_gateway.json").write_text(json.dumps(lumen, indent=2) + "\n", encoding="utf-8")
-    files = [DIST / "index.html", DIST / "taskbars.json", DIST / "lumen_gateway.json"]
+    (DIST / "fr0333_image_quality_gate_0002.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
+    files = [
+        DIST / "index.html",
+        DIST / "taskbars.json",
+        DIST / "lumen_gateway.json",
+        DIST / "fr0333_image_quality_gate_0002.json"
+    ]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
-    print(f"PASS taskbars={len(taskbars['taskbars'])} lumen={lumen['provisioning_state']}")
+    print(
+        f"PASS taskbars={len(taskbars['taskbars'])} "
+        f"lumen={lumen['provisioning_state']} "
+        f"image_quality_min={image_quality['reference_scale']['minimum_promotable_reference']}"
+    )
     print(sums, end="")
 
 if __name__ == "__main__":
