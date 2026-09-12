@@ -1,0 +1,143 @@
+{
+  "registry_id": "FR0333.TWO_LANE.HIGHWAY.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
+  "specification_state": "PROMOTED.WORKING.SPEC",
+  "structural_consistency": "T.20.PASS",
+  "runtime_execution": "U.21.HOLD",
+  "empirical_runtime_receipt": "U.21.HOLD",
+  "external_registry_write": "NOT.ESTABLISHED",
+  "subject": "Parallel active/passive highway architecture for non-compressive state evolution, verification, promotion, and immutable audit witness preservation",
+  "source_boundary": {
+    "rule": "PUBLIC_COMPARATOR_NE_INTERNAL_RUNTIME_PROOF",
+    "google_ai_search_comparator": "DOCUMENTED_EXTERNAL_COMPARATOR_ONLY",
+    "internal_runtime_claim": "NOT_ESTABLISHED",
+    "byte_level_isolation": "SPECIFICATION.ISOLATION.DEFINED",
+    "hardware_stop_vector": "NOT_CLAIMED",
+    "user_interrupt_control": "STOP.CONTROL.REQUIRED"
+  },
+  "reference_points": [
+    {"reference_point":"A1","name":"ACTIVE.RESEARCH","role":"ACTIVE_LANE_ENTRY","state":"SPECIFIED","meaning":"new research payload enters active lane without modifying prior state"},
+    {"reference_point":"B2","name":"FAN.OUT","role":"PARALLEL_DECOMPOSITION","state":"SPECIFIED","meaning":"active query or update branches into bounded subproblems"},
+    {"reference_point":"C3","name":"MULTI.SOURCE","role":"MULTI_SOURCE_INGEST","state":"SPECIFIED","meaning":"multiple source surfaces may be gathered without treating multiplicity as verification"},
+    {"reference_point":"D4","name":"SECOND.LOOK","role":"CORROBORATION_GATE","state":"SPECIFIED","meaning":"claims are independently crosschecked; synthesis cannot validate itself"},
+    {"reference_point":"E5","name":"VERIFY","role":"SCHEMA_AND_EVIDENCE_INTEGRITY_GATE","state":"SPECIFIED","meaning":"candidate state must satisfy schema, source, and evidence requirements"},
+    {"reference_point":"F6","name":"COMPARE.PASSIVE","role":"PRIOR_STATE_DIFFERENTIAL_GATE","state":"SPECIFIED","meaning":"candidate is compared against preserved passive reference without rewriting it"},
+    {"reference_point":"G7","name":"GENIUS","role":"EPISTEMIC_VALIDATION_GATE","state":"SPECIFIED","meaning":"logic, count invariants, evidence classes, and bounded conclusions are validated"},
+    {"reference_point":"H8","name":"HUMANLOCK","role":"EXECUTIVE_AUTHORIZATION_GATE","state":"SPECIFIED","meaning":"consequential promotion or external action requires explicit human authorization"},
+    {"reference_point":"I9","name":"ACTIVE.CANONICAL.PROMOTION","role":"TERMINAL_ACTIVE_STATE_TRANSITION","state":"SPECIFIED","meaning":"verified and authorized candidate becomes the current active canonical state"},
+    {"reference_point":"J10","name":"APPEND.WITNESS.SNAPSHOT","role":"POST_PROMOTION_WITNESS_CAPTURE","state":"SPECIFIED","meaning":"promoted state is appended as a new passive witness snapshot"},
+    {"reference_point":"K11","name":"PASSIVE.HISTORY","role":"IMMUTABLE_AUDIT_LEDGER","state":"SPECIFIED","meaning":"prior snapshots, receipts, and hashes remain append-only and non-destructive"},
+    {"reference_point":"L12","name":"EXECUTION.INTERLOCK","role":"RESEARCH_TO_ACTION_BOUNDARY","state":"SPECIFIED","meaning":"research capability never implies permission for external action"},
+    {"reference_point":"M13","name":"DATA.GOVERNANCE.SEPARATION","role":"STATE_AND_PERMISSION_SEPARATION","state":"SPECIFIED","meaning":"connected, authorized, retained, deleted, source, and session states remain distinct"},
+    {"reference_point":"N14","name":"STOP.CONTROL.REQUIRED","role":"USER_INTERRUPT_REQUIREMENT","state":"SPECIFIED_NOT_RUNTIME_PROVEN","meaning":"runtime-capable execution designs require an interrupt/stop control; no hardware implementation is claimed"}
+  ],
+  "active_lane": {
+    "traffic": ["CENSUS.RELEASES","ACS.UPDATES","CAPABILITY.CHECKS","GENIUS.CHECKS","RESEARCH.FAN.OUT","MULTI.SOURCE.INGEST"],
+    "path": ["A1.ACTIVE.RESEARCH","B2.FAN.OUT","C3.MULTI.SOURCE","D4.SECOND.LOOK","E5.VERIFY","F6.COMPARE.PASSIVE","G7.GENIUS","H8.HUMANLOCK","I9.ACTIVE.CANONICAL.PROMOTION"],
+    "non_blocking": true
+  },
+  "passive_lane": {
+    "traffic": ["SOURCE.SNAPSHOTS","PRIOR.RECEIPTS","HISTORICAL.HASHES","PROMOTED.WITNESS.SNAPSHOTS"],
+    "write_mode": "APPEND.ONLY",
+    "mutation_policy": "NO_OVERWRITE_NO_COMPRESSION_NO_RENUMBERING",
+    "read_mode": "AUDIT_COMPARE_TRACEBACK",
+    "path": ["J10.APPEND.WITNESS.SNAPSHOT","K11.PASSIVE.HISTORY"]
+  },
+  "four_gate_interlock": {
+    "gate_count": 4,
+    "terminal_transition_count": 1,
+    "gates": ["E5.VERIFY","F6.COMPARE.PASSIVE","G7.GENIUS","H8.HUMANLOCK"],
+    "terminal_transition": "I9.ACTIVE.CANONICAL.PROMOTION",
+    "law": "FOUR.GATES_PLUS_ONE.TERMINAL.PROMOTION"
+  },
+  "second_look_gate": {
+    "reference_point": "D4",
+    "laws": ["SOURCE.ONE_NE_CORROBORATION","AI.SYNTHESIS_NE_VERIFIED.FACT","AGGREGATE.OVERVIEW_NE_VALIDATION.PREIMAGE"],
+    "required_behavior": ["PARSE.CLAIMS","BRANCH.CHECKS","CROSSCHECK.SEPARATE.REFERENCE.SURFACES","PRESERVE.DISAGREEMENT"]
+  },
+  "execution_interlock": {
+    "reference_point": "L12",
+    "laws": ["RESEARCH.CAPABILITY_NE_EXTERNAL.ACTION","AI.ORCHESTRATION_NE_PROVIDER.EXECUTION","DISCOVERY.AUTHORIZATION_NE_TRANSACTION.AUTHORIZATION"],
+    "external_action_requirement": ["EXPLICIT.HUMAN.AUTHORIZATION","PROVIDER.SPECIFIC.RECEIPT.WHEN_EXECUTED","STOP.CONTROL.WHEN_RUNTIME_CAPABLE"],
+    "runtime_state": "U.21.HOLD"
+  },
+  "data_governance": {
+    "reference_point": "M13",
+    "laws": [
+      "CONNECTED_NE_AUTHORIZED.FOR.ALL.ACTIONS",
+      "DISCONNECT_NE_DELETE",
+      "SOURCE.STATE_NE_SESSION.STATE",
+      "MEMORY.STATE_NE_SOURCE.TRUTH",
+      "ORIGINAL.FILE_NE_EDITED.VERSION",
+      "RETENTION.STATE_NE_PERSONALIZATION.STATE",
+      "PERSONALIZATION.STATE_NE_TRAINING.ELIGIBILITY"
+    ]
+  },
+  "core_invariants": [
+    "ACTIVE.NEW.STATE_BIDIRECTIONAL_COMPARE_PASSIVE.PRIOR.STATE",
+    "ACTIVE_MUST_NOT_OVERWRITE_PASSIVE",
+    "PASSIVE_MUST_NOT_BLOCK_ACTIVE",
+    "PASSIVE.IMMUTABILITY_TRUE",
+    "PASSIVE.WRITE.MODE_APPEND_ONLY",
+    "NON_BLOCKING_WITNESS_TRUE",
+    "AI.SYNTHESIS_NE_VERIFIED.FACT",
+    "SOURCE.ONE_NE_CORROBORATION",
+    "RESEARCH.CAPABILITY_NE_EXTERNAL.ACTION",
+    "AI.ORCHESTRATION_NE_PROVIDER.EXECUTION",
+    "ORIGINAL.FILE_NE_EDITED.VERSION",
+    "DISCONNECT_NE_DELETE",
+    "SOURCE.STATE_NE_SESSION.STATE",
+    "AUTO.CONTINUE_F6.NONE",
+    "AUTO.PROMOTION_F6.NONE"
+  ],
+  "promotion_path": [
+    "ACTIVE.RESEARCH",
+    "FAN.OUT",
+    "MULTI.SOURCE",
+    "SECOND.LOOK",
+    "VERIFY",
+    "COMPARE.PASSIVE",
+    "GENIUS",
+    "HUMANLOCK",
+    "ACTIVE.CANONICAL.PROMOTION",
+    "APPEND.WITNESS.SNAPSHOT",
+    "PASSIVE.HISTORY"
+  ],
+  "terminal_control_matrix": {
+    "current_branch_state": "CLOSED.AT.SPECIFICATION.TIER",
+    "auto_continue": "F.6.NONE",
+    "auto_promotion": "F.6.NONE",
+    "runtime_execution": "U.21.HOLD",
+    "empirical_runtime_receipt": "U.21.HOLD",
+    "external_registry_write": "NOT.ESTABLISHED"
+  },
+  "genius_bar": {
+    "identifier": "FR0333.GENIUS.TWO.LANE.HIGHWAY.0001",
+    "gate_count": 14,
+    "required_pass_count": 14,
+    "gates": [
+      "G1.REGISTRY.ID.LOCK",
+      "G2.REFERENCE.POINT.SEQUENCE",
+      "G3.ACTIVE.PASSIVE.SEPARATION",
+      "G4.PASSIVE.APPEND.ONLY",
+      "G5.SECOND.LOOK.BOUNDARY",
+      "G6.FOUR.GATE.INTERLOCK",
+      "G7.HUMANLOCK.REQUIRED",
+      "G8.EXECUTION.INTERLOCK",
+      "G9.DATA.GOVERNANCE.SEPARATION",
+      "G10.RUNTIME.CLAIM.HOLD",
+      "G11.BYTE.ISOLATION.SPEC.ONLY",
+      "G12.STOP.CONTROL.REQUIREMENT",
+      "G13.AUTO.PROMOTION.DISABLED",
+      "G14.GOLDEN.CHAIN.INDEX.LOCK"
+    ]
+  },
+  "golden_chain": {
+    "anchor": "FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
+    "public_index_target": "0.3.FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
+    "promotion_rule": "ALL_14_GENIUS_GATES_PASS_AND_HUMANLOCK_TRUE",
+    "humanlock": true,
+    "runtime_promotion": "PROHIBITED_WITHOUT_EMPIRICAL_RECEIPT"
+  },
+  "system_status": "STATE.SPECIFICATION.INTERNAL.CONSISTENCY.VALIDATED"
+}

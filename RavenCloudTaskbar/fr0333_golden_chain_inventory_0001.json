@@ -38,12 +38,50 @@
       "artifact": ".github/workflows/fr0333-census-black-detailed-origin-validate.yml",
       "role": "CI_VALIDATION",
       "git_blob_sha": "2686b49fabd1f1f1fff46484fb59773203db3280"
+    },
+    {
+      "inventory_id": "INV.0.7",
+      "artifact": "RavenCloudTaskbar/fr0333_two_lane_highway_0001.json",
+      "role": "GOLDEN_CHAIN_SPECIFICATION_RAIL",
+      "git_blob_sha": "4cdc6cf6afeecbfc83d9a01f43e6d6e06f41c3f8"
+    },
+    {
+      "inventory_id": "INV.0.8",
+      "artifact": "RavenCloudTaskbar/fr0333_two_lane_highway_genius.py",
+      "role": "GENIUS_BAR_VALIDATOR",
+      "git_blob_sha": "a9e5051fd449c99fbd244a49ea41f72de1000892"
+    },
+    {
+      "inventory_id": "INV.0.9",
+      "artifact": "RavenCloudTaskbar/test_fr0333_two_lane_highway_genius.py",
+      "role": "LOCAL_TEST_RAIL",
+      "git_blob_sha": "e50f93e2cb471d85d0acbaeb47877e46034cf394"
+    },
+    {
+      "inventory_id": "INV.0.10",
+      "artifact": "RavenCloudTaskbar/README_two_lane_highway_0001.md",
+      "role": "README",
+      "git_blob_sha": "3cc24f1808745681579b44856a90a015970ba5e7"
+    },
+    {
+      "inventory_id": "INV.0.11",
+      "artifact": ".github/workflows/fr0333-two-lane-highway-validate.yml",
+      "role": "CI_VALIDATION",
+      "git_blob_sha": "46f3d622f9d90dac6045a592c8f4d8a2da29ebf3"
+    },
+    {
+      "inventory_id": "INV.0.12",
+      "artifact": "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json",
+      "role": "GOLDEN_CHAIN_INDEX_REVISION_FOR_0.3",
+      "git_blob_sha": "fa4a3c149364a6ac66010c065733fb49770cb904"
     }
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
     "LOCAL_VALIDATION_NE_GITHUB_ACTIONS_PASS",
     "GITHUB_ACTIONS_PASS_NE_MERGED",
-    "SOURCE_AUDITED_NE_CAUSAL_INFERENCE"
+    "SPECIFICATION_PROMOTION_NE_RUNTIME_PROOF",
+    "SOURCE_AUDITED_NE_CAUSAL_INFERENCE",
+    "PRIOR_INVENTORY_RECEIPTS_ARE_NOT_REWRITTEN"
   ]
 }
