@@ -20,7 +20,15 @@
     {"inventory_id":"INV.0.15","artifact":"RavenCloudTaskbar/test_fr0333_red_sea_dual_chokepoint_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"f8d5e7ee66de209642f1ea7fbabcb90575702022"},
     {"inventory_id":"INV.0.16","artifact":"RavenCloudTaskbar/README_red_sea_dual_chokepoint_0001.md","role":"README","git_blob_sha":"389306f96eb6c8fd7b92a5a9da7242753b669831"},
     {"inventory_id":"INV.0.17","artifact":".github/workflows/fr0333-red-sea-dual-chokepoint-validate.yml","role":"CI_VALIDATION","git_blob_sha":"fb8393ea2c5ac94c84893739e4d8b976d4e15076"},
-    {"inventory_id":"INV.0.18","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.4","git_blob_sha":"823de2360d3f3a207b02b81708914e1deef78243"}
+    {"inventory_id":"INV.0.18","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.4","git_blob_sha":"823de2360d3f3a207b02b81708914e1deef78243"},
+    {"inventory_id":"INV.0.19","artifact":"RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_matrix_0001.json","role":"GOLDEN_CHAIN_CONTINUUM_SPECIFICATION_RAIL","git_blob_sha":"67584c11a1d942deafd572c9b25186f69266c9f3"},
+    {"inventory_id":"INV.0.20","artifact":"RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"f3195eb4329fc403efd11a65c878ebb3c1b38fd0"},
+    {"inventory_id":"INV.0.21","artifact":"RavenCloudTaskbar/test_fr0333_motorcycle_ai_continuum_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"f583526940e60b49bb830f3b9982b07eb1cee18a"},
+    {"inventory_id":"INV.0.22","artifact":"RavenCloudTaskbar/README_motorcycle_ai_continuum_matrix_0001.md","role":"README","git_blob_sha":"7d32d7a253c8add132675a757080269b524fa534"},
+    {"inventory_id":"INV.0.23","artifact":".github/workflows/fr0333-motorcycle-ai-continuum-validate.yml","role":"CI_VALIDATION","git_blob_sha":"d404ec5d6eebb37c27d7cf61b9384a7b7a7ce83a"},
+    {"inventory_id":"INV.0.24","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.5","git_blob_sha":"626e5ebc8189df69a3da46799bc4e1a0b515bfe5"},
+    {"inventory_id":"INV.0.25","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_INDEX_SURFACE","git_blob_sha":"e27165df4e30b41d8016f0eebe79d7ea2a8aa8b0"},
+    {"inventory_id":"INV.0.26","artifact":"RavenCloudTaskbar/taskbars.json","role":"ACTIVE_INDEX_TASKBAR","git_blob_sha":"976fd7c50cb6b81d879294ffc6c5da76bb7fbb5e"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -30,6 +38,8 @@
     "SOURCE_AUDITED_NE_CAUSAL_INFERENCE",
     "PRIOR_INVENTORY_RECEIPTS_ARE_NOT_REWRITTEN",
     "POLITICAL_PROPOSAL_NE_ENACTED_POLICY",
-    "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP"
+    "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP",
+    "GOLDEN_CHAIN_INDEX_ACTIVE_NE_EXTERNAL_RUNTIME_DEPLOYED",
+    "SPECIFICATION_INDEXED_NE_AUTONOMOUS_EXECUTION"
   ]
 }
