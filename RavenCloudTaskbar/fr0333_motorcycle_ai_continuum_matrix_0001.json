@@ -162,8 +162,9 @@
   },
   "golden_chain_deployment": {
     "index_state": "ACTIVE.INDEXED",
-    "inventory_state": "REQUIRED",
-    "readme_state": "REQUIRED",
+    "inventory_state": "ESTABLISHED.APPEND_ONLY",
+    "readme_state": "ESTABLISHED",
+    "validation_state": "VALIDATION.RAIL.PRESENT.CI.PENDING",
     "runtime_claim": "NONE",
     "merge_state": "UNMERGED.WORKING.BRANCH"
   },
