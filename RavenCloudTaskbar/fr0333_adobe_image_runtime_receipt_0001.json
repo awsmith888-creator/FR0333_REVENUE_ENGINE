@@ -1,0 +1,45 @@
+{
+  "identifier": "FR0333.ADOBE.IMAGE.RUNTIME.RECEIPT.0001",
+  "observed_at": "2026-09-12",
+  "scope": "SINGLE_IMAGE_BOUNDED_RUNTIME_WITNESS",
+  "provider": "ADOBE",
+  "operation": "image_instruct_edit",
+  "source": {
+    "chatgpt_file_id": "file_000000005efc81f6882a5195bb868d17",
+    "filename": "golden_hour_waterfront_wheelie.png",
+    "adobe_asset_id": "urn:aaid:sc:VA6C2:8200e7c3-e8a4-4b0e-9541-3747dc8e2dec"
+  },
+  "request": {
+    "instruction": "Make the picture look much more realistic.",
+    "prompt_reasoner": "quality",
+    "resolution_level": "4MP",
+    "output_format": "png",
+    "variants": 1
+  },
+  "provider_receipt": {
+    "request_id": "e1745bcb-79ea-43af-9b8e-b51eaf8965f6",
+    "output_asset_id": "urn:aaid:ps:US:2100e073-2c99-4587-94c9-28b7a3fa59ff",
+    "execution_state": "PASS_RUNTIME"
+  },
+  "readback": {
+    "input_preview_observed": true,
+    "output_preview_observed": true,
+    "provider_operation_completed": true,
+    "quality_promotion_state": "U.21.HOLD",
+    "user_acceptance": "NOT_OBSERVED",
+    "reason": "The provider edit completed and was visually read back, but a successful generic realism edit does not establish that identity, anatomy, motorcycle geometry, contact physics, lighting, materials, artifacts, and user-intent dimensions each meet the minimum quality reference. The prior ten-image set was explicitly rejected by the user for insufficient realism, and this edited output has not received user acceptance."
+  },
+  "boundaries": [
+    "ADOBE.RUNTIME.EXECUTION = ESTABLISHED_FOR_THIS_SINGLE_EDIT",
+    "SINGLE.EDIT.RUNTIME != FULL.ADOBE.PRODUCTION.RUNTIME",
+    "PROVIDER.SUCCESS != QUALITY.PASS",
+    "QUALITY.READBACK.HOLD != FAILURE.OF.CONNECTOR",
+    "USER.ACCEPTANCE.NOT_OBSERVED = NO.PROMOTION",
+    "NO.CREDENTIAL.OR.INTERNAL.ADOBE.ENGINE.CLAIM"
+  ],
+  "result": {
+    "connector_runtime": "T.20.PASS",
+    "photorealism_promotion": "U.21.HOLD",
+    "external_adobe_full_capacity": "NOT_ESTABLISHED"
+  }
+}
