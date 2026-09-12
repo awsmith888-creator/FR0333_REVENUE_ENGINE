@@ -1,0 +1,31 @@
+name: FR0333 Red Sea Dual Chokepoint Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_0001.json"
+      - "RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_genius.py"
+      - "RavenCloudTaskbar/test_fr0333_red_sea_dual_chokepoint_genius.py"
+      - "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json"
+      - "RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json"
+      - "RavenCloudTaskbar/README_red_sea_dual_chokepoint_0001.md"
+      - ".github/workflows/fr0333-red-sea-dual-chokepoint-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate specification JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_0001.json >/dev/null
+      - name: Run Genius Bar
+        run: python RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_genius.py
+      - name: Run local test rail
+        run: python RavenCloudTaskbar/test_fr0333_red_sea_dual_chokepoint_genius.py
