@@ -3,78 +3,24 @@
   "state": "APPEND_ONLY_ARTIFACT_INVENTORY",
   "hash_policy": "GIT_BLOB_SHA_CAPTURED_FROM_BRANCH",
   "entries": [
-    {
-      "inventory_id": "INV.0.1",
-      "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json",
-      "role": "GOLDEN_CHAIN_METRIC_RAIL",
-      "git_blob_sha": "ff09ffab6a36dbbacf577a3e64dc02af1cbee3e5"
-    },
-    {
-      "inventory_id": "INV.0.2",
-      "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_genius.py",
-      "role": "GENIUS_BAR_VALIDATOR",
-      "git_blob_sha": "d5cc2052165465a8456aca5c93ae911ccb0db07c"
-    },
-    {
-      "inventory_id": "INV.0.3",
-      "artifact": "RavenCloudTaskbar/test_fr0333_census_black_detailed_origin_genius.py",
-      "role": "LOCAL_TEST_RAIL",
-      "git_blob_sha": "8f53f3194aa6349e6c9e8e87ca724c5c67d37f53"
-    },
-    {
-      "inventory_id": "INV.0.4",
-      "artifact": "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json",
-      "role": "GOLDEN_CHAIN_INDEX",
-      "git_blob_sha": "825a07e85adee54189d90a6f813bc0ac8c7b99f8"
-    },
-    {
-      "inventory_id": "INV.0.5",
-      "artifact": "RavenCloudTaskbar/README_census_black_detailed_origin_0001.md",
-      "role": "README",
-      "git_blob_sha": "7d9447dc2bd9e65d9076036900f736cb5c2d83cd"
-    },
-    {
-      "inventory_id": "INV.0.6",
-      "artifact": ".github/workflows/fr0333-census-black-detailed-origin-validate.yml",
-      "role": "CI_VALIDATION",
-      "git_blob_sha": "2686b49fabd1f1f1fff46484fb59773203db3280"
-    },
-    {
-      "inventory_id": "INV.0.7",
-      "artifact": "RavenCloudTaskbar/fr0333_two_lane_highway_0001.json",
-      "role": "GOLDEN_CHAIN_SPECIFICATION_RAIL",
-      "git_blob_sha": "4cdc6cf6afeecbfc83d9a01f43e6d6e06f41c3f8"
-    },
-    {
-      "inventory_id": "INV.0.8",
-      "artifact": "RavenCloudTaskbar/fr0333_two_lane_highway_genius.py",
-      "role": "GENIUS_BAR_VALIDATOR",
-      "git_blob_sha": "a9e5051fd449c99fbd244a49ea41f72de1000892"
-    },
-    {
-      "inventory_id": "INV.0.9",
-      "artifact": "RavenCloudTaskbar/test_fr0333_two_lane_highway_genius.py",
-      "role": "LOCAL_TEST_RAIL",
-      "git_blob_sha": "e50f93e2cb471d85d0acbaeb47877e46034cf394"
-    },
-    {
-      "inventory_id": "INV.0.10",
-      "artifact": "RavenCloudTaskbar/README_two_lane_highway_0001.md",
-      "role": "README",
-      "git_blob_sha": "3cc24f1808745681579b44856a90a015970ba5e7"
-    },
-    {
-      "inventory_id": "INV.0.11",
-      "artifact": ".github/workflows/fr0333-two-lane-highway-validate.yml",
-      "role": "CI_VALIDATION",
-      "git_blob_sha": "46f3d622f9d90dac6045a592c8f4d8a2da29ebf3"
-    },
-    {
-      "inventory_id": "INV.0.12",
-      "artifact": "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json",
-      "role": "GOLDEN_CHAIN_INDEX_REVISION_FOR_0.3",
-      "git_blob_sha": "fa4a3c149364a6ac66010c065733fb49770cb904"
-    }
+    {"inventory_id":"INV.0.1","artifact":"RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json","role":"GOLDEN_CHAIN_METRIC_RAIL","git_blob_sha":"ff09ffab6a36dbbacf577a3e64dc02af1cbee3e5"},
+    {"inventory_id":"INV.0.2","artifact":"RavenCloudTaskbar/fr0333_census_black_detailed_origin_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"d5cc2052165465a8456aca5c93ae911ccb0db07c"},
+    {"inventory_id":"INV.0.3","artifact":"RavenCloudTaskbar/test_fr0333_census_black_detailed_origin_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"8f53f3194aa6349e6c9e8e87ca724c5c67d37f53"},
+    {"inventory_id":"INV.0.4","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX","git_blob_sha":"825a07e85adee54189d90a6f813bc0ac8c7b99f8"},
+    {"inventory_id":"INV.0.5","artifact":"RavenCloudTaskbar/README_census_black_detailed_origin_0001.md","role":"README","git_blob_sha":"7d9447dc2bd9e65d9076036900f736cb5c2d83cd"},
+    {"inventory_id":"INV.0.6","artifact":".github/workflows/fr0333-census-black-detailed-origin-validate.yml","role":"CI_VALIDATION","git_blob_sha":"2686b49fabd1f1f1fff46484fb59773203db3280"},
+    {"inventory_id":"INV.0.7","artifact":"RavenCloudTaskbar/fr0333_two_lane_highway_0001.json","role":"GOLDEN_CHAIN_SPECIFICATION_RAIL","git_blob_sha":"4cdc6cf6afeecbfc83d9a01f43e6d6e06f41c3f8"},
+    {"inventory_id":"INV.0.8","artifact":"RavenCloudTaskbar/fr0333_two_lane_highway_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"a9e5051fd449c99fbd244a49ea41f72de1000892"},
+    {"inventory_id":"INV.0.9","artifact":"RavenCloudTaskbar/test_fr0333_two_lane_highway_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"e50f93e2cb471d85d0acbaeb47877e46034cf394"},
+    {"inventory_id":"INV.0.10","artifact":"RavenCloudTaskbar/README_two_lane_highway_0001.md","role":"README","git_blob_sha":"3cc24f1808745681579b44856a90a015970ba5e7"},
+    {"inventory_id":"INV.0.11","artifact":".github/workflows/fr0333-two-lane-highway-validate.yml","role":"CI_VALIDATION","git_blob_sha":"46f3d622f9d90dac6045a592c8f4d8a2da29ebf3"},
+    {"inventory_id":"INV.0.12","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.3","git_blob_sha":"fa4a3c149364a6ac66010c065733fb49770cb904"},
+    {"inventory_id":"INV.0.13","artifact":"RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_0001.json","role":"GOLDEN_CHAIN_METRIC_RAIL","git_blob_sha":"38745ee5a35ef0d8910f70ecd018baf6d76f72a9"},
+    {"inventory_id":"INV.0.14","artifact":"RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"d1dc74ae8a52e63385e1baa5634002279a8b666a"},
+    {"inventory_id":"INV.0.15","artifact":"RavenCloudTaskbar/test_fr0333_red_sea_dual_chokepoint_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"f8d5e7ee66de209642f1ea7fbabcb90575702022"},
+    {"inventory_id":"INV.0.16","artifact":"RavenCloudTaskbar/README_red_sea_dual_chokepoint_0001.md","role":"README","git_blob_sha":"389306f96eb6c8fd7b92a5a9da7242753b669831"},
+    {"inventory_id":"INV.0.17","artifact":".github/workflows/fr0333-red-sea-dual-chokepoint-validate.yml","role":"CI_VALIDATION","git_blob_sha":"fb8393ea2c5ac94c84893739e4d8b976d4e15076"},
+    {"inventory_id":"INV.0.18","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.4","git_blob_sha":"823de2360d3f3a207b02b81708914e1deef78243"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -82,6 +28,8 @@
     "GITHUB_ACTIONS_PASS_NE_MERGED",
     "SPECIFICATION_PROMOTION_NE_RUNTIME_PROOF",
     "SOURCE_AUDITED_NE_CAUSAL_INFERENCE",
-    "PRIOR_INVENTORY_RECEIPTS_ARE_NOT_REWRITTEN"
+    "PRIOR_INVENTORY_RECEIPTS_ARE_NOT_REWRITTEN",
+    "POLITICAL_PROPOSAL_NE_ENACTED_POLICY",
+    "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP"
   ]
 }
