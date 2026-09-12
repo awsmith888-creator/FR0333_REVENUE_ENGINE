@@ -1,0 +1,38 @@
+name: FR0333 Motorcycle AI Continuum Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_matrix_0001.json"
+      - "RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_genius.py"
+      - "RavenCloudTaskbar/test_fr0333_motorcycle_ai_continuum_genius.py"
+      - "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json"
+      - "RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json"
+      - "RavenCloudTaskbar/README_motorcycle_ai_continuum_matrix_0001.md"
+      - "RavenCloudTaskbar/README.md"
+      - "RavenCloudTaskbar/taskbars.json"
+      - ".github/workflows/fr0333-motorcycle-ai-continuum-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate JSON rails
+        run: |
+          python -m json.tool RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_matrix_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_golden_chain_index_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/taskbars.json >/dev/null
+      - name: Run Genius Bar
+        run: python RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_genius.py
+      - name: Run local test rail
+        working-directory: RavenCloudTaskbar
+        run: python test_fr0333_motorcycle_ai_continuum_genius.py
