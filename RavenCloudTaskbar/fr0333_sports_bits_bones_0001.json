@@ -1,0 +1,128 @@
+{
+  "id": "FR0333.SPORTS.BITS.BONES.0001",
+  "version": "0.1",
+  "state": "PROMOTED.WORKING.SPEC.REFERENCE_POINT_VALIDATED",
+  "purpose": "Convert a sports-event screenshot into an evidence-bounded BITS/BONES metric rail using explicit reference points without promoting ongoing or media-view observations into final results or audience ratings.",
+  "source_fixture": {
+    "fixture_id": "RP.FIXTURE.MLB.SUBWAY.SERIES.2026.09.12.0001",
+    "source_type": "USER_PROVIDED_SCREENSHOT_AND_TRANSCRIBED_GOOGLE_SPORTS_DATA",
+    "capture_display_time": "2:02",
+    "capture_timezone": "UNKNOWN",
+    "evidence_class": "SCREENSHOT.OBSERVED_PLUS_STRUCTURED_SOURCE_REPORTED",
+    "independent_verification": "NOT_ESTABLISHED"
+  },
+  "bones": [
+    "SPORT",
+    "LEAGUE",
+    "TEAM",
+    "EVENT",
+    "DATE",
+    "VENUE",
+    "SERIES",
+    "SCHEDULE"
+  ],
+  "bits": [
+    "SCORE",
+    "INNING",
+    "TIME",
+    "RESULT",
+    "STANDINGS",
+    "PITCHER.DATA",
+    "AUDIENCE.DATA",
+    "MEDIA.VIEWS",
+    "VIDEO.RUNTIME"
+  ],
+  "reference_points": [
+    {
+      "reference_id": "RP.01.CURRENT.GAME",
+      "sport": "MLB",
+      "event": "NEW_YORK_METS_VS_NEW_YORK_YANKEES",
+      "date": "2026-09-12",
+      "venue": "YANKEE_STADIUM",
+      "series_state": "LATE_SEASON_SUBWAY_SERIES",
+      "game_state": "ONGOING",
+      "score_observed": {
+        "mets": 3,
+        "yankees": 0
+      },
+      "inning": "UNKNOWN",
+      "final_result": "UNKNOWN",
+      "terminal_state": "U.21.HOLD"
+    },
+    {
+      "reference_id": "RP.02.COMPLETED.ROWS",
+      "completed_games": [
+        {"date": "2026-05-15", "winner": "YANKEES", "score": "5-2"},
+        {"date": "2026-05-16", "winner": "METS", "score": "6-3"},
+        {"date": "2026-05-17", "winner": "METS", "score": "7-6", "innings": 10},
+        {"date": "2026-09-11", "winner": "YANKEES", "score": "6-4"}
+      ],
+      "derived_completed_record": {
+        "mets_wins": 2,
+        "yankees_wins": 2
+      },
+      "derivation_class": "DERIVED_FROM_PROVIDED_ROWS_ONLY",
+      "terminal_state": "T.20.REFERENCE.POINT.DERIVATION"
+    },
+    {
+      "reference_id": "RP.03.NEXT.GAME",
+      "date": "2026-09-13",
+      "scheduled_time": "13:35",
+      "timezone": "EDT",
+      "away": "METS",
+      "home": "YANKEES",
+      "result": "NOT_YET_OBSERVED",
+      "terminal_state": "U.21.HOLD"
+    },
+    {
+      "reference_id": "RP.04.MEDIA.VIDEO",
+      "platform": "YOUTUBE",
+      "publisher": "MLB",
+      "title_observed": "METS vs. YANKEES: Official Full Game...",
+      "views_observed": 165000,
+      "age_observed_hours": 15,
+      "video_runtime": "15:09",
+      "metric_class": "MEDIA.VIEWS",
+      "tv_ratings": "UNKNOWN",
+      "total_game_reach": "UNKNOWN",
+      "terminal_state": "T.20.OBSERVATION"
+    }
+  ],
+  "metric_chain": [
+    "EVENT",
+    "SOURCE",
+    "REFERENCE.POINT",
+    "SCORE",
+    "TIME",
+    "RESULT",
+    "AUDIENCE",
+    "MEDIA.VIEWS",
+    "STANDINGS",
+    "DELTA",
+    "RECEIPT"
+  ],
+  "evidence_boundaries": [
+    "SCREENSHOT.OBSERVED != INDEPENDENT.VERIFICATION",
+    "GOOGLE.SPORTS.DATA != FINAL.AUTHORITY.BY.NAME.ALONE",
+    "ONGOING.SCORE != FINAL.RESULT",
+    "VIDEO.VIEWS != TV.RATINGS",
+    "VIDEO.VIEWS != TOTAL.GAME.REACH",
+    "SEARCH.VISIBILITY != AUDIENCE.SIZE",
+    "SCHEDULED.EVENT != COMPLETED.EVENT",
+    "UNKNOWN != ZERO != PASS",
+    "DERIVED.RECORD != SOURCE.REPORTED.RECORD"
+  ],
+  "reference_point_logic": {
+    "baseline_completed_record": "2-2_FROM_FOUR_LISTED_COMPLETED_GAMES",
+    "current_game_delta": "HOLD_UNTIL_FINAL_RESULT",
+    "future_game_delta": "HOLD_UNTIL_EVENT_OCCURS",
+    "media_delta": "COMPARE_ONLY_AGAINST_SAME_METRIC_CLASS_AND_TIME_WINDOW"
+  },
+  "terminal_control": {
+    "specification": "T.20.PASS",
+    "current_game_final": "U.21.HOLD",
+    "next_game_result": "U.21.HOLD",
+    "tv_audience": "U.21.HOLD",
+    "external_runtime": "NOT_CLAIMED"
+  }
+}
