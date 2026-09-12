@@ -12,6 +12,16 @@ Network layer:
 
 The Lumen layer is recorded as **verified capability / not provisioned**. No tenant ID, gateway ID, interface, BGP session, cloud account, or credential is fabricated.
 
+## Golden Chain active index
+
+`0.5.FR.0333.GOLDEN.CHAIN.MOTORCYCLE.AI.CONTINUUM.0001` is indexed on its working branch as `PROMOTED.WORKING.SPEC.GOLDEN_CHAIN.INDEXED`.
+
+Primary artifact: `RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_matrix_0001.json`
+
+Validation: `RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_genius.py` plus its local test rail and GitHub Actions workflow.
+
+Boundary: `GOLDEN_CHAIN.INDEX.ACTIVE != EXTERNAL.RUNTIME.DEPLOYED`.
+
 ## Hard boundaries
 
 - HumanLock remains active.
