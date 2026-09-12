@@ -1,0 +1,77 @@
+{
+  "identifier": "FR0333.REFERENCE.MONITORING.CORRECTION.0003",
+  "state": "DRAFT.USER.REVIEWED.CORRECTION",
+  "supersedes_for_position_27_only": "FR0333.REFERENCE.MONITORING.CORRECTION.0002",
+  "preserves": [
+    "A.1_THROUGH_Z.26_ALPHABETIC_NUMERIC_IDENTITY",
+    "IMMUTABLE_HISTORY",
+    "DIGIT.VALUE_NE_FUNCTIONAL.ROLE",
+    "SEVEN.REGULATOR.STATE.CONDITIONAL",
+    "Z.26.21.HUMANLOCK.HUMAN_AUTHORIZATION_BOUNDARY"
+  ],
+  "explicit_user_review": {
+    "date": "2026-09-12",
+    "decision": "POSITION.27_ASSIGNED_AS_HUMANLOCK_CONTINUATION",
+    "letter_binding": null,
+    "post_z_namespace": "PROHIBITED",
+    "rationale": "Position 27 is reviewed as a numeric continuation of the established HumanLock boundary. It is not AA and does not create a new alphabetic identity."
+  },
+  "reference_frame": {
+    "Z.26": {
+      "role": "HUMANLOCK.BOUNDARY",
+      "established_reference": "Z.26.21.HUMANLOCK"
+    },
+    "POSITION.27": {
+      "role": "HUMANLOCK.CONTINUATION",
+      "binding_type": "NUMERIC.POSITION.ONLY",
+      "alphabetic_symbol": null,
+      "requires_human_authorization": true,
+      "automatic_role_inheritance": false
+    }
+  },
+  "census_correction": {
+    "source_record": "FR0333.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+    "invalid_positional_token": "AA27",
+    "observation_preserved": {
+      "source_row": "ACS.ROW.07",
+      "identity": "Jamaican",
+      "value": 986647,
+      "unit": "persons",
+      "universe": "2024_ACS_1_YEAR_BLACK_ALONE",
+      "class": "ACS_ESTIMATE",
+      "source": "SRC.008"
+    },
+    "rule": "SOURCE_ROW_ID_NE_REFERENCE_POSITION",
+    "effect": "The Jamaican observation remains intact but no longer occupies or defines position 27."
+  },
+  "hard_invariants": [
+    "AA27_REJECT",
+    "A27_REJECT",
+    "POST_Z_LETTER_BINDING_REJECT",
+    "POSITION_27_REQUIRES_EXPLICIT_HUMAN_REVIEW",
+    "POSITION_27_ROLE_HUMANLOCK_CONTINUATION",
+    "SOURCE_ROW_ID_NE_REFERENCE_POSITION",
+    "CI.SUCCESS_NE_REFERENCE.FRAME.INTEGRITY",
+    "HUMANLOCK_NE_AUTOMATIC_DEPLOYMENT"
+  ],
+  "machine_path": [
+    "SOURCE_LOCK",
+    "OBSERVE",
+    "TIMESTAMP",
+    "REFERENCE_POINT",
+    "PRIOR_STATE",
+    "CURRENT_STATE",
+    "DELTA",
+    "EVIDENCE_CLASS",
+    "CONTRADICTION_CHECK",
+    "LOGIC_GATE",
+    "UPGRADE_TEST",
+    "REPORT_OR_STAY"
+  ],
+  "promotion": {
+    "repository_mutation": "DRAFT_BRANCH_ONLY",
+    "merge": "USER_REVIEW_REQUIRED",
+    "deployment": "NOT_AUTHORIZED",
+    "external_execution": "NOT_ESTABLISHED"
+  }
+}
