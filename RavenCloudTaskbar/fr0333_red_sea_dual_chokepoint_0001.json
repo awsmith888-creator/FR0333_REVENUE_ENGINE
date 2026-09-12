@@ -1,0 +1,76 @@
+{
+  "identifier": "FR0333.RED.SEA.DUAL.CHOKEPOINT.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001",
+  "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION",
+  "source_clock": "2026-09-11",
+  "subject": "Yemen Red Sea advance, Iran-linked support, dual energy chokepoint stress, and U.S. midterm fiscal-promise crosswalk",
+  "source_lock": {
+    "rule": "SOURCE_THEN_CLAIM_THEN_UNIVERSE_THEN_DERIVATION_THEN_CAUSATION_GATE_THEN_PROMOTION",
+    "sources": [
+      {"id":"SRC.001","publisher":"U.S. Energy Information Administration","title":"Energy security and world oil transit chokepoints","url":"https://www.eia.gov/outlooks/steo/report/energysecurity/article.php","class":"FEDERAL_PRIMARY_ENERGY_DATA"},
+      {"id":"SRC.002","publisher":"Reuters","title":"Gulf oil threatened anew as Houthis reach key island and pipeline is shut down","url":"https://www.reuters.com/world/middle-east/yemens-houthis-reach-strategic-island-mouth-vital-shipping-lane-2026-09-11/","class":"INDEPENDENT_NEWS_MULTISOURCE"},
+      {"id":"SRC.003","publisher":"Associated Press","title":"The Houthi advance in Yemen raises concerns about a key shipping choke point","url":"https://apnews.com/article/ab2e69eb2959979bae44eb4d45ae637e","class":"INDEPENDENT_NEWS"},
+      {"id":"SRC.004","publisher":"Reuters","title":"Is Trump's $5,000 dividend legal and how would it work?","url":"https://www.reuters.com/legal/government/is-trumps-5000-dividend-legal-how-would-it-work-2026-09-10/","class":"INDEPENDENT_NEWS_LEGAL_FISCAL"},
+      {"id":"SRC.005","publisher":"Reuters","title":"At Dallas convention, some loyalists question Trump-centric midterms strategy","url":"https://www.reuters.com/world/us/dallas-convention-some-loyalists-question-trump-centric-midterms-strategy-2026-09-11/","class":"INDEPENDENT_NEWS_POLITICAL"},
+      {"id":"SRC.006","publisher":"Al Jazeera Arabic","title":"Bab el-Mandeb at the heart of the conflict","url":"https://www.aljazeera.net/news/2026/9/11/%D8%A8%D8%A7%D8%A8-%D8%A7%D9%84%D9%85%D9%86%D8%AF%D8%A8-%D9%81%D9%8A-%D9%82%D9%84%D8%A8-%D8%A7%D9%84%D8%B5%D8%B1%D8%A7%D8%B9-%D9%84%D9%85%D8%A7%D8%B0%D8%A7-%D9%8A%D8%B3%D8%A7%D8%B1%D8%B9","class":"REGIONAL_ARABIC_REPORTING"},
+      {"id":"SRC.007","publisher":"Al Jazeera Arabic","title":"Latest developments on Yemen's west coast after Houthi advance","url":"https://www.aljazeera.net/news/2026/9/11/%D9%88%D8%B3%D8%A7%D8%A6%D9%84-%D8%A5%D8%B9%D9%84%D8%A7%D9%85-%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9-%D9%84%D9%84%D8%AD%D9%88%D8%AB%D9%8A%D9%8A%D9%86-%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%D8%A7%D9%86","class":"REGIONAL_ARABIC_REPORTING_WITH_IRANIAN_OFFICIAL_FRAMING"}
+    ]
+  },
+  "control_laws": [
+    "HOUTHI_ADVANCE_NE_DIRECT_IRANIAN_ATTACK",
+    "IRANIAN_SUPPORT_NE_PROVEN_COMMAND_CONTROL",
+    "DUAL_CHOKEPOINT_PRESSURE_NE_UNIFIED_PHYSICAL_CONTROL",
+    "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP",
+    "BAB_EL_MANDEB_PLUS_HORMUZ_MUST_NOT_BE_SUMMED_WITHOUT_OVERLAP_ADJUSTMENT",
+    "CAMPAIGN_PLEDGE_NE_ENACTED_SPENDING",
+    "ELECTION_CONDITION_NE_EXECUTIVE_SPENDING_AUTHORITY",
+    "TEMPORAL_OVERLAP_NE_CAUSATION",
+    "RETALIATION_OR_REVENGE_FRAMING_NE_VERIFIED_MORAL_JUSTIFICATION",
+    "CASUALTY_HARM_NE_PROVEN_STRATEGIC_OBJECTIVE",
+    "AI_SYNTHESIS_NE_VERIFIED_FACT"
+  ],
+  "reference_points": [
+    {"reference_point":"A1","metric":"HOUTHI.WEST.COAST.ADVANCE","value":"MOCHA_PERIM_MAYUN_DHUBAB","unit":"observed_territorial_positions","class":"INDEPENDENTLY_REPORTED_CURRENT_STATE","source":["SRC.002","SRC.003","SRC.006"]},
+    {"reference_point":"B2","metric":"IRAN.SUPPORT.STATE","value":"SUPPORTED_RELATIONSHIP_CORROBORATED_DIRECT_COMMAND_DISPUTED","unit":"evidence_state","class":"INDEPENDENT_MULTISOURCE_WITH_PARTY_DENIAL","source":["SRC.002","SRC.006","SRC.007"]},
+    {"reference_point":"C3","metric":"BAB.EL.MANDEB.OIL.FLOW.2Q26","value":8.1,"unit":"million_barrels_per_day","class":"MEASURED_ENERGY_FLOW","source":"SRC.001"},
+    {"reference_point":"D4","metric":"WORLD.OIL.SUPPLY.2Q26","value":99.7,"unit":"million_barrels_per_day","class":"MEASURED_WORLD_REFERENCE","source":"SRC.001"},
+    {"reference_point":"E5","metric":"BAB.EL.MANDEB.PER.1000.WORLD.SUPPLY","value":81,"unit":"barrels_per_1000_world_supply_reference","class":"DERIVED_REFERENCE_POINT_ROUNDED","derivation":"8.1 / 99.7 * 1000","source":"SRC.001"},
+    {"reference_point":"F6","metric":"HORMUZ.OIL.FLOW.2Q26","value":4.9,"unit":"million_barrels_per_day","class":"MEASURED_ENERGY_FLOW","source":"SRC.001"},
+    {"reference_point":"G7","metric":"HORMUZ.PER.1000.WORLD.SUPPLY","value":49,"unit":"barrels_per_1000_world_supply_reference","class":"DERIVED_REFERENCE_POINT_ROUNDED","derivation":"4.9 / 99.7 * 1000","source":"SRC.001"},
+    {"reference_point":"H8","metric":"DUAL.CHOKEPOINT.SUMMATION","value":"U.21.HOLD","unit":"causal_and_accounting_gate","class":"OVERLAP_NOT_RESOLVED","reason":"The same cargo can transit multiple chokepoints and oil and gas series use different denominators."},
+    {"reference_point":"I9","metric":"SAUDI.EAST.WEST.PIPELINE.STRESS","value":"TEMPORARY_SHUTDOWN_REPORTED","unit":"infrastructure_state","class":"INDEPENDENTLY_REPORTED_CURRENT_STATE","source":"SRC.002"},
+    {"reference_point":"J10","metric":"ENERGY.MARKET.STRESS","value":"BRENT_ABOVE_100","unit":"dollars_per_barrel_threshold_state","class":"MARKET_OBSERVATION_TIME_BOUND","source":"SRC.002"},
+    {"reference_point":"K11","metric":"TRUMP.DIVIDEND.PLEDGE","value":5000,"unit":"dollars_per_adult_citizen_proposed","class":"POLITICAL_PROPOSAL_NOT_ENACTED","source":["SRC.004","SRC.005"]},
+    {"reference_point":"L12","metric":"TRUMP.DIVIDEND.ESTIMATED.COST","value":1.2,"unit":"trillion_dollars_approximate","class":"INDEPENDENT_FISCAL_ESTIMATE","source":"SRC.004"},
+    {"reference_point":"M13","metric":"CONGRESSIONAL.APPROVAL.REQUIREMENT","value":"REQUIRED_FOR_SPENDING_PROGRAM","unit":"legal_fiscal_state","class":"LEGAL_PROCESS_BOUNDARY","source":"SRC.004"},
+    {"reference_point":"N14","metric":"POLITICAL_GEOPOLITICAL.CAUSATION.GATE","value":"F.6.NOT_ESTABLISHED","unit":"causation_state","class":"EVIDENCE_BOUNDARY","meaning":"No verified evidence in this rail establishes that Houthi or Iranian-linked military timing was designed to humiliate a U.S. politician, determine the U.S. midterms, or enact morally righteous revenge."}
+  ],
+  "regional_language_findings": {
+    "iranian_official_framing": "An Iranian adviser publicly linked Iranian leverage in Hormuz with Houthi or resistance leverage at Bab el-Mandeb.",
+    "classification": "OFFICIAL_POLITICAL_FRAMING_NOT_COMMAND_RECEIPT",
+    "source":"SRC.007"
+  },
+  "us_political_crosswalk": {
+    "fact": "Trump publicly proposed a 5000 dollar payment to adult citizens conditioned on Republican congressional control.",
+    "implementation_boundary": "Proposal requires congressional approval and is not an enacted payment program.",
+    "causation_boundary": "The coincidence of election messaging and Middle East escalation is not evidence that one caused or was timed for the other.",
+    "sources":["SRC.004","SRC.005"]
+  },
+  "human_cost_boundary": {
+    "rule": "HUMAN_CASUALTIES_AND_DISPLACEMENT_ARE_REAL_HARMS_BUT_DO_NOT_BY_THEMSELVES_PROVE_MOTIVE_OR_MORAL_LEGITIMACY",
+    "state":"ACTIVE"
+  },
+  "genius_bar": {
+    "identifier":"FR0333.GENIUS.RED.SEA.DUAL.CHOKEPOINT.0001",
+    "gate_count":14,
+    "required_pass_count":14,
+    "gates":[
+      "G1.IDENTIFIER.LOCK","G2.SOURCE.AUTHORITY","G3.REFERENCE.POINT.SEQUENCE","G4.HOUTHI.IRAN.DISTINCTION","G5.FLOW.OWNERSHIP.DISTINCTION","G6.PER1000.RECONSTRUCTION","G7.NO_DOUBLE.COUNTING","G8.PLEDGE.ENACTMENT.DISTINCTION","G9.CONGRESSIONAL.AUTHORITY","G10.TEMPORAL.CAUSATION.BOUNDARY","G11.MORAL.FRAME.BOUNDARY","G12.REGIONAL.LANGUAGE.CLASSIFICATION","G13.HUMANLOCK","G14.GOLDEN.CHAIN.INDEX.LOCK"
+    ]
+  },
+  "golden_chain": {
+    "public_index_target":"0.4.FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001",
+    "humanlock":true,
+    "promotion_rule":"ALL_14_GENIUS_GATES_PASS_AND_HUMANLOCK_TRUE"
+  }
+}
