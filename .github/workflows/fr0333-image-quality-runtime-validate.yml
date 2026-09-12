@@ -1,0 +1,32 @@
+name: FR0333 Image Quality Runtime Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_image_quality_gate_0003.json"
+      - "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
+      - "RavenCloudTaskbar/fr0333_image_quality_runtime_genius.py"
+      - "RavenCloudTaskbar/test_fr0333_image_quality_runtime_genius.py"
+      - "RavenCloudTaskbar/README_image_quality_runtime_0003.md"
+      - ".github/workflows/fr0333-image-quality-runtime-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate quality gate JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_image_quality_gate_0003.json >/dev/null
+      - name: Validate Adobe runtime receipt JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json >/dev/null
+      - name: Run image quality runtime Genius rail
+        run: python RavenCloudTaskbar/fr0333_image_quality_runtime_genius.py
+      - name: Run image quality runtime tests
+        run: python RavenCloudTaskbar/test_fr0333_image_quality_runtime_genius.py
