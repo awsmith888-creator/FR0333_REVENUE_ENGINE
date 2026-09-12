@@ -1,0 +1,48 @@
+{
+  "identifier": "FR0333.GOLDEN.CHAIN.INVENTORY.0001",
+  "state": "APPEND_ONLY_ARTIFACT_INVENTORY",
+  "entries": [
+    {
+      "inventory_id": "INV.0.1",
+      "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json",
+      "role": "GOLDEN_CHAIN_METRIC_RAIL",
+      "sha256": "7ce24367d6b7818831e1d0256a1a1c6dc602e75c06a2003960a25992c3349ef3"
+    },
+    {
+      "inventory_id": "INV.0.2",
+      "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_genius.py",
+      "role": "GENIUS_BAR_VALIDATOR",
+      "sha256": "9a7a13667f11171aaeb87ed47e586c42cc9dbd320be876e3b0e8a1a54d52f340"
+    },
+    {
+      "inventory_id": "INV.0.3",
+      "artifact": "RavenCloudTaskbar/test_fr0333_census_black_detailed_origin_genius.py",
+      "role": "LOCAL_TEST_RAIL",
+      "sha256": "d22fa07406c93616bf13a6385c1193afcd496c232a387093255c602102de12ef"
+    },
+    {
+      "inventory_id": "INV.0.4",
+      "artifact": "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json",
+      "role": "GOLDEN_CHAIN_INDEX",
+      "sha256": "e4a576115149e15a4c8ca4cdf9b5ad3c74929e7ef8609d7f7412649b41bd6a9a"
+    },
+    {
+      "inventory_id": "INV.0.5",
+      "artifact": "RavenCloudTaskbar/README_census_black_detailed_origin_0001.md",
+      "role": "README",
+      "sha256": "9692beb23448cdedfa28a62ffe2be853ba5e66af81c532868447779aa8382955"
+    },
+    {
+      "inventory_id": "INV.0.6",
+      "artifact": ".github/workflows/fr0333-census-black-detailed-origin-validate.yml",
+      "role": "CI_VALIDATION",
+      "sha256": "db7062e80a2c0d1baef96f0ad5204cadd5db6d77262c8a77127fb7b4c7810307"
+    }
+  ],
+  "boundaries": [
+    "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
+    "LOCAL_VALIDATION_NE_GITHUB_ACTIONS_PASS",
+    "GITHUB_ACTIONS_PASS_NE_MERGED",
+    "SOURCE_AUDITED_NE_CAUSAL_INFERENCE"
+  ]
+}
