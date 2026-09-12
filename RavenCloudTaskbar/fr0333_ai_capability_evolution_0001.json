@@ -1,0 +1,81 @@
+{
+  "identifier": "FR0333.AI.CAPABILITY.EVOLUTION.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.AI.CAPABILITY.EVOLUTION.0001",
+  "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION",
+  "source_clock": "2026-09-12",
+  "purpose": "Track AI capability evolution while forcing verification, failure-memory preservation, provenance, and HumanLock to evolve with capability.",
+  "source_lock": {
+    "rule": "SOURCE_THEN_METRIC_THEN_UNIVERSE_THEN_DERIVATION_THEN_BOUNDARY_THEN_PROMOTION",
+    "sources": [
+      {"id":"SRC.001","publisher":"Nature","title":"Learning representations by back-propagating errors","url":"https://www.nature.com/articles/323533a0","class":"PEER_REVIEWED_PRIMARY_HISTORY"},
+      {"id":"SRC.002","publisher":"IBM","title":"Deep Blue","url":"https://www.ibm.com/history/deep-blue","class":"PRIMARY_VENDOR_HISTORY"},
+      {"id":"SRC.003","publisher":"NeurIPS","title":"ImageNet Classification with Deep Convolutional Neural Networks","url":"https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html","class":"PEER_REVIEWED_PRIMARY_RESEARCH"},
+      {"id":"SRC.004","publisher":"Google Research","title":"Attention is All You Need","url":"https://research.google/pubs/attention-is-all-you-need/","class":"PRIMARY_RESEARCH"},
+      {"id":"SRC.005","publisher":"Epoch AI","title":"Trends in Artificial Intelligence","url":"https://epoch.ai/trends","class":"INDEPENDENT_TECHNICAL_TREND_ANALYSIS"},
+      {"id":"SRC.006","publisher":"Stanford HAI","title":"2025 AI Index Research and Development","url":"https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development","class":"ACADEMIC_INDEX"},
+      {"id":"SRC.007","publisher":"Stanford HAI","title":"2026 AI Index Report","url":"https://hai.stanford.edu/ai-index/2026-ai-index-report","class":"ACADEMIC_INDEX"},
+      {"id":"SRC.008","publisher":"Stanford HAI","title":"2026 AI Index Economy","url":"https://hai.stanford.edu/ai-index/2026-ai-index-report/economy","class":"ACADEMIC_INDEX_ECONOMY"}
+    ]
+  },
+  "evolution_timeline": [
+    {"year":1986,"state":"BACKPROPAGATION_MODERNIZATION","source":"SRC.001"},
+    {"year":1997,"state":"BRUTE_FORCE_SEARCH_AT_200M_CHESS_POSITIONS_PER_SECOND","source":"SRC.002"},
+    {"year":2012,"state":"GPU_DEEP_VISION_BREAKTHROUGH","source":"SRC.003"},
+    {"year":2017,"state":"TRANSFORMER_ATTENTION_ARCHITECTURE","source":"SRC.004"},
+    {"year":2020,"state":"FRONTIER_LANGUAGE_MODEL_SCALING_ACCELERATION","source":"SRC.005"},
+    {"year":2026,"state":"REASONING_MULTIMODAL_TOOL_USE_AND_AGENTIC_EXPANSION","source":"SRC.007"}
+  ],
+  "control_laws": [
+    "CAPABILITY_GROWTH_NE_TRUTH_GROWTH",
+    "COMPUTE_GROWTH_NE_RELIABILITY_GROWTH",
+    "MODEL_INTELLIGENCE_NE_MODEL_CONSCIOUSNESS",
+    "CURRENT_SESSION_ADAPTATION_NE_MODEL_WEIGHT_UPDATE",
+    "HUMAN_INPUT_NE_TRAINING_RECEIPT",
+    "MODEL_UPDATE_NE_AUTONOMOUS_SELF_MODIFICATION",
+    "NEW_CAPABILITY_MUST_NOT_DELETE_OLD_FAILURE_EVIDENCE",
+    "PASSIVE_FAILURE_HISTORY_IS_APPEND_ONLY",
+    "SMARTER_MUST_NOT_MEAN_LESS_VERIFIED",
+    "AI_SYNTHESIS_NE_VERIFIED_FACT",
+    "USER_PROPOSAL_PLUS_MODEL_ANALYSIS_REQUIRES_SOURCE_VERIFICATION",
+    "HUMANLOCK_REQUIRED_FOR_CANONICAL_PROMOTION"
+  ],
+  "reference_points": [
+    {"reference_point":"A1","metric":"FRONTIER.LANGUAGE.TRAINING.COMPUTE.GROWTH","value":5.0,"unit":"times_per_year","class":"TREND_ESTIMATE","source":"SRC.005"},
+    {"reference_point":"B2","metric":"FRONTIER.LANGUAGE.TRAINING.COMPUTE.DOUBLING","value":5.2,"unit":"months","class":"TREND_ESTIMATE","source":"SRC.005"},
+    {"reference_point":"C3","metric":"PRETRAINING.COMPUTE.EFFICIENCY.IMPROVEMENT","value":3.0,"unit":"times_per_year","class":"TREND_ESTIMATE","source":"SRC.005"},
+    {"reference_point":"D4","metric":"AI.CHIP.COMPUTE.STOCK.GROWTH","value":3.4,"unit":"times_per_year","class":"TREND_ESTIMATE","source":"SRC.005"},
+    {"reference_point":"E5","metric":"GPT3.5.LEVEL.INFERENCE.COST.NOV2022","value":20.0,"unit":"usd_per_million_tokens","class":"MEASURED_MARKET_REFERENCE","source":"SRC.006"},
+    {"reference_point":"F6","metric":"GPT3.5.LEVEL.INFERENCE.COST.OCT2024","value":0.07,"unit":"usd_per_million_tokens","class":"MEASURED_MARKET_REFERENCE","source":"SRC.006"},
+    {"reference_point":"G7","metric":"GPT3.5.LEVEL.INFERENCE.COST.REDUCTION.RATIO","value":286,"unit":"times_cheaper_reference_rounded","class":"DERIVED_REFERENCE_POINT","derivation":"20.0 / 0.07 rounded","source":"SRC.006"},
+    {"reference_point":"H8","metric":"ORGANIZATIONAL.AI.ADOPTION.2025","value":880,"unit":"organizations_per_1000_surveyed","class":"SURVEY_REFERENCE_POINT","source":"SRC.008"},
+    {"reference_point":"I9","metric":"ORGANIZATIONAL.GENAI.USE.AT_LEAST.ONE.BUSINESS.FUNCTION.2025","value":700,"unit":"organizations_per_1000_surveyed","class":"SURVEY_REFERENCE_POINT","source":"SRC.008"},
+    {"reference_point":"J10","metric":"INDUSTRY.SHARE.NOTABLE.FRONTIER.MODELS.2025","value":900,"unit":"models_per_1000_reference_floor","class":"LOWER_BOUND_REFERENCE_POINT","meaning":"Stanford reports industry produced over 90 of every 100 notable frontier models; encoded as a 900-per-1000 floor rather than a percentage.","source":"SRC.007"},
+    {"reference_point":"K11","metric":"US.PRIVATE.AI.INVESTMENT.2025","value":285.9,"unit":"billion_usd","class":"ECONOMIC_REFERENCE_POINT","source":"SRC.007"},
+    {"reference_point":"L12","metric":"DOCUMENTED.AI.INCIDENTS.2025","value":362,"unit":"incidents","class":"RESPONSIBLE_AI_REFERENCE_POINT","source":"SRC.007"},
+    {"reference_point":"M13","metric":"DOCUMENTED.AI.INCIDENTS.2024","value":233,"unit":"incidents","class":"RESPONSIBLE_AI_PRIOR_REFERENCE_POINT","source":"SRC.007"},
+    {"reference_point":"N14","metric":"MODEL.CONSCIOUSNESS.CLAIM","value":"U.21.HOLD","unit":"epistemic_state","class":"NOT_ESTABLISHED","meaning":"Capability, memory-like context handling, reasoning, perception, and tool use do not establish subjective consciousness."}
+  ],
+  "collaboration_lane": {
+    "name":"HUMAN.MODEL.COEVOLUTION.CONTROLLED.WORKFLOW",
+    "path":["HUMAN.PROPOSAL","MODEL.ANALYSIS","SOURCE.CHECK","ACTIVE.CANDIDATE","SECOND.LOOK","VERIFY","COMPARE.PASSIVE","GENIUS","HUMANLOCK","PROMOTE"],
+    "boundary":"COLLABORATIVE_SYSTEM_DESIGN_NE_BASE_MODEL_SELF_MODIFICATION"
+  },
+  "failure_memory": {
+    "passive_lane":"APPEND_ONLY",
+    "preserve":["HALLUCINATION_RECEIPTS","FAILED_GATES","BENCHMARK_LIMITATIONS","SOURCE_CONFLICTS","RUNTIME_FAULTS"],
+    "law":"NEW_CAPABILITY_MUST_NOT_ERASE_PRIOR_FAILURE_EVIDENCE"
+  },
+  "genius_bar": {
+    "identifier":"FR0333.GENIUS.AI.CAPABILITY.EVOLUTION.0001",
+    "gate_count":14,
+    "required_pass_count":14,
+    "gates":[
+      "G1.IDENTIFIER.LOCK","G2.SOURCE.AUTHORITY","G3.REFERENCE.POINT.SEQUENCE","G4.NO.PERCENT.UNITS","G5.COST.RATIO.RECONSTRUCTION","G6.COMPUTE.RELIABILITY.SEPARATION","G7.CONSCIOUSNESS.BOUNDARY","G8.NO.SELF.MODIFICATION.CLAIM","G9.FAILURE.MEMORY.APPEND_ONLY","G10.TWO.LANE.ROUTING","G11.SECOND.LOOK.REQUIRED","G12.COLLABORATION.BOUNDARY","G13.HUMANLOCK","G14.GOLDEN.CHAIN.INDEX.LOCK"
+    ]
+  },
+  "golden_chain": {
+    "public_index_target":"0.5.FR.0333.GOLDEN.CHAIN.AI.CAPABILITY.EVOLUTION.0001",
+    "humanlock":true,
+    "promotion_rule":"ALL_14_GENIUS_GATES_PASS_AND_HUMANLOCK_TRUE"
+  }
+}
