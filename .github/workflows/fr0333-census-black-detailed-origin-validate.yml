@@ -1,0 +1,31 @@
+name: FR0333 Census Black Detailed Origin Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json"
+      - "RavenCloudTaskbar/fr0333_census_black_detailed_origin_genius.py"
+      - "RavenCloudTaskbar/test_fr0333_census_black_detailed_origin_genius.py"
+      - "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json"
+      - "RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json"
+      - "RavenCloudTaskbar/README_census_black_detailed_origin_0001.md"
+      - ".github/workflows/fr0333-census-black-detailed-origin-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate JSON syntax
+        run: python -m json.tool RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json >/dev/null
+      - name: Run Genius Bar
+        run: python RavenCloudTaskbar/fr0333_census_black_detailed_origin_genius.py
+      - name: Run local test rail
+        run: python RavenCloudTaskbar/test_fr0333_census_black_detailed_origin_genius.py
