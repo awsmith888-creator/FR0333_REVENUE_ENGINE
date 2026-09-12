@@ -29,7 +29,15 @@
     {"inventory_id":"INV.0.24","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.5","git_blob_sha":"626e5ebc8189df69a3da46799bc4e1a0b515bfe5"},
     {"inventory_id":"INV.0.25","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_INDEX_SURFACE","git_blob_sha":"e27165df4e30b41d8016f0eebe79d7ea2a8aa8b0"},
     {"inventory_id":"INV.0.26","artifact":"RavenCloudTaskbar/taskbars.json","role":"ACTIVE_INDEX_TASKBAR","git_blob_sha":"976fd7c50cb6b81d879294ffc6c5da76bb7fbb5e"},
-    {"inventory_id":"INV.0.27","artifact":"RavenCloudTaskbar/build.py","role":"CONTROL_PLANE_VALIDATION_INTEGRATION","git_blob_sha":"e0f8db63f73bcb667e305d2a0982fe996534811c"}
+    {"inventory_id":"INV.0.27","artifact":"RavenCloudTaskbar/build.py","role":"CONTROL_PLANE_VALIDATION_INTEGRATION","git_blob_sha":"e0f8db63f73bcb667e305d2a0982fe996534811c"},
+    {"inventory_id":"INV.0.28","artifact":"RavenCloudTaskbar/fr0333_sports_bits_bones_0001.json","role":"SPORTS_BITS_BONES_REFERENCE_POINT_SPECIFICATION","git_blob_sha":"b948af3b2d2ed0866c2c6892fbd11ee529b20486"},
+    {"inventory_id":"INV.0.29","artifact":"RavenCloudTaskbar/fr0333_sports_bits_bones_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"30b6a0479f454180357101a0f56ccc01ce0d0ee4"},
+    {"inventory_id":"INV.0.30","artifact":"RavenCloudTaskbar/test_fr0333_sports_bits_bones_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"b3609e6f60d7f758baeb3cef4bff4a57300f1819"},
+    {"inventory_id":"INV.0.31","artifact":"RavenCloudTaskbar/README_sports_bits_bones_0001.md","role":"README","git_blob_sha":"ddb668ac26fbe8bc5b213b19b24057d8dc41e91e"},
+    {"inventory_id":"INV.0.32","artifact":".github/workflows/fr0333-sports-bits-bones-validate.yml","role":"CI_VALIDATION","git_blob_sha":"1398bf3ddf031a940493ce25381b351b83efaf1c"},
+    {"inventory_id":"INV.0.33","artifact":"RavenCloudTaskbar/build.py","role":"CONTROL_PLANE_VALIDATION_INTEGRATION_SPORTS_BITS_BONES","git_blob_sha":"ca897b9a0a0a659eeb9968198d44b99aae95e715"},
+    {"inventory_id":"INV.0.34","artifact":"RavenCloudTaskbar/taskbars.json","role":"SPORTS_BITS_BONES_TASKBAR_REGISTRATION","git_blob_sha":"5dde5603f07c56e3c9e0c649cbd3e262f1a31546"},
+    {"inventory_id":"INV.0.35","artifact":"RavenCloudTaskbar/README.md","role":"SPORTS_BITS_BONES_TASKBAR_README_SURFACE","git_blob_sha":"659de67acc416154ddcbac92ec05e321f6aab930"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -41,6 +49,13 @@
     "POLITICAL_PROPOSAL_NE_ENACTED_POLICY",
     "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP",
     "GOLDEN_CHAIN_INDEX_ACTIVE_NE_EXTERNAL_RUNTIME_DEPLOYED",
-    "SPECIFICATION_INDEXED_NE_AUTONOMOUS_EXECUTION"
+    "SPECIFICATION_INDEXED_NE_AUTONOMOUS_EXECUTION",
+    "SCREENSHOT_OBSERVED_NE_INDEPENDENT_VERIFICATION",
+    "ONGOING_SCORE_NE_FINAL_RESULT",
+    "VIDEO_VIEWS_NE_TV_RATINGS",
+    "VIDEO_VIEWS_NE_TOTAL_GAME_REACH",
+    "SCHEDULED_EVENT_NE_COMPLETED_EVENT",
+    "UNKNOWN_NE_ZERO_NE_PASS",
+    "DERIVED_RECORD_NE_SOURCE_REPORTED_RECORD"
   ]
 }
