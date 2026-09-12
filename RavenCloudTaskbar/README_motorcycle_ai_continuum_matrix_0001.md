@@ -1,8 +1,14 @@
 # FR0333.MOTORCYCLE.AI.CONTINUUM.MATRIX.0001
 
-State: `PROMOTED.WORKING.SPEC`
+State: `PROMOTED.WORKING.SPEC.GOLDEN_CHAIN.INDEXED`
 
-Golden Chain position: `UNASSIGNED`
+Golden Chain position: `0.5`
+
+Golden Chain identifier: `FR.0333.GOLDEN.CHAIN.MOTORCYCLE.AI.CONTINUUM.0001`
+
+Deployment state: `GOLDEN_CHAIN.INDEX.ACTIVE`
+
+Runtime state: `NOT.APPLICABLE.SPECIFICATION.INDEX`
 
 ## Purpose
 
@@ -12,6 +18,16 @@ This index connects two evolution rails without collapsing them into one claim:
 2. AI system evolution from rule-based systems through deep learning, transformers, foundation models, reasoning, tool use, agents, longer context, faster inference, and lower cost per unit of useful work.
 
 The comparison is structural, not literal. A motorcycle and an AI system do not evolve biologically and a running AI model instance does not autonomously rewrite itself every day.
+
+## Golden Chain deployment
+
+This specification is indexed as Golden Chain entry `0.5` on the working branch. "Active" here means present in the append-only Golden Chain index, represented in inventory, documented in README, and covered by a deterministic validation rail. It does **not** assert an external production runtime, autonomous model mutation, or a guaranteed future development rate.
+
+`GOLDEN_CHAIN.INDEX.ACTIVE != EXTERNAL.RUNTIME.DEPLOYED`
+
+`SPECIFICATION.INDEXED != AUTONOMOUS.EXECUTION`
+
+`CI.PASS != MERGED.MAINLINE`
 
 ## Motorcycle continuum
 
