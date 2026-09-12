@@ -1,0 +1,44 @@
+{
+  "golden_chain_id": "GC.SB.0029",
+  "state": "REGISTERED.DRAFT.UNMERGED",
+  "predecessor": "GC.SB.0028",
+  "predecessor_requirement": "GC.SB.0028 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0029 IS PROMOTED",
+  "package_id": "FR0333.MEDIA.LITIGATION.EVIDENCE.PACKAGE.0001",
+  "primary_module": "FR0333.TRUMP.BBC.DEFAMATION.LITIGATION.EVIDENCE.0001",
+  "humanlock": true,
+  "promotion": "HOLD.UNTIL.PREDECESSOR.MERGE.ORDER.REVIEW.AND.CURRENT.CI.SATISFIED",
+  "classification": "PUBLIC.LITIGATION.EVIDENCE.REGISTER",
+  "evidence_state": "ACTIVE.CASE.MERITS.UNRESOLVED",
+  "terminal_state": "U.21.HOLD",
+  "source_priority": [
+    "COURT.ORDER.OR.FILING",
+    "PARTY.ADMISSION.OR.FILED.POSITION",
+    "WIRE.OR.AP.CORROBORATION",
+    "SECONDARY.MEDIA.POINTER"
+  ],
+  "case_controls": {
+    "misleading_edit_acknowledgment": "OBSERVED",
+    "defamation_liability": "UNRESOLVED",
+    "damages_sought": "$10_BILLION.PLEADED",
+    "financial_discovery": "CONTESTED.PROCEDURAL",
+    "amendment_motive": "NOT.ESTABLISHED",
+    "final_winner": "NOT.ESTABLISHED",
+    "case_status": "ACTIVE",
+    "trial_date": "2027-02-15",
+    "trial_date_state": "TENTATIVE.SCHEDULED"
+  },
+  "hard_boundaries": [
+    "ACKNOWLEDGED.MISLEADING.EDIT != DEFAMATION.LIABILITY",
+    "DISCOVERY.RESISTANCE != FEAR.PROVEN",
+    "AMENDED.DAMAGES.THEORY != MOTIVE.PROVEN",
+    "ACTIVE.CASE != FINAL.WINNER",
+    "TRIAL.SCHEDULED != LIABILITY.ESTABLISHED",
+    "PARTY.ASSERTION != COURT.FINDING",
+    "PROCEDURAL.DELAY != MERITS.VICTORY",
+    "GOLDEN.CHAIN.REGISTRATION != FINAL.JUDGMENT"
+  ],
+  "runtime": {
+    "external_runtime": "NOT.APPLICABLE.PUBLIC.RECORD.REGISTER",
+    "monitoring": "NONE.USER.DID.NOT.REQUEST.AUTOMATION"
+  }
+}

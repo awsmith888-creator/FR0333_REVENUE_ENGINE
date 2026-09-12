@@ -1,0 +1,135 @@
+{
+  "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
+  "version": "1.3.0",
+  "state": "SPECIFICATION_CI_GATE_ACTIVE",
+  "golden_chain_position": "GC.SB.0028",
+  "golden_chain_state": "REGISTERED.DRAFT.UNMERGED",
+  "golden_chain_predecessor": "GC.SB.0027",
+  "humanlock": true,
+  "promotion": "CLAIM.SPECIFIC",
+  "runtime": {
+    "state": "NOT.ESTABLISHED.UNTIL.RECEIPT",
+    "receipt": null
+  },
+  "pipeline": [
+    "HUMAN.CONTRIBUTION",
+    "TOOL",
+    "EXECUTION",
+    "EVIDENCE",
+    "ACCESSIBILITY",
+    "ATTRIBUTION",
+    "RECEIPT"
+  ],
+  "rails": [
+    "C.01.ATTRIBUTION",
+    "C.02.ACCESSIBILITY",
+    "C.03.EXECUTION",
+    "C.04.SOURCE.EXTRACTION",
+    "C.05.VERIFICATION"
+  ],
+  "linked_specs": [
+    {
+      "id": "FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001",
+      "version": "0.12",
+      "state": "SPECIFICATION",
+      "binding": "CHILD.REFERENCE"
+    },
+    {
+      "id": "FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001",
+      "version": "0.20",
+      "state": "SPECIFICATION",
+      "binding": "SYSTEM.ROOT.GOVERNING.REFERENCE"
+    }
+  ],
+  "linked_case_evidence": [
+    {
+      "id": "FR0333.TRUMP.BBC.DEFAMATION.LITIGATION.EVIDENCE.0001",
+      "version": "1.0.0",
+      "golden_chain_position": "GC.SB.0029",
+      "golden_chain_predecessor": "GC.SB.0028",
+      "state": "SPECIFICATION.EVIDENCE_BOUNDED",
+      "terminal_state": "U.21.HOLD",
+      "case_status": "ACTIVE",
+      "record_path": "RavenCloudTaskbar/fr0333_trump_bbc_litigation_evidence_0001.json",
+      "chain_path": "RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0029.json",
+      "test_path": "RavenCloudTaskbar/test_trump_bbc_litigation_evidence.py",
+      "promotion_gate": "GC.SB.0028 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0029 PROMOTION"
+    }
+  ],
+  "linked_measurement_rails": [
+    {
+      "id": "FR0333.GENIUS.BAR.COMPARABILITY.NORMALIZATION.0001",
+      "version": "1.0.0",
+      "golden_chain_position": "GC.SB.0030",
+      "golden_chain_predecessor": "GC.SB.0029",
+      "state": "SPECIFICATION.FROZEN.IMPLEMENTED.CI.GATE.ACTIVE",
+      "schema_path": "RavenCloudTaskbar/fr0333_genius_bar_comparability_normalization_0001.schema.json",
+      "validator_path": "RavenCloudTaskbar/fr0333_genius_bar_comparability_normalization_0001.py",
+      "fixtures_path": "RavenCloudTaskbar/fr0333_genius_bar_comparability_fixtures_0001.json",
+      "test_path": "RavenCloudTaskbar/test_fr0333_genius_bar_comparability_normalization.py",
+      "readme_path": "RavenCloudTaskbar/README_genius_bar_comparability_normalization.md",
+      "chain_path": "RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0030.json",
+      "canonicalization_version": "CANONICAL.JSON.V1",
+      "hash_algorithm": "SHA256",
+      "receipt_class": "HASH_BOUND.DETERMINISTIC.EXECUTION.RECEIPT",
+      "cryptographic_signature": "NOT.ESTABLISHED",
+      "external_runtime": "NOT.ESTABLISHED",
+      "promotion_gate": "GC.SB.0029 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0030 PROMOTION"
+    }
+  ],
+  "terminal_states": [
+    "T.20.PASS",
+    "U.21.HOLD",
+    "F.6.REJECT"
+  ],
+  "local_verification": {
+    "base_tests": 10,
+    "human_centered_extension_tests": 12,
+    "litigation_evidence_tests": 12,
+    "genius_bar_comparability_tests": 19,
+    "expected_total": 53,
+    "new_suite_local_verified": 19,
+    "failed_in_new_suite_local_run": 0,
+    "scope": "SCHEMA_SPEC_EVIDENCE_BOUNDARY_AND_COMPARABILITY_FIXTURES"
+  },
+  "ci_verification": {
+    "state": "CI.GATE.ACTIVE",
+    "last_observed_success_run_id": 34650038593,
+    "last_observed_success_run_number": 21,
+    "last_observed_success_head": "7705c8be3c94b97fe680f9d0c9d271c8e82d6a7f",
+    "current_head_receipt_is_external_to_inventory_commit": true,
+    "policy": "EVERY MUTATED HEAD MUST PASS BEFORE PROMOTION"
+  },
+  "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
+  "source_name_auto_promotion": "FORBIDDEN",
+  "hard_invariants": [
+    "WORK.PERFORMED != WORK.CREDITED",
+    "TOOL.CONFIGURED != TOOL.EXECUTED",
+    "COMMAND.VISIBLE != RUNTIME.RECEIPT",
+    "CONTENT.CREATED != CONTENT.ACCESSIBLE",
+    "SOURCE.PRESENT != CONTENT.EXTRACTED",
+    "VENDOR.CLAIM != INDEPENDENT.VERIFICATION",
+    "CLAIM.PUBLISHED != CLAIM.VERIFIED",
+    "EVIDENCE.CLASS MUST.NOT AUTO.PROMOTE BASED.ON SOURCE.NAME",
+    "OBSERVATION.AGREEMENT != STATISTICAL.INDEPENDENCE",
+    "UNKNOWN != PASS",
+    "SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE",
+    "ACKNOWLEDGED.MISLEADING.EDIT != DEFAMATION.LIABILITY",
+    "DISCOVERY.RESISTANCE != FEAR.PROVEN",
+    "AMENDED.DAMAGES.THEORY != MOTIVE.PROVEN",
+    "ACTIVE.CASE != FINAL.WINNER",
+    "EXACT.CANONICAL.DECIMAL.EQUALITY != RAW.BYTE.IDENTITY",
+    "FORMATTING.DIFFERENCE != SEMANTIC.DIFFERENCE",
+    "RAW.STATE != CANONICAL.STATE",
+    "NUMERIC.IDENTITY != SEMANTIC.IDENTITY",
+    "REVERSIBLE.REPRESENTATION != EXACT.UNDERLYING.TRUTH",
+    "VALID.RECORD != VALID.FOR.EVERY.USE",
+    "NORMALIZED != COMPARABLE",
+    "COMPARABLE != CONSUMER.COMPATIBLE",
+    "SCHEMA.VALID != SEMANTICALLY.VALID",
+    "SPECIFICATION.PASS != IMPLEMENTATION.PASS",
+    "IMPLEMENTATION.PASS != RUNTIME.ENFORCEMENT",
+    "HASH_BOUND.RECEIPT != CRYPTOGRAPHICALLY.SIGNED.RECEIPT",
+    "GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT"
+  ]
+}

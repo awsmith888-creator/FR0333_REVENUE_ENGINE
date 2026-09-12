@@ -1,0 +1,87 @@
+{
+  "id": "FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001",
+  "version": "0.20",
+  "state": "SPECIFICATION",
+  "parent": "SYSTEM.ROOT",
+  "design_maxim": "STRICT.SYSTEM -> COMPASSIONATE.INTERFACE",
+  "objective": "ABSORB.COMPLEXITY.PROTECT.ACCESS",
+  "humanlock": true,
+  "human_dignity": "NON_NEGOTIABLE",
+  "internal_rigor": "HIGH",
+  "user_burden": "MINIMIZED",
+  "primary_public_benefit_failure_metric": "FALSE.DENIAL.RATE",
+  "core_invariants": [
+    "SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE",
+    "SENSORY.VARIANCE != ELIGIBILITY.FAILURE",
+    "LOW.CONFIDENCE -> ASSIST.OR.HUMANLOCK",
+    "MISSING.DATA -> HELP.RECOVER",
+    "ADVERSE.ACTION.REQUIRES.EXPLICIT.BASIS",
+    "NO.SILENT.DENIAL",
+    "APPEALABLE.DECISION -> PRESERVE.APPEAL.PATH",
+    "INTERNAL.RIGOR -> RELIABILITY -> ACCESS -> HELP",
+    "EVIDENCE.DISCIPLINE = INTERNAL.PLUMBING.NOT.MISSION"
+  ],
+  "protective_hold": {
+    "state": "U.21.HOLD",
+    "meaning": "PROTECTIVE.SANCTUARY",
+    "automatic_adverse_action_from_system_uncertainty": false,
+    "route": "HUMAN.ADVOCACY",
+    "maintain_existing_access": "WHEN AUTHORIZED BY APPLICABLE LAW POLICY AND PROGRAM RULES",
+    "authority_boundary": "SYSTEM MUST NOT INVENT BENEFIT CONTINUATION AUTHORITY"
+  },
+  "sensory_variance_protection": [
+    "DEGRADED.AUDIO",
+    "DIALECT.VARIANCE",
+    "NON_NATIVE.SPEECH",
+    "CONNECTIVITY.DROP",
+    "ACCESSIBILITY.NEED",
+    "LITERACY.BARRIER"
+  ],
+  "routing_matrix": {
+    "ELIGIBLE.PERSON": {
+      "machine_action": "ACCELERATE.PROCESSING.WITHIN.AUTHORITY",
+      "interface": "DIRECT.RAPID.ACCESS",
+      "core_law": "SUCCESSFUL.ACCESS"
+    },
+    "AMBIGUOUS.CASE": {
+      "machine_action": "ISOLATE.AMBIGUITY",
+      "interface": "PROACTIVE.HUMAN.OUTREACH",
+      "core_law": "ASSIST"
+    },
+    "MISSING.DATA": {
+      "machine_action": "HIGHLIGHT.GAPS",
+      "interface": "STEP.BY.STEP.ASSISTED.RECOVERY",
+      "core_law": "HELP.RECOVER"
+    },
+    "ADVERSE.SIGNAL": {
+      "machine_action": "LOG.EXPLICIT.BASIS.AND.EXCEPTION",
+      "interface": "CLEAR.EXPLANATION.AND.APPEAL.ASSISTANCE",
+      "core_law": "PRESERVE.APPEAL.PATH"
+    },
+    "SYSTEM.UNCERTAINTY": {
+      "machine_action": "INTERCEPT.AUTOMATIC.ADVERSE.EXECUTION",
+      "interface": "ROUTE.TO.HUMAN.ADVOCATE",
+      "core_law": "NO.SILENT.DENIAL"
+    }
+  },
+  "humanitarian_protocol": [
+    "HUMANITARIAN.NEED",
+    "VERIFY.SENSORY",
+    "LOCATE.AID",
+    "ROUTE.RESOURCES.WITHIN.AUTHORIZED.CHANNELS",
+    "PRESERVE.EVIDENCE"
+  ],
+  "humanitarian_evidence_boundary": "VERIFY CLAIMS AND ROUTING DATA WITHOUT DELAYING URGENT AID WHEN AUTHORIZED SAFETY PATHS EXIST",
+  "success_metrics": [
+    "FALSE.DENIAL.RATE",
+    "SUCCESSFUL.ACCESS.RATE",
+    "TIME.TO.RESOLUTION",
+    "ABANDONED.CASE.RATE",
+    "SUCCESSFUL.APPEAL.RATE",
+    "RESTORED.COVERAGE.RATE",
+    "VERIFIED.ASSISTANCE.DELIVERED"
+  ],
+  "terminal_states": ["T.20.PASS", "U.21.HOLD", "F.6.REJECT"],
+  "golden_chain_reference": "GC.SB.0028",
+  "golden_chain_role": "SYSTEM.ROOT.GOVERNING.REFERENCE"
+}

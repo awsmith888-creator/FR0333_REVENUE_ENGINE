@@ -1,0 +1,128 @@
+{
+  "id": "FR0333.TRUMP.BBC.DEFAMATION.LITIGATION.EVIDENCE.0001",
+  "version": "1.0.0",
+  "state": "SPECIFICATION.EVIDENCE_BOUNDED",
+  "classification": "PUBLIC.LITIGATION.EVIDENCE.REGISTER",
+  "golden_chain_position": "GC.SB.0029",
+  "golden_chain_predecessor": "GC.SB.0028",
+  "humanlock": true,
+  "promotion": "HOLD.UNTIL.PREDECESSOR.AND.REVIEW.SATISFIED",
+  "case": {
+    "caption": "Donald J. Trump v. British Broadcasting Corporation et al.",
+    "docket": "1:25-cv-25894-RKA",
+    "court": "U.S. District Court for the Southern District of Florida",
+    "status": "ACTIVE",
+    "trial": {
+      "date": "2027-02-15",
+      "state": "TENTATIVE.SCHEDULED"
+    }
+  },
+  "claims": [
+    {
+      "id": "C.01",
+      "proposition": "The BBC acknowledged that its documentary edit created a mistaken impression that Donald Trump made a direct call for violent action.",
+      "state": "ACKNOWLEDGED.BY.BBC",
+      "evidence_class": "PARTY.ADMISSION.IN.COURT.RECORD"
+    },
+    {
+      "id": "C.02",
+      "proposition": "The BBC is legally liable for defamation.",
+      "state": "UNRESOLVED",
+      "evidence_class": "LITIGATED.CLAIM"
+    },
+    {
+      "id": "C.03",
+      "proposition": "The complaint seeks at least five billion dollars on each of two counts, for a stated total of ten billion dollars.",
+      "state": "VERIFIED.PLEADING",
+      "evidence_class": "COURT.FILING"
+    },
+    {
+      "id": "C.04",
+      "proposition": "Financial discovery relating to alleged business and reputational harm was ordered and later contested by Trump through emergency and amendment-related motions.",
+      "state": "VERIFIED.PROCEDURAL",
+      "evidence_class": "COURT.PROCEDURE"
+    },
+    {
+      "id": "C.05",
+      "proposition": "Trump sought to amend the damages theory to focus more heavily on alleged personal reputational harm while continuing to seek ten billion dollars.",
+      "state": "VERIFIED.PROCEDURAL",
+      "evidence_class": "COURT.PROCEDURE"
+    },
+    {
+      "id": "C.06",
+      "proposition": "The purpose of the amendment was to shield Trump-linked entities from discovery.",
+      "state": "NOT.ESTABLISHED",
+      "evidence_class": "INFERENCE.HOLD"
+    },
+    {
+      "id": "C.07",
+      "proposition": "The BBC has already won the case.",
+      "state": "NOT.ESTABLISHED",
+      "evidence_class": "UNRESOLVED.OUTCOME"
+    },
+    {
+      "id": "C.08",
+      "proposition": "In a September 4, 2026 filing, Trump responded to an order to show cause concerning the timing of opposition papers and argued that any delay resulted from compliance with a protective order.",
+      "state": "FILED.PARTY.POSITION",
+      "evidence_class": "COURT.FILING.PARTY.ASSERTION"
+    },
+    {
+      "id": "C.09",
+      "proposition": "The BBC sought testimony and documents from Donald Trump Jr., Ivanka Trump, and Jared Kushner in connection with discovery.",
+      "state": "VERIFIED.PROCEDURAL",
+      "evidence_class": "COURT.PROCEDURE.CORROBORATED"
+    }
+  ],
+  "source_register": [
+    {
+      "id": "S.01",
+      "source_type": "COURT.FILING",
+      "description": "BBC motion to dismiss, Case 1:25-cv-25894-RKA, Document 36, entered March 16, 2026.",
+      "url": "https://www.courthousenews.com/wp-content/uploads/2026/03/trump-v-british-broadcasting-motion-dismiss-usdc-southern-fl.pdf"
+    },
+    {
+      "id": "S.02",
+      "source_type": "WIRE.REPORT",
+      "description": "Reuters report on BBC dismissal arguments and trial schedule.",
+      "url": "https://www.reuters.com/legal/government/bbc-argue-trump-failed-show-he-was-defamed-documentary-2026-02-18/"
+    },
+    {
+      "id": "S.03",
+      "source_type": "WIRE.REPORT.VIDEO.METADATA",
+      "description": "Reuters Connect report on the August 6, 2026 financial-discovery dispute and proposed amendment.",
+      "url": "https://www.reutersconnect.com/item/uncaptioned-trump-seeks-to-block-financial-disclosure-in-bbc-lawsuit/dGFnOnJldXRlcnMuY29tLDIwMjY6bmV3c21sX09XQ1ZNQzQ0MzY3MC1WSURFTw"
+    },
+    {
+      "id": "S.04",
+      "source_type": "ASSOCIATED.PRESS.REPORT",
+      "description": "AP report on BBC efforts to obtain Trump-family testimony and documents and the tentative February trial schedule.",
+      "url": "https://apnews.com/article/6e5936f0a221c04927459efdb1e949ef"
+    },
+    {
+      "id": "S.05",
+      "source_type": "COURT.FILING.INDEX",
+      "description": "September 4, 2026 response to order to show cause regarding timing of opposition papers.",
+      "url": "https://www.courthousenews.com/trump-v-bbc-response-delay/"
+    },
+    {
+      "id": "S.06",
+      "source_type": "ASSOCIATED.PRESS.REPORT",
+      "description": "AP report on the February 2027 tentative trial setting.",
+      "url": "https://apnews.com/article/e41bc699da7e010218f87a95a364350a"
+    }
+  ],
+  "hard_invariants": [
+    "ACKNOWLEDGED.MISLEADING.EDIT != DEFAMATION.LIABILITY",
+    "DISCOVERY.RESISTANCE != FEAR.PROVEN",
+    "AMENDED.DAMAGES.THEORY != MOTIVE.PROVEN",
+    "ACTIVE.CASE != FINAL.WINNER",
+    "TRIAL.SCHEDULED != LIABILITY.ESTABLISHED",
+    "PARTY.ASSERTION != COURT.FINDING",
+    "MEDIA.REPORT != COURT.ORDER",
+    "PROCEDURAL.DELAY != MERITS.VICTORY",
+    "CLAIM.SEVERITY != CLAIM.TRUTH"
+  ],
+  "terminal_state": "U.21.HOLD",
+  "terminal_state_reason": "Merits liability, final damages, and final case outcome remain unresolved while litigation is active.",
+  "observed_on": "2026-09-11"
+}
