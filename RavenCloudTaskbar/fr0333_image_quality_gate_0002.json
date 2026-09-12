@@ -1,0 +1,64 @@
+{
+  "identifier": "FR0333.IMAGE.QUALITY.GATE.0002",
+  "state": "ACTIVE_SPEC_PENDING_RUNTIME_RECEIPT",
+  "humanlock": true,
+  "purpose": "Prevent technically valid but visually weak image outputs from promotion.",
+  "reference_scale": {
+    "name": "QUALITY.REFERENCE.0.9",
+    "percent_symbols_prohibited": true,
+    "minimum_promotable_reference": 8
+  },
+  "queue_contract": {
+    "n_in_equals_n_out": true,
+    "one_run_one_canvas_one_image": true,
+    "independent_9_16_canvas_per_slot": true,
+    "collage": "REJECT",
+    "duplicate_output": "REJECT",
+    "count_mismatch": "REJECT"
+  },
+  "quality_dimensions": [
+    "IDENTITY.FIDELITY",
+    "FACE.BODY.PROPORTION",
+    "CAMERA.GEOMETRY",
+    "CROP.FRAME.INTEGRITY",
+    "WARDROBE.CONTINUITY",
+    "LIGHTING.COHERENCE",
+    "BACKGROUND.SCALE",
+    "ARTIFACT.CONTROL",
+    "AESTHETIC.COHERENCE",
+    "USER.INTENT.MATCH"
+  ],
+  "promotion_gate": {
+    "all_required": true,
+    "identity_reference_min": 8,
+    "geometry_reference_min": 8,
+    "crop_reference_min": 8,
+    "artifact_control_reference_min": 8,
+    "aesthetic_reference_min": 8,
+    "user_intent_reference_min": 8,
+    "user_reject_overrides_promotion": true,
+    "runtime_receipt_required_for_external_execution_claim": true
+  },
+  "hard_boundaries": [
+    "TECHNICALLY.CLEAN != HIGH.QUALITY",
+    "LOCAL.TEST.PASS != ADOBE.RUNTIME.PASS",
+    "ADOBE.CONNECTOR.AVAILABLE != IMAGE.QUALITY.VERIFIED",
+    "IDENTITY.REFERENCE != IDENTITY.AUTHORIZATION",
+    "QUEUE.PASS != AESTHETIC.PASS",
+    "USER.REJECT = OUTPUT.HOLD"
+  ],
+  "valuation_boundary": "NO_MARKET_VALUE_OR_DOLLAR_QUALITY_CLAIM_WITHOUT_EXTERNAL_EVIDENCE",
+  "golden_chain_route": [
+    "SOURCE_LOCK",
+    "INTENT_COMPILE",
+    "QUEUE_GATE",
+    "IDENTITY_GATE",
+    "CAMERA_333_GATE",
+    "QUALITY_REFERENCE_GATE",
+    "HUMANLOCK",
+    "OUTPUT_GATE",
+    "RECEIPT",
+    "CHOMP",
+    "STAY"
+  ]
+}
