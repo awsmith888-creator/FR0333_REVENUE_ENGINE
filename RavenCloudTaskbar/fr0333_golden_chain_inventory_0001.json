@@ -20,7 +20,13 @@
     {"inventory_id":"INV.0.15","artifact":"RavenCloudTaskbar/test_fr0333_red_sea_dual_chokepoint_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"f8d5e7ee66de209642f1ea7fbabcb90575702022"},
     {"inventory_id":"INV.0.16","artifact":"RavenCloudTaskbar/README_red_sea_dual_chokepoint_0001.md","role":"README","git_blob_sha":"389306f96eb6c8fd7b92a5a9da7242753b669831"},
     {"inventory_id":"INV.0.17","artifact":".github/workflows/fr0333-red-sea-dual-chokepoint-validate.yml","role":"CI_VALIDATION","git_blob_sha":"fb8393ea2c5ac94c84893739e4d8b976d4e15076"},
-    {"inventory_id":"INV.0.18","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.4","git_blob_sha":"823de2360d3f3a207b02b81708914e1deef78243"}
+    {"inventory_id":"INV.0.18","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.4","git_blob_sha":"823de2360d3f3a207b02b81708914e1deef78243"},
+    {"inventory_id":"INV.0.19","artifact":"RavenCloudTaskbar/fr0333_ai_capability_evolution_0001.json","role":"GOLDEN_CHAIN_METRIC_RAIL","git_blob_sha":"e63fedaebd4d2772290fce82246412db4d2fcda4"},
+    {"inventory_id":"INV.0.20","artifact":"RavenCloudTaskbar/fr0333_ai_capability_evolution_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"30ff3d18f03d1b3259c689e9849c19a5115c3ddb"},
+    {"inventory_id":"INV.0.21","artifact":"RavenCloudTaskbar/test_fr0333_ai_capability_evolution_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"bb4d4070a18ae53aa5cf1cca8abf2f46c2ee4853"},
+    {"inventory_id":"INV.0.22","artifact":"RavenCloudTaskbar/README_ai_capability_evolution_0001.md","role":"README","git_blob_sha":"4e058f96f8929b47804c89d65492e812ad08fa8a"},
+    {"inventory_id":"INV.0.23","artifact":".github/workflows/fr0333-ai-capability-evolution-validate.yml","role":"CI_VALIDATION","git_blob_sha":"f8bed3ead6ec6f2eb3cc077f8be5602d7a72f9b9"},
+    {"inventory_id":"INV.0.24","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.5","git_blob_sha":"cf9a0721c82594a7461b855df9928fd2e02c6a67"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -30,6 +36,10 @@
     "SOURCE_AUDITED_NE_CAUSAL_INFERENCE",
     "PRIOR_INVENTORY_RECEIPTS_ARE_NOT_REWRITTEN",
     "POLITICAL_PROPOSAL_NE_ENACTED_POLICY",
-    "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP"
+    "TRANSIT_FLOW_NE_RESOURCE_OWNERSHIP",
+    "CAPABILITY_GROWTH_NE_TRUTH_GROWTH",
+    "MODEL_INTELLIGENCE_NE_MODEL_CONSCIOUSNESS",
+    "COLLABORATIVE_SYSTEM_DESIGN_NE_BASE_MODEL_SELF_MODIFICATION",
+    "NEW_CAPABILITY_MUST_NOT_DELETE_OLD_FAILURE_EVIDENCE"
   ]
 }
