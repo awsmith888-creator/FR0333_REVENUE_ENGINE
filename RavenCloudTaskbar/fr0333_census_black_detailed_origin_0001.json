@@ -1,0 +1,121 @@
+{
+  "identifier": "FR0333.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+  "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION",
+  "subject": "U.S. Census Black or African American umbrella category with detailed origin preservation",
+  "source_clock": {
+    "primary": "2020_DECENNIAL_CENSUS_DHC_A",
+    "secondary": "2020_USVI_ISLAND_AREAS_CENSUS",
+    "update_reference": "2024_ACS_1_YEAR_B02023",
+    "standards_reference": "2024_SPD15_REVISED_RACE_ETHNICITY_STANDARDS"
+  },
+  "source_lock": {
+    "rule": "SOURCE_THEN_UNIVERSE_THEN_COUNT_THEN_DERIVATION_THEN_PROMOTION",
+    "sources": [
+      {"id":"SRC.001","publisher":"U.S. Census Bureau","title":"2020 Census questionnaires and instructions","url":"https://www.census.gov/programs-surveys/decennial-census/technical-documentation/questionnaires.2020_Census.html?nav=2","class":"FEDERAL_PRIMARY_QUESTIONNAIRE"},
+      {"id":"SRC.002","publisher":"U.S. Census Bureau","title":"Additional Instructions for Respondents","url":"https://www.census.gov/programs-surveys/decennial-census/technical-documentation/questionnaires/2020/response-guidance.html","class":"FEDERAL_PRIMARY_GUIDANCE"},
+      {"id":"SRC.003","publisher":"U.S. Census Bureau","title":"2020 Census detailed DHC-A release","url":"https://www.census.gov/newsroom/press-releases/2023/2020-census-detailed-dhc-file-a.html","class":"FEDERAL_PRIMARY_STATISTICAL_RELEASE"},
+      {"id":"SRC.004","publisher":"U.S. Census Bureau","title":"Producing Statistics for Our Nation's Myriad Detailed Racial/Ethnic Communities","url":"https://www2.census.gov/about/partners/cac/nac/meetings/2023-11/presentation-producing-statistics-detailed-racial-ethnic-communities.pdf","class":"FEDERAL_PRIMARY_PRESENTATION"},
+      {"id":"SRC.005","publisher":"U.S. Census Bureau","title":"2020 Census DHC-A Black population article","url":"https://www.census.gov/library/stories/2023/10/2020-census-dhc-a-black-population.html","class":"FEDERAL_STATISTICAL_EXPLANATION"},
+      {"id":"SRC.006","publisher":"U.S. Census Bureau","title":"2020 Island Areas Census U.S. Virgin Islands demographic release","url":"https://www.census.gov/newsroom/press-releases/2022/2020-island-areas-us-virgin-islands.html","class":"FEDERAL_PRIMARY_ISLAND_AREAS_RELEASE"},
+      {"id":"SRC.007","publisher":"U.S. Census Bureau","title":"Updates to Race/Ethnicity Standards for Our Nation","url":"https://www.census.gov/about/our-research/race-ethnicity/standards-updates.html","class":"FEDERAL_STANDARDS_REFERENCE"},
+      {"id":"SRC.008","publisher":"U.S. Census Bureau","title":"ACS 2024 B02023 Black or African American Alone by Selected Groups","url":"https://data.census.gov/table/ACSDT1Y2024.B02023?q=B020","class":"FEDERAL_ACS_ESTIMATE_TABLE"}
+    ]
+  },
+  "control_laws": [
+    "BLACK_OR_AFRICAN_AMERICAN_UMBRELLA_NE_AFRICAN_AMERICAN_DETAILED_IDENTITY",
+    "RACE_NE_NATIONALITY",
+    "RACE_NE_CITIZENSHIP",
+    "RACE_NE_ANCESTRY",
+    "RACE_NE_LANGUAGE",
+    "ECONOMIC_CONTRIBUTION_NE_CLASSIFICATION_QUALIFIER",
+    "ALONE_NE_ALONE_OR_IN_ANY_COMBINATION",
+    "DECENNIAL_COUNT_NE_ACS_ESTIMATE",
+    "US_MAINLAND_GEOGRAPHY_NE_USVI_ISLAND_AREA_GEOGRAPHY",
+    "2020_DHC_A_NE_2024_ACS_DIRECT_GROWTH_SERIES",
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL"
+  ],
+  "questionnaire_examples_2020": ["African American","Jamaican","Haitian","Nigerian","Ethiopian","Somali"],
+  "detail_gate": ["AFRICAN_AMERICAN","JAMAICAN","HAITIAN","NIGERIAN","ETHIOPIAN","SOMALI","SOUTH_AFRICAN","GHANAIAN","CARIBBEAN_DETAILED","SUB_SAHARAN_AFRICAN_DETAILED","OTHER_BLACK_OR_AFRICAN_AMERICAN_DETAILED"],
+  "metrics_2020_dhc_a_alone_or_in_any_combination": [
+    {"reference_point":"A1","identity":"African American","value":24569479,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"B2","identity":"Jamaican","value":1047117,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"C3","identity":"Haitian","value":1032737,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"D4","identity":"Nigerian","value":604077,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"E5","identity":"Ethiopian","value":325214,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"F6","identity":"Somali","value":221043,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"G7","identity":"Trinidadian and Tobagonian","value":194364,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"H8","identity":"Ghanaian","value":172558,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"I9","identity":"Congolese","value":110537,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"J10","identity":"Kenyan","value":104708,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"K11","identity":"South African","value":86528,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"L12","identity":"Cameroonian","value":77058,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"M13","identity":"Liberian","value":71379,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"},
+    {"reference_point":"N14","identity":"Eritrean","value":69060,"unit":"persons","universe":"BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_ANY_COMBINATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.004"}
+  ],
+  "reference_ratio_rail": {
+    "denominator_reference_point":"A1",
+    "denominator_identity":"African American",
+    "denominator_value":24569479,
+    "scale":1000,
+    "rule":"REFERENCE_RATIO_ONLY_NOT_SHARE_NOT_PERCENT",
+    "metrics":[
+      {"identity":"Jamaican","value":42.619,"unit":"persons_per_1000_african_american_reference","method":"1047117*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Haitian","value":42.033,"unit":"persons_per_1000_african_american_reference","method":"1032737*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Nigerian","value":24.586,"unit":"persons_per_1000_african_american_reference","method":"604077*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Ethiopian","value":13.237,"unit":"persons_per_1000_african_american_reference","method":"325214*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Somali","value":8.997,"unit":"persons_per_1000_african_american_reference","method":"221043*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Trinidadian and Tobagonian","value":7.911,"unit":"persons_per_1000_african_american_reference","method":"194364*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Ghanaian","value":7.023,"unit":"persons_per_1000_african_american_reference","method":"172558*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Congolese","value":4.499,"unit":"persons_per_1000_african_american_reference","method":"110537*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Kenyan","value":4.262,"unit":"persons_per_1000_african_american_reference","method":"104708*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"South African","value":3.522,"unit":"persons_per_1000_african_american_reference","method":"86528*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Cameroonian","value":3.136,"unit":"persons_per_1000_african_american_reference","method":"77058*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Liberian","value":2.905,"unit":"persons_per_1000_african_american_reference","method":"71379*1000/24569479","class":"DERIVED_REFERENCE_RATIO"},
+      {"identity":"Eritrean","value":2.811,"unit":"persons_per_1000_african_american_reference","method":"69060*1000/24569479","class":"DERIVED_REFERENCE_RATIO"}
+    ]
+  },
+  "usvi_2020_island_area_metrics":[
+    {"reference_point":"O15","name":"USVI_TOTAL_POPULATION","value":87146,"unit":"persons","universe":"USVI_TOTAL_POPULATION","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.006"},
+    {"reference_point":"P16","name":"USVI_BLACK_OR_AFRICAN_AMERICAN_ALONE","value":62183,"unit":"persons","universe":"USVI","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.006"},
+    {"reference_point":"Q17","name":"USVI_BLACK_OR_AFRICAN_AMERICAN_ALONE_OR_IN_COMBINATION","value":67769,"unit":"persons","universe":"USVI","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.006"},
+    {"reference_point":"R18","name":"USVI_AFRICAN_AMERICAN_ALONE","value":18867,"unit":"persons","universe":"USVI_DETAILED_BLACK","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.006"},
+    {"reference_point":"S19","name":"US_VIRGIN_ISLANDER_ALONE","value":2565,"unit":"persons","universe":"USVI_DETAILED_BLACK","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.006"},
+    {"reference_point":"T20","name":"US_VIRGIN_ISLANDER_ALONE_OR_IN_ANY_COMBINATION","value":2756,"unit":"persons","universe":"USVI_DETAILED_BLACK","class":"MEASURED_DECENNIAL_COUNT","source":"SRC.006"}
+  ],
+  "acs_2024_black_alone_selected_groups":[
+    {"reference_point":"U21","identity":"Black or African American alone total","value":41115988,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"},
+    {"reference_point":"V22","identity":"African American","value":20965880,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"},
+    {"reference_point":"W23","identity":"Nigerian","value":701319,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"},
+    {"reference_point":"X24","identity":"Ethiopian","value":381337,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"},
+    {"reference_point":"Y25","identity":"Somali","value":247769,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"},
+    {"reference_point":"Z26","identity":"Haitian","value":1248214,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"},
+    {"reference_point":"AA27","identity":"Jamaican","value":986647,"unit":"persons","universe":"2024_ACS_1_YEAR_BLACK_ALONE","class":"ACS_ESTIMATE","source":"SRC.008"}
+  ],
+  "comparability_gate":{
+    "state":"HOLD_FOR_DIRECT_GROWTH_CALCULATION",
+    "reason":"2020 detailed DHC-A counts here use alone-or-in-any-combination while the 2024 ACS rail uses Black-alone estimates. Do not calculate a growth delta until universes and methodologies are normalized.",
+    "allowed":["WITHIN_SERIES_COUNTS","WITHIN_SERIES_REFERENCE_RATIOS","CROSS_SERIES_DESCRIPTIVE_COMPARISON_WITH_CAUTION"],
+    "forbidden":["UNQUALIFIED_2020_TO_2024_GROWTH_DELTA","PERCENT_GROWTH_FROM_MISMATCHED_UNIVERSES"]
+  },
+  "classification_logic":{
+    "federal_umbrella":"BLACK_OR_AFRICAN_AMERICAN",
+    "detailed_identity":"PRESERVE_AS_REPORTED",
+    "citizenship_inference":"NOT_ALLOWED",
+    "nationality_inference":"NOT_ALLOWED",
+    "language_inference":"NOT_ALLOWED",
+    "economic_contribution_test":"NOT_A_CLASSIFICATION_REQUIREMENT"
+  },
+  "genius_bar":{
+    "identifier":"FR0333.GENIUS.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+    "gate_count":10,
+    "required_pass_count":10,
+    "gates":["G1.IDENTIFIER_LOCK","G2.UMBRELLA_DETAIL_SEPARATION","G3.QUESTIONNAIRE_EXAMPLE_LOCK","G4.SOURCE_AUTHORITY_LOCK","G5.DHC_A_COUNT_RAIL_LOCK","G6.REFERENCE_RATIO_RECONSTRUCTION","G7.USVI_GEOGRAPHY_LOCK","G8.ACS_UNIVERSE_SEPARATION","G9.CLASSIFICATION_BOUNDARY_LOCK","G10.GOLDEN_CHAIN_PROMOTION_LOCK"]
+  },
+  "golden_chain":{
+    "anchor":"FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+    "chain":["SOURCE_LOCK","UNIVERSE_LOCK","DETAIL_GATE","REFERENCE_POINT","GENIUS_BAR","INVENTORY","INDEX","README","REPORT","STAY"],
+    "promotion_rule":"ALL_10_GENIUS_GATES_PASS_AND_EXTERNAL_CLAIMS_REMAIN_SOURCE_BOUNDED",
+    "humanlock":true
+  }
+}

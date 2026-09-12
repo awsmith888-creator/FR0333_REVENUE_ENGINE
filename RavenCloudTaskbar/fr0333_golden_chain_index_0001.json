@@ -1,0 +1,29 @@
+{
+  "identifier": "FR0333.GOLDEN.CHAIN.INDEX.0001",
+  "state": "APPEND_ONLY_INDEX",
+  "public_index": [
+    "0.1.FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
+    "0.2.FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001"
+  ],
+  "entries": [
+    {
+      "index": "0.1",
+      "identifier": "FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_andalusia_golden_chain_metrics_0001.json",
+      "state": "EXISTING_MAINLINE_REFERENCE"
+    },
+    {
+      "index": "0.2",
+      "identifier": "FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json",
+      "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    }
+  ],
+  "rules": [
+    "APPEND_ONLY",
+    "NO_RENUMBERING_PRIOR_ENTRIES",
+    "SOURCE_LOCK_REQUIRED",
+    "GENIUS_GATE_REQUIRED",
+    "HUMANLOCK_REQUIRED_FOR_PROMOTION"
+  ]
+}
