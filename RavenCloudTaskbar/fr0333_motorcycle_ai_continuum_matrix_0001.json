@@ -1,8 +1,10 @@
 {
   "id": "FR0333.MOTORCYCLE.AI.CONTINUUM.MATRIX.0001",
-  "version": "0.1",
-  "state": "PROMOTED.WORKING.SPEC",
-  "golden_chain_position": "UNASSIGNED",
+  "version": "0.2",
+  "state": "PROMOTED.WORKING.SPEC.GOLDEN_CHAIN.INDEXED",
+  "golden_chain_position": "0.5",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.MOTORCYCLE.AI.CONTINUUM.0001",
+  "deployment_state": "GOLDEN_CHAIN.INDEX.ACTIVE",
   "runtime": "NOT.APPLICABLE.SPECIFICATION.INDEX",
   "purpose": "Index motorcycle evolution, modification economics, and an evidence-bounded comparison to modern AI system evolution.",
   "motorcycle_evolution": {
@@ -154,9 +156,16 @@
   },
   "evidence_classes": {
     "motorcycle_numbers": "CURRENT.CONVERSATION.RESEARCH.BASELINE",
-    "ai_index_numbers": "INDEPENDENT.PUBLIC.RESEARCH.STANFORD.AI.INDEX.2026",
-    "openai_product_numbers": "FIRST.PARTY.OPENAI.PUBLIC.RELEASE.2026",
+    "ai_index_numbers": "INDEPENDENT.PUBLIC_RESEARCH.STANFORD.AI.INDEX.2026",
+    "openai_product_numbers": "FIRST_PARTY.OPENAI.PUBLIC.RELEASE.2026",
     "future_ai_growth": "UNVERIFIED.FUTURE.CLAIM.HOLD"
+  },
+  "golden_chain_deployment": {
+    "index_state": "ACTIVE.INDEXED",
+    "inventory_state": "REQUIRED",
+    "readme_state": "REQUIRED",
+    "runtime_claim": "NONE",
+    "merge_state": "UNMERGED.WORKING.BRANCH"
   },
   "source_urls": [
     "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance",
@@ -165,5 +174,5 @@
     "https://openai.com/index/previewing-ultrafast/",
     "https://openai.com/index/gpt-5-6/"
   ],
-  "terminal_state": "T.20.SPECIFICATION.INDEXED"
+  "terminal_state": "T.20.GOLDEN_CHAIN.INDEXED.WORKING_BRANCH"
 }
