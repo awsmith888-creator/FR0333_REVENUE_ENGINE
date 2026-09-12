@@ -4,6 +4,8 @@ import html
 import json
 from pathlib import Path
 
+from fr0333_motorcycle_ai_continuum_genius import validate as validate_motorcycle_ai_continuum
+
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
 TASKBARS = ROOT / "taskbars.json"
@@ -37,6 +39,13 @@ def load_and_validate():
         ids.add(item["id"])
     assert lumen["provisioning_state"] == "NOT_PROVISIONED"
     assert lumen["credentials"] == "NOT_STORED"
+
+    continuum = validate_motorcycle_ai_continuum()
+    assert continuum["result"] == "T.20.PASS"
+    assert continuum["golden_chain_position"] == "0.5"
+    assert continuum["runtime_claim"] == "NONE"
+    assert continuum["future_claim_state"] == "U.21.HOLD"
+
     return taskbars, lumen
 
 
@@ -100,7 +109,7 @@ def main():
     files = [DIST / "index.html", DIST / "taskbars.json", DIST / "lumen_gateway.json"]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
-    print(f"PASS taskbars={len(taskbars['taskbars'])} lumen={lumen['provisioning_state']}")
+    print(f"PASS taskbars={len(taskbars['taskbars'])} lumen={lumen['provisioning_state']} continuum=0.5")
     print(sums, end="")
 
 if __name__ == "__main__":
