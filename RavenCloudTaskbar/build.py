@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from fr0333_motorcycle_ai_continuum_genius import validate as validate_motorcycle_ai_continuum
+from fr0333_sports_bits_bones_genius import validate as validate_sports_bits_bones
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
@@ -45,6 +46,15 @@ def load_and_validate():
     assert continuum["golden_chain_position"] == "0.5"
     assert continuum["runtime_claim"] == "NONE"
     assert continuum["future_claim_state"] == "U.21.HOLD"
+
+    sports = validate_sports_bits_bones()
+    assert sports["result"] == "T.20.PASS"
+    assert sports["reference_points"] == 4
+    assert sports["completed_rows"] == 4
+    assert sports["derived_record"] == "METS.2.YANKEES.2"
+    assert sports["current_game_final"] == "U.21.HOLD"
+    assert sports["tv_audience"] == "U.21.HOLD"
+    assert sports["runtime_claim"] == "NONE"
 
     return taskbars, lumen
 
@@ -109,7 +119,7 @@ def main():
     files = [DIST / "index.html", DIST / "taskbars.json", DIST / "lumen_gateway.json"]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
-    print(f"PASS taskbars={len(taskbars['taskbars'])} lumen={lumen['provisioning_state']} continuum=0.5")
+    print(f"PASS taskbars={len(taskbars['taskbars'])} lumen={lumen['provisioning_state']} continuum=0.5 sports_bits_bones=4RP")
     print(sums, end="")
 
 if __name__ == "__main__":
