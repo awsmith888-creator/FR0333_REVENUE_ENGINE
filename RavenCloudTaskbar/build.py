@@ -8,7 +8,8 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
 TASKBARS = ROOT / "taskbars.json"
 LUMEN = ROOT / "lumen_gateway.json"
-IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0002.json"
+IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0003.json"
+ADOBE_RECEIPT = ROOT / "fr0333_adobe_image_runtime_receipt_0001.json"
 
 REQUIRED_TASKBAR_FIELDS = {
     "id", "project", "lane", "state", "evidence_state",
@@ -28,6 +29,8 @@ def load_and_validate():
     taskbars = json.loads(TASKBARS.read_text(encoding="utf-8"))
     lumen = json.loads(LUMEN.read_text(encoding="utf-8"))
     image_quality = json.loads(IMAGE_QUALITY.read_text(encoding="utf-8"))
+    adobe_receipt = json.loads(ADOBE_RECEIPT.read_text(encoding="utf-8"))
+
     assert taskbars["humanlock"] is True
     assert taskbars["state"] == "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED"
     assert taskbars["evidence_gate"] == "OBSERVED != CORRELATED != CAUSAL"
@@ -37,11 +40,15 @@ def load_and_validate():
         assert not missing, f"{item.get('id', '<unknown>')} missing {sorted(missing)}"
         assert item["id"] not in ids, f"duplicate taskbar id {item['id']}"
         ids.add(item["id"])
+
     assert lumen["provisioning_state"] == "NOT_PROVISIONED"
     assert lumen["credentials"] == "NOT_STORED"
+
+    assert image_quality["identifier"] == "FR0333.IMAGE.QUALITY.GATE.0003"
     assert image_quality["humanlock"] is True
     assert image_quality["reference_scale"]["percent_symbols_prohibited"] is True
     assert image_quality["reference_scale"]["minimum_promotable_reference"] == 8
+
     queue = image_quality["queue_contract"]
     assert queue["n_in_equals_n_out"] is True
     assert queue["one_run_one_canvas_one_image"] is True
@@ -49,16 +56,48 @@ def load_and_validate():
     assert queue["collage"] == "REJECT"
     assert queue["duplicate_output"] == "REJECT"
     assert queue["count_mismatch"] == "REJECT"
+
+    mode = image_quality["mode_gate"]
+    assert mode["edit_ne_regenerate"] is True
+    assert mode["remaster_ne_reinvent"] is True
+
+    dimensions = image_quality["photorealism_dimensions"]
+    assert len(dimensions) == 14
+    assert "VEHICLE.MECHANICAL.GEOMETRY" in dimensions
+    assert "LOAD.BALANCE.CONTACT.PHYSICS" in dimensions
+    assert "VISUAL.READBACK" in dimensions
+
+    defaults = image_quality["adobe_execution_defaults"]
+    assert defaults["generation_prompt_reasoner"] == "quality"
+    assert defaults["edit_prompt_reasoner"] == "quality"
+    assert defaults["target_resolution_level"] == "4MP"
+    assert defaults["output_format"] == "png"
+    assert defaults["post_edit_visual_readback"] == "REQUIRED"
+
     promo = image_quality["promotion_gate"]
     for field in (
-        "identity_reference_min", "geometry_reference_min", "crop_reference_min",
-        "artifact_control_reference_min", "aesthetic_reference_min", "user_intent_reference_min"
+        "identity_reference_min", "anatomy_reference_min",
+        "vehicle_geometry_reference_min", "physics_reference_min",
+        "camera_geometry_reference_min", "lighting_reference_min",
+        "material_realism_reference_min", "crop_reference_min",
+        "artifact_control_reference_min", "aesthetic_reference_min",
+        "user_intent_reference_min"
     ):
         assert promo[field] >= 8, f"quality threshold too low: {field}={promo[field]}"
+    assert promo["visual_readback_required"] is True
     assert promo["user_reject_overrides_promotion"] is True
     assert promo["runtime_receipt_required_for_external_execution_claim"] is True
     assert "USER.REJECT = OUTPUT.HOLD" in image_quality["hard_boundaries"]
-    return taskbars, lumen, image_quality
+    assert "TONE.IMPROVEMENT != STRUCTURAL.REALISM.REPAIR" in image_quality["hard_boundaries"]
+
+    assert adobe_receipt["provider"] == "ADOBE"
+    assert adobe_receipt["provider_receipt"]["execution_state"] == "PASS_RUNTIME"
+    assert adobe_receipt["readback"]["quality_promotion_state"] == "U.21.HOLD"
+    assert adobe_receipt["readback"]["user_acceptance"] == "NOT_OBSERVED"
+    assert adobe_receipt["result"]["connector_runtime"] == "T.20.PASS"
+    assert adobe_receipt["result"]["external_adobe_full_capacity"] == "NOT_ESTABLISHED"
+
+    return taskbars, lumen, image_quality, adobe_receipt
 
 
 def card(item):
@@ -113,26 +152,31 @@ footer{{margin-top:20px;color:var(--muted);font-family:ui-monospace,monospace;fo
 
 
 def main():
-    taskbars, lumen, image_quality = load_and_validate()
+    taskbars, lumen, image_quality, adobe_receipt = load_and_validate()
     DIST.mkdir(exist_ok=True)
     (DIST / "index.html").write_text(build_html(taskbars, lumen), encoding="utf-8")
     (DIST / "taskbars.json").write_text(json.dumps(taskbars, indent=2) + "\n", encoding="utf-8")
     (DIST / "lumen_gateway.json").write_text(json.dumps(lumen, indent=2) + "\n", encoding="utf-8")
-    (DIST / "fr0333_image_quality_gate_0002.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
+    (DIST / "fr0333_image_quality_gate_0003.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
+    (DIST / "fr0333_adobe_image_runtime_receipt_0001.json").write_text(json.dumps(adobe_receipt, indent=2) + "\n", encoding="utf-8")
     files = [
         DIST / "index.html",
         DIST / "taskbars.json",
         DIST / "lumen_gateway.json",
-        DIST / "fr0333_image_quality_gate_0002.json"
+        DIST / "fr0333_image_quality_gate_0003.json",
+        DIST / "fr0333_adobe_image_runtime_receipt_0001.json"
     ]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
     print(
         f"PASS taskbars={len(taskbars['taskbars'])} "
         f"lumen={lumen['provisioning_state']} "
-        f"image_quality_min={image_quality['reference_scale']['minimum_promotable_reference']}"
+        f"image_quality_min={image_quality['reference_scale']['minimum_promotable_reference']} "
+        f"adobe_connector={adobe_receipt['result']['connector_runtime']} "
+        f"quality_promotion={adobe_receipt['result']['photorealism_promotion']}"
     )
     print(sums, end="")
+
 
 if __name__ == "__main__":
     main()
