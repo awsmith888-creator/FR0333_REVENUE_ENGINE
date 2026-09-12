@@ -1,0 +1,146 @@
+{
+  "identifier": "FR0333.EZEKIEL.TEXTUAL.LOCK.0001",
+  "state": "SOURCE_AUDITED_TEXTUAL_LOCK",
+  "source_clock": "2026-09-12",
+  "scope": ["EZEKIEL.37", "EZEKIEL.40", "EZEKIEL.43", "EZEKIEL.47"],
+  "pipeline": ["GEʿEZ.EXACT.VERSE", "LEMMA", "GRAMMAR", "HEBREW.CROSSCHECK", "GREEK.CROSSCHECK", "LATIN.CROSSCHECK", "NUMBER.EXTRACTION", "EVIDENCE.CLASS", "RECEIPT"],
+  "source_registry": [
+    {"id":"GEEZ.TEXT","publisher":"scriptures-inspector public repository","title":"Geʿez Mashafa Qeddus Ezekiel transcription","url":"https://github.com/antonioconselheiro/scriptures-inspector/blob/main/projects/bible/sources/geez-mashafa-qeddus/EZE.json","class":"PUBLIC_GEʿEZ_TEXT_TRANSCRIPTION"},
+    {"id":"GEEZ.LEX.BONES","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ዐፅም","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/1/L3c8821a46d56420283fc3bdedc1c341a.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.SPIRIT","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"መንፈስ","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/5/Lc372a0c42e3f4448a888fc8becc52f04.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.LIVE","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ሐይወ","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/6/Lb18678e7241042c686e9929a40ea7589.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.LIFE","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ሕይወት","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/7/La05973b3d0de4c9e8e7c67d0fef2e7a5.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.WIND","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ነፋስ","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/3/Lfdbfad004e8e493c86b1dc2e70e62d51.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.MEASURE.NOUN","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"መስፈርት","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/3/Lf5b10cab6f414b92a2c79dd34d91a9c0.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.MEASURE.VERB","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ሰፈረ I","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/5/Ld0f5100f83fe4268bcde5bc53a40c0b3.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.CUBIT","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"እመት","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/3/Lf54d39708b434334bfcfc3b5a81bb7c5.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.REED","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ኅለት","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/2/L4a8ddb4adb6c4e598ab1e895ae2fa3ad.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"GEEZ.LEX.MEASURE.MODE","publisher":"Beta maṣāḥǝft / TraCES Dillmann Data","title":"ዐቅም","url":"https://github.com/BetaMasaheft/DillmannData/blob/main/7/L946723839dcc4638b69769e41983bb39.xml","class":"PHILOLOGICAL_LEMMA_SPECIALIST_LEXICON"},
+    {"id":"HEBREW.MT","publisher":"Mechon-Mamre / Westminster Leningrad crosscheck","url":"https://www.mechon-mamre.org/p/pt/pt1237.htm","class":"PRIMARY_TEXT_HEBREW_MT"},
+    {"id":"GREEK.LXX","publisher":"GreekLab Septuagint interlinear","url":"https://www.greeklab.org/index.php?book=Ezekiel","class":"PRIMARY_TEXT_GREEK_LXX_TRANSCRIPTION"},
+    {"id":"LATIN.VULGATE","publisher":"Vulgata Clementina public text","url":"https://biblehub.com/vul/ezekiel/37.htm","class":"PRIMARY_TEXT_LATIN_VULGATE_TRANSCRIPTION"}
+  ],
+  "locks": [
+    {
+      "concept":"BONES",
+      "chapter":"37",
+      "geez_exact":["37:1 ወምሉእ፡ ህየ፡ አዕፅምተ፡ ሰብእ።","37:3 የሐይዉኑ፡ እሉ፡ አዕፅምት።"],
+      "lemma":"ዐፅም",
+      "grammar":"noun; plural አዕፅምት",
+      "lexicon_source":"GEEZ.LEX.BONES",
+      "hebrew":"עֶצֶם / הָעֲצָמוֹת; noun plural in 37:3",
+      "greek":"ὀστέον / τὰ ὀστᾶ",
+      "latin":"os / ossa",
+      "state":"T.20.TEXTUALLY.LOCKED"
+    },
+    {
+      "concept":"LIVE",
+      "chapter":"37",
+      "geez_exact":["37:3 የሐይዉኑ፡ እሉ፡ አዕፅምት።","37:9 ወይሕየዉ።","37:10 ወሐይዉ።"],
+      "lemma":"ሐይወ",
+      "grammar":"verb; lexicon imperfect የሐዩ/የሐይው; subjunctive ይሕየው; imperative ሕየው; resurrection/revival sense directly cited at Ezekiel 37:3",
+      "lexicon_source":"GEEZ.LEX.LIVE",
+      "hebrew":"חיה; 37:3 הֲתִחְיֶינָה Qal imperfect 3fp",
+      "greek":"ζάω; 37:3 ζήσεται; 37:9 ζησάτωσαν",
+      "latin":"vivere; 37:3 vivent; 37:9 reviviscant",
+      "state":"T.20.TEXTUALLY.LOCKED"
+    },
+    {
+      "concept":"BREATH.SPIRIT",
+      "chapter":"37",
+      "geez_exact":["37:5 መንፈሰ፡ ሕይወት","37:8 አልቦ፡ መንፈስ","37:9 በላ፡ ለመንፈስ","37:10 ወቦአ፡ መንፈስ፡ ላዕሌሆሙ"],
+      "lemma":"መንፈስ",
+      "grammar":"noun; plural መንፈሳት / መናፍስት; attested senses include breath, spirit, wind, vital force/life",
+      "lexicon_source":"GEEZ.LEX.SPIRIT",
+      "hebrew":"רוּחַ spans breath/wind/spirit in Ezekiel 37 context",
+      "greek":"πνεῦμα spans breath/wind/spirit; 37:9 uses plural πνευμάτων and singular πνεῦμα",
+      "latin":"spiritus; 37:9 contrasts quatuor ventis with spiritus",
+      "state":"T.20.POLYSEMY.LOCKED"
+    },
+    {
+      "concept":"FOUR.WINDS",
+      "chapter":"37",
+      "geez_exact":"37:9 እም፬ነፋሳት፡ ትምጻእ፡ ወትንፋኅ",
+      "lemma":"ነፋስ",
+      "grammar":"noun; plural ነፋሳት; ፬ = four",
+      "lexicon_source":"GEEZ.LEX.WIND",
+      "hebrew":"מֵאַרְבַּע רוּחוֹת",
+      "greek":"ἐκ τῶν τεσσάρων πνευμάτων",
+      "latin":"a quatuor ventis",
+      "number_extraction":{"value":4,"unit":"winds","class":"PRIMARY_TEXT_NUMBER"},
+      "state":"T.20.TEXTUALLY.LOCKED"
+    },
+    {
+      "concept":"MEASURING.INSTRUMENT",
+      "chapter":"40",
+      "geez_exact":["40:3 ወህለት፡ ዘዓቅም፡ ይቀውም፡ ውስተ፡ አንቀጽ።","40:5 ወህለት፡ ዘዓቅም፡ ውስተ፡ እዴሁ"],
+      "lemma":"ኅለት (source witness orthography ህለት)",
+      "grammar":"noun; reed/cane; measuring-reed usage directly cited for Ezekiel 40:3 and 40:5; ዘዐቅም = of measure",
+      "lexicon_sources":["GEEZ.LEX.REED","GEEZ.LEX.MEASURE.MODE"],
+      "hebrew":"קְנֵה הַמִּדָּה",
+      "greek":"κάλαμος μέτρου / κάλαμος τὸ μέτρον",
+      "latin":"calamus mensuræ",
+      "state":"T.20.TEXTUALLY.LOCKED"
+    },
+    {
+      "concept":"CUBIT",
+      "chapters":["40","43","47"],
+      "geez_exact":["40:5 ዘስድስ፡ በእመት፡ ወስዝር","43:13 በእመታት፡ እመቱሂ፡ እመት፡ ወስዝር","47:3 ፲፻፡ በእመት"],
+      "lemma":"እመት",
+      "grammar":"measurement noun; lexicon gloss cubitus",
+      "lexicon_source":"GEEZ.LEX.CUBIT",
+      "boundary":"LONG.CUBIT.TEXTUAL.DEFINITION != EXACT.MODERN.LENGTH",
+      "state":"T.20.TEXTUALLY.LOCKED"
+    },
+    {
+      "concept":"MEASURE",
+      "chapters":["40","47"],
+      "geez_exact":["47:3 ወመስፈርት፡ ውስተ፡ እዴሁ፡ ወሰፈረ፡ ፲፻፡ በእመት","47:4 ወሰፈረ፡ ፲፻","47:5 ወሰፈረ፡ ፲፻ ... ወሰፈረ፡ ፲፻"],
+      "lemmas":{"noun":"መስፈርት","verb":"ሰፈረ"},
+      "grammar":"መስፈርት noun 'measure'; ሰፈረ verb 'measure/dimension'; ወሰፈረ = conjunction + finite verb 'and he measured'",
+      "lexicon_sources":["GEEZ.LEX.MEASURE.NOUN","GEEZ.LEX.MEASURE.VERB"],
+      "state":"T.20.TEXTUALLY.LOCKED"
+    },
+    {
+      "concept":"PATTERN",
+      "chapter":"43",
+      "geez_exact":["43:10 ወአንተ፡ ወልደ፡ እጓለ፡ እመሕያው፡ ንግሮሙ፡ ለቤተ፡ እስራኤል፡ ዘንተ፡ ቤተ፣፡ ወይኅድጉ፡ ግብሮሙ፡ ወኃጢአቶሙ።","43:11 ወሥዕሎ፡ ለዝንቱ፡ ቤት፡ ወትርሢቶ፡ ... ወኵሎ፡ ግብሮ፡ ታርእዮሙ፡ ወትጽሕፎ፡ በቅድሜሆሙ"],
+      "hebrew_mt":"43:10 וּמָדְד֖וּ אֶת־תָּכְנִֽית — measure the pattern/plan",
+      "greek_lxx":"43:10 preserves vision/appearance and arrangement language rather than the MT imperative to measure the pattern",
+      "latin_vulgate":"43:10 et metiantur fabricam",
+      "geez_direct_equivalent":"NOT.ESTABLISHED.IN.43_10",
+      "state":"T.20.TEXTUAL.VARIANT.LOCKED",
+      "boundary":"HEBREW.PATTERN.MEASURE.43_10 != UNIVERSAL.MULTILINGUAL.WORDING"
+    },
+    {
+      "concept":"1000",
+      "chapter":"47",
+      "geez_exact":["47:3 ወሰፈረ፡ ፲፻፡ በእመት","47:4 ወሰፈረ፡ ፲፻ ... ወሰፈረ፡ ፲፻","47:5 ወሰፈረ፡ ፲፻"],
+      "number_extraction":{"symbol":"፲፻","value":1000,"repeated_measurement_acts":4,"derived_total_contextual_units":4000,"unit_explicit_at":"47:3 cubit; subsequent repetitions inherit narrative measurement context but do not restate the noun in the Geʿez transcription"},
+      "hebrew":"47:3 אֶלֶף בָּאַמָּה; repeated 1000 measures across vv.3-5",
+      "greek":"47:3 χιλίους ἐν τῷ μέτρῳ; repeated χιλίους sequence",
+      "latin":"47:3 mille cubitos; four mille measurements across vv.3-5",
+      "state":"T.20.NUMBER.SEQUENCE.LOCKED",
+      "boundary":"TEXTUAL.COUNT != MODERN.PHYSICAL.UNIT.CONVERSION"
+    }
+  ],
+  "hard_boundaries": [
+    "GEʿEZ.EXACT.TEXT != AMHARIC.TEXT",
+    "GEʿEZ.TRADITIONAL.TEXT != CRITICAL.EDITION.IDENTITY",
+    "HEBREW.MT != GREEK.LXX != LATIN.VULGATE != GEʿEZ.WITNESS",
+    "SHARED.CONCEPT != IDENTICAL.WORDING",
+    "TEXTUAL.VARIANT = EVIDENCE.NOT.ERROR",
+    "NUMBER.COUNT != UNIT.CONVERSION",
+    "LONG.CUBIT.TEXTUAL.DEFINITION != EXACT.MODERN.LENGTH",
+    "AUTOMATIC.GLOSS != PHILOLOGICAL.LEMMA.PROOF",
+    "HEBREW.PATTERN.MEASURE.43_10 != UNIVERSAL.MULTILINGUAL.WORDING"
+  ],
+  "result": {
+    "stage":"STAGE.1.EZEKIEL.TEXTUAL.LOCK",
+    "critical_concepts_locked":9,
+    "critical_concepts_total":9,
+    "state":"T.20.PASS",
+    "pattern_handling":"PASS_BY_VARIANT_LOCK_NOT_FORCED_EQUIVALENCE",
+    "modern_length_conversion":"U.21.HOLD"
+  }
+}
