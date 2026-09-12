@@ -5,7 +5,8 @@
     "0.1.FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
     "0.2.FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
     "0.3.FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
-    "0.4.FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001"
+    "0.4.FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001",
+    "0.5.FR.0333.GOLDEN.CHAIN.MOTORCYCLE.AI.CONTINUUM.0001"
   ],
   "entries": [
     {
@@ -31,6 +32,12 @@
       "identifier": "FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001",
       "artifact": "RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_0001.json",
       "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.5",
+      "identifier": "FR.0333.GOLDEN.CHAIN.MOTORCYCLE.AI.CONTINUUM.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_matrix_0001.json",
+      "state": "PROMOTED_WORKING_SPEC_GOLDEN_CHAIN_INDEXED_RUNTIME_NOT_APPLICABLE"
     }
   ],
   "rules": [
