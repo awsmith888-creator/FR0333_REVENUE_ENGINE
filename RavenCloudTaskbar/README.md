@@ -22,6 +22,36 @@ Validation: `RavenCloudTaskbar/fr0333_motorcycle_ai_continuum_genius.py` plus it
 
 Boundary: `GOLDEN_CHAIN.INDEX.ACTIVE != EXTERNAL.RUNTIME.DEPLOYED`.
 
+## Sports BITS/BONES reference-point rail
+
+`FR0333.SPORTS.BITS.BONES.0001` is active as an evidence-bounded reference-point specification.
+
+Primary artifact: `RavenCloudTaskbar/fr0333_sports_bits_bones_0001.json`
+
+Reference fixture: `RP.FIXTURE.MLB.SUBWAY.SERIES.2026.09.12.0001`
+
+The first fixture separates structural BONES from measurable BITS:
+
+`BONES = SPORT + LEAGUE + TEAM + EVENT + DATE + VENUE + SERIES + SCHEDULE`
+
+`BITS = SCORE + INNING + TIME + RESULT + STANDINGS + PITCHER.DATA + AUDIENCE.DATA + MEDIA.VIEWS + VIDEO.RUNTIME`
+
+The fixture contains four reference points: the observed ongoing Mets-Yankees game state, four listed completed games used to derive a 2-2 completed-row baseline, the scheduled 2026-09-13 game, and the observed MLB YouTube 165,000-view media metric.
+
+Validation: `RavenCloudTaskbar/fr0333_sports_bits_bones_genius.py` plus `RavenCloudTaskbar/test_fr0333_sports_bits_bones_genius.py` and `.github/workflows/fr0333-sports-bits-bones-validate.yml`.
+
+Key boundaries:
+
+- `SCREENSHOT.OBSERVED != INDEPENDENT.VERIFICATION`
+- `ONGOING.SCORE != FINAL.RESULT`
+- `VIDEO.VIEWS != TV.RATINGS`
+- `VIDEO.VIEWS != TOTAL.GAME.REACH`
+- `SCHEDULED.EVENT != COMPLETED.EVENT`
+- `UNKNOWN != ZERO != PASS`
+- `DERIVED.RECORD != SOURCE.REPORTED.RECORD`
+
+The Raven build imports this validator directly, so the control-plane build fails if these reference-point controls are broken.
+
 ## Hard boundaries
 
 - HumanLock remains active.
