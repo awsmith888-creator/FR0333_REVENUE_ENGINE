@@ -28,7 +28,8 @@
     {"inventory_id":"INV.0.23","artifact":".github/workflows/fr0333-motorcycle-ai-continuum-validate.yml","role":"CI_VALIDATION","git_blob_sha":"d404ec5d6eebb37c27d7cf61b9384a7b7a7ce83a"},
     {"inventory_id":"INV.0.24","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.5","git_blob_sha":"626e5ebc8189df69a3da46799bc4e1a0b515bfe5"},
     {"inventory_id":"INV.0.25","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_INDEX_SURFACE","git_blob_sha":"e27165df4e30b41d8016f0eebe79d7ea2a8aa8b0"},
-    {"inventory_id":"INV.0.26","artifact":"RavenCloudTaskbar/taskbars.json","role":"ACTIVE_INDEX_TASKBAR","git_blob_sha":"976fd7c50cb6b81d879294ffc6c5da76bb7fbb5e"}
+    {"inventory_id":"INV.0.26","artifact":"RavenCloudTaskbar/taskbars.json","role":"ACTIVE_INDEX_TASKBAR","git_blob_sha":"976fd7c50cb6b81d879294ffc6c5da76bb7fbb5e"},
+    {"inventory_id":"INV.0.27","artifact":"RavenCloudTaskbar/build.py","role":"CONTROL_PLANE_VALIDATION_INTEGRATION","git_blob_sha":"e0f8db63f73bcb667e305d2a0982fe996534811c"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
