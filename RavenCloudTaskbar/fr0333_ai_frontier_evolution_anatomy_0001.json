@@ -1,0 +1,125 @@
+{
+  "identifier": "FR0333.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
+  "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION",
+  "source_clock": "2026-09-12",
+  "purpose": "Turn the AI capability rail into an evidence-bounded evolution anatomy that tracks how frontier systems are changing across reasoning, perception, tools, agents, science, efficiency, embodiment, safety, and human oversight without equating capability with consciousness or benevolence.",
+  "parent_rail": "FR0333.AI.CAPABILITY.EVOLUTION.0001",
+  "evolution_chain": [
+    "SEARCH.RETRIEVAL",
+    "CONVERSATIONAL.ANSWERING",
+    "DEEP.REASONING",
+    "MULTIMODAL.PERCEPTION",
+    "TOOL.USE",
+    "COMPUTER.USE",
+    "LONG.HORIZON.AGENTS",
+    "MULTI.AGENT.ORCHESTRATION",
+    "SCIENTIFIC.RESEARCH",
+    "EMBODIED.ROBOTICS",
+    "GOVERNED.AUTONOMY"
+  ],
+  "frontier_anatomy": {
+    "A.SCALE": "training compute, chip stock, data-center capacity, and inference supply",
+    "B.REASONING": "multi-step problem solving, deliberate inference, and specialized deep-think modes",
+    "C.PERCEPTION": "native text, image, audio, document, and video understanding",
+    "D.TOOLS": "code execution, retrieval, APIs, browser/computer use, and structured actions",
+    "E.AGENT.HORIZON": "ability to complete longer tasks with less human intervention",
+    "F.MULTI.AGENT": "parallel decomposition and coordination among multiple model instances",
+    "G.CONTEXT.MEMORY": "larger working context and persistent user/project state where explicitly supported",
+    "H.SCIENCE": "research assistance in mathematics, biology, chemistry, medicine, engineering, and other disciplines",
+    "I.EMBODIMENT": "robotics and physical-world control, still materially behind digital-task performance",
+    "J.EFFICIENCY": "lower cost, lower latency, fewer tokens, and more capability per unit compute",
+    "K.SAFETY": "cyber, biological/chemical, manipulation, misalignment, and loss-of-control evaluations",
+    "L.GOVERNANCE": "deployment thresholds, incident response, red teaming, external evaluation, and policy controls",
+    "M.HUMAN.OVERSIGHT": "HumanLock, approval boundaries, provenance, readback, and failure memory",
+    "N.COMPETITION": "multi-company and multi-country race where benchmark leadership can change rapidly"
+  },
+  "source_lock": {
+    "rule": "SOURCE_THEN_METRIC_THEN_UNIVERSE_THEN_DATE_THEN_BOUNDARY_THEN_PROMOTION",
+    "sources": [
+      {"id":"SRC.001","publisher":"Stanford HAI","title":"2026 AI Index Technical Performance","url":"https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance","class":"ACADEMIC_INDEX"},
+      {"id":"SRC.002","publisher":"Stanford HAI","title":"2026 AI Index Responsible AI","url":"https://hai.stanford.edu/ai-index/2026-ai-index-report/responsible-ai","class":"ACADEMIC_INDEX"},
+      {"id":"SRC.003","publisher":"Stanford HAI","title":"2026 AI Index Science","url":"https://hai.stanford.edu/ai-index/2026-ai-index-report/science","class":"ACADEMIC_INDEX"},
+      {"id":"SRC.004","publisher":"Stanford HAI","title":"2026 AI Index Economy","url":"https://hai.stanford.edu/ai-index/2026-ai-index-report/economy","class":"ACADEMIC_INDEX"},
+      {"id":"SRC.005","publisher":"Epoch AI","title":"Trends in Artificial Intelligence","url":"https://epoch.ai/trends","class":"INDEPENDENT_TECHNICAL_TREND_ANALYSIS"},
+      {"id":"SRC.006","publisher":"Epoch AI","title":"Largest AI Data Center: Doubling every 7 months","url":"https://epoch.ai/data-insights/largest-data-center-compute","class":"INDEPENDENT_TECHNICAL_TREND_ANALYSIS"},
+      {"id":"SRC.007","publisher":"OpenAI","title":"GPT-5.6","url":"https://openai.com/index/gpt-5-6/","class":"PRIMARY_VENDOR_RELEASE"},
+      {"id":"SRC.008","publisher":"OpenAI","title":"GPT-5.6 System Card","url":"https://deploymentsafety.openai.com/gpt-5-6","class":"PRIMARY_VENDOR_SAFETY_REPORT"},
+      {"id":"SRC.009","publisher":"Anthropic","title":"Claude Fable 5.1","url":"https://www.anthropic.com/claude/fable","class":"PRIMARY_VENDOR_RELEASE"},
+      {"id":"SRC.010","publisher":"Anthropic","title":"Responsible Scaling Policy","url":"https://www.anthropic.com/responsible-scaling-policy","class":"PRIMARY_VENDOR_SAFETY_FRAMEWORK"},
+      {"id":"SRC.011","publisher":"Google DeepMind","title":"Gemini models","url":"https://deepmind.google/models/gemini/","class":"PRIMARY_VENDOR_RELEASE"},
+      {"id":"SRC.012","publisher":"Google DeepMind","title":"Frontier Safety Framework","url":"https://deepmind.google/frontier-safety/","class":"PRIMARY_VENDOR_SAFETY_FRAMEWORK"},
+      {"id":"SRC.013","publisher":"Meta AI","title":"Muse Spark","url":"https://ai.meta.com/blog/introducing-muse-spark-msl/","class":"PRIMARY_VENDOR_RELEASE"},
+      {"id":"SRC.014","publisher":"Artificial Analysis","title":"Claude Fable 5.1 tops the Artificial Analysis Intelligence Index","url":"https://artificialanalysis.ai/articles/claude-fable-5-1","class":"INDEPENDENT_MODEL_BENCHMARK"}
+    ]
+  },
+  "reference_points": [
+    {"reference_point":"A1","metric":"HUMANITY.LAST.EXAM.FRONTIER.ONE.YEAR.GAIN","value":300,"unit":"benchmark_points_per_1000_scale","class":"INDEX_NORMALIZED_REFERENCE","source":"SRC.001","boundary":"Stanford reports a 30 percentage-point gain; encoded here as 300 points per 1000 to preserve no-percent grammar."},
+    {"reference_point":"B2","metric":"ARENA.TOP.FOUR.ELO.SPREAD.MARCH.2026","value":22,"unit":"elo_points","class":"DERIVED_FROM_ACADEMIC_INDEX","source":"SRC.001","derivation":"1503 minus 1481","meaning":"Anthropic, xAI, Google, and OpenAI were tightly clustered rather than separated by a dominant permanent leader."},
+    {"reference_point":"C3","metric":"INDEPENDENT.INTELLIGENCE.INDEX.TOP.FIVE.SPREAD.SEPT.2026","value":5,"unit":"index_points","class":"DERIVED_FROM_INDEPENDENT_BENCHMARK","source":"SRC.014","derivation":"66 minus 61","meaning":"Leaderboard leadership remains close and methodology-dependent; benchmark leader is not general dominance."},
+    {"reference_point":"D4","metric":"FRONTIER.LANGUAGE.TRAINING.COMPUTE.GROWTH","value":5.0,"unit":"times_per_year","class":"TREND_ESTIMATE","source":"SRC.005"},
+    {"reference_point":"E5","metric":"LARGEST.AI.DATA.CENTER.CAPACITY.DOUBLING","value":7,"unit":"months","class":"TREND_ESTIMATE","source":"SRC.006"},
+    {"reference_point":"F6","metric":"ORGANIZATIONAL.AI.ADOPTION.2025","value":880,"unit":"organizations_per_1000_surveyed","class":"SURVEY_REFERENCE_POINT","source":"SRC.004"},
+    {"reference_point":"G7","metric":"GLOBAL.GENERATIVE.AI.ADOPTION.THREE.YEAR.REFERENCE","value":530,"unit":"people_per_1000_reference_population","class":"ADOPTION_REFERENCE_POINT","source":"SRC.004"},
+    {"reference_point":"H8","metric":"DOCUMENTED.AI.INCIDENTS.2025","value":362,"unit":"incidents","class":"RESPONSIBLE_AI_REFERENCE_POINT","source":"SRC.002"},
+    {"reference_point":"I9","metric":"DOCUMENTED.AI.INCIDENTS.2024","value":233,"unit":"incidents","class":"RESPONSIBLE_AI_PRIOR_REFERENCE_POINT","source":"SRC.002"},
+    {"reference_point":"J10","metric":"OSWORLD.AGENT.TASK.SUCCESS.TOP.2026.INDEX_REFERENCE","value":660,"unit":"successful_tasks_per_1000_reference","class":"BENCHMARK_REFERENCE_POINT","source":"SRC.001","boundary":"Stanford summarizes top agent performance at approximately 66 of 100 tasks; this is structured-benchmark performance, not unrestricted autonomy."},
+    {"reference_point":"K11","metric":"REAL.HOUSEHOLD.ROBOT.TASK.SUCCESS","value":120,"unit":"successful_tasks_per_1000_reference","class":"PHYSICAL_WORLD_LIMIT_REFERENCE","source":"SRC.001","meaning":"Digital agent progress materially exceeds embodied household robotics performance."},
+    {"reference_point":"L12","metric":"GPT5.6.SOL.AGENTS.LAST.EXAM","value":536,"unit":"benchmark_points_per_1000_scale","class":"VENDOR_REPORTED_BENCHMARK","source":"SRC.007"},
+    {"reference_point":"M13","metric":"GPT5.6.SOL.CODING.AGENT.INDEX","value":80,"unit":"index_score","class":"VENDOR_REPORTED_INDEPENDENT_BENCHMARK_RESULT","source":"SRC.007"},
+    {"reference_point":"N14","metric":"GPT5.6.BLACK.BOX.RED.TEAM.COMPUTE","value":700000,"unit":"a100_equivalent_gpu_hours","class":"VENDOR_REPORTED_SAFETY_EFFORT","source":"SRC.007"},
+    {"reference_point":"O15","metric":"PAPERARENA.BEST.AGENT.VS.PHD.EXPERT","value":{"agent_per_1000":388,"phd_per_1000":835},"unit":"accuracy_points_per_1000","class":"SCIENCE_CAPABILITY_GAP_REFERENCE","source":"SRC.003"},
+    {"reference_point":"P16","metric":"MODEL.CONSCIOUSNESS.AND.GUARANTEED.BENEVOLENCE","value":"U.21.HOLD","unit":"epistemic_state","class":"NOT_ESTABLISHED","meaning":"Capability, intelligence, safeguards, and cooperative behavior do not establish subjective consciousness or a guarantee of harmlessness."}
+  ],
+  "race_anatomy": {
+    "formula":"FRONTIER.VALUE = CAPABILITY * RELIABILITY * EFFICIENCY * TOOL_USE * AGENT_HORIZON * SAFETY * DISTRIBUTION",
+    "warning":"FORMULA_IS_CONCEPTUAL_NOT_A_MEASURED_MULTIPLICATIVE_SCORE",
+    "competitors":["OPENAI","ANTHROPIC","GOOGLE_DEEPMIND","META","XAI","ALIBABA","DEEPSEEK","OTHER_FRONTIER_LABS"],
+    "state":"MULTI.FRONT.RACE.NO.PERMANENT.WINNER.ESTABLISHED"
+  },
+  "direction_of_travel": [
+    {"lane":"LONGER.HORIZON.AGENTS","evidence_state":"STRONG_CURRENT_DIRECTION"},
+    {"lane":"COMPUTER.AND.TOOL.USE","evidence_state":"STRONG_CURRENT_DIRECTION"},
+    {"lane":"NATIVE.MULTIMODAL.VIDEO.AUDIO.IMAGE","evidence_state":"STRONG_CURRENT_DIRECTION"},
+    {"lane":"MULTI.AGENT.ORCHESTRATION","evidence_state":"EMERGING_CURRENT_DIRECTION"},
+    {"lane":"SCIENTIFIC.AND.ENGINEERING.RESEARCH","evidence_state":"STRONG_CURRENT_DIRECTION"},
+    {"lane":"PERSONAL.PERSISTENT.CONTEXT","evidence_state":"PRODUCT_DIRECTION_PROVIDER_DEPENDENT"},
+    {"lane":"EMBODIED.ROBOTICS","evidence_state":"ACTIVE_BUT_BEHIND_DIGITAL_AGENTS"},
+    {"lane":"LOWER.COST.HIGHER.THROUGHPUT","evidence_state":"STRONG_CURRENT_DIRECTION"},
+    {"lane":"STRONGER.SAFETY.SECURITY.GOVERNANCE","evidence_state":"REQUIRED_COMPANION_DIRECTION"}
+  ],
+  "control_laws": [
+    "INTELLIGENCE_NE_BENEVOLENCE",
+    "SMARTER_NE_HARMLESS",
+    "BENCHMARK_LEADER_NE_GENERAL_DOMINANCE",
+    "RACE_PRESSURE_NE_UNSAFE_DEPLOYMENT_PROOF",
+    "SAFETY_FRAMEWORK_NE_ZERO_RISK",
+    "CAPABILITY_GROWTH_NE_TRUTH_GROWTH",
+    "AGENT_BENCHMARK_SUCCESS_NE_UNRESTRICTED_AUTONOMY",
+    "DIGITAL_TASK_SUCCESS_NE_PHYSICAL_WORLD_MASTERY",
+    "MODEL_INTELLIGENCE_NE_MODEL_CONSCIOUSNESS",
+    "SELF_IMPROVEMENT.CAPABILITY.NE_AUTONOMOUS.WEIGHT.UPDATE",
+    "NEW_CAPABILITY_MUST_NOT_DELETE_OLD_FAILURE_EVIDENCE",
+    "HUMANLOCK_REQUIRED_FOR_CANONICAL_PROMOTION"
+  ],
+  "safety_state": {
+    "openai_gpt5_6":{"cyber":"HIGH_CAPABILITY_VENDOR_CLASSIFICATION","bio_chem":"HIGH_CAPABILITY_VENDOR_CLASSIFICATION","ai_self_improvement":"BELOW_HIGH_VENDOR_CLASSIFICATION","source":"SRC.008"},
+    "anthropic":{"framework":"RESPONSIBLE_SCALING_POLICY_ACTIVE","risk_reports":"ACTIVE","source":"SRC.010"},
+    "google_deepmind":{"framework":"FRONTIER_SAFETY_FRAMEWORK_ACTIVE","tracked_domains":["AUTONOMY","BIOSECURITY","CYBERSECURITY","ML_R_AND_D","HARMFUL_MANIPULATION"],"source":"SRC.012"}
+  },
+  "genius_bar": {
+    "identifier":"FR0333.GENIUS.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
+    "gate_count":16,
+    "required_pass_count":16,
+    "gates":[
+      "G1.IDENTIFIER.LOCK","G2.PARENT.RAIL.LOCK","G3.SOURCE.AUTHORITY","G4.REFERENCE.POINT.SEQUENCE","G5.NO.PERCENT.UNITS","G6.RACE.SPREAD.RECONSTRUCTION","G7.COMPUTE.SCALE.BOUNDARY","G8.AGENT.AUTONOMY.BOUNDARY","G9.DIGITAL.PHYSICAL.BOUNDARY","G10.SAFETY.ZERO.RISK.BOUNDARY","G11.CONSCIOUSNESS.BOUNDARY","G12.NO.BENEVOLENCE.GUARANTEE","G13.FAILURE.MEMORY.APPEND_ONLY","G14.TWO.LANE.COMPATIBILITY","G15.HUMANLOCK","G16.GOLDEN.CHAIN.INDEX.LOCK"
+    ]
+  },
+  "golden_chain": {
+    "public_index_target":"0.6.FR.0333.GOLDEN.CHAIN.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
+    "mode":"EVOLUTION_OVERLAY_APPEND_ONLY",
+    "prior_entries_renumbered":false,
+    "humanlock":true,
+    "promotion_rule":"ALL_16_GENIUS_GATES_PASS_AND_HUMANLOCK_TRUE"
+  }
+}
