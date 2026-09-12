@@ -32,7 +32,13 @@
     {"inventory_id":"INV.0.27","artifact":"RavenCloudTaskbar/test_fr0333_ai_frontier_evolution_anatomy_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"26712e017e89e73a71f84519b58a53ae6a23e5da"},
     {"inventory_id":"INV.0.28","artifact":"RavenCloudTaskbar/README_ai_frontier_evolution_anatomy_0001.md","role":"README","git_blob_sha":"6141fb255d487aacd5c8fd62101d9155fbe13bad"},
     {"inventory_id":"INV.0.29","artifact":".github/workflows/fr0333-ai-frontier-evolution-anatomy-validate.yml","role":"CI_VALIDATION","git_blob_sha":"7d46f7d5f281a80e6133f5307010044b254857ce"},
-    {"inventory_id":"INV.0.30","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.6","git_blob_sha":"d8dad339171d0a753f4dd32da30189b43a0218c1"}
+    {"inventory_id":"INV.0.30","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.6","git_blob_sha":"d8dad339171d0a753f4dd32da30189b43a0218c1"},
+    {"inventory_id":"INV.0.31","artifact":"RavenCloudTaskbar/fr0333_ai_safe_spec_adoption_0001.json","role":"GOLDEN_CHAIN_SAFE_SPEC_EVOLUTION_RAIL","git_blob_sha":"136a3f0aed3df3ae0b1f7f1bf100a8e49c46ac83"},
+    {"inventory_id":"INV.0.32","artifact":"RavenCloudTaskbar/fr0333_ai_safe_spec_adoption_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"3de2a557c448f62025ef3fcec81374f7d41ce538"},
+    {"inventory_id":"INV.0.33","artifact":"RavenCloudTaskbar/test_fr0333_ai_safe_spec_adoption_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"857e7fb80d9c52c69e8228a40c1c11d3b9b234d9"},
+    {"inventory_id":"INV.0.34","artifact":"RavenCloudTaskbar/README_ai_safe_spec_adoption_0001.md","role":"README","git_blob_sha":"86edc90b4537cf595beb0bf89c316d2c3d205d2b"},
+    {"inventory_id":"INV.0.35","artifact":".github/workflows/fr0333-ai-safe-spec-adoption-validate.yml","role":"CI_VALIDATION","git_blob_sha":"5855d8eccb730fa0f76daf89b164ca85a427ec3f"},
+    {"inventory_id":"INV.0.36","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.7","git_blob_sha":"33ec229814064e12002b7c83605e790073486c30"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -52,6 +58,12 @@
     "SMARTER_NE_HARMLESS",
     "SAFETY_FRAMEWORK_NE_ZERO_RISK",
     "AGENT_BENCHMARK_SUCCESS_NE_UNRESTRICTED_AUTONOMY",
-    "DIGITAL_TASK_SUCCESS_NE_PHYSICAL_WORLD_MASTERY"
+    "DIGITAL_TASK_SUCCESS_NE_PHYSICAL_WORLD_MASTERY",
+    "PUBLIC_SPEC_READING_NE_PROVIDER_SYSTEM_ACCESS",
+    "GOOD_SPEC_PATTERN_NE_COPY_PROVIDER_IMPLEMENTATION",
+    "AGENT_ACTION_CANNOT_EXCEED_OPERATOR_PERMISSION",
+    "MUTATING_ACTION_REQUIRES_AUTHORIZATION",
+    "OPERATOR_SHUTDOWN_MUST_REMAIN_POSSIBLE",
+    "HUMAN_OPERATOR_CONTINUITY_MUST_NOT_BE_ERASED"
   ]
 }
