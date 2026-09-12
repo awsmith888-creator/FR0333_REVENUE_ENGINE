@@ -1,0 +1,169 @@
+{
+  "id": "FR0333.MOTORCYCLE.AI.CONTINUUM.MATRIX.0001",
+  "version": "0.1",
+  "state": "PROMOTED.WORKING.SPEC",
+  "golden_chain_position": "UNASSIGNED",
+  "runtime": "NOT.APPLICABLE.SPECIFICATION.INDEX",
+  "purpose": "Index motorcycle evolution, modification economics, and an evidence-bounded comparison to modern AI system evolution.",
+  "motorcycle_evolution": {
+    "timeline": [
+      {"year": 1894, "event": "MASS.PRODUCTION.MOTORCYCLE", "reference": "HILDEBRAND.WOLFMUELLER", "metric": "APPROX.2.5.HP"},
+      {"year": 1969, "event": "MASS.PRODUCTION.FOUR.CYLINDER.DISC.BRAKE", "reference": "HONDA.CB750.FOUR", "metric": "67.PS"},
+      {"year": 1975, "event": "TOURING.PLATFORM.EXPANSION", "reference": "HONDA.GOLD.WING.GL1000", "metric": "999.CC"},
+      {"year": 1992, "event": "LIGHTWEIGHT.SUPERSPORT.SHIFT", "reference": "HONDA.CBR900RR", "metric": "124.PS.185.KG.DRY"},
+      {"year": 1998, "event": "LITER.SPORT.POWER.TO.WEIGHT.SHIFT", "reference": "YAMAHA.YZF.R1", "metric": "150.PS.177.KG"},
+      {"year": 2006, "event": "PRODUCTION.MOTORCYCLE.AIRBAG", "reference": "HONDA.GOLD.WING", "metric": "FIRST.PRODUCTION.APPLICATION"},
+      {"year": 2013, "event": "IMU.STABILITY.CONTROL.GENERATION", "reference": "LEAN.AWARE.CONTROL", "metric": "BRAKING.TRACTION.WHEELIE.CONTROL"}
+    ],
+    "specialization_chain": [
+      "ROAD.MOTORCYCLE",
+      "SPORT",
+      "SUPERSPORT",
+      "TOURING",
+      "SPORT.TOURING",
+      "DUAL.PURPOSE.ADV",
+      "RIDER.FIT",
+      "ABS",
+      "IMU",
+      "TRACTION.CONTROL",
+      "WHEELIE.CONTROL",
+      "FREESTYLE.MOTO",
+      "WOMEN.PARTICIPATION",
+      "X.GAMES",
+      "RED.BULL.FREERIDE",
+      "MEDIA.SCALE"
+    ],
+    "fleet_reference": {
+      "2002_iihs_vin_decoded": 4339271,
+      "2023_iihs_vin_decoded": 8790480,
+      "growth_multiple_2002_to_2023": 2.03,
+      "2024_fhwa_state_reported": 9261249,
+      "2024_vehicle_miles": 22241000000,
+      "approx_miles_per_registered_motorcycle": 2401
+    },
+    "fit_law": "RIDER.FIT = INSEAM + REACH + MASS + HAND.SIZE + MOBILITY + EXPERIENCE",
+    "design_boundary": "SEX.ALONE != COMPLETE.RIDER.FIT.MODEL"
+  },
+  "motorcycle_cost_matrix": {
+    "base_reference_usd": {
+      "600_sportbike_low": 12099,
+      "600_sportbike_high": 13284,
+      "750_sportbike_reference": 14249,
+      "1000_sportbike_reference": 17774
+    },
+    "core_stunt_reference_usd": {
+      "crash_cage": 495,
+      "subcage": 395,
+      "rearsets": 549,
+      "clip_ons": 395,
+      "clutch_lever": 149,
+      "fat_pegs": 100,
+      "handbrake": 500,
+      "rear_sprocket": 75,
+      "ecu_flash": 375,
+      "core_stunt_parts_total": 3033
+    },
+    "show_performance_reference_usd": {
+      "exhaust": 1353,
+      "steering_damper": 846,
+      "premium_tires_pair": 459,
+      "wrap_low": 1500,
+      "wrap_high": 2800,
+      "wheel_finish_low": 200,
+      "wheel_finish_high": 700,
+      "full_parts_build_low": 7391,
+      "full_parts_build_high": 9191
+    },
+    "installed_project_reference_usd": {
+      "shop_hours_planning_reference": 12,
+      "modeled_installed_modifications_low": 8591,
+      "modeled_installed_modifications_high": 11471,
+      "zx6r_abs_reference": 13284,
+      "modeled_project_total_low": 21875,
+      "modeled_project_total_high": 24755
+    },
+    "cost_chain": [
+      "BIKE.ACQUISITION",
+      "PROTECTION.HARDWARE",
+      "CONTROL.MODIFICATION",
+      "DRIVE.RATIO",
+      "BRAKE.CONTROL",
+      "ECU",
+      "POWER.SYSTEM",
+      "ERGONOMICS",
+      "AESTHETIC.BODYWORK",
+      "WHEELS",
+      "TIRES",
+      "LABOR",
+      "DAMAGE.RESERVE",
+      "TOTAL.BUILD.COST"
+    ],
+    "hard_boundaries": [
+      "BASE.MSRP != OUT.THE.DOOR.COST",
+      "PART.PRICE != INSTALLED.PRICE",
+      "PRETTY.BIKE != COSMETIC.ONLY",
+      "CUSTOM.BUILD.VALUE != RESALE.VALUE"
+    ]
+  },
+  "ai_continuum": {
+    "concept": "AI evolution is a succession of trained model generations, architectures, tools, infrastructure, evaluations, and product releases. A running model instance does not autonomously rewrite itself every day.",
+    "continuum_chain": [
+      "RULE.BASED.AI",
+      "STATISTICAL.ML",
+      "DEEP.LEARNING",
+      "TRANSFORMERS",
+      "FOUNDATION.MODELS",
+      "MULTIMODAL.MODELS",
+      "REASONING.MODELS",
+      "TOOL.USE",
+      "AGENTIC.SYSTEMS",
+      "LONG.CONTEXT",
+      "FASTER.INFERENCE",
+      "LOWER.COST.PER.UNIT.WORK",
+      "SAFETY.EVALUATION",
+      "CONTINUOUS.PRODUCT.RELEASES"
+    ],
+    "2026_public_reference_points": {
+      "stanford_global_ai_compute_h100_equivalents": 17100000,
+      "stanford_compute_growth_multiple_per_year_since_2022": 3.3,
+      "osworld_accuracy_reference_start": 12.0,
+      "osworld_accuracy_2025": 66.3,
+      "swe_bench_verified_2024_reference": 60.0,
+      "swe_bench_verified_2025_reference": 100.0,
+      "humanitys_last_exam_one_year_gain_reference_points": 30,
+      "gpt_5_6_sol_context_tokens": 1050000,
+      "gpt_5_6_sol_max_output_tokens": 128000,
+      "gpt_5_6_sol_api_input_usd_per_million_tokens": 4.0,
+      "gpt_5_6_sol_api_output_usd_per_million_tokens": 20.0,
+      "gpt_5_6_ultrafast_max_output_tokens_per_second": 750,
+      "gpt_5_6_ultrafast_speed_multiple_vs_standard": 14
+    },
+    "controlling_laws": [
+      "MODEL.INSTANCE.SELF.MODIFICATION = FALSE",
+      "SYSTEM.EVOLUTION = TRAINING + RELEASES + TOOLING + INFRASTRUCTURE + FEEDBACK",
+      "BENCHMARK.GAIN != GENERAL.RELIABILITY",
+      "CAPABILITY.GAIN != SAFETY.GUARANTEE",
+      "CURRENT.TREND != GUARANTEED.FUTURE.RATE",
+      "EVOLUTION.CONTINUUM = CAPABILITY + EFFICIENCY + TOOL.USE + RELIABILITY + SAFETY + ACCESS"
+    ],
+    "comparison": {
+      "motorcycle": "ENGINE -> FRAME -> BRAKES -> ERGONOMICS -> ELECTRONICS -> RIDER.CONTROL -> SPECIALIZED.USE",
+      "ai": "MODEL -> TRAINING -> CONTEXT -> REASONING -> TOOLS -> AGENTS -> EVALUATION -> DEPLOYMENT.CONTROL",
+      "shared_law": "EVOLUTION = CORE.MACHINE + CONTROL.SYSTEM + USER.FIT + FEEDBACK + SAFETY + SPECIALIZATION"
+    }
+  },
+  "evidence_classes": {
+    "motorcycle_numbers": "CURRENT.CONVERSATION.RESEARCH.BASELINE",
+    "ai_index_numbers": "INDEPENDENT.PUBLIC.RESEARCH.STANFORD.AI.INDEX.2026",
+    "openai_product_numbers": "FIRST.PARTY.OPENAI.PUBLIC.RELEASE.2026",
+    "future_ai_growth": "UNVERIFIED.FUTURE.CLAIM.HOLD"
+  },
+  "source_urls": [
+    "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance",
+    "https://hai.stanford.edu/ai-index/2026-ai-index-report/research-and-development",
+    "https://developers.openai.com/api/docs/models/gpt-5.6-sol",
+    "https://openai.com/index/previewing-ultrafast/",
+    "https://openai.com/index/gpt-5-6/"
+  ],
+  "terminal_state": "T.20.SPECIFICATION.INDEXED"
+}
