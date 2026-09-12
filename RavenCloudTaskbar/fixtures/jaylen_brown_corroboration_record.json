@@ -1,0 +1,83 @@
+{
+  "artifact_type": "FR0333.ZERO.LION.CORROBORATION.REGISTER",
+  "claims": [
+    {
+      "CLAIM.ID": "JAYLEN.BROWN.STATEMENT",
+      "SOURCE.ORIGIN": "JAYLEN.BROWN.LIVESTREAM",
+      "SOURCE.DERIVATION": "MIXED",
+      "SOURCE.INDEPENDENCE": "NOT_DEMONSTRATED",
+      "SOURCE.CLASS": "FIRSTHAND",
+      "CLAIM.CLASS": "QUOTE",
+      "CORROBORATION.STATE": "C2",
+      "CONTRADICTION.STATE": "NOT_RUN",
+      "CAUSATION.STATE": "NOT_RUN",
+      "PROMOTION.STATE": "AUTHENTICITY_ONLY",
+      "SOURCES": [
+        {"source_id": "ORIGINAL.CLIP", "origin": "JAYLEN.BROWN.LIVESTREAM", "derivation": "ORIGINAL"},
+        {"source_id": "COMPLEX.REPORT", "origin": "JAYLEN.BROWN.LIVESTREAM", "derivation": "DERIVED"},
+        {"source_id": "YAHOO.REPORT", "origin": "JAYLEN.BROWN.LIVESTREAM", "derivation": "DERIVED"}
+      ]
+    },
+    {
+      "CLAIM.ID": "BLACK.WALL.STREET.PROJECT",
+      "SOURCE.ORIGIN": "BOSTON.XCHANGE.PLUS.CONTEMPORANEOUS.RECORD",
+      "SOURCE.DERIVATION": "MIXED",
+      "SOURCE.INDEPENDENCE": "PRESENT",
+      "SOURCE.CLASS": "PRIMARY_DOCUMENT",
+      "CLAIM.CLASS": "DOCUMENTED_EVENT",
+      "CORROBORATION.STATE": "C4",
+      "CONTRADICTION.STATE": "PASS",
+      "CAUSATION.STATE": "NOT_RUN",
+      "PROMOTION.STATE": "INDEPENDENT_CORROBORATION_PRESENT",
+      "SOURCES": [
+        {"source_id": "BOSTON.XCHANGE", "origin": "BOSTON.XCHANGE.FIRST.PARTY", "derivation": "ORIGINAL"},
+        {"source_id": "NBA.AP.2023", "origin": "NBA.AP.CONTEMPORANEOUS.RECORD", "derivation": "ORIGINAL"}
+      ]
+    },
+    {
+      "CLAIM.ID": "SYSTEMATIC.AGENT.BLOCKING",
+      "SOURCE.ORIGIN": "JAYLEN.BROWN.LIVESTREAM",
+      "SOURCE.DERIVATION": "ORIGINAL",
+      "SOURCE.INDEPENDENCE": "NOT_DEMONSTRATED",
+      "SOURCE.CLASS": "FIRSTHAND",
+      "CLAIM.CLASS": "SYSTEMIC",
+      "CORROBORATION.STATE": "C1",
+      "CONTRADICTION.STATE": "NOT_RUN",
+      "CAUSATION.STATE": "NOT_RUN",
+      "PROMOTION.STATE": "BLOCKED",
+      "SOURCES": [
+        {"source_id": "BROWN.ALLEGATION", "origin": "JAYLEN.BROWN.LIVESTREAM", "derivation": "ORIGINAL"}
+      ]
+    },
+    {
+      "CLAIM.ID": "NBA.DIRECTED.BLOCKING",
+      "SOURCE.ORIGIN": "UNKNOWN",
+      "SOURCE.DERIVATION": "UNKNOWN",
+      "SOURCE.INDEPENDENCE": "NONE",
+      "SOURCE.CLASS": "UNKNOWN",
+      "CLAIM.CLASS": "SYSTEMIC",
+      "CORROBORATION.STATE": "C0",
+      "CONTRADICTION.STATE": "NOT_RUN",
+      "CAUSATION.STATE": "NOT_RUN",
+      "PROMOTION.STATE": "BLOCKED",
+      "SOURCES": [
+        {"source_id": "VIRAL.FRAMING", "origin": "VIRAL.HEADLINE", "derivation": "DERIVED"}
+      ]
+    },
+    {
+      "CLAIM.ID": "LEAGUE.WIDE.HANDLER.SYSTEM",
+      "SOURCE.ORIGIN": "UNKNOWN",
+      "SOURCE.DERIVATION": "UNKNOWN",
+      "SOURCE.INDEPENDENCE": "NONE",
+      "SOURCE.CLASS": "UNKNOWN",
+      "CLAIM.CLASS": "SYSTEMIC",
+      "CORROBORATION.STATE": "C0",
+      "CONTRADICTION.STATE": "NOT_RUN",
+      "CAUSATION.STATE": "NOT_RUN",
+      "PROMOTION.STATE": "BLOCKED",
+      "SOURCES": [
+        {"source_id": "VIRAL.FRAMING", "origin": "VIRAL.HEADLINE", "derivation": "DERIVED"}
+      ]
+    }
+  ]
+}
