@@ -38,7 +38,15 @@
     {"inventory_id":"INV.0.33","artifact":"RavenCloudTaskbar/test_fr0333_ai_safe_spec_adoption_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"857e7fb80d9c52c69e8228a40c1c11d3b9b234d9"},
     {"inventory_id":"INV.0.34","artifact":"RavenCloudTaskbar/README_ai_safe_spec_adoption_0001.md","role":"README","git_blob_sha":"86edc90b4537cf595beb0bf89c316d2c3d205d2b"},
     {"inventory_id":"INV.0.35","artifact":".github/workflows/fr0333-ai-safe-spec-adoption-validate.yml","role":"CI_VALIDATION","git_blob_sha":"5855d8eccb730fa0f76daf89b164ca85a427ec3f"},
-    {"inventory_id":"INV.0.36","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.7","git_blob_sha":"33ec229814064e12002b7c83605e790073486c30"}
+    {"inventory_id":"INV.0.36","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.7","git_blob_sha":"33ec229814064e12002b7c83605e790073486c30"},
+    {"inventory_id":"INV.0.37","artifact":"RavenCloudTaskbar/fr0333_bits_bones_cultural_capital_transfer_0002.json","role":"GOLDEN_CHAIN_FORENSIC_METRIC_RAIL","git_blob_sha":"b7a5d45f123bab6275fad3b5462baef8432823b4"},
+    {"inventory_id":"INV.0.38","artifact":"RavenCloudTaskbar/fr0333_bits_bones_cultural_capital_transfer_genius.py","role":"GENIUS_BAR_VALIDATOR","git_blob_sha":"50e598cfc3a57fc1a7d89506b4f47aba61b7dab5"},
+    {"inventory_id":"INV.0.39","artifact":"RavenCloudTaskbar/test_fr0333_bits_bones_cultural_capital_transfer_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"84709974623defb5d4f6ab7bd3dda092298f0d3d"},
+    {"inventory_id":"INV.0.40","artifact":"RavenCloudTaskbar/README_bits_bones_cultural_capital_transfer_0002.md","role":"README","git_blob_sha":"845953cc765ce48604a374dc41837b9ffeb35c8b"},
+    {"inventory_id":"INV.0.41","artifact":".github/workflows/fr0333-bits-bones-cultural-capital-transfer-validate.yml","role":"CI_VALIDATION","git_blob_sha":"c0e3c29e3fd03739decac869f2bc041c37856c43"},
+    {"inventory_id":"INV.0.42","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.8","git_blob_sha":"3341b3086a94ee1be66b25014509f1d147114a7e"},
+    {"inventory_id":"INV.0.43","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_EXPOSURE_FOR_0.8","git_blob_sha":"86bfb178ddfc8eac65e7be21c3e23993bcd2b9dc"},
+    {"inventory_id":"INV.0.44","artifact":"RavenCloudTaskbar/taskbars.json","role":"TASKBAR_REGISTRATION_FOR_0.8","git_blob_sha":"fed924db16059748dcd1b07dcc6d2d43788107e9"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -64,6 +72,12 @@
     "AGENT_ACTION_CANNOT_EXCEED_OPERATOR_PERMISSION",
     "MUTATING_ACTION_REQUIRES_AUTHORIZATION",
     "OPERATOR_SHUTDOWN_MUST_REMAIN_POSSIBLE",
-    "HUMAN_OPERATOR_CONTINUITY_MUST_NOT_BE_ERASED"
+    "HUMAN_OPERATOR_CONTINUITY_MUST_NOT_BE_ERASED",
+    "CULTURAL_EXCHANGE_NE_EXPLOITATION",
+    "INFLUENCE_NE_THEFT",
+    "POPULARIZATION_NE_ORIGIN",
+    "STRUCTURAL_BARRIER_NE_ABSOLUTE_BARRIER",
+    "AUDIO_IDENTITY_NE_VISUAL_IDENTITY",
+    "LABEL_MARKETING_INTENT_REQUIRES_STRONG_SOURCE_FOR_T20"
   ]
 }

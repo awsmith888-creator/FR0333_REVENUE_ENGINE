@@ -21,6 +21,14 @@ The Lumen layer is recorded as **verified capability / not provisioned**. No ten
 - `OBSERVED != CORRELATED != CAUSAL` remains the evidence gate.
 - Recovery is not called deployed until authenticated state, redundant storage, recovery manifest and restore tests exist.
 
+## Golden Chain working rail 0.8
+
+`0.8.FR.0333.GOLDEN.CHAIN.BITS.BONES.CULTURAL.CAPITAL.TRANSFER.0002`
+
+The BITS AND BONES cultural-capital rail measures divergence across creation, ownership, distribution, market translation, visual identity, reward, recognition, and legacy. It preserves `CULTURAL.EXCHANGE != EXPLOITATION`, `INFLUENCE != THEFT`, `STRUCTURAL.BARRIER != ABSOLUTE.BARRIER`, and canonical `T.20 / U.21 / F.6` terminal states.
+
+Dedicated documentation: `README_bits_bones_cultural_capital_transfer_0002.md`.
+
 ## Build
 
 ```bash
