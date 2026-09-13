@@ -1,0 +1,91 @@
+{
+  "identifier": "FR0333.IMAGE.QUEUE.RUNTIME.0001",
+  "state": "CONTROL_PLANE_RUNTIME_DISPATCH_SPEC_EXTERNAL_RUNTIME_HOLD",
+  "humanlock": true,
+  "purpose": "Turn an N-image request into N isolated provider jobs with one receipt per slot, fail-closed reconciliation, duplicate detection, visual readback hooks, and surgical retry semantics.",
+  "pipeline": [
+    "USER.REQUEST",
+    "INTENT.COMPILE",
+    "SLOT.SPLIT",
+    "SLOT.ISOLATION",
+    "ONE.PROVIDER.REQUEST.PER.SLOT",
+    "PER.SLOT.RECEIPT",
+    "VISUAL.READBACK",
+    "DUPLICATE.DETECTION",
+    "COUNT.RECONCILIATION",
+    "HUMANLOCK",
+    "OUTPUT"
+  ],
+  "slot_contract": {
+    "required_fields": [
+      "slot_id",
+      "intent_hash",
+      "scene_contract",
+      "reference_policy",
+      "input_reference_ids",
+      "output_asset_id",
+      "width",
+      "height",
+      "aspect_ratio",
+      "provider_request_id",
+      "visual_fingerprint",
+      "readback_state",
+      "user_state"
+    ],
+    "slot_ids_for_ten": ["Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10"],
+    "one_provider_request_per_slot": true,
+    "one_output_asset_per_slot": true,
+    "target_aspect_ratio": "9:16",
+    "collage_or_contact_sheet": "REJECT",
+    "multi_panel": "REJECT"
+  },
+  "queue_pass_requirements": {
+    "request_count_equals_output_count": true,
+    "request_count_equals_receipt_count": true,
+    "unique_output_asset_ids_equals_request_count": true,
+    "unique_provider_request_ids_equals_request_count": true,
+    "failed_slots": 0,
+    "duplicate_slots": 0,
+    "collage_slots": 0,
+    "all_slots_readback_pass": true
+  },
+  "retry_policy": {
+    "retry_scope": "FAILED_SLOT_ONLY",
+    "preserve_successful_slots": true,
+    "regenerate_successful_slots": false,
+    "example": "FAILED.Q04 -> RETRY.Q04; NOT FAILED.Q04 -> REGENERATE.Q01.THROUGH.Q10"
+  },
+  "duplicate_detection": {
+    "output_asset_id_uniqueness_required": true,
+    "provider_request_id_uniqueness_required": true,
+    "visual_fingerprint_uniqueness_required_for_distinct_scene_slots": true,
+    "same_output_asset_in_multiple_slots": "F.6.REJECT",
+    "same_visual_fingerprint_in_distinct_scene_slots": "F.6.REJECT"
+  },
+  "runtime_states": {
+    "queue_specification": "T.20.PASS",
+    "dispatcher_logic_local_ci": "T.20.PASS_WHEN_TESTS_PASS",
+    "single_image_provider_runtime": "T.20.PASS_BOUNDED_WITNESS",
+    "multi_slot_external_provider_runtime": "U.21.HOLD_UNTIL_RECEIPTS",
+    "ten_slot_external_isolation": "U.21.HOLD_UNTIL_RECEIPTS",
+    "end_to_end_external_queue_proof": "NOT_ESTABLISHED"
+  },
+  "hard_boundaries": [
+    "QUEUE.SPEC.PASS != QUEUE.RUNTIME.PASS",
+    "COUNT.CONTRACT.PRESENT != COUNT.EXECUTED",
+    "SLOT.DEFINED != SLOT.ISOLATED",
+    "MULTI.IMAGE.REQUEST != INDEPENDENT.MULTI.IMAGE.EXECUTION",
+    "PROVIDER.SUCCESS != QUEUE.INTEGRITY",
+    "PROMPT.DIVERSITY != VISUAL.DIVERSITY",
+    "LOCAL.SIMULATION.PASS != EXTERNAL.PROVIDER.RUNTIME.PASS",
+    "ONE.REQUEST.TEN.VARIANTS != TEN.ISOLATED.REQUESTS",
+    "PARTIAL.SUCCESS != QUEUE.SUCCESS",
+    "RETRY.FAILED.SLOT != REGENERATE.SUCCESSFUL.SLOTS",
+    "GITHUB.SPECIFICATION != CHATGPT.INTERNAL.IMAGE.RUNTIME.CONTROL"
+  ],
+  "bindings": {
+    "quality_gate": "FR0333.IMAGE.QUALITY.GATE.0004",
+    "single_image_runtime_receipt": "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json",
+    "observed_queue_failure_receipt": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
+  }
+}
