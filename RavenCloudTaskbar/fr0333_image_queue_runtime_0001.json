@@ -2,20 +2,36 @@
   "identifier": "FR0333.IMAGE.QUEUE.RUNTIME.0001",
   "state": "CONTROL_PLANE_RUNTIME_DISPATCH_SPEC_EXTERNAL_RUNTIME_HOLD",
   "humanlock": true,
-  "purpose": "Turn an N-image request into N isolated provider jobs with one receipt per slot, fail-closed reconciliation, duplicate detection, visual readback hooks, and surgical retry semantics.",
+  "purpose": "Turn an N-image request into isolated output slots with provider-native batching where verified, one receipt per output slot, exact-dimension enforcement, per-slot quality readback, fail-closed reconciliation, duplicate detection, and surgical retry semantics.",
   "pipeline": [
     "USER.REQUEST",
     "INTENT.COMPILE",
     "SLOT.SPLIT",
     "SLOT.ISOLATION",
-    "ONE.PROVIDER.REQUEST.PER.SLOT",
+    "OPERATION.CAP.GATE",
+    "NATIVE.BATCH.DISPATCH",
     "PER.SLOT.RECEIPT",
-    "VISUAL.READBACK",
+    "PER.SLOT.QUALITY.READBACK",
+    "EXACT.DIMENSION.CHECK",
     "DUPLICATE.DETECTION",
     "COUNT.RECONCILIATION",
     "HUMANLOCK",
     "OUTPUT"
   ],
+  "dispatch_modes": {
+    "IMAGE_GENERATE": {
+      "provider_cap_state": "T.20.VERIFIED_PROVIDER_CAP",
+      "max_variations_per_call": 4,
+      "ten_slot_batch_plan": [4, 4, 2],
+      "ten_slot_provider_call_count": 3,
+      "mode": "NATIVE_PROVIDER_BATCH"
+    },
+    "IMAGE_INSTRUCT_EDIT": {
+      "provider_cap_state": "U.21.NOT_ESTABLISHED",
+      "mode": "CONSERVATIVE_SINGLETON_UNTIL_CAP_VERIFIED",
+      "ten_slot_provider_call_count_if_executed_under_current_safe_mode": 10
+    }
+  },
   "slot_contract": {
     "required_fields": [
       "slot_id",
@@ -28,14 +44,25 @@
       "height",
       "aspect_ratio",
       "provider_request_id",
+      "provider_variation_index",
+      "batch_index",
+      "batch_size",
       "visual_fingerprint",
       "readback_state",
-      "user_state"
+      "anatomy_readback",
+      "realism_readback",
+      "clothing_variance_readback",
+      "intent_alignment_readback",
+      "user_state",
+      "operation"
     ],
-    "slot_ids_for_ten": ["Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10"],
-    "one_provider_request_per_slot": true,
+    "slot_ids_for_ten": ["Q01", "Q02", "Q03", "Q04", "Q05", "Q06", "Q07", "Q08", "Q09", "Q10"],
     "one_output_asset_per_slot": true,
     "target_aspect_ratio": "9:16",
+    "target_width": 1080,
+    "target_height": 1920,
+    "exact_dimensions_required": true,
+    "all_readback_fields_must_equal": "PASS",
     "collage_or_contact_sheet": "REJECT",
     "multi_panel": "REJECT"
   },
@@ -43,7 +70,18 @@
     "request_count_equals_output_count": true,
     "request_count_equals_receipt_count": true,
     "unique_output_asset_ids_equals_request_count": true,
-    "unique_provider_request_ids_equals_request_count": true,
+    "unique_provider_output_coordinates_equals_request_count": true,
+    "unique_visual_fingerprints_equals_request_count_for_distinct_scene_jobs": true,
+    "image_generate_ten_slot_batch_plan": [4, 4, 2],
+    "image_generate_ten_slot_provider_call_count": 3,
+    "exact_1080_1920_per_slot": true,
+    "per_slot_readback_fields": [
+      "readback_state",
+      "anatomy_readback",
+      "realism_readback",
+      "clothing_variance_readback",
+      "intent_alignment_readback"
+    ],
     "failed_slots": 0,
     "duplicate_slots": 0,
     "collage_slots": 0,
@@ -57,28 +95,45 @@
   },
   "duplicate_detection": {
     "output_asset_id_uniqueness_required": true,
-    "provider_request_id_uniqueness_required": true,
+    "provider_output_coordinate": "provider_request_id + provider_variation_index",
+    "provider_output_coordinate_uniqueness_required": true,
+    "provider_request_id_alone_may_repeat_within_verified_native_batch": true,
     "visual_fingerprint_uniqueness_required_for_distinct_scene_slots": true,
     "same_output_asset_in_multiple_slots": "F.6.REJECT",
+    "same_provider_output_coordinate_in_multiple_slots": "F.6.REJECT",
     "same_visual_fingerprint_in_distinct_scene_slots": "F.6.REJECT"
   },
   "runtime_states": {
-    "queue_specification": "T.20.PASS",
-    "dispatcher_logic_local_ci": "T.20.PASS_WHEN_TESTS_PASS",
-    "single_image_provider_runtime": "T.20.PASS_BOUNDED_WITNESS",
-    "multi_slot_external_provider_runtime": "U.21.HOLD_UNTIL_RECEIPTS",
-    "ten_slot_external_isolation": "U.21.HOLD_UNTIL_RECEIPTS",
-    "end_to_end_external_queue_proof": "NOT_ESTABLISHED"
+    "build_validation": "T.20.PASS_WHEN_REPOSITORY_VALIDATION_PASSES",
+    "connector_runtime": "T.20.PASS.BOUNDED",
+    "single_instruct_edit": "T.20.PASS.BOUNDED",
+    "upload_path": "U.21.NOT.SEPARATELY.PROVEN",
+    "human_generation": "U.21.NOT.PROVEN",
+    "nine_sixteen_output": "U.21.NOT.PROVEN",
+    "exact_1080_1920_output": "U.21.NOT.PROVEN",
+    "queue_runtime": "U.21.NOT.PROVEN",
+    "ten_output_adobe_runtime": "U.21.NOT.PROVEN",
+    "quality_promotion": "U.21.HOLD",
+    "overall_system_status": "U.21.HOLD"
   },
+  "required_status_output": [
+    "BUILD.VALIDATION=T.20.PASS",
+    "CONNECTOR.RUNTIME=T.20.PASS.BOUNDED",
+    "QUALITY.PROMOTION=U.21.HOLD",
+    "QUEUE.RUNTIME=U.21.NOT.PROVEN",
+    "OVERALL.SYSTEM.STATUS=U.21.HOLD"
+  ],
   "hard_boundaries": [
     "QUEUE.SPEC.PASS != QUEUE.RUNTIME.PASS",
+    "BUILD.VALIDATION.PASS != ADOBE.RUNTIME.PASS",
     "COUNT.CONTRACT.PRESENT != COUNT.EXECUTED",
     "SLOT.DEFINED != SLOT.ISOLATED",
-    "MULTI.IMAGE.REQUEST != INDEPENDENT.MULTI.IMAGE.EXECUTION",
+    "NATIVE.4.4.2.PLAN.DEFINED != TEN.OUTPUT.ADOBE.RUNTIME.PROVEN",
     "PROVIDER.SUCCESS != QUEUE.INTEGRITY",
     "PROMPT.DIVERSITY != VISUAL.DIVERSITY",
+    "9.16.RATIO != EXACT.1080x1920.DELIVERY",
+    "GENERIC.READBACK != ANATOMY.REALISM.CLOTHING.INTENT.READBACK",
     "LOCAL.SIMULATION.PASS != EXTERNAL.PROVIDER.RUNTIME.PASS",
-    "ONE.REQUEST.TEN.VARIANTS != TEN.ISOLATED.REQUESTS",
     "PARTIAL.SUCCESS != QUEUE.SUCCESS",
     "RETRY.FAILED.SLOT != REGENERATE.SUCCESSFUL.SLOTS",
     "GITHUB.SPECIFICATION != CHATGPT.INTERNAL.IMAGE.RUNTIME.CONTROL"
