@@ -1,0 +1,42 @@
+name: FR0333 Find Hub Remembered State Boundary Validate
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_find_hub_remembered_state_boundary_0001.json'
+      - 'RavenCloudTaskbar/fr0333_find_hub_remembered_state_boundary_genius.py'
+      - 'RavenCloudTaskbar/test_fr0333_find_hub_remembered_state_boundary_genius.py'
+      - 'RavenCloudTaskbar/README_find_hub_remembered_state_boundary_0001.md'
+      - 'RavenCloudTaskbar/taskbars.json'
+      - '.github/workflows/fr0333-find-hub-remembered-state-boundary-validate.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_find_hub_remembered_state_boundary_0001.json'
+      - 'RavenCloudTaskbar/fr0333_find_hub_remembered_state_boundary_genius.py'
+      - 'RavenCloudTaskbar/test_fr0333_find_hub_remembered_state_boundary_genius.py'
+      - 'RavenCloudTaskbar/README_find_hub_remembered_state_boundary_0001.md'
+      - 'RavenCloudTaskbar/taskbars.json'
+      - '.github/workflows/fr0333-find-hub-remembered-state-boundary-validate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate JSON syntax
+        run: python -m json.tool RavenCloudTaskbar/fr0333_find_hub_remembered_state_boundary_0001.json >/dev/null
+      - name: Run twelve-gate Zero Lion validator
+        working-directory: RavenCloudTaskbar
+        run: python fr0333_find_hub_remembered_state_boundary_genius.py
+      - name: Run deterministic boundary tests
+        working-directory: RavenCloudTaskbar
+        run: python -m unittest -v test_fr0333_find_hub_remembered_state_boundary_genius.py
