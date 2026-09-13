@@ -3,6 +3,7 @@
 
 Zero Lion rule: a saved remembered-item record may validate as a record while the
 present physical-state claim remains HOLD unless separate runtime evidence exists.
+HumanLock is permanent: authorized actions may pass through it, but never remove it.
 """
 from __future__ import annotations
 
@@ -26,6 +27,7 @@ REQUIRED_LAWS = {
     "RECORD_EXISTS_NE_CURRENT_PHYSICAL_STATE_VERIFIED",
     "LOCATION_PERMISSION_NE_CONTINUOUS_OBJECT_TRACKING",
     "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "AUTHORIZED_ACTION_COMPLETE_NE_HUMANLOCK_REMOVED",
 }
 
 REQUIRED_SOURCES = {"S1", "S2", "S3"}
@@ -42,8 +44,9 @@ def validate_spec(doc: dict[str, Any]) -> dict[str, Any]:
 
     check(
         "G1.IDENTIFIER",
-        doc.get("identifier") == "FR0333.FIND.HUB.REMEMBERED.STATE.BOUNDARY.0001",
-        "canonical Find Hub remembered-state identifier",
+        doc.get("identifier") == "FR0333.FIND.HUB.REMEMBERED.STATE.BOUNDARY.0001"
+        and doc.get("state") == "ACTIVE_CANONICAL_SPECIFICATION",
+        "canonical identifier and active canonical repository state",
     )
     check(
         "G2.SYSTEM.OF.RECORD",
@@ -83,7 +86,7 @@ def validate_spec(doc: dict[str, Any]) -> dict[str, Any]:
     check(
         "G7.CONTROL.LAWS",
         REQUIRED_LAWS.issubset(laws),
-        "all non-equivalence laws are present",
+        "all non-equivalence and HumanLock permanence laws are present",
     )
     terminals = set(doc.get("terminal_logic", {}))
     check(
@@ -96,23 +99,34 @@ def validate_spec(doc: dict[str, Any]) -> dict[str, Any]:
         "G9.NO.LIVE.PROMOTION",
         promotion.get("remembered_record_can_prove_current_location") is False
         and promotion.get("current_location_claim_requires_separate_runtime_evidence") is True
-        and promotion.get("gemini_readback_is_not_independent_location_verification") is True,
+        and promotion.get("gemini_readback_is_not_independent_location_verification") is True
+        and promotion.get("humanlock_required_for_canonical_promotion") is True,
         "saved record cannot self-promote into a live-location claim",
     )
     zl = doc.get("zero_lion_logic_gate", {})
+    auth = doc.get("authorization_receipt", {})
     check(
         "G10.ZERO.LION.HUMANLOCK",
         zl.get("humanlock") is True
+        and zl.get("humanlock_state") == "ACTIVE_IMMUTABLE"
+        and zl.get("humanlock_can_be_disabled") is False
+        and zl.get("operator_authorization_required_per_controlled_mutation") is True
+        and zl.get("authorized_action_complete_does_not_remove_humanlock") is True
         and zl.get("fail_closed") is True
-        and zl.get("evidence_gate") == "OBSERVED != CORRELATED != CAUSAL",
-        "HumanLock and fail-closed evidence gate remain active",
+        and zl.get("evidence_gate") == "OBSERVED != CORRELATED != CAUSAL"
+        and auth.get("state") == "OPERATOR_AUTHORIZED_CANONICAL_REPOSITORY_PROMOTION"
+        and auth.get("scope") == "CANONICAL_REPOSITORY_PROMOTION_ONLY"
+        and auth.get("external_runtime_authorized") is False
+        and auth.get("humanlock_removed") is False,
+        "HumanLock is active/immutable; operator authorization changes action state, never the gate",
     )
     repo_bounds = set(doc.get("repository_boundaries", []))
     check(
         "G11.RUNTIME.REPOSITORY.BOUNDARY",
         "REPOSITORY_WRITE_NE_FIND_HUB_WRITE" in repo_bounds
-        and "GITHUB_ACTIONS_PASS_NE_LIVE_LOCATION_VERIFICATION" in repo_bounds,
-        "repository and CI state cannot masquerade as provider runtime",
+        and "GITHUB_ACTIONS_PASS_NE_LIVE_LOCATION_VERIFICATION" in repo_bounds
+        and "CANONICAL_ACTIVE_NE_EXTERNAL_RUNTIME" in repo_bounds,
+        "repository, CI, and canonical activation cannot masquerade as provider runtime",
     )
     schema = doc.get("record_schema", {})
     check(
