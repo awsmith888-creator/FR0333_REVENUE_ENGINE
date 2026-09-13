@@ -16,11 +16,15 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout exact head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Validate unpromoted policy architecture
         run: python RavenCloudTaskbar/fr0333_ai_federal_safety_architecture_validator.py
       - name: Run boundary tests
-        run: python -m unittest RavenCloudTaskbar/test_fr0333_ai_federal_safety_architecture_validator.py
+        working-directory: RavenCloudTaskbar
+        run: python -m unittest -v test_fr0333_ai_federal_safety_architecture_validator.py
