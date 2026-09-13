@@ -8,6 +8,7 @@ from fr0333_image_quality_runtime_genius import validate
 HERE = pathlib.Path(__file__).resolve().parent
 GATE = HERE / "fr0333_image_quality_gate_0004.json"
 RECEIPT = HERE / "fr0333_adobe_image_runtime_receipt_0001.json"
+QUEUE_RECEIPT = HERE / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
 
 
 class ImageQualityRuntimeTests(unittest.TestCase):
@@ -15,6 +16,7 @@ class ImageQualityRuntimeTests(unittest.TestCase):
     def setUpClass(cls):
         cls.gate = json.loads(GATE.read_text(encoding="utf-8"))
         cls.receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+        cls.queue_receipt = json.loads(QUEUE_RECEIPT.read_text(encoding="utf-8"))
         cls.report = validate(cls.gate, cls.receipt)
 
     def test_sixteen_in_sixteen_out(self):
@@ -84,6 +86,16 @@ class ImageQualityRuntimeTests(unittest.TestCase):
         self.assertEqual(self.receipt["result"]["external_adobe_full_capacity"], "NOT_ESTABLISHED")
         self.assertEqual(self.receipt["readback"]["quality_promotion_state"], "U.21.HOLD")
         self.assertEqual(self.receipt["readback"]["user_acceptance"], "NOT_OBSERVED")
+
+    def test_observed_contact_sheet_failure_is_preserved(self):
+        q = self.queue_receipt
+        self.assertEqual(q["provider_receipt"]["execution_state"], "T.20.PASS")
+        self.assertTrue(q["visual_readback"]["single_output_contains_multiple_panels"])
+        self.assertTrue(q["visual_readback"]["contact_sheet_or_collage_detected"])
+        self.assertFalse(q["visual_readback"]["independent_full_canvas_delivery"])
+        self.assertEqual(q["result"]["queue_contract"], "F.6.FAIL")
+        self.assertEqual(q["result"]["user_delivery"], "F.6.FAIL")
+        self.assertEqual(q["result"]["external_ten_slot_capacity"], "U.21.NOT_ESTABLISHED")
 
     def test_user_reject_and_humanlock_override(self):
         self.assertTrue(self.gate["humanlock"])
