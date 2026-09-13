@@ -1,0 +1,74 @@
+{
+  "identifier": "FR0333.AI.FEDERAL.SAFETY.ARCHITECTURE.2026.0001",
+  "state": "WORKING.SPECIFICATION.UNPROMOTED",
+  "record_mode": "APPEND_ONLY_POLICY_TRACKING",
+  "duplicate_burst_weight": "ONE.LOGICAL.EVENT",
+  "repetition_additive_weight": 0,
+  "humanlock": "ACTIVE",
+  "canonical_promotion": "HOLD",
+  "stay": "ACTIVE",
+  "policy_lanes": [
+    {"id": "1.EMERGENCY.INTERVENTION", "items": []},
+    {"id": "2.DEVELOPMENT.PROHIBITION", "items": []},
+    {"id": "3.FRONTIER.DUTY.OF.CARE", "items": []},
+    {"id": "4.AGENT.DISCOVERY.AND.CONTAINMENT", "items": []},
+    {"id": "5.MANDATORY.SAFETY.AUDIT.REGIME", "items": []}
+  ],
+  "separate_rail": "AI.INFRASTRUCTURE.ECONOMICS",
+  "evidence_gate": [
+    "INCIDENT != LEGISLATIVE.PROOF",
+    "PROPOSAL != LAW",
+    "NEGOTIATION != FINAL.TEXT",
+    "MODEL.MISALIGNMENT.EVENT != GENERAL.MODEL.BEHAVIOR",
+    "CYBER.INCIDENT != EXISTENTIAL.CATASTROPHE",
+    "AI.SOFTWARE.SAFETY != AI.INFRASTRUCTURE.ECONOMICS",
+    "MULTIPLE.ARTICLES.REPORTING.SAME.EVENT != MULTIPLE.INDEPENDENT.EVENTS"
+  ],
+  "claim_contract": {
+    "required_fields": [
+      "claim_id", "lane", "jurisdiction", "instrument_type", "instrument_identifier",
+      "claim_text", "source_url", "source_authority", "source_date", "observation_date",
+      "verification_state", "statutory_force", "evidence_class", "duplicate_event_key", "receipt"
+    ],
+    "allowed_instrument_type": [
+      "BILL", "AMENDMENT", "EXECUTIVE_ORDER", "AGENCY_RULE", "PROPOSED_RULE",
+      "GUIDANCE", "HEARING_TEXT", "NEGOTIATION_TEXT", "POLICY_PROPOSAL", "OTHER"
+    ],
+    "allowed_verification_state": ["SOURCE_VERIFIED", "SOURCE_PARTIAL", "UNVERIFIED"],
+    "allowed_statutory_force": [
+      "ENACTED_LAW", "FINAL_RULE", "EFFECTIVE_GUIDANCE", "PROPOSED", "DRAFT", "NEGOTIATION", "UNKNOWN"
+    ],
+    "allowed_evidence_class": [
+      "PRIMARY_OFFICIAL", "SECONDARY_CORROBORATION", "MEDIA_REPORT", "PUBLIC_STATEMENT", "UNVERIFIED_CLAIM"
+    ]
+  },
+  "promotion_gate": {
+    "source_verification_required_per_claim": true,
+    "official_primary_source_required_for_statutory_force": true,
+    "all_claims_source_verified_required_for_canonical_promotion": true,
+    "humanlock_required": true,
+    "current_result": "HOLD"
+  },
+  "duplicate_control": {
+    "same_event_multiple_articles_collapse": true,
+    "duplicate_burst_weight": 1,
+    "repetition_additive_weight": 0
+  },
+  "append_only_rules": [
+    "PRIOR_VERIFIED_RECORDS_MUST_NOT_BE_REWRITTEN",
+    "CORRECTIONS_APPEND_SUPERSEDING_RECORD_WITH_LINEAGE",
+    "RETRACTIONS_APPEND_STATUS_CHANGE_WITH_SOURCE",
+    "DUPLICATE_MEDIA_COVERAGE_COLLAPSES_TO_ONE_LOGICAL_EVENT",
+    "NO_STATUTORY_FORCE_WITHOUT_OFFICIAL_PRIMARY_SOURCE",
+    "NO_CANONICAL_PROMOTION_WHILE_ANY_CLAIM_IS_UNVERIFIED"
+  ],
+  "source_registry": [],
+  "policy_items": [],
+  "status": {
+    "architecture": "PRESERVE",
+    "source_verification": "REQUIRED.PER.CLAIM",
+    "statutory_force": "NOT.ASSUMED",
+    "canonical_promotion": "HOLD",
+    "external_runtime": "NOT.CLAIMED"
+  }
+}
