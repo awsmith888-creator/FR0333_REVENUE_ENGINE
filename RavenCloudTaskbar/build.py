@@ -10,6 +10,7 @@ TASKBARS = ROOT / "taskbars.json"
 LUMEN = ROOT / "lumen_gateway.json"
 IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0004.json"
 ADOBE_RECEIPT = ROOT / "fr0333_adobe_image_runtime_receipt_0001.json"
+ADOBE_QUEUE_RECEIPT = ROOT / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
 
 REQUIRED_TASKBAR_FIELDS = {
     "id", "project", "lane", "state", "evidence_state",
@@ -30,6 +31,7 @@ def load_and_validate():
     lumen = json.loads(LUMEN.read_text(encoding="utf-8"))
     image_quality = json.loads(IMAGE_QUALITY.read_text(encoding="utf-8"))
     adobe_receipt = json.loads(ADOBE_RECEIPT.read_text(encoding="utf-8"))
+    adobe_queue_receipt = json.loads(ADOBE_QUEUE_RECEIPT.read_text(encoding="utf-8"))
 
     assert taskbars["humanlock"] is True
     assert taskbars["state"] == "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED"
@@ -49,6 +51,9 @@ def load_and_validate():
     assert image_quality["humanlock"] is True
     assert image_quality["reference_scale"]["percent_symbols_prohibited"] is True
     assert image_quality["reference_scale"]["minimum_promotable_reference"] == 8
+    assert set(image_quality["preserved_from_0003"]) == {
+        "VEHICLE.MECHANICAL.GEOMETRY", "LOAD.BALANCE.CONTACT.PHYSICS"
+    }
 
     queue = image_quality["queue_contract"]
     assert queue["requested_count_must_equal_delivered_count"] is True
@@ -64,9 +69,17 @@ def load_and_validate():
     assert queue["completion_claim_requires_all_slots_present"] is True
 
     caps = image_quality["provider_batch_caps"]
-    assert caps["ADOBE_FIREFLY_IMAGE_GENERATE_MAX_VARIATIONS_PER_CALL"] == 4
-    assert caps["TEN_SLOT_CHUNK_PLAN"] == [4, 4, 2]
-    assert sum(caps["TEN_SLOT_CHUNK_PLAN"]) == 10
+    generate = caps["IMAGE_GENERATE"]
+    edit = caps["IMAGE_INSTRUCT_EDIT"]
+    assert generate["state"] == "T.20.VERIFIED_PROVIDER_CAP"
+    assert generate["max_variations_per_call"] == 4
+    assert generate["ten_slot_chunk_plan"] == [4, 4, 2]
+    assert sum(generate["ten_slot_chunk_plan"]) == 10
+    assert edit["state"] == "U.21.NOT_ESTABLISHED"
+    assert edit["max_variations_per_call"] == "U.21.NOT_ESTABLISHED"
+    assert edit["ten_slot_chunk_plan"] == "U.21.NOT_ESTABLISHED"
+    assert caps["cap_scope_rule"] == "PROVIDER_CAP_IS_OPERATION_SPECIFIC"
+    assert caps["unknown_cap_scheduler_rule"] == "DO_NOT_BATCH_BY_ASSUMED_CAP"
     assert caps["successful_slots_must_not_be_regenerated"] is True
 
     human = image_quality["human_realism_gate"]
@@ -86,8 +99,10 @@ def load_and_validate():
     assert mode["concept_reference_total_remake"] == "GENERATE_DISTINCT_NEW_SCENES_WITH_CONCEPT_LOCK"
 
     dimensions = image_quality["photorealism_dimensions"]
-    assert len(dimensions) == 14
+    assert len(dimensions) == 16
     assert "ANATOMY.FACE.HANDS.FEET" in dimensions
+    assert "VEHICLE.MECHANICAL.GEOMETRY" in dimensions
+    assert "LOAD.BALANCE.CONTACT.PHYSICS" in dimensions
     assert "POSE.WEIGHT.CONTACT" in dimensions
     assert "SCENE.UNIQUENESS" in dimensions
     assert "VISUAL.READBACK" in dimensions
@@ -103,7 +118,8 @@ def load_and_validate():
 
     promo = image_quality["promotion_gate"]
     for field in (
-        "anatomy_reference_min", "pose_contact_reference_min", "camera_geometry_reference_min",
+        "identity_reference_min", "anatomy_reference_min", "vehicle_geometry_reference_min",
+        "physics_reference_min", "pose_contact_reference_min", "camera_geometry_reference_min",
         "lighting_reference_min", "material_realism_reference_min", "crop_reference_min",
         "artifact_control_reference_min", "aesthetic_reference_min", "scene_uniqueness_reference_min",
         "user_intent_reference_min"
@@ -117,15 +133,23 @@ def load_and_validate():
     recovery = image_quality["failure_recovery"]
     assert recovery["SILENT_EMPTY_OUTPUT"] == "FAIL_AND_RETRY_SLOT"
     assert recovery["CARDINALITY_MISMATCH"] == "FAIL_AND_RETRY_MISSING_SLOTS"
+    assert recovery["VEHICLE_GEOMETRY_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
+    assert recovery["LOAD_CONTACT_PHYSICS_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
     assert recovery["MAX_RETRY_PER_SLOT"] == 2
     assert recovery["no_silent_success"] is True
 
     hard = set(image_quality["hard_boundaries"])
     assert "TEN.REQUESTED = TEN.DELIVERED" in hard
     assert "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS" in hard
+    assert "PROVIDER.CAP.IS.OPERATION.SPECIFIC" in hard
+    assert "IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED" in hard
     assert "PARTIAL.SUCCESS != QUEUE.SUCCESS" in hard
     assert "EMPTY.RESPONSE != SUCCESS" in hard
     assert "USER.REJECT = OUTPUT.HOLD" in hard
+
+    bindings = image_quality["runtime_receipt_bindings"]
+    assert bindings["connector_runtime"] == "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
+    assert bindings["queue_failure"] == "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
 
     assert adobe_receipt["provider"] == "ADOBE"
     assert adobe_receipt["provider_receipt"]["execution_state"] == "PASS_RUNTIME"
@@ -134,7 +158,16 @@ def load_and_validate():
     assert adobe_receipt["result"]["connector_runtime"] == "T.20.PASS"
     assert adobe_receipt["result"]["external_adobe_full_capacity"] == "NOT_ESTABLISHED"
 
-    return taskbars, lumen, image_quality, adobe_receipt
+    assert adobe_queue_receipt["identifier"] == "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0002"
+    assert adobe_queue_receipt["provider"] == "ADOBE_FIREFLY_IMAGE_INSTRUCT_EDIT"
+    assert adobe_queue_receipt["provider_receipt"]["execution_state"] == "T.20.PASS"
+    assert adobe_queue_receipt["provider_receipt"]["api_variation_count"] == 1
+    assert adobe_queue_receipt["visual_readback"]["contact_sheet_or_collage_detected"] is True
+    assert adobe_queue_receipt["visual_readback"]["independent_full_canvas_delivery"] is False
+    assert adobe_queue_receipt["result"]["queue_contract"] == "F.6.FAIL"
+    assert adobe_queue_receipt["result"]["external_ten_slot_capacity"] == "U.21.NOT_ESTABLISHED"
+
+    return taskbars, lumen, image_quality, adobe_receipt, adobe_queue_receipt
 
 
 def card(item):
@@ -189,19 +222,21 @@ footer{{margin-top:20px;color:var(--muted);font-family:ui-monospace,monospace;fo
 
 
 def main():
-    taskbars, lumen, image_quality, adobe_receipt = load_and_validate()
+    taskbars, lumen, image_quality, adobe_receipt, adobe_queue_receipt = load_and_validate()
     DIST.mkdir(exist_ok=True)
     (DIST / "index.html").write_text(build_html(taskbars, lumen), encoding="utf-8")
     (DIST / "taskbars.json").write_text(json.dumps(taskbars, indent=2) + "\n", encoding="utf-8")
     (DIST / "lumen_gateway.json").write_text(json.dumps(lumen, indent=2) + "\n", encoding="utf-8")
     (DIST / "fr0333_image_quality_gate_0004.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
     (DIST / "fr0333_adobe_image_runtime_receipt_0001.json").write_text(json.dumps(adobe_receipt, indent=2) + "\n", encoding="utf-8")
+    (DIST / "fr0333_adobe_image_queue_runtime_receipt_0002.json").write_text(json.dumps(adobe_queue_receipt, indent=2) + "\n", encoding="utf-8")
     files = [
         DIST / "index.html",
         DIST / "taskbars.json",
         DIST / "lumen_gateway.json",
         DIST / "fr0333_image_quality_gate_0004.json",
-        DIST / "fr0333_adobe_image_runtime_receipt_0001.json"
+        DIST / "fr0333_adobe_image_runtime_receipt_0001.json",
+        DIST / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
     ]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
@@ -210,7 +245,7 @@ def main():
         f"lumen={lumen['provisioning_state']} "
         f"image_quality={image_quality['identifier']} "
         f"adobe_connector={adobe_receipt['result']['connector_runtime']} "
-        f"quality_promotion={adobe_receipt['result']['photorealism_promotion']}"
+        f"queue_failure={adobe_queue_receipt['result']['queue_contract']}"
     )
     print(sums, end="")
 
