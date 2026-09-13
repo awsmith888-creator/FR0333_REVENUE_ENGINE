@@ -11,6 +11,7 @@ on:
       - '.github/workflows/fr0333-chat-to-work-bridge-delta-1-0-validate.yml'
   push:
     branches:
+      - main
       - upgrade/chat-to-work-bridge-delta-1-0
 
 jobs:
