@@ -45,7 +45,8 @@
     {"inventory_id":"INV.0.40","artifact":"RavenCloudTaskbar/README_bits_bones_cultural_capital_transfer_0002.md","role":"README","git_blob_sha":"845953cc765ce48604a374dc41837b9ffeb35c8b"},
     {"inventory_id":"INV.0.41","artifact":".github/workflows/fr0333-bits-bones-cultural-capital-transfer-validate.yml","role":"CI_VALIDATION","git_blob_sha":"c0e3c29e3fd03739decac869f2bc041c37856c43"},
     {"inventory_id":"INV.0.42","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.8","git_blob_sha":"3341b3086a94ee1be66b25014509f1d147114a7e"},
-    {"inventory_id":"INV.0.43","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_EXPOSURE_FOR_0.8","git_blob_sha":"86bfb178ddfc8eac65e7be21c3e23993bcd2b9dc"}
+    {"inventory_id":"INV.0.43","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_EXPOSURE_FOR_0.8","git_blob_sha":"86bfb178ddfc8eac65e7be21c3e23993bcd2b9dc"},
+    {"inventory_id":"INV.0.44","artifact":"RavenCloudTaskbar/taskbars.json","role":"TASKBAR_REGISTRATION_FOR_0.8","git_blob_sha":"fed924db16059748dcd1b07dcc6d2d43788107e9"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
