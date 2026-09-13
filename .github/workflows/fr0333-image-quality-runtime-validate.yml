@@ -5,6 +5,7 @@ on:
     paths:
       - "RavenCloudTaskbar/fr0333_image_quality_gate_0004.json"
       - "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
+      - "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
       - "RavenCloudTaskbar/fr0333_image_quality_runtime_genius.py"
       - "RavenCloudTaskbar/test_fr0333_image_quality_runtime_genius.py"
       - "RavenCloudTaskbar/README_image_quality_runtime_0004.md"
@@ -26,8 +27,10 @@ jobs:
           python-version: "3.11"
       - name: Validate quality gate JSON
         run: python -m json.tool RavenCloudTaskbar/fr0333_image_quality_gate_0004.json >/dev/null
-      - name: Validate Adobe runtime receipt JSON
+      - name: Validate prior Adobe runtime receipt JSON
         run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json >/dev/null
+      - name: Validate observed queue failure receipt JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json >/dev/null
       - name: Run image quality runtime Genius rail
         run: python RavenCloudTaskbar/fr0333_image_quality_runtime_genius.py
       - name: Run image quality runtime tests
