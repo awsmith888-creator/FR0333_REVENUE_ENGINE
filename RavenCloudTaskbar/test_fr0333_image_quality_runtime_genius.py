@@ -19,7 +19,7 @@ class ImageQualityRuntimeTests(unittest.TestCase):
         cls.queue_receipt = json.loads(QUEUE_RECEIPT.read_text(encoding="utf-8"))
         cls.report = validate(cls.gate, cls.receipt, cls.queue_receipt)
 
-    def test_sixteen_in_sixteen_out(self):
+    def test_sixteen_validation_gates_pass_not_queue_throughput(self):
         self.assertEqual(self.report["total"], 16)
         self.assertEqual(self.report["passed"], 16)
         self.assertEqual(self.report["state"], "PASS")
