@@ -17,6 +17,14 @@ REQUIRED_TASKBAR_FIELDS = {
     "execution_state", "cloud_mode", "next_action"
 }
 
+REQUIRED_STATUS = {
+    "BUILD.VALIDATION": "T.20.PASS",
+    "CONNECTOR.RUNTIME": "T.20.PASS.BOUNDED",
+    "QUALITY.PROMOTION": "U.21.HOLD",
+    "QUEUE.RUNTIME": "U.21.NOT.PROVEN",
+    "OVERALL.SYSTEM.STATUS": "U.21.HOLD",
+}
+
 
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
@@ -59,6 +67,7 @@ def load_and_validate():
     assert queue["requested_count_must_equal_delivered_count"] is True
     assert queue["one_slot_one_canvas_one_image"] is True
     assert queue["independent_9_16_canvas_per_slot"] is True
+    assert queue["exact_1080_1920_required"] is True
     assert queue["max_user_queue"] == 10
     assert queue["slot_receipt_required"] is True
     assert queue["collage"] == "REJECT"
@@ -74,13 +83,27 @@ def load_and_validate():
     assert generate["state"] == "T.20.VERIFIED_PROVIDER_CAP"
     assert generate["max_variations_per_call"] == 4
     assert generate["ten_slot_chunk_plan"] == [4, 4, 2]
+    assert generate["ten_slot_provider_call_count"] == 3
+    assert generate["dispatcher_mode"] == "NATIVE_PROVIDER_BATCH"
     assert sum(generate["ten_slot_chunk_plan"]) == 10
     assert edit["state"] == "U.21.NOT_ESTABLISHED"
     assert edit["max_variations_per_call"] == "U.21.NOT_ESTABLISHED"
     assert edit["ten_slot_chunk_plan"] == "U.21.NOT_ESTABLISHED"
+    assert edit["dispatcher_mode"] == "CONSERVATIVE_SINGLETON_UNTIL_CAP_VERIFIED"
     assert caps["cap_scope_rule"] == "PROVIDER_CAP_IS_OPERATION_SPECIFIC"
     assert caps["unknown_cap_scheduler_rule"] == "DO_NOT_BATCH_BY_ASSUMED_CAP"
     assert caps["successful_slots_must_not_be_regenerated"] is True
+
+    per_slot = image_quality["per_slot_readback_contract"]
+    assert per_slot["required_fields"] == [
+        "readback_state",
+        "anatomy_readback",
+        "realism_readback",
+        "clothing_variance_readback",
+        "intent_alignment_readback",
+    ]
+    assert per_slot["required_pass_value"] == "PASS"
+    assert per_slot["all_fields_required_for_slot_promotion"] is True
 
     human = image_quality["human_realism_gate"]
     required_human = set(human["human_subject_request_requires"])
@@ -112,6 +135,10 @@ def load_and_validate():
     assert defaults["edit_prompt_reasoner"] == "quality"
     assert defaults["target_aspect_ratio"] == "9:16"
     assert defaults["target_resolution_level"] == "4MP"
+    assert defaults["provider_render_resolution_level"] == "4MP"
+    assert defaults["delivery_width"] == 1080
+    assert defaults["delivery_height"] == 1920
+    assert defaults["delivery_exact_dimensions_required"] is True
     assert defaults["output_format"] == "png"
     assert defaults["post_generation_visual_readback"] == "REQUIRED"
     assert defaults["post_edit_visual_readback"] == "REQUIRED"
@@ -126,13 +153,20 @@ def load_and_validate():
     ):
         assert promo[field] >= 8, f"quality threshold too low: {field}={promo[field]}"
     assert promo["visual_readback_required"] is True
+    assert promo["per_slot_readback_fields_required"] is True
     assert promo["queue_cardinality_required"] is True
+    assert promo["exact_1080_1920_required"] is True
     assert promo["user_reject_overrides_promotion"] is True
     assert promo["runtime_receipt_required_for_external_execution_claim"] is True
 
     recovery = image_quality["failure_recovery"]
     assert recovery["SILENT_EMPTY_OUTPUT"] == "FAIL_AND_RETRY_SLOT"
     assert recovery["CARDINALITY_MISMATCH"] == "FAIL_AND_RETRY_MISSING_SLOTS"
+    assert recovery["EXACT_DIMENSION_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
+    assert recovery["HUMAN_ANATOMY_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
+    assert recovery["REALISM_READBACK_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
+    assert recovery["CLOTHING_VARIANCE_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
+    assert recovery["INTENT_ALIGNMENT_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
     assert recovery["VEHICLE_GEOMETRY_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
     assert recovery["LOAD_CONTACT_PHYSICS_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
     assert recovery["MAX_RETRY_PER_SLOT"] == 2
@@ -141,11 +175,16 @@ def load_and_validate():
     hard = set(image_quality["hard_boundaries"])
     assert "TEN.REQUESTED = TEN.DELIVERED" in hard
     assert "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS" in hard
+    assert "9.16.RATIO != EXACT.1080x1920.DELIVERY" in hard
+    assert "IMAGE.GENERATE.TEN.SLOTS = NATIVE.4.4.2.BATCH.PLAN" in hard
+    assert "READBACK.GENERIC != ANATOMY.REALISM.CLOTHING.INTENT.PASS" in hard
     assert "PROVIDER.CAP.IS.OPERATION.SPECIFIC" in hard
     assert "IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED" in hard
     assert "PARTIAL.SUCCESS != QUEUE.SUCCESS" in hard
     assert "EMPTY.RESPONSE != SUCCESS" in hard
     assert "USER.REJECT = OUTPUT.HOLD" in hard
+
+    assert image_quality["status_output_contract"] == REQUIRED_STATUS
 
     bindings = image_quality["runtime_receipt_bindings"]
     assert bindings["connector_runtime"] == "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
@@ -240,13 +279,8 @@ def main():
     ]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
-    print(
-        f"PASS taskbars={len(taskbars['taskbars'])} "
-        f"lumen={lumen['provisioning_state']} "
-        f"image_quality={image_quality['identifier']} "
-        f"adobe_connector={adobe_receipt['result']['connector_runtime']} "
-        f"queue_failure={adobe_queue_receipt['result']['queue_contract']}"
-    )
+    for key, value in REQUIRED_STATUS.items():
+        print(f"{key}={value}")
     print(sums, end="")
 
 
