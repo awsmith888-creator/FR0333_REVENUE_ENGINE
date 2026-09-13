@@ -1,0 +1,32 @@
+name: FR0333 BITS BONES Cultural Capital Transfer Validate
+
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_bits_bones_cultural_capital_transfer_0002.json'
+      - 'RavenCloudTaskbar/fr0333_bits_bones_cultural_capital_transfer_genius.py'
+      - 'RavenCloudTaskbar/test_fr0333_bits_bones_cultural_capital_transfer_genius.py'
+      - 'RavenCloudTaskbar/README_bits_bones_cultural_capital_transfer_0002.md'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_index_0001.json'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json'
+      - 'RavenCloudTaskbar/taskbars.json'
+      - '.github/workflows/fr0333-bits-bones-cultural-capital-transfer-validate.yml'
+  push:
+    branches:
+      - feature/bits-bones-cultural-capital-transfer-0002
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: RavenCloudTaskbar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate 10 gate rail
+        run: python fr0333_bits_bones_cultural_capital_transfer_genius.py
+      - name: Run local test rail
+        run: python -m unittest -v test_fr0333_bits_bones_cultural_capital_transfer_genius.py
