@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
 TASKBARS = ROOT / "taskbars.json"
 LUMEN = ROOT / "lumen_gateway.json"
-IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0003.json"
+IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0004.json"
 ADOBE_RECEIPT = ROOT / "fr0333_adobe_image_runtime_receipt_0001.json"
 
 REQUIRED_TASKBAR_FIELDS = {
@@ -44,51 +44,88 @@ def load_and_validate():
     assert lumen["provisioning_state"] == "NOT_PROVISIONED"
     assert lumen["credentials"] == "NOT_STORED"
 
-    assert image_quality["identifier"] == "FR0333.IMAGE.QUALITY.GATE.0003"
+    assert image_quality["identifier"] == "FR0333.IMAGE.QUALITY.GATE.0004"
+    assert image_quality["supersedes"] == "FR0333.IMAGE.QUALITY.GATE.0003"
     assert image_quality["humanlock"] is True
     assert image_quality["reference_scale"]["percent_symbols_prohibited"] is True
     assert image_quality["reference_scale"]["minimum_promotable_reference"] == 8
 
     queue = image_quality["queue_contract"]
-    assert queue["n_in_equals_n_out"] is True
-    assert queue["one_run_one_canvas_one_image"] is True
+    assert queue["requested_count_must_equal_delivered_count"] is True
+    assert queue["one_slot_one_canvas_one_image"] is True
     assert queue["independent_9_16_canvas_per_slot"] is True
+    assert queue["max_user_queue"] == 10
+    assert queue["slot_receipt_required"] is True
     assert queue["collage"] == "REJECT"
+    assert queue["contact_sheet"] == "REJECT"
+    assert queue["multi_panel"] == "REJECT"
     assert queue["duplicate_output"] == "REJECT"
     assert queue["count_mismatch"] == "REJECT"
+    assert queue["completion_claim_requires_all_slots_present"] is True
+
+    caps = image_quality["provider_batch_caps"]
+    assert caps["ADOBE_FIREFLY_IMAGE_GENERATE_MAX_VARIATIONS_PER_CALL"] == 4
+    assert caps["TEN_SLOT_CHUNK_PLAN"] == [4, 4, 2]
+    assert sum(caps["TEN_SLOT_CHUNK_PLAN"]) == 10
+    assert caps["successful_slots_must_not_be_regenerated"] is True
+
+    human = image_quality["human_realism_gate"]
+    required_human = set(human["human_subject_request_requires"])
+    for field in (
+        "CORRECT_LIMB_COUNT", "JOINT_CONTINUITY", "PLAUSIBLE_WEIGHT_BEARING",
+        "NATURAL_HAND_FINGER_STRUCTURE", "NATURAL_FOOT_TOE_STRUCTURE"
+    ):
+        assert field in required_human
+    assert human["rubber_limb_or_fused_body_geometry"] == "REJECT"
+    assert human["floating_or_impossible_contact"] == "REJECT"
+    assert human["mannequin_or_plastic_skin"] == "REJECT"
 
     mode = image_quality["mode_gate"]
     assert mode["edit_ne_regenerate"] is True
     assert mode["remaster_ne_reinvent"] is True
+    assert mode["concept_reference_total_remake"] == "GENERATE_DISTINCT_NEW_SCENES_WITH_CONCEPT_LOCK"
 
     dimensions = image_quality["photorealism_dimensions"]
     assert len(dimensions) == 14
-    assert "VEHICLE.MECHANICAL.GEOMETRY" in dimensions
-    assert "LOAD.BALANCE.CONTACT.PHYSICS" in dimensions
+    assert "ANATOMY.FACE.HANDS.FEET" in dimensions
+    assert "POSE.WEIGHT.CONTACT" in dimensions
+    assert "SCENE.UNIQUENESS" in dimensions
     assert "VISUAL.READBACK" in dimensions
 
     defaults = image_quality["adobe_execution_defaults"]
     assert defaults["generation_prompt_reasoner"] == "quality"
     assert defaults["edit_prompt_reasoner"] == "quality"
+    assert defaults["target_aspect_ratio"] == "9:16"
     assert defaults["target_resolution_level"] == "4MP"
     assert defaults["output_format"] == "png"
+    assert defaults["post_generation_visual_readback"] == "REQUIRED"
     assert defaults["post_edit_visual_readback"] == "REQUIRED"
 
     promo = image_quality["promotion_gate"]
     for field in (
-        "identity_reference_min", "anatomy_reference_min",
-        "vehicle_geometry_reference_min", "physics_reference_min",
-        "camera_geometry_reference_min", "lighting_reference_min",
-        "material_realism_reference_min", "crop_reference_min",
-        "artifact_control_reference_min", "aesthetic_reference_min",
+        "anatomy_reference_min", "pose_contact_reference_min", "camera_geometry_reference_min",
+        "lighting_reference_min", "material_realism_reference_min", "crop_reference_min",
+        "artifact_control_reference_min", "aesthetic_reference_min", "scene_uniqueness_reference_min",
         "user_intent_reference_min"
     ):
         assert promo[field] >= 8, f"quality threshold too low: {field}={promo[field]}"
     assert promo["visual_readback_required"] is True
+    assert promo["queue_cardinality_required"] is True
     assert promo["user_reject_overrides_promotion"] is True
     assert promo["runtime_receipt_required_for_external_execution_claim"] is True
-    assert "USER.REJECT = OUTPUT.HOLD" in image_quality["hard_boundaries"]
-    assert "TONE.IMPROVEMENT != STRUCTURAL.REALISM.REPAIR" in image_quality["hard_boundaries"]
+
+    recovery = image_quality["failure_recovery"]
+    assert recovery["SILENT_EMPTY_OUTPUT"] == "FAIL_AND_RETRY_SLOT"
+    assert recovery["CARDINALITY_MISMATCH"] == "FAIL_AND_RETRY_MISSING_SLOTS"
+    assert recovery["MAX_RETRY_PER_SLOT"] == 2
+    assert recovery["no_silent_success"] is True
+
+    hard = set(image_quality["hard_boundaries"])
+    assert "TEN.REQUESTED = TEN.DELIVERED" in hard
+    assert "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS" in hard
+    assert "PARTIAL.SUCCESS != QUEUE.SUCCESS" in hard
+    assert "EMPTY.RESPONSE != SUCCESS" in hard
+    assert "USER.REJECT = OUTPUT.HOLD" in hard
 
     assert adobe_receipt["provider"] == "ADOBE"
     assert adobe_receipt["provider_receipt"]["execution_state"] == "PASS_RUNTIME"
@@ -125,7 +162,7 @@ def build_html(taskbars, lumen):
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Raven Cloud Taskbar</title>
 <style>
-:root{{--bg:#0b0d0d;--panel:#171a1a;--line:#b9c1c3;--text:#f3f5f5;--muted:#9ca5a7;--ok:#d8e0e2}}
+:root{{--bg:#0b0d0d;--panel:#171a1a;--line:#b9c1c3;--text:#f3f5f5;--muted:#9ca5a7}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,sans-serif}}
 main{{max-width:1180px;margin:auto;padding:28px 18px 60px}}header{{border:1px solid #343a3b;padding:22px;margin-bottom:18px}}
 h1{{margin:0;font-size:clamp(28px,5vw,54px);letter-spacing:.04em}}.sub{{color:var(--muted);margin:6px 0 0}}
@@ -157,13 +194,13 @@ def main():
     (DIST / "index.html").write_text(build_html(taskbars, lumen), encoding="utf-8")
     (DIST / "taskbars.json").write_text(json.dumps(taskbars, indent=2) + "\n", encoding="utf-8")
     (DIST / "lumen_gateway.json").write_text(json.dumps(lumen, indent=2) + "\n", encoding="utf-8")
-    (DIST / "fr0333_image_quality_gate_0003.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
+    (DIST / "fr0333_image_quality_gate_0004.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
     (DIST / "fr0333_adobe_image_runtime_receipt_0001.json").write_text(json.dumps(adobe_receipt, indent=2) + "\n", encoding="utf-8")
     files = [
         DIST / "index.html",
         DIST / "taskbars.json",
         DIST / "lumen_gateway.json",
-        DIST / "fr0333_image_quality_gate_0003.json",
+        DIST / "fr0333_image_quality_gate_0004.json",
         DIST / "fr0333_adobe_image_runtime_receipt_0001.json"
     ]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
@@ -171,7 +208,7 @@ def main():
     print(
         f"PASS taskbars={len(taskbars['taskbars'])} "
         f"lumen={lumen['provisioning_state']} "
-        f"image_quality_min={image_quality['reference_scale']['minimum_promotable_reference']} "
+        f"image_quality={image_quality['identifier']} "
         f"adobe_connector={adobe_receipt['result']['connector_runtime']} "
         f"quality_promotion={adobe_receipt['result']['photorealism_promotion']}"
     )
