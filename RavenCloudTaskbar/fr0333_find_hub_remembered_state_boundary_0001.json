@@ -1,7 +1,7 @@
 {
   "identifier": "FR0333.FIND.HUB.REMEMBERED.STATE.BOUNDARY.0001",
   "classification": "ZERO_LION_LOGIC_GATE_SOURCE_BOUNDED_STATE_SPECIFICATION",
-  "state": "SOURCE_VERIFIED_WORKING_SPECIFICATION",
+  "state": "ACTIVE_CANONICAL_SPECIFICATION",
   "system_of_record": "FIND_HUB",
   "interfaces": {
     "gemini": "READ_WRITE_INTERFACE",
@@ -83,7 +83,8 @@
     "SAME_PRODUCT_NAME_NE_SAME_EVIDENCE_CLASS",
     "RECORD_EXISTS_NE_CURRENT_PHYSICAL_STATE_VERIFIED",
     "LOCATION_PERMISSION_NE_CONTINUOUS_OBJECT_TRACKING",
-    "OBSERVED_NE_CORRELATED_NE_CAUSAL"
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "AUTHORIZED_ACTION_COMPLETE_NE_HUMANLOCK_REMOVED"
   ],
   "terminal_logic": {
     "T.20": {
@@ -155,15 +156,26 @@
   },
   "zero_lion_logic_gate": {
     "humanlock": true,
+    "humanlock_state": "ACTIVE_IMMUTABLE",
+    "humanlock_can_be_disabled": false,
+    "operator_authorization_required_per_controlled_mutation": true,
+    "authorized_action_complete_does_not_remove_humanlock": true,
     "fail_closed": true,
     "evidence_gate": "OBSERVED != CORRELATED != CAUSAL",
     "truth_boundary": "DECLARED_OR_CAPTURED_RECORD_STATE_MUST_NOT_BE_UPGRADED_TO_LIVE_PHYSICAL_STATE_WITHOUT_SEPARATE_RUNTIME_EVIDENCE"
+  },
+  "authorization_receipt": {
+    "state": "OPERATOR_AUTHORIZED_CANONICAL_REPOSITORY_PROMOTION",
+    "authorized_on": "2026-09-13",
+    "scope": "CANONICAL_REPOSITORY_PROMOTION_ONLY",
+    "external_runtime_authorized": false,
+    "humanlock_removed": false
   },
   "repository_boundaries": [
     "SPECIFICATION_PRESENT_NE_EXTERNAL_RUNTIME",
     "LOCAL_TEST_PASS_NE_GOOGLE_PROVIDER_RUNTIME",
     "GITHUB_ACTIONS_PASS_NE_LIVE_LOCATION_VERIFICATION",
     "REPOSITORY_WRITE_NE_FIND_HUB_WRITE",
-    "SOURCE_VERIFIED_SPEC_NE_CANONICAL_MAINLINE_PROMOTION"
+    "CANONICAL_ACTIVE_NE_EXTERNAL_RUNTIME"
   ]
 }
