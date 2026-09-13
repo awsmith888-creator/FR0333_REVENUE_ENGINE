@@ -114,6 +114,20 @@
       "meaning": "THE_RECORD_CANNOT_SUPPORT_THE_CLAIM"
     }
   },
+  "evaluation_lanes": {
+    "record_validity": {
+      "purpose": "EVALUATE_THE_SAVED_RECORD_AS_A_RECORDED_STATE",
+      "pass": "T.20",
+      "reject": "F.6"
+    },
+    "present_physical_state": {
+      "purpose": "EVALUATE_A_CLAIM_ABOUT_WHERE_THE_ITEM_IS_NOW",
+      "pass": "T.20_ONLY_WITH_SEPARATE_RUNTIME_EVIDENCE",
+      "hold": "U.21_WHEN_CURRENT_PHYSICAL_STATE_IS_NOT_SEPARATELY_VERIFIED",
+      "reject": "F.6_WHEN_CONTRADICTED_OR_INVALID"
+    },
+    "non_equivalence": "RECORD_VALIDITY_NE_PRESENT_PHYSICAL_STATE_VALIDITY"
+  },
   "record_schema": {
     "required": [
       "ITEM_ID",
