@@ -38,6 +38,18 @@ A valid remembered record can be `T.20` as a recorded-state fact while the prese
 - `present_state = T.20`: only when a separate runtime-evidence flag accompanies a verified present-state observation.
 - `F.6`: missing/invalid records, invalid source classes, invalid state, or contradiction of the present-state claim.
 
+## HumanLock permanence
+
+`HUMANLOCK.STATE = ACTIVE.IMMUTABLE`
+
+`HUMANLOCK.CAN_BE_DISABLED = FALSE`
+
+`OPERATOR.AUTHORIZATION = REQUIRED.PER.CONTROLLED.MUTATION`
+
+`AUTHORIZED.ACTION.COMPLETE != HUMANLOCK.REMOVED`
+
+Operator authorization changes the authorization state of a controlled action; it never removes, bypasses, or disables HumanLock. Canonical repository activation remains distinct from any external provider runtime authorization.
+
 ## Zero Lion control laws
 
 - `REMEMBERED.LOCATION != CURRENT.VERIFIED.LOCATION`
@@ -49,6 +61,7 @@ A valid remembered record can be `T.20` as a recorded-state fact while the prese
 - `SAME.PRODUCT.NAME != SAME.EVIDENCE.CLASS`
 - `LOCATION.PERMISSION != CONTINUOUS.OBJECT.TRACKING`
 - `OBSERVED != CORRELATED != CAUSAL`
+- `AUTHORIZED.ACTION.COMPLETE != HUMANLOCK.REMOVED`
 
 ## Source lock
 
@@ -68,7 +81,15 @@ python fr0333_find_hub_remembered_state_boundary_genius.py
 python -m unittest -v test_fr0333_find_hub_remembered_state_boundary_genius.py
 ```
 
-The validator is fail-closed and enforces 12 gates. Mutation tests prove that removing a governing law, converting sensor-assisted capture into continuous tracking, or changing the canonical terminal grammar fails validation.
+The validator is fail-closed and enforces 12 gates. Deterministic mutation tests prove that removing a governing law, converting sensor-assisted capture into continuous tracking, changing the canonical terminal grammar, flipping HumanLock to false, making HumanLock disable-capable, or allowing an authorized action to remove HumanLock all fail validation.
+
+## Canonical activation boundary
+
+The repository specification is authorized for canonical activation through HumanLock. That authorization is scoped to repository promotion only.
+
+`CANONICAL.ACTIVE != EXTERNAL.RUNTIME`
+
+`OPERATOR.AUTHORIZATION.FOR.REPOSITORY.PROMOTION != GOOGLE.RUNTIME.AUTHORIZATION`
 
 ## Repository/runtime boundary
 
@@ -80,4 +101,4 @@ The validator is fail-closed and enforces 12 gates. Mutation tests prove that re
 
 `REPOSITORY.WRITE != FIND.HUB.WRITE`
 
-No Google account action, Find Hub write, live item lookup, tracker read, Gemini invocation, or external runtime execution is performed by this package. HumanLock remains required for canonical promotion.
+No Google account action, Find Hub write, live item lookup, tracker read, Gemini invocation, or external runtime execution is performed by this package. HumanLock remains permanently active for controlled mutations.
