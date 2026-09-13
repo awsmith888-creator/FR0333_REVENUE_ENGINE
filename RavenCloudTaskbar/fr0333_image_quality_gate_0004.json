@@ -3,12 +3,16 @@
   "supersedes": "FR0333.IMAGE.QUALITY.GATE.0003",
   "state": "WORKING_BRANCH_QUEUE_HARDENED_SPEC",
   "humanlock": true,
-  "purpose": "Prevent silent, partial, duplicated, collage-style, anatomically artificial, or cardinality-mismatched image output from being presented as a completed queue.",
+  "purpose": "Prevent silent, partial, duplicated, collage-style, anatomically artificial, mechanically incoherent, or cardinality-mismatched image output from being presented as a completed queue.",
   "reference_scale": {
     "name": "QUALITY.REFERENCE.0.9",
     "percent_symbols_prohibited": true,
     "minimum_promotable_reference": 8
   },
+  "preserved_from_0003": [
+    "VEHICLE.MECHANICAL.GEOMETRY",
+    "LOAD.BALANCE.CONTACT.PHYSICS"
+  ],
   "queue_contract": {
     "requested_count_must_equal_delivered_count": true,
     "one_slot_one_canvas_one_image": true,
@@ -26,9 +30,19 @@
     "completion_claim_requires_all_slots_present": true
   },
   "provider_batch_caps": {
-    "ADOBE_FIREFLY_IMAGE_GENERATE_MAX_VARIATIONS_PER_CALL": 4,
-    "TEN_SLOT_CHUNK_PLAN": [4, 4, 2],
-    "chunking_rule": "NEVER_REQUEST_MORE_THAN_PROVIDER_MAX_IN_ONE_CALL",
+    "IMAGE_GENERATE": {
+      "state": "T.20.VERIFIED_PROVIDER_CAP",
+      "max_variations_per_call": 4,
+      "ten_slot_chunk_plan": [4, 4, 2]
+    },
+    "IMAGE_INSTRUCT_EDIT": {
+      "state": "U.21.NOT_ESTABLISHED",
+      "max_variations_per_call": "U.21.NOT_ESTABLISHED",
+      "ten_slot_chunk_plan": "U.21.NOT_ESTABLISHED",
+      "observed_smoke_test_api_variation_count": 1
+    },
+    "cap_scope_rule": "PROVIDER_CAP_IS_OPERATION_SPECIFIC",
+    "unknown_cap_scheduler_rule": "DO_NOT_BATCH_BY_ASSUMED_CAP",
     "retry_rule": "RETRY_ONLY_FAILED_OR_MISSING_SLOTS",
     "successful_slots_must_not_be_regenerated": true
   },
@@ -82,6 +96,8 @@
   "photorealism_dimensions": [
     "IDENTITY.FIDELITY",
     "ANATOMY.FACE.HANDS.FEET",
+    "VEHICLE.MECHANICAL.GEOMETRY",
+    "LOAD.BALANCE.CONTACT.PHYSICS",
     "POSE.WEIGHT.CONTACT",
     "CAMERA.GEOMETRY",
     "MOTION.BLUR.COHERENCE",
@@ -102,6 +118,8 @@
     "DUPLICATE_SCENE": "FAIL_DUPLICATE_SLOT_ONLY",
     "ASPECT_RATIO_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "HUMAN_ANATOMY_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
+    "VEHICLE_GEOMETRY_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
+    "LOAD_CONTACT_PHYSICS_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "SOURCE_MODE_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "PROVIDER_ERROR": "RETRY_ONCE_THEN_REPORT_HOLD",
     "MAX_RETRY_PER_SLOT": 2,
@@ -121,7 +139,10 @@
   },
   "promotion_gate": {
     "all_required": true,
+    "identity_reference_min": 8,
     "anatomy_reference_min": 8,
+    "vehicle_geometry_reference_min": 8,
+    "physics_reference_min": 8,
     "pose_contact_reference_min": 8,
     "camera_geometry_reference_min": 8,
     "lighting_reference_min": 8,
@@ -139,21 +160,27 @@
   "hard_boundaries": [
     "TEN.REQUESTED = TEN.DELIVERED",
     "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS",
-    "PROVIDER.MAX.BATCH = EXECUTION.CHUNK.CEILING",
+    "PROVIDER.CAP.IS.OPERATION.SPECIFIC",
+    "IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED",
     "PARTIAL.SUCCESS != QUEUE.SUCCESS",
     "EMPTY.RESPONSE != SUCCESS",
     "RETRY.MISSING != REGENERATE.SUCCESSFUL",
+    "TECHNICALLY.CLEAN != HIGH.QUALITY",
     "PHOTOREALISTIC.STYLE != PHYSICALLY.COHERENT",
     "HUMAN.LOOKING != HUMAN.ANATOMY.PASS",
     "TONE.IMPROVEMENT != STRUCTURAL.REALISM.REPAIR",
     "GENERATION.SUCCESS != QUALITY.PASS",
     "ADOBE.CONNECTOR.SUCCESS != USER.ACCEPTANCE",
+    "ADOBE.CONNECTOR.AVAILABLE != IMAGE.QUALITY.VERIFIED",
     "LOCAL.TEST.PASS != ADOBE.RUNTIME.PASS",
     "QUEUE.PASS != AESTHETIC.PASS",
     "VISUAL.READBACK.HOLD = OUTPUT.HOLD",
     "USER.REJECT = OUTPUT.HOLD"
   ],
-  "runtime_receipt_binding": "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json",
+  "runtime_receipt_bindings": {
+    "connector_runtime": "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json",
+    "queue_failure": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
+  },
   "camera_gate_binding": "FR.0333.ADOBE.CAMERA.3.3.3.0001",
   "golden_chain_route": [
     "SOURCE_LOCK",
@@ -164,6 +191,7 @@
     "MODE_GATE",
     "HUMAN_REALISM_GATE",
     "CAMERA_333_GATE",
+    "MECHANICAL_PHYSICS_GATE",
     "QUALITY_REFERENCE_GATE",
     "PER_SLOT_VISUAL_READBACK",
     "CARDINALITY_RECONCILE",
