@@ -1,0 +1,155 @@
+{
+  "identifier": "FR0333.FIND.HUB.REMEMBERED.STATE.BOUNDARY.0001",
+  "classification": "ZERO_LION_LOGIC_GATE_SOURCE_BOUNDED_STATE_SPECIFICATION",
+  "state": "SOURCE_VERIFIED_WORKING_SPECIFICATION",
+  "system_of_record": "FIND_HUB",
+  "interfaces": {
+    "gemini": "READ_WRITE_INTERFACE",
+    "find_hub_direct_ui": "READ_WRITE_INTERFACE"
+  },
+  "remembered_item": {
+    "semantic_class": "PERSISTENT_DECLARED_STATE_RECORD",
+    "state_input_classes": [
+      "USER_ASSERTED",
+      "SENSOR_ASSISTED_CAPTURE"
+    ],
+    "sensor_assisted_capture": {
+      "definition": "DEVICE_LOCATION_CAPTURED_AT_RECORD_CREATE_OR_UPDATE",
+      "continuous_tracking": false,
+      "permission_dependency": "FIND_HUB_LOCATION_PERMISSION",
+      "background_permission_note": "ALLOW_ALL_THE_TIME_CAN_SUPPORT_LOCATION_SAVING_WHEN_FIND_HUB_IS_CLOSED"
+    },
+    "editable_fields": [
+      "NAME",
+      "STORAGE_SPOT",
+      "LOCATION",
+      "PHOTO",
+      "NOTES"
+    ]
+  },
+  "runtime_lane_separation": {
+    "remembered_items": "PERSISTENCE_ORIENTED_RECORD_LANE",
+    "device_and_accessory_finding": "LOCATION_RUNTIME_LANE",
+    "people_location_sharing": "SEPARATE_REAL_TIME_LOCATION_SHARING_LANE",
+    "live_tracking_equivalence": false
+  },
+  "source_lock": {
+    "captured_on": "2026-09-13",
+    "sources": [
+      {
+        "id": "S1",
+        "authority": "GOOGLE_ANDROID_HELP",
+        "title": "Remembered items in Find Hub",
+        "url": "https://support.google.com/android/answer/18132896",
+        "supports": [
+          "REMEMBERED_ITEMS_CAN_BE_SAVED_AND_UPDATED",
+          "LOCATION_CAN_BE_USER_ENTERED",
+          "LOCATION_PERMISSION_CAN_AUTO_DETECT_AND_SAVE_CURRENT_ADDRESS_AT_ADD_OR_UPDATE",
+          "GEMINI_CAN_WRITE_AND_RECALL_REMEMBERED_ITEMS"
+        ]
+      },
+      {
+        "id": "S2",
+        "authority": "GOOGLE_ANDROID_PRODUCT_DOCUMENTATION",
+        "title": "Browse Android's Latest Features - Find Hub Remembered items",
+        "url": "https://www.android.com/new-features-on-android/",
+        "supports": [
+          "REMEMBERED_TAB_DOES_NOT_TRACK_REAL_TIME_LOCATION",
+          "ACCURACY_DEPENDS_ON_USER_PROVIDED_INFORMATION"
+        ]
+      },
+      {
+        "id": "S3",
+        "authority": "GOOGLE_ANDROID_HELP",
+        "title": "How Find Hub protects your data",
+        "url": "https://support.google.com/android/answer/14796936",
+        "supports": [
+          "FIND_HUB_DEVICE_LOCATION_RUNTIME_IS_DISTINCT",
+          "ONLINE_DEVICE_CURRENT_LOCATION_CAN_BE_COLLECTED",
+          "OFFLINE_FINDING_CAN_USE_ENCRYPTED_RECENT_OR_CROWDSOURCED_LOCATION",
+          "GOOGLE_LOCATION_SHARING_IS_A_SEPARATE_FEATURE_SURFACED_IN_FIND_HUB"
+        ]
+      }
+    ]
+  },
+  "control_laws": [
+    "RECORD_OF_WHERE_IT_WAS_SAVED_NE_LIVE_EVIDENCE_OF_WHERE_IT_IS",
+    "REMEMBERED_LOCATION_NE_CURRENT_VERIFIED_LOCATION",
+    "USER_ASSERTED_STATE_NE_SENSOR_OBSERVATION",
+    "SENSOR_ASSISTED_CAPTURE_NE_CONTINUOUS_TRACKING",
+    "LAST_KNOWN_RECORDED_STATE_NE_PRESENT_PHYSICAL_STATE",
+    "GEMINI_INTERFACE_NE_SYSTEM_OF_RECORD",
+    "FIND_HUB_REMEMBERED_ITEM_NE_FIND_HUB_REAL_TIME_LOCATION_SHARE",
+    "SAME_PRODUCT_NAME_NE_SAME_EVIDENCE_CLASS",
+    "RECORD_EXISTS_NE_CURRENT_PHYSICAL_STATE_VERIFIED",
+    "LOCATION_PERMISSION_NE_CONTINUOUS_OBJECT_TRACKING",
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL"
+  ],
+  "terminal_logic": {
+    "T.20": {
+      "label": "PASS",
+      "requires": [
+        "RECORD_EXISTS",
+        "SOURCE_CLASS_KNOWN",
+        "TIMESTAMP_KNOWN",
+        "VALUE_READABLE"
+      ],
+      "meaning": "THE_RECORDED_STATE_IS_VALID_AS_A_RECORDED_STATE"
+    },
+    "U.21": {
+      "label": "HOLD",
+      "requires": [
+        "RECORD_EXISTS",
+        "CURRENT_PHYSICAL_STATE_NOT_VERIFIED"
+      ],
+      "meaning": "DO_NOT_PROMOTE_REMEMBERED_STATE_TO_PRESENT_PHYSICAL_FACT"
+    },
+    "F.6": {
+      "label": "REJECT",
+      "any_of": [
+        "RECORD_MISSING",
+        "SOURCE_CONTRADICTED",
+        "STATE_INVALID"
+      ],
+      "meaning": "THE_RECORD_CANNOT_SUPPORT_THE_CLAIM"
+    }
+  },
+  "record_schema": {
+    "required": [
+      "ITEM_ID",
+      "RECORDED_VALUE",
+      "SOURCE_CLASS",
+      "RECORDED_AT",
+      "READABLE"
+    ],
+    "source_class_allowed": [
+      "USER_ASSERTED",
+      "SENSOR_ASSISTED_CAPTURE"
+    ],
+    "current_physical_state_allowed": [
+      "VERIFIED",
+      "NOT_VERIFIED",
+      "CONTRADICTED",
+      "UNKNOWN"
+    ]
+  },
+  "promotion_gate": {
+    "remembered_record_can_prove_current_location": false,
+    "current_location_claim_requires_separate_runtime_evidence": true,
+    "gemini_readback_is_not_independent_location_verification": true,
+    "humanlock_required_for_canonical_promotion": true
+  },
+  "zero_lion_logic_gate": {
+    "humanlock": true,
+    "fail_closed": true,
+    "evidence_gate": "OBSERVED != CORRELATED != CAUSAL",
+    "truth_boundary": "DECLARED_OR_CAPTURED_RECORD_STATE_MUST_NOT_BE_UPGRADED_TO_LIVE_PHYSICAL_STATE_WITHOUT_SEPARATE_RUNTIME_EVIDENCE"
+  },
+  "repository_boundaries": [
+    "SPECIFICATION_PRESENT_NE_EXTERNAL_RUNTIME",
+    "LOCAL_TEST_PASS_NE_GOOGLE_PROVIDER_RUNTIME",
+    "GITHUB_ACTIONS_PASS_NE_LIVE_LOCATION_VERIFICATION",
+    "REPOSITORY_WRITE_NE_FIND_HUB_WRITE",
+    "SOURCE_VERIFIED_SPEC_NE_CANONICAL_MAINLINE_PROMOTION"
+  ]
+}
