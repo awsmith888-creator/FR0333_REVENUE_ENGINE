@@ -1,0 +1,34 @@
+name: FR0333 Chat to Work Bridge Validate
+
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_chat_to_work_bridge_0001.json'
+      - 'RavenCloudTaskbar/fr0333_chat_to_work_bridge.py'
+      - 'RavenCloudTaskbar/test_fr0333_chat_to_work_bridge.py'
+      - 'RavenCloudTaskbar/taskbars.json'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json'
+      - '.github/workflows/fr0333-chat-to-work-bridge-validate.yml'
+  push:
+    branches:
+      - feature/bits-bones-cultural-capital-transfer-0002
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: RavenCloudTaskbar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bridge regression rail
+        run: python -m unittest -v test_fr0333_chat_to_work_bridge.py
+      - name: Verify stop-image to repository-write override
+        run: >-
+          python fr0333_chat_to_work_bridge.py
+          --text "Stop trying to make pictures. Write the bridge into the system."
+          --prior-lane IMAGE_GENERATION
+          --tool-class GITHUB_WRITE
