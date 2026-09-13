@@ -1,0 +1,49 @@
+{
+  "identifier": "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0002",
+  "observed_at": "2026-09-13T12:11:00-04:00",
+  "provider": "ADOBE_FIREFLY_IMAGE_INSTRUCT_EDIT",
+  "purpose": "Bounded smoke test of the multi-image remake failure mode after the user reported that the image queue was not working.",
+  "source_asset": "USER_SUPPLIED_IMAGE_PRESENT_NOT_PUBLISHED_IN_RECEIPT",
+  "provider_receipt": {
+    "execution_state": "T.20.PASS",
+    "request_id": "da9cd2c2-db1f-4c0d-8579-71080fed8210",
+    "api_variation_count": 1,
+    "output_count": 1,
+    "output_asset_present": true
+  },
+  "user_queue_intent": {
+    "requested_final_images": 10,
+    "independent_full_canvas_images": true,
+    "target_ratio": "9:16",
+    "all_scenery_different": true,
+    "all_clothes_different": true,
+    "photoreal_humans": true
+  },
+  "visual_readback": {
+    "performed": true,
+    "single_output_contains_multiple_panels": true,
+    "contact_sheet_or_collage_detected": true,
+    "independent_full_canvas_delivery": false,
+    "queue_cardinality_satisfied": false,
+    "human_realism_not_promoted": true
+  },
+  "diagnosis": {
+    "primary_fault": "MULTI_IMAGE_INTENT_COLLAPSED_INTO_SINGLE_CONTACT_SHEET",
+    "prompt_count_language_must_not_be_used_as_canvas_cardinality_control": true,
+    "canvas_cardinality_must_be_controlled_by_queue_scheduler_and_api_n": true,
+    "multi_scene_language_inside_one_edit_prompt_is_not_a_valid_substitute_for_separate_outputs": true
+  },
+  "result": {
+    "provider_execution": "T.20.PASS",
+    "queue_contract": "F.6.FAIL",
+    "user_delivery": "F.6.FAIL",
+    "external_ten_slot_capacity": "U.21.NOT_ESTABLISHED"
+  },
+  "hard_boundaries": [
+    "PROVIDER.EXECUTION.PASS != QUEUE.PASS",
+    "ONE.COMPOSITE != TEN.INDEPENDENT.IMAGES",
+    "CONTACT.SHEET != SEPARATE.CANVASES",
+    "PROMPT.NUMBER != OUTPUT.CARDINALITY.CONTROL",
+    "FAILED.QUEUE.RECEIPT.MUST.NOT.BE_ERASED"
+  ]
+}
