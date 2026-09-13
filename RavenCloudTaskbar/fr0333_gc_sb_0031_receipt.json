@@ -1,0 +1,30 @@
+{
+  "receipt_id": "FR0333.GC.SB.0031.MANUAL.RUN.RECEIPT.0001",
+  "run_date": "2026-09-13",
+  "run_mode": "MANUAL.NO.SCHEDULE",
+  "repository": "awsmith888-creator/FR0333_REVENUE_ENGINE",
+  "open_pr_count_observed": 15,
+  "meaningful_alerts": [
+    {
+      "pr": 33,
+      "change": "FAILED.RUNTIME.VALIDATION.STATE.RECOVERED.TO.CURRENT.HEAD.SUCCESS",
+      "head_sha": "54793c3a59b78fd133038690e2070c6e8196d0ab",
+      "evidence": {
+        "workflow_runs": [34776895901, 34776895924, 34776895908]
+      },
+      "action": "REVIEW.EXACT.HEAD.BEFORE.ANY.PROMOTION"
+    }
+  ],
+  "suppressed_as_routine_or_standing_state": [
+    "UNCHANGED.OLDER.NONMERGEABLE.PRS",
+    "UNCHANGED.DRAFT.STATE",
+    "ROUTINE.TIMESTAMP.OR.NONACTIONABLE.CHURN"
+  ],
+  "marlo": {
+    "source": "https://www.mymarlo.ai/",
+    "status": "VENDOR.CLAIM.OBSERVED",
+    "independent_verification": "NOT.ESTABLISHED"
+  },
+  "terminal_state": "T.20.PASS.BOUNDED",
+  "humanlock": "ACTIVE"
+}
