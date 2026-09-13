@@ -6,10 +6,13 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 GATE_PATH = HERE / "fr0333_image_quality_gate_0004.json"
 RECEIPT_PATH = HERE / "fr0333_adobe_image_runtime_receipt_0001.json"
+QUEUE_RECEIPT_PATH = HERE / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
 
 EXPECTED_DIMENSIONS = [
     "IDENTITY.FIDELITY",
     "ANATOMY.FACE.HANDS.FEET",
+    "VEHICLE.MECHANICAL.GEOMETRY",
+    "LOAD.BALANCE.CONTACT.PHYSICS",
     "POSE.WEIGHT.CONTACT",
     "CAMERA.GEOMETRY",
     "MOTION.BLUR.COHERENCE",
@@ -25,18 +28,22 @@ EXPECTED_DIMENSIONS = [
 ]
 
 
-def validate(gate_doc, receipt_doc):
+def validate(gate_doc, receipt_doc, queue_receipt_doc):
     results = []
 
     def check(name, condition, detail):
         results.append({"gate": name, "state": "PASS" if condition else "FAIL", "detail": detail})
 
+    bindings = gate_doc.get("runtime_receipt_bindings", {})
     check(
-        "G1.IDENTIFIER.LOCK",
+        "G1.IDENTIFIER.AND.RECEIPT.BINDING.LOCK",
         gate_doc.get("identifier") == "FR0333.IMAGE.QUALITY.GATE.0004"
         and gate_doc.get("supersedes") == "FR0333.IMAGE.QUALITY.GATE.0003"
-        and receipt_doc.get("identifier") == "FR0333.ADOBE.IMAGE.RUNTIME.RECEIPT.0001",
-        "0004 supersedes 0003 while retaining the bounded Adobe runtime witness",
+        and receipt_doc.get("identifier") == "FR0333.ADOBE.IMAGE.RUNTIME.RECEIPT.0001"
+        and queue_receipt_doc.get("identifier") == "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0002"
+        and bindings.get("connector_runtime") == "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
+        and bindings.get("queue_failure") == "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json",
+        "0004 binds both the connector runtime witness and the observed queue-failure witness",
     )
 
     ref = gate_doc.get("reference_scale", {})
@@ -66,16 +73,24 @@ def validate(gate_doc, receipt_doc):
     )
 
     caps = gate_doc.get("provider_batch_caps", {})
-    chunk_plan = caps.get("TEN_SLOT_CHUNK_PLAN", [])
-    provider_max = caps.get("ADOBE_FIREFLY_IMAGE_GENERATE_MAX_VARIATIONS_PER_CALL")
+    generate = caps.get("IMAGE_GENERATE", {})
+    edit = caps.get("IMAGE_INSTRUCT_EDIT", {})
+    chunk_plan = generate.get("ten_slot_chunk_plan", [])
+    provider_max = generate.get("max_variations_per_call")
     check(
-        "G4.PROVIDER.CAP.CHUNK.PLAN",
-        provider_max == 4
+        "G4.OPERATION.SPECIFIC.PROVIDER.CAPS",
+        generate.get("state") == "T.20.VERIFIED_PROVIDER_CAP"
+        and provider_max == 4
         and chunk_plan == [4, 4, 2]
         and sum(chunk_plan) == 10
         and all(0 < x <= provider_max for x in chunk_plan)
+        and edit.get("state") == "U.21.NOT_ESTABLISHED"
+        and edit.get("max_variations_per_call") == "U.21.NOT_ESTABLISHED"
+        and edit.get("ten_slot_chunk_plan") == "U.21.NOT_ESTABLISHED"
+        and caps.get("cap_scope_rule") == "PROVIDER_CAP_IS_OPERATION_SPECIFIC"
+        and caps.get("unknown_cap_scheduler_rule") == "DO_NOT_BATCH_BY_ASSUMED_CAP"
         and caps.get("successful_slots_must_not_be_regenerated") is True,
-        "ten outputs are split into Firefly-compatible 4+4+2 execution chunks",
+        "4+4+2 is bound to image_generate only; instruct-edit capacity remains U.21",
     )
 
     compile_gate = gate_doc.get("prompt_compile", {})
@@ -111,10 +126,12 @@ def validate(gate_doc, receipt_doc):
         "edit, remaster, independent remake, and concept-reference total remake remain distinct",
     )
 
+    preserved = set(gate_doc.get("preserved_from_0003", []))
     check(
-        "G8.PHOTOREALISM.DIMENSIONS",
-        gate_doc.get("photorealism_dimensions") == EXPECTED_DIMENSIONS,
-        "14 ordered dimensions include face/hands/feet, pose/contact, scene uniqueness, and readback",
+        "G8.ADDITIVE.PHOTOREALISM.DIMENSIONS",
+        gate_doc.get("photorealism_dimensions") == EXPECTED_DIMENSIONS
+        and {"VEHICLE.MECHANICAL.GEOMETRY", "LOAD.BALANCE.CONTACT.PHYSICS"}.issubset(preserved),
+        "0004 adds human/scene hardening without deleting 0003 vehicle and load/contact physics dimensions",
     )
 
     defaults = gate_doc.get("adobe_execution_defaults", {})
@@ -132,7 +149,8 @@ def validate(gate_doc, receipt_doc):
 
     promo = gate_doc.get("promotion_gate", {})
     threshold_fields = [
-        "anatomy_reference_min", "pose_contact_reference_min", "camera_geometry_reference_min",
+        "identity_reference_min", "anatomy_reference_min", "vehicle_geometry_reference_min",
+        "physics_reference_min", "pose_contact_reference_min", "camera_geometry_reference_min",
         "lighting_reference_min", "material_realism_reference_min", "crop_reference_min",
         "artifact_control_reference_min", "aesthetic_reference_min", "scene_uniqueness_reference_min",
         "user_intent_reference_min",
@@ -143,7 +161,7 @@ def validate(gate_doc, receipt_doc):
         and promo.get("visual_readback_required") is True
         and promo.get("queue_cardinality_required") is True
         and promo.get("user_reject_overrides_promotion") is True,
-        "quality, uniqueness, cardinality, readback, and user acceptance all gate promotion",
+        "human, vehicle, physics, uniqueness, cardinality, readback, and user acceptance all gate promotion",
     )
 
     recovery = gate_doc.get("failure_recovery", {})
@@ -151,10 +169,12 @@ def validate(gate_doc, receipt_doc):
         "G11.FAILURE.RECOVERY",
         recovery.get("SILENT_EMPTY_OUTPUT") == "FAIL_AND_RETRY_SLOT"
         and recovery.get("CARDINALITY_MISMATCH") == "FAIL_AND_RETRY_MISSING_SLOTS"
+        and recovery.get("VEHICLE_GEOMETRY_DRIFT") == "FAIL_AFFECTED_SLOT_ONLY"
+        and recovery.get("LOAD_CONTACT_PHYSICS_DRIFT") == "FAIL_AFFECTED_SLOT_ONLY"
         and recovery.get("PROVIDER_ERROR") == "RETRY_ONCE_THEN_REPORT_HOLD"
         and recovery.get("MAX_RETRY_PER_SLOT") == 2
         and recovery.get("no_silent_success") is True,
-        "empty/partial outputs cannot silently pass and recovery targets missing slots only",
+        "empty/partial outputs cannot silently pass and human/mechanical failures target affected slots only",
     )
 
     hard = set(gate_doc.get("hard_boundaries", []))
@@ -162,46 +182,57 @@ def validate(gate_doc, receipt_doc):
         "G12.HARD.BOUNDARIES",
         "TEN.REQUESTED = TEN.DELIVERED" in hard
         and "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS" in hard
+        and "PROVIDER.CAP.IS.OPERATION.SPECIFIC" in hard
+        and "IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED" in hard
         and "PARTIAL.SUCCESS != QUEUE.SUCCESS" in hard
-        and "EMPTY.RESPONSE != SUCCESS" in hard
         and "HUMAN.LOOKING != HUMAN.ANATOMY.PASS" in hard
         and "USER.REJECT = OUTPUT.HOLD" in hard,
-        "cardinality, one-canvas, empty response, anatomy, and HumanLock boundaries are explicit",
+        "cardinality, operation-cap, anatomy, and HumanLock boundaries are explicit",
     )
 
     provider = receipt_doc.get("provider_receipt", {})
-    check(
-        "G13.ADOBE.RUNTIME.WITNESS",
-        provider.get("execution_state") == "PASS_RUNTIME"
-        and bool(provider.get("request_id"))
-        and str(provider.get("output_asset_id", "")).startswith("urn:aaid:ps:"),
-        "prior authenticated Adobe runtime witness remains bounded evidence",
-    )
-
     readback = receipt_doc.get("readback", {})
-    check(
-        "G14.READBACK.HOLD",
-        readback.get("input_preview_observed") is True
-        and readback.get("output_preview_observed") is True
-        and readback.get("quality_promotion_state") == "U.21.HOLD"
-        and readback.get("user_acceptance") == "NOT_OBSERVED",
-        "prior runtime witness remains held without user acceptance",
-    )
-
     result = receipt_doc.get("result", {})
     check(
-        "G15.FULL.CAPACITY.BOUNDARY",
-        result.get("connector_runtime") == "T.20.PASS"
-        and result.get("photorealism_promotion") == "U.21.HOLD"
-        and result.get("external_adobe_full_capacity") == "NOT_ESTABLISHED",
-        "bounded connector runtime does not establish ten-slot production capacity",
+        "G13.CONNECTOR.RUNTIME.WITNESS",
+        provider.get("execution_state") == "PASS_RUNTIME"
+        and bool(provider.get("request_id"))
+        and str(provider.get("output_asset_id", "")).startswith("urn:aaid:ps:")
+        and readback.get("quality_promotion_state") == "U.21.HOLD"
+        and readback.get("user_acceptance") == "NOT_OBSERVED"
+        and result.get("connector_runtime") == "T.20.PASS",
+        "authenticated connector runtime remains bounded and unpromoted without user acceptance",
+    )
+
+    q_readback = queue_receipt_doc.get("visual_readback", {})
+    q_result = queue_receipt_doc.get("result", {})
+    check(
+        "G14.QUEUE.FAILURE.WITNESS",
+        queue_receipt_doc.get("provider") == "ADOBE_FIREFLY_IMAGE_INSTRUCT_EDIT"
+        and queue_receipt_doc.get("provider_receipt", {}).get("execution_state") == "T.20.PASS"
+        and queue_receipt_doc.get("provider_receipt", {}).get("api_variation_count") == 1
+        and q_readback.get("single_output_contains_multiple_panels") is True
+        and q_readback.get("contact_sheet_or_collage_detected") is True
+        and q_readback.get("independent_full_canvas_delivery") is False
+        and q_result.get("queue_contract") == "F.6.FAIL"
+        and q_result.get("user_delivery") == "F.6.FAIL",
+        "the instruct-edit smoke test is preserved as an observed queue failure, not a batch-cap proof",
     )
 
     check(
-        "G16.HUMANLOCK.CAMERA.BINDING",
+        "G15.FULL.CAPACITY.BOUNDARY",
+        result.get("external_adobe_full_capacity") == "NOT_ESTABLISHED"
+        and q_result.get("external_ten_slot_capacity") == "U.21.NOT_ESTABLISHED",
+        "neither receipt establishes full Adobe or ten-slot external production capacity",
+    )
+
+    route = set(gate_doc.get("golden_chain_route", []))
+    check(
+        "G16.HUMANLOCK.CAMERA.MECHANICS.BINDING",
         gate_doc.get("humanlock") is True
-        and gate_doc.get("camera_gate_binding") == "FR.0333.ADOBE.CAMERA.3.3.3.0001",
-        "HumanLock and camera 3.3.3 remain bound",
+        and gate_doc.get("camera_gate_binding") == "FR.0333.ADOBE.CAMERA.3.3.3.0001"
+        and "MECHANICAL_PHYSICS_GATE" in route,
+        "HumanLock, camera 3.3.3, and inherited mechanical/physics gating remain bound",
     )
 
     passed = sum(item["state"] == "PASS" for item in results)
@@ -218,9 +249,11 @@ def validate(gate_doc, receipt_doc):
 def main():
     gate_path = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else GATE_PATH
     receipt_path = pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else RECEIPT_PATH
+    queue_receipt_path = pathlib.Path(sys.argv[3]) if len(sys.argv) > 3 else QUEUE_RECEIPT_PATH
     gate_doc = json.loads(gate_path.read_text(encoding="utf-8"))
     receipt_doc = json.loads(receipt_path.read_text(encoding="utf-8"))
-    report = validate(gate_doc, receipt_doc)
+    queue_receipt_doc = json.loads(queue_receipt_path.read_text(encoding="utf-8"))
+    report = validate(gate_doc, receipt_doc, queue_receipt_doc)
     print(json.dumps(report, indent=2))
     raise SystemExit(0 if report["state"] == "PASS" else 1)
 
