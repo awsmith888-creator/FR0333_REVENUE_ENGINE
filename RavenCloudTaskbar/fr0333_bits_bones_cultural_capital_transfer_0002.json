@@ -1,0 +1,218 @@
+{
+  "identifier": "FR0333.BITS.BONES.CULTURAL.CAPITAL.TRANSFER.0002",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.BITS.BONES.CULTURAL.CAPITAL.TRANSFER.0002",
+  "version": "0.2.0",
+  "state": "WORKING_BRANCH_SOURCE_BOUNDED_SPEC",
+  "purpose": "Measure divergence between creative contribution and downstream ownership, distribution, reward, recognition, and legacy without collapsing cultural exchange into theft claims.",
+  "terminal_states": {
+    "true": "T.20",
+    "hold": "U.21",
+    "false": "F.6"
+  },
+  "pipeline": [
+    "CREATION",
+    "OWNERSHIP",
+    "DISTRIBUTION",
+    "MARKET.TRANSLATION",
+    "VISUAL.IDENTITY",
+    "REWARD",
+    "RECOGNITION",
+    "LEGACY"
+  ],
+  "creation_field_map": {
+    "composition": "LYRIC_OR_MELODIC_BLUEPRINT",
+    "performance": "VOCAL_DELIVERY_IMPROVISATION_MELODIC_REALIZATION",
+    "arrangement": "TEMPO_METER_RHYTHMIC_STYLE_STRUCTURAL_ALTERATION",
+    "production": "SONIC_TEXTURE_TRACKING_ENVIRONMENT_BACKING_EXECUTION"
+  },
+  "metric_evidence_boundaries": [
+    {
+      "source_class": "AUDITED_FINANCIAL_RECORD",
+      "confidence": "HIGH",
+      "rule": "LEGAL_OR_LEDGER_FACT_ONLY"
+    },
+    {
+      "source_class": "HISTORICALLY_CORROBORATED_RECOLLECTION",
+      "confidence": "MEDIUM_HIGH",
+      "rule": "GUARDED_FACT_NOT_AUDITED_LEDGER"
+    },
+    {
+      "source_class": "PUBLIC_ANECDOTE",
+      "confidence": "LOW",
+      "rule": "NARRATIVE_DATA_NOT_FINANCIAL_FACT"
+    },
+    {
+      "source_class": "PRIMARY_OR_INSTITUTIONAL_HISTORY",
+      "confidence": "HIGH_FOR_STATED_SCOPE",
+      "rule": "SOURCE_SCOPE_MUST_NOT_BE_EXTENDED_BEYOND_DOCUMENTED_CLAIM"
+    }
+  ],
+  "market_translation": {
+    "fields": [
+      "ORIGINAL.PERFORMANCE",
+      "COVER.ADAPTATION",
+      "FORMAT.COMPATIBILITY",
+      "RADIO.ACCEPTABILITY",
+      "RETAIL.ACCEPTABILITY",
+      "CROSSOVER.ACCESS",
+      "MARKET.OUTCOME"
+    ],
+    "law": "MARKET_TRANSLATION_NE_NEW_COMPOSITION"
+  },
+  "visual_identity": {
+    "fields": {
+      "artist_face_on_cover": ["YES", "NO", "UNKNOWN"],
+      "substitute_subject": ["NONE", "WHITE_PERSON", "ABSTRACT_ART", "CARTOON", "OBJECT", "OTHER", "UNKNOWN"],
+      "artist_race_visible": ["YES", "NO", "UNKNOWN"],
+      "label_marketing_intent": ["DOCUMENTED", "INFERRED", "UNKNOWN"],
+      "crossover_target": ["BLACK_MARKET", "WHITE_MAINSTREAM", "GENERAL_POP", "UNKNOWN"]
+    },
+    "evidence_rules": [
+      "COVER_USES_WHITE_SUBJECT_IS_OBSERVED_ONLY_WHEN_VISUALLY_ESTABLISHED",
+      "BLACK_ARTIST_NOT_PICTURED_IS_OBSERVED_ONLY_WHEN_ASSET_IS_INSPECTED",
+      "LABEL_MARKETING_INTENT_REQUIRES_EXECUTIVE_STATEMENT_LABEL_RECORD_OR_EQUIVALENT_STRONG_SOURCE_FOR_T20",
+      "AUDIO_IDENTITY_NE_VISUAL_IDENTITY",
+      "PERFORMER_PRESENT_NE_PERFORMER_VISIBLE"
+    ]
+  },
+  "reward_fields": [
+    "ARTIST.ROYALTY",
+    "PUBLISHING",
+    "MASTER.REVENUE",
+    "PERFORMANCE.INCOME",
+    "SALES",
+    "STREAMS",
+    "UNVERIFIED.REVENUE.HOLD"
+  ],
+  "legacy_fields": [
+    "CONTEMPORARY.RECOGNITION",
+    "LONG_TERM.RECOGNITION",
+    "INSTITUTIONAL.HONORS",
+    "PUBLIC.MEMORY",
+    "ORIGINATOR.ATTRIBUTION"
+  ],
+  "control_laws": [
+    "CREATION_SHARE_NE_OWNERSHIP_SHARE",
+    "OWNERSHIP_SHARE_NE_REVENUE_SHARE",
+    "REVENUE_SHARE_NE_CULTURAL_CREDIT",
+    "CULTURAL_CREDIT_NE_HISTORICAL_ORIGIN",
+    "CULTURAL_EXCHANGE_NE_EXPLOITATION",
+    "INFLUENCE_NE_THEFT",
+    "COVER_VERSION_NE_APPROPRIATION_BY_DEFAULT",
+    "POPULARIZATION_NE_ORIGIN",
+    "PERFORMER_NE_COMPOSER_NE_PUBLISHER",
+    "MARKET_TRANSLATION_NE_NEW_COMPOSITION",
+    "MODERN_METADATA_NE_ORIGINAL_COPYRIGHT_RECORD",
+    "CHART_POSITION_IS_ORDINAL_NOT_LINEAR_PERCENT",
+    "STRUCTURAL_BARRIER_NE_ABSOLUTE_BARRIER",
+    "CONTEMPORARY_MARKET_POWER_NE_LONG_TERM_CANONICAL_LEGACY",
+    "AUDIO_IDENTITY_NE_VISUAL_IDENTITY",
+    "PERFORMER_PRESENT_NE_PERFORMER_VISIBLE",
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "DIRECT_THEFT_CLAIM_REQUIRES_DIRECT_EVIDENCE",
+    "RUNTIME_CLAIM_REQUIRES_EMPIRICAL_RECEIPT",
+    "HUMANLOCK_REQUIRED_FOR_CANONICAL_PROMOTION"
+  ],
+  "formulae": {
+    "documented_divergence": "MEASURABLE_GAP_BETWEEN_CREATION_AND_DOWNSTREAM_DISTRIBUTION_REWARD_OR_RECOGNITION",
+    "identity_mediated_capital_transfer": "CULTURAL_VALUE_RETAINED_PLUS_CREATOR_IDENTITY_SUPPRESSED_PLUS_MARKET_ACCESS_REDIRECTED",
+    "structural_exploitation": "DOCUMENTED_DIVERGENCE_PLUS_MEASURABLE_ADVANTAGE_PLUS_EVIDENCE"
+  },
+  "cases": [
+    {
+      "case_id": "CASE.0001.HOUND.DOG",
+      "track": "Hound Dog",
+      "creation": {
+        "legal_authors": ["Jerry Leiber", "Mike Stoller"],
+        "original_major_performer": "Big Mama Thornton",
+        "later_mass_market_performer": "Elvis Presley",
+        "state": "T.20"
+      },
+      "metrics": {
+        "thornton_r_and_b_number_one_weeks": 7,
+        "thornton_reported_sales_approx": 500000,
+        "thornton_reported_compensation_usd": 500,
+        "presley_national_number_one_weeks": 11
+      },
+      "evidence_boundaries": {
+        "thornton_compensation": "HISTORICALLY_CORROBORATED_RECOLLECTION",
+        "direct_composition_theft_by_presley": "F.6.NOT_SUPPORTED",
+        "structural_commercial_divergence": "T.20.SUPPORTED",
+        "exact_lifetime_artist_earnings_delta": "U.21.NOT_ESTABLISHED"
+      },
+      "gate_diagnosis": [
+        "SEGREGATED_MARKET_CATEGORIES",
+        "LABEL_DISTRIBUTION_SCALE",
+        "MEDIA_BROADCAST_ACCESS",
+        "PUBLISHING_AND_CONTRACT_STRUCTURE"
+      ]
+    },
+    {
+      "case_id": "CASE.0002.TUTTI.FRUTTI",
+      "track": "Tutti Frutti",
+      "creation": {
+        "core_authorship": ["Richard Penniman", "Dorothy LaBostrie"],
+        "original_performance_blueprint": "Little Richard",
+        "cover_performer": "Pat Boone",
+        "authorship_metadata_variance": "JOE_LUBIN_CREDIT_SOURCE_SENSITIVE",
+        "state": "T.20.WITH_SOURCE_BOUNDARY"
+      },
+      "metrics": {
+        "little_richard_pop_peak": 17,
+        "little_richard_r_and_b_peak": 2,
+        "little_richard_r_and_b_chart_weeks": 22,
+        "little_richard_initial_sales_approx": 200000,
+        "little_richard_cumulative_sales_by_1968_gt": 3000000,
+        "pat_boone_pop_peak": 12,
+        "ordinal_pop_peak_delta_positions_in_boone_favor": 5
+      },
+      "evidence_boundaries": {
+        "little_richard_pop_crossover": "T.20",
+        "boone_pop_chart_advantage": "T.20",
+        "complete_black_market_exclusion": "F.6.FALSE",
+        "direct_composition_theft_by_boone": "F.6.NOT_SUPPORTED",
+        "specialty_contractual_extraction": "T.20.WITH_SOURCE_BOUNDARY",
+        "exact_boone_vs_richard_sales_delta": "U.21.NOT_ESTABLISHED",
+        "exact_boone_vs_richard_artist_earnings_delta": "U.21.NOT_ESTABLISHED",
+        "long_term_richard_originator_recognition": "T.20"
+      }
+    }
+  ],
+  "historical_packaging_layer": {
+    "catalog_segregation_1920s": {
+      "race_records": "BLACK_PERFORMERS_MARKET_CATEGORY",
+      "hillbilly_records": "WHITE_RURAL_PERFORMERS_MARKET_CATEGORY",
+      "state": "T.20.SOURCE_BOUNDED"
+    },
+    "visual_packaging_1950s_1960s": {
+      "state": "T.20.EXAMPLES_EXIST",
+      "rule": "INDIVIDUAL_ASSET_INTENT_MUST_NOT_BE_INFERRED_WITHOUT_STRONG_SOURCE"
+    }
+  },
+  "source_lock": {
+    "state": "PUBLIC_SOURCES_REGISTERED",
+    "sources": [
+      {"id": "S1", "authority": "Library of Congress", "scope": "Hound Dog and early recording history", "url": "https://www.loc.gov/"},
+      {"id": "S2", "authority": "Rock and Roll Hall of Fame", "scope": "Big Mama Thornton historical record", "url": "https://rockhall.com/inductees/big-mama-thornton/"},
+      {"id": "S3", "authority": "Library of Congress", "scope": "Tutti Frutti recording essay and chart history", "url": "https://www.loc.gov/static/programs/national-recording-preservation-board/documents/TuttiFrutti.pdf"},
+      {"id": "S4", "authority": "UPI archive", "scope": "Little Richard 1984 royalty litigation reporting", "url": "https://www.upi.com/Archives/1984/06/21/Little-Richard-sues-for-royalties/9934456638400/"},
+      {"id": "S5", "authority": "PBS American Masters", "scope": "Little Richard royalty and publishing history", "url": "https://www.pbs.org/wnet/americanmasters/how-little-richard-fought-to-be-the-architect-of-rock-n-roll/27943/"},
+      {"id": "S6", "authority": "Smithsonian Folkways", "scope": "race and hillbilly catalog segregation history", "url": "https://folkways.si.edu/"},
+      {"id": "S7", "authority": "Kenan Institute for Ethics Duke University", "scope": "album art and racial representation research", "url": "https://kenan.ethics.duke.edu/"},
+      {"id": "S8", "authority": "Classic Motown", "scope": "Motown archival cover-art history", "url": "https://classic.motown.com/"},
+      {"id": "S9", "authority": "Vanity Fair Berry Gordy interview", "scope": "documented executive statements on early Motown cover strategy", "url": "https://www.vanityfair.com/culture/2008/12/motown200812"}
+    ]
+  },
+  "genius_bar": {
+    "gate_count": 10,
+    "required_pass_count": 10,
+    "invariant": "TEN.IN_TO_TEN.OUT"
+  },
+  "golden_chain": {
+    "public_index_target": "0.8.FR.0333.GOLDEN.CHAIN.BITS.BONES.CULTURAL.CAPITAL.TRANSFER.0002",
+    "prior_entries_renumbered": false,
+    "humanlock": true,
+    "runtime_state": "NOT_APPLICABLE_SPECIFICATION_RAIL",
+    "canonical_promotion": "PENDING_BRANCH_VALIDATION_AND_HUMAN_REVIEW"
+  }
+}
