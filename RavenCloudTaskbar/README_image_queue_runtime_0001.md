@@ -2,33 +2,57 @@
 
 `FR0333.IMAGE.QUEUE.RUNTIME.0001` is the provider-neutral queue dispatcher and reconciler for multi-image requests.
 
-It exists because a queue contract in configuration does not prove queue execution. The runtime rail therefore separates specification, local dispatcher behavior, bounded single-image provider evidence, and external multi-slot provider execution.
+It exists because a queue contract in configuration does not prove queue execution. The runtime rail separates repository validation, bounded single-image provider evidence, operation-specific provider batching, and external multi-slot execution.
 
-## Pipeline
+## Dispatch modes
 
-`USER.REQUEST -> INTENT.COMPILE -> SLOT.SPLIT -> SLOT.ISOLATION -> ONE.PROVIDER.REQUEST.PER.SLOT -> PER.SLOT.RECEIPT -> VISUAL.READBACK -> DUPLICATE.DETECTION -> COUNT.RECONCILIATION -> HUMANLOCK -> OUTPUT`
+For `IMAGE_GENERATE`, the verified provider cap is four variations per call. A ten-slot generation queue therefore uses native provider batching:
 
-For ten requested images, the dispatcher compiles ten independent slots: `Q01` through `Q10`. Each slot receives its own intent hash, scene contract, reference policy, provider request, output asset, visual fingerprint, readback state, and user state.
+`10 requested -> 4 + 4 + 2 IMAGE_GENERATE calls -> 10 isolated slot receipts`
+
+The same provider request ID may appear on several outputs from one verified batch. Slot identity is therefore bound to the provider output coordinate:
+
+`provider_request_id + provider_variation_index`
+
+For `IMAGE_INSTRUCT_EDIT`, the provider cap remains `U.21.NOT_ESTABLISHED`. The safe dispatcher stays singleton until that endpoint is independently verified.
+
+`PROVIDER.CAP.IS.OPERATION.SPECIFIC`
+
+## Exact delivery contract
+
+A `9:16` ratio by itself is not enough.
+
+Every promotable output slot must be:
+
+- width `1080`
+- height `1920`
+- aspect ratio `9:16`
+- one independent image
+- no collage, contact sheet, or multi-panel composition
+
+`9.16.RATIO != EXACT.1080x1920.DELIVERY`
+
+## Per-slot readback
+
+Each slot carries separate readback fields rather than one generic quality flag:
+
+- `readback_state`
+- `anatomy_readback`
+- `realism_readback`
+- `clothing_variance_readback`
+- `intent_alignment_readback`
+
+Every field must be `PASS` before that slot can pass reconciliation.
 
 ## Queue pass law
 
-The queue passes only when all of the following are true:
+The queue passes only when requested count, output count, and receipt count match; output asset IDs, provider output coordinates, and visual fingerprints are unique; all slots are exactly `1080x1920`; all per-slot readbacks pass; and no collage/contact-sheet/multi-panel output is present.
 
-- requested count equals output count
-- requested count equals receipt count
-- unique output asset IDs equal requested count
-- unique provider request IDs equal requested count
-- unique visual fingerprints equal requested count for distinct-scene jobs
-- failed slots equal zero
-- duplicate slots equal zero
-- collage/contact-sheet/multi-panel slots equal zero
-- all slots complete readback
-
-`ONE.REQUEST.TEN.VARIANTS != TEN.ISOLATED.REQUESTS`
+For a ten-slot `IMAGE_GENERATE` run, the reconciler additionally requires the `4 + 4 + 2` batch plan and three provider requests.
 
 ## Surgical retry
 
-A failure in one slot does not authorize re-generation of successful slots.
+A failure in one slot does not authorize regeneration of successful slots.
 
 `FAILED.Q04 -> RETRY.Q04`
 
@@ -36,22 +60,29 @@ not
 
 `FAILED.Q04 -> REGENERATE.Q01.THROUGH.Q10`
 
-The reconciler emits `retry_slots` and `preserve_slots` separately so successful outputs remain outside the failed slot's visual ancestry loop.
+## Deterministic validation
 
-## Deterministic test rail
+`test_fr0333_image_queue_runtime.py` verifies the provider-neutral control plane. It tests native `4 + 4 + 2` generation batching, conservative singleton instruct-edit dispatch, exact `1080x1920` enforcement, separate anatomy/realism/clothing/intent readbacks, count mismatch, duplicates, contact sheets, slot/receipt mismatch, and surgical retry.
 
-`test_fr0333_image_queue_runtime.py` runs a provider-neutral ten-slot simulation that actually calls the adapter once per slot and requires ten distinct runtime receipt objects. It also rejects count mismatch, duplicate output assets, duplicate visual fingerprints, contact-sheet output, slot/receipt mismatch, and broad retry behavior.
-
-This is materially different from counting validation gates. A passing ten-slot simulation establishes dispatcher and reconciliation behavior only.
+A passing test establishes repository dispatcher and reconciliation behavior only.
 
 ## Evidence boundary
 
-- `QUEUE.SPEC.PASS != QUEUE.RUNTIME.PASS`
-- `COUNT.CONTRACT.PRESENT != COUNT.EXECUTED`
-- `SLOT.DEFINED != SLOT.ISOLATED`
-- `PROVIDER.SUCCESS != QUEUE.INTEGRITY`
-- `PROMPT.DIVERSITY != VISUAL.DIVERSITY`
+- `BUILD.VALIDATION.PASS != ADOBE.RUNTIME.PASS`
+- `NATIVE.4.4.2.PLAN.DEFINED != TEN.OUTPUT.ADOBE.RUNTIME.PROVEN`
+- `9.16.RATIO != EXACT.1080x1920.DELIVERY`
+- `GENERIC.READBACK != ANATOMY.REALISM.CLOTHING.INTENT.READBACK`
 - `LOCAL.SIMULATION.PASS != EXTERNAL.PROVIDER.RUNTIME.PASS`
 - `GITHUB.SPECIFICATION != CHATGPT.INTERNAL.IMAGE.RUNTIME.CONTROL`
 
-Current external state remains `U.21.HOLD` for multi-slot provider runtime and ten-slot isolation until ten real per-slot provider receipts are captured and reconciled.
+Required status remains:
+
+```text
+BUILD.VALIDATION=T.20.PASS
+CONNECTOR.RUNTIME=T.20.PASS.BOUNDED
+QUALITY.PROMOTION=U.21.HOLD
+QUEUE.RUNTIME=U.21.NOT.PROVEN
+OVERALL.SYSTEM.STATUS=U.21.HOLD
+```
+
+The baseline is patched, not frozen. External ten-slot Adobe runtime remains unproven until real provider receipts establish it.
