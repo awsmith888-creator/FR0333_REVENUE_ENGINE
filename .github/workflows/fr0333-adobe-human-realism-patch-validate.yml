@@ -1,0 +1,33 @@
+name: FR0333 Adobe Human Realism Diversity Patch Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_adobe_human_realism_patch_0004.json"
+      - "RavenCloudTaskbar/fr0333_adobe_human_realism_manifest_0004.json"
+      - "RavenCloudTaskbar/fr0333_adobe_human_realism_patch_genius.py"
+      - "RavenCloudTaskbar/test_fr0333_adobe_human_realism_patch_genius.py"
+      - "RavenCloudTaskbar/README_adobe_human_realism_patch_0004.md"
+      - "RavenCloudTaskbar/taskbars.json"
+      - ".github/workflows/fr0333-adobe-human-realism-patch-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate patch JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_human_realism_patch_0004.json >/dev/null
+      - name: Validate ten-slot manifest JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_human_realism_manifest_0004.json >/dev/null
+      - name: Run Adobe human realism diversity Genius rail
+        run: python RavenCloudTaskbar/fr0333_adobe_human_realism_patch_genius.py
+      - name: Run Adobe human realism diversity tests
+        run: python RavenCloudTaskbar/test_fr0333_adobe_human_realism_patch_genius.py

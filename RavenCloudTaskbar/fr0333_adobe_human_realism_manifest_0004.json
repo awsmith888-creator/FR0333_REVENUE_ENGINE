@@ -1,0 +1,17 @@
+{
+  "identifier": "FR0333.ADOBE.HUMAN.REALISM.MANIFEST.0004",
+  "requested_count": 10,
+  "user_intent": "TEN_DIFFERENT_HUMAN_DANCE_IMAGES_WITH_DIFFERENT_SCENERY_CLOTHES_POSES_CAMERA_AND_LIGHTING",
+  "slots": [
+    {"slot_id":"Q01","scene":"grand_theater_stage","wardrobe":"black_velvet_ballet_costume","pose_action":"supported_arabesque_duet","camera_setup":"85mm_eye_level_full_body","lighting":"cool_three_spot_stage","background":"smoked_black_proscenium","subject_count":2,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q02","scene":"sunlit_rehearsal_studio","wardrobe":"ivory_linen_practice_set","pose_action":"floor_extension_single","camera_setup":"50mm_low_three_quarter","lighting":"window_daylight_soft_fill","background":"pale_wood_mirrors","subject_count":1,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q03","scene":"historic_train_terminal","wardrobe":"deep_red_contemporary_dress","pose_action":"walking_turn_group","camera_setup":"35mm_environmental_mid_distance","lighting":"warm_skylight_practicals","background":"stone_arches_clock","subject_count":4,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q04","scene":"rainy_city_rooftop","wardrobe":"graphite_modern_dance_coat","pose_action":"wind_braced_reach","camera_setup":"70mm_waist_height_telephoto","lighting":"blue_hour_rim_light","background":"wet_skyline_neon","subject_count":3,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q05","scene":"desert_dawn_plain","wardrobe":"burnt_orange_flowing_silk","pose_action":"running_leap_single","camera_setup":"135mm_long_distance_profile","lighting":"sunrise_backlight","background":"open_dunes_horizon","subject_count":1,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q06","scene":"museum_marble_gallery","wardrobe":"emerald_structured_costume","pose_action":"counterbalanced_trio","camera_setup":"45mm_centered_symmetry","lighting":"diffused_skylight","background":"white_marble_columns","subject_count":3,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q07","scene":"industrial_warehouse","wardrobe":"navy_denim_and_mesh","pose_action":"grounded_contemporary_group","camera_setup":"28mm_high_angle_wide_environmental","lighting":"hard_side_windows_haze","background":"brick_steel_loading_bay","subject_count":5,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q08","scene":"forest_clearing_after_rain","wardrobe":"platinum_gray_layered_chiffon","pose_action":"spiral_turn_duet","camera_setup":"100mm_shallow_depth_eye_level","lighting":"overcast_natural_green_bounce","background":"wet_pines_mist","subject_count":2,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q09","scene":"art_deco_ballroom","wardrobe":"gold_and_black_evening_costume","pose_action":"formal_partner_lift","camera_setup":"65mm_slight_low_angle","lighting":"chandelier_warm_key_cool_fill","background":"geometric_gold_walls","subject_count":2,"identity_mode":"DISTINCT_CAST"},
+    {"slot_id":"Q10","scene":"coastal_cliff_twilight","wardrobe":"cobalt_blue_wind_swept_dress","pose_action":"solo_balance_reach","camera_setup":"40mm_side_profile_environmental","lighting":"twilight_ambient_soft_flash","background":"ocean_cliff_clouds","subject_count":1,"identity_mode":"DISTINCT_CAST"}
+  ]
+}
