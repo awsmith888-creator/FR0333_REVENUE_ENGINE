@@ -3,7 +3,7 @@
   "supersedes": "FR0333.IMAGE.QUALITY.GATE.0003",
   "state": "WORKING_BRANCH_QUEUE_HARDENED_SPEC",
   "humanlock": true,
-  "purpose": "Prevent silent, partial, duplicated, collage-style, anatomically artificial, mechanically incoherent, or cardinality-mismatched image output from being presented as a completed queue.",
+  "purpose": "Prevent silent, partial, duplicated, collage-style, anatomically artificial, mechanically incoherent, dimension-mismatched, or cardinality-mismatched image output from being presented as a completed queue.",
   "reference_scale": {
     "name": "QUALITY.REFERENCE.0.9",
     "percent_symbols_prohibited": true,
@@ -17,6 +17,7 @@
     "requested_count_must_equal_delivered_count": true,
     "one_slot_one_canvas_one_image": true,
     "independent_9_16_canvas_per_slot": true,
+    "exact_1080_1920_required": true,
     "max_user_queue": 10,
     "slot_ids_required": true,
     "slot_receipt_required": true,
@@ -33,13 +34,16 @@
     "IMAGE_GENERATE": {
       "state": "T.20.VERIFIED_PROVIDER_CAP",
       "max_variations_per_call": 4,
-      "ten_slot_chunk_plan": [4, 4, 2]
+      "ten_slot_chunk_plan": [4, 4, 2],
+      "ten_slot_provider_call_count": 3,
+      "dispatcher_mode": "NATIVE_PROVIDER_BATCH"
     },
     "IMAGE_INSTRUCT_EDIT": {
       "state": "U.21.NOT_ESTABLISHED",
       "max_variations_per_call": "U.21.NOT_ESTABLISHED",
       "ten_slot_chunk_plan": "U.21.NOT_ESTABLISHED",
-      "observed_smoke_test_api_variation_count": 1
+      "observed_smoke_test_api_variation_count": 1,
+      "dispatcher_mode": "CONSERVATIVE_SINGLETON_UNTIL_CAP_VERIFIED"
     },
     "cap_scope_rule": "PROVIDER_CAP_IS_OPERATION_SPECIFIC",
     "unknown_cap_scheduler_rule": "DO_NOT_BATCH_BY_ASSUMED_CAP",
@@ -49,6 +53,7 @@
   "prompt_compile": {
     "global_lock_fields": [
       "TARGET_RATIO_9_16",
+      "TARGET_EXACT_1080_1920",
       "PHOTOREAL_HUMAN",
       "NATURAL_ANATOMY",
       "REALISTIC_SKIN_TEXTURE",
@@ -67,6 +72,17 @@
       "COMPOSITION"
     ],
     "slot_uniqueness_rule": "NO_TWO_SLOTS_MAY_SHARE_THE_SAME_SCENE_WARDROBE_POSE_TRIPLE"
+  },
+  "per_slot_readback_contract": {
+    "required_fields": [
+      "readback_state",
+      "anatomy_readback",
+      "realism_readback",
+      "clothing_variance_readback",
+      "intent_alignment_readback"
+    ],
+    "required_pass_value": "PASS",
+    "all_fields_required_for_slot_promotion": true
   },
   "human_realism_gate": {
     "human_subject_request_requires": [
@@ -117,7 +133,11 @@
     "COLLAGE_OR_CONTACT_SHEET": "FAIL_WHOLE_AFFECTED_SLOT",
     "DUPLICATE_SCENE": "FAIL_DUPLICATE_SLOT_ONLY",
     "ASPECT_RATIO_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
+    "EXACT_DIMENSION_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "HUMAN_ANATOMY_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
+    "REALISM_READBACK_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
+    "CLOTHING_VARIANCE_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
+    "INTENT_ALIGNMENT_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "VEHICLE_GEOMETRY_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "LOAD_CONTACT_PHYSICS_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
     "SOURCE_MODE_DRIFT": "FAIL_AFFECTED_SLOT_ONLY",
@@ -130,6 +150,10 @@
     "edit_prompt_reasoner": "quality",
     "target_aspect_ratio": "9:16",
     "target_resolution_level": "4MP",
+    "provider_render_resolution_level": "4MP",
+    "delivery_width": 1080,
+    "delivery_height": 1920,
+    "delivery_exact_dimensions_required": true,
     "output_format": "png",
     "post_generation_visual_readback": "REQUIRED",
     "post_edit_visual_readback": "REQUIRED",
@@ -153,13 +177,25 @@
     "scene_uniqueness_reference_min": 8,
     "user_intent_reference_min": 8,
     "visual_readback_required": true,
+    "per_slot_readback_fields_required": true,
     "queue_cardinality_required": true,
+    "exact_1080_1920_required": true,
     "user_reject_overrides_promotion": true,
     "runtime_receipt_required_for_external_execution_claim": true
+  },
+  "status_output_contract": {
+    "BUILD.VALIDATION": "T.20.PASS",
+    "CONNECTOR.RUNTIME": "T.20.PASS.BOUNDED",
+    "QUALITY.PROMOTION": "U.21.HOLD",
+    "QUEUE.RUNTIME": "U.21.NOT.PROVEN",
+    "OVERALL.SYSTEM.STATUS": "U.21.HOLD"
   },
   "hard_boundaries": [
     "TEN.REQUESTED = TEN.DELIVERED",
     "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS",
+    "9.16.RATIO != EXACT.1080x1920.DELIVERY",
+    "IMAGE.GENERATE.TEN.SLOTS = NATIVE.4.4.2.BATCH.PLAN",
+    "READBACK.GENERIC != ANATOMY.REALISM.CLOTHING.INTENT.PASS",
     "PROVIDER.CAP.IS.OPERATION.SPECIFIC",
     "IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED",
     "PARTIAL.SUCCESS != QUEUE.SUCCESS",
@@ -188,12 +224,14 @@
     "QUEUE_MANIFEST",
     "PROVIDER_CAP_GATE",
     "CHUNK_PLAN",
+    "NATIVE_BATCH_DISPATCH",
     "MODE_GATE",
     "HUMAN_REALISM_GATE",
     "CAMERA_333_GATE",
     "MECHANICAL_PHYSICS_GATE",
     "QUALITY_REFERENCE_GATE",
     "PER_SLOT_VISUAL_READBACK",
+    "EXACT_DIMENSION_GATE",
     "CARDINALITY_RECONCILE",
     "HUMANLOCK",
     "OUTPUT_GATE",
