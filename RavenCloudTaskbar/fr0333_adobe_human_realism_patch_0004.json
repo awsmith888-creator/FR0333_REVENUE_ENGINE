@@ -1,0 +1,119 @@
+{
+  "identifier": "FR0333.ADOBE.HUMAN.REALISM.DIVERSITY.PATCH.0004",
+  "version": "0.4.0",
+  "state": "WORKING_BRANCH_PATCH_RUNTIME_NOT_ESTABLISHED",
+  "humanlock": true,
+  "binds": {
+    "image_quality_gate": "FR0333.IMAGE.QUALITY.GATE.0003",
+    "camera_gate": "FR.0333.ADOBE.CAMERA.3.3.3.0001",
+    "provider_role": "EXTERNAL_CREATIVE_EXECUTION_PROVIDER"
+  },
+  "purpose": "Fail closed when human image requests return synthetic-looking anatomy, clone-like repeated people, repeated scenery or wardrobe, count mismatch, collage output, or slot-to-slot prompt drift.",
+  "queue_contract": {
+    "supported_requested_count_min": 1,
+    "supported_requested_count_max": 10,
+    "requested_count_equals_slot_count": true,
+    "slot_count_equals_output_count": true,
+    "one_slot_one_prompt": true,
+    "one_slot_one_canvas": true,
+    "one_canvas_one_image": true,
+    "aspect_ratio": "9:16",
+    "collage": "REJECT",
+    "contact_sheet": "REJECT",
+    "duplicate_output": "REJECT",
+    "missing_output": "REJECT"
+  },
+  "human_realism_gate": {
+    "human_request_requires_human_anatomy_pass": true,
+    "face_proportion_check": "REQUIRED",
+    "hand_digit_joint_check": "REQUIRED",
+    "limb_joint_range_check": "REQUIRED",
+    "weight_balance_contact_check": "REQUIRED",
+    "skin_texture_microvariation": "REQUIRED",
+    "eye_alignment_and_gaze_check": "REQUIRED",
+    "hair_attachment_and_strand_behavior_check": "REQUIRED_WHEN_VISIBLE",
+    "fabric_body_interaction_check": "REQUIRED",
+    "symmetry_policy": "NATURAL_ASYMMETRY_REQUIRED",
+    "synthetic_plastic_skin": "REJECT",
+    "duplicated_face_within_scene": "REJECT_UNLESS_EXPLICITLY_REQUESTED",
+    "duplicated_body_pose_within_scene": "REJECT_UNLESS_CHOREOGRAPHY_REQUIRES"
+  },
+  "diversity_contract": {
+    "activation": "USER_REQUESTS_DIFFERENT_UNIQUE_OR_EVERYTHING_DIFFERENT",
+    "scene_unique_per_slot": true,
+    "wardrobe_unique_per_slot": true,
+    "pose_or_action_unique_per_slot": true,
+    "camera_setup_unique_per_slot": true,
+    "background_unique_per_slot": true,
+    "lighting_setup_unique_per_slot": true,
+    "subject_cast_unique_per_slot": true,
+    "repeat_allowed_only_when_explicitly_requested": true
+  },
+  "identity_policy": {
+    "identity_mode_values": [
+      "UNSPECIFIED_CAST",
+      "PRESERVE_SOURCE_IDENTITY",
+      "CONTINUITY_CAST",
+      "DISTINCT_CAST"
+    ],
+    "default_for_multi_scene_human_generation": "DISTINCT_CAST",
+    "same_face_across_slots": "REJECT_UNLESS_PRESERVE_SOURCE_IDENTITY_OR_CONTINUITY_CAST",
+    "same_face_multiple_times_in_one_scene": "REJECT_UNLESS_EXPLICIT_CLONE_CONCEPT",
+    "style_reference_does_not_imply_identity_copy": true,
+    "remake_ne_clone": true
+  },
+  "slot_manifest": {
+    "required": true,
+    "required_fields": [
+      "slot_id",
+      "scene",
+      "wardrobe",
+      "pose_action",
+      "camera_setup",
+      "lighting",
+      "background",
+      "subject_count",
+      "identity_mode"
+    ],
+    "slot_id_format": "Q01_TO_Q10",
+    "semantic_collision_check": "REQUIRED_BEFORE_PROVIDER_EXECUTION"
+  },
+  "readback_gate": {
+    "required_per_output": true,
+    "compare_against_slot_manifest": true,
+    "check_human_realism": true,
+    "check_scene_uniqueness": true,
+    "check_wardrobe_uniqueness": true,
+    "check_cast_uniqueness": true,
+    "check_pose_action_uniqueness": true,
+    "check_count_integrity": true,
+    "on_failure": "HOLD_OUTPUT_REGENERATE_ONLY_FAILED_SLOT"
+  },
+  "promotion_gate": {
+    "all_slots_must_pass": true,
+    "user_reject_overrides_promotion": true,
+    "visual_readback_required": true,
+    "runtime_receipt_required_for_external_execution_claim": true,
+    "provider_success_ne_quality_pass": true,
+    "failed_slot_must_not_force_regeneration_of_passing_slots": true
+  },
+  "hard_boundaries": [
+    "PHOTOREALISTIC.STYLE != HUMAN.REALISM",
+    "STYLE.COHERENCE != SLOT.DUPLICATION",
+    "SAME.FACE != CAST.CONTINUITY.UNLESS.REQUESTED",
+    "SAME.WARDROBE != SERIES.COHERENCE.UNLESS.REQUESTED",
+    "SAME.SCENE != SERIES.COHERENCE.UNLESS_REQUESTED",
+    "PROVIDER.SUCCESS != QUALITY.PASS",
+    "BATCH.SUCCESS != N_IN_N_OUT.PASS",
+    "READBACK.FAIL = SLOT.HOLD",
+    "USER.REJECT = OUTPUT.HOLD",
+    "LOCAL.CI.PASS != EXTERNAL.ADOBE.RUNTIME",
+    "THIS.PATCH != ADOBE.INTERNAL.MODEL.MODIFICATION"
+  ],
+  "runtime_boundary": {
+    "local_validator": "ESTABLISHES_SPEC_CONFORMANCE_ONLY",
+    "external_adobe_runtime": "NOT_ESTABLISHED_BY_THIS_PATCH",
+    "external_provider_quality": "MUST_BE_PROVEN_BY_RUNTIME_RECEIPT_AND_READBACK",
+    "ownership_boundary": "PATCH_MODIFIES_FR0333_ORCHESTRATION_AND_VALIDATION_NOT_ADOBE_INTERNAL_SYSTEMS"
+  }
+}
