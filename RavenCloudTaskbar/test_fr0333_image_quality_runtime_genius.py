@@ -17,7 +17,7 @@ class ImageQualityRuntimeTests(unittest.TestCase):
         cls.gate = json.loads(GATE.read_text(encoding="utf-8"))
         cls.receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
         cls.queue_receipt = json.loads(QUEUE_RECEIPT.read_text(encoding="utf-8"))
-        cls.report = validate(cls.gate, cls.receipt)
+        cls.report = validate(cls.gate, cls.receipt, cls.queue_receipt)
 
     def test_sixteen_in_sixteen_out(self):
         self.assertEqual(self.report["total"], 16)
@@ -34,11 +34,18 @@ class ImageQualityRuntimeTests(unittest.TestCase):
         self.assertEqual(queue["contact_sheet"], "REJECT")
         self.assertEqual(queue["multi_panel"], "REJECT")
 
-    def test_firefly_ten_slot_plan_is_4_4_2(self):
+    def test_provider_caps_are_operation_specific(self):
         caps = self.gate["provider_batch_caps"]
-        self.assertEqual(caps["ADOBE_FIREFLY_IMAGE_GENERATE_MAX_VARIATIONS_PER_CALL"], 4)
-        self.assertEqual(caps["TEN_SLOT_CHUNK_PLAN"], [4, 4, 2])
-        self.assertEqual(sum(caps["TEN_SLOT_CHUNK_PLAN"]), 10)
+        generate = caps["IMAGE_GENERATE"]
+        edit = caps["IMAGE_INSTRUCT_EDIT"]
+        self.assertEqual(generate["state"], "T.20.VERIFIED_PROVIDER_CAP")
+        self.assertEqual(generate["max_variations_per_call"], 4)
+        self.assertEqual(generate["ten_slot_chunk_plan"], [4, 4, 2])
+        self.assertEqual(sum(generate["ten_slot_chunk_plan"]), 10)
+        self.assertEqual(edit["state"], "U.21.NOT_ESTABLISHED")
+        self.assertEqual(edit["max_variations_per_call"], "U.21.NOT_ESTABLISHED")
+        self.assertEqual(edit["ten_slot_chunk_plan"], "U.21.NOT_ESTABLISHED")
+        self.assertEqual(caps["cap_scope_rule"], "PROVIDER_CAP_IS_OPERATION_SPECIFIC")
 
     def test_missing_slots_retry_without_replacing_successes(self):
         queue = self.gate["queue_contract"]
@@ -66,12 +73,27 @@ class ImageQualityRuntimeTests(unittest.TestCase):
             {"SCENERY", "WARDROBE", "POSE_OR_ACTION", "CAMERA_POSITION", "LIGHTING_SETUP", "COMPOSITION"},
         )
 
-    def test_fourteen_photorealism_dimensions(self):
-        self.assertEqual(len(self.gate["photorealism_dimensions"]), 14)
-        self.assertIn("ANATOMY.FACE.HANDS.FEET", self.gate["photorealism_dimensions"])
-        self.assertIn("POSE.WEIGHT.CONTACT", self.gate["photorealism_dimensions"])
-        self.assertIn("SCENE.UNIQUENESS", self.gate["photorealism_dimensions"])
-        self.assertIn("VISUAL.READBACK", self.gate["photorealism_dimensions"])
+    def test_sixteen_photorealism_dimensions_preserve_0003(self):
+        dimensions = self.gate["photorealism_dimensions"]
+        self.assertEqual(len(dimensions), 16)
+        self.assertIn("ANATOMY.FACE.HANDS.FEET", dimensions)
+        self.assertIn("VEHICLE.MECHANICAL.GEOMETRY", dimensions)
+        self.assertIn("LOAD.BALANCE.CONTACT.PHYSICS", dimensions)
+        self.assertIn("POSE.WEIGHT.CONTACT", dimensions)
+        self.assertIn("SCENE.UNIQUENESS", dimensions)
+        self.assertIn("VISUAL.READBACK", dimensions)
+        self.assertEqual(
+            set(self.gate["preserved_from_0003"]),
+            {"VEHICLE.MECHANICAL.GEOMETRY", "LOAD.BALANCE.CONTACT.PHYSICS"},
+        )
+
+    def test_promotion_gate_preserves_vehicle_and_physics_thresholds(self):
+        promo = self.gate["promotion_gate"]
+        self.assertGreaterEqual(promo["identity_reference_min"], 8)
+        self.assertGreaterEqual(promo["vehicle_geometry_reference_min"], 8)
+        self.assertGreaterEqual(promo["physics_reference_min"], 8)
+        self.assertGreaterEqual(promo["anatomy_reference_min"], 8)
+        self.assertGreaterEqual(promo["scene_uniqueness_reference_min"], 8)
 
     def test_adobe_defaults_are_quality_first_9_16(self):
         defaults = self.gate["adobe_execution_defaults"]
@@ -81,6 +103,11 @@ class ImageQualityRuntimeTests(unittest.TestCase):
         self.assertEqual(defaults["target_resolution_level"], "4MP")
         self.assertEqual(defaults["output_format"], "png")
 
+    def test_runtime_receipt_bindings_include_both_witnesses(self):
+        bindings = self.gate["runtime_receipt_bindings"]
+        self.assertEqual(bindings["connector_runtime"], "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json")
+        self.assertEqual(bindings["queue_failure"], "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json")
+
     def test_runtime_receipt_stays_bounded(self):
         self.assertEqual(self.receipt["provider_receipt"]["execution_state"], "PASS_RUNTIME")
         self.assertEqual(self.receipt["result"]["external_adobe_full_capacity"], "NOT_ESTABLISHED")
@@ -89,7 +116,9 @@ class ImageQualityRuntimeTests(unittest.TestCase):
 
     def test_observed_contact_sheet_failure_is_preserved(self):
         q = self.queue_receipt
+        self.assertEqual(q["provider"], "ADOBE_FIREFLY_IMAGE_INSTRUCT_EDIT")
         self.assertEqual(q["provider_receipt"]["execution_state"], "T.20.PASS")
+        self.assertEqual(q["provider_receipt"]["api_variation_count"], 1)
         self.assertTrue(q["visual_readback"]["single_output_contains_multiple_panels"])
         self.assertTrue(q["visual_readback"]["contact_sheet_or_collage_detected"])
         self.assertFalse(q["visual_readback"]["independent_full_canvas_delivery"])
@@ -101,7 +130,8 @@ class ImageQualityRuntimeTests(unittest.TestCase):
         self.assertTrue(self.gate["humanlock"])
         self.assertTrue(self.gate["promotion_gate"]["user_reject_overrides_promotion"])
         self.assertIn("USER.REJECT = OUTPUT.HOLD", self.gate["hard_boundaries"])
-        self.assertIn("EMPTY.RESPONSE != SUCCESS", self.gate["hard_boundaries"])
+        self.assertIn("PROVIDER.CAP.IS.OPERATION.SPECIFIC", self.gate["hard_boundaries"])
+        self.assertIn("IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED", self.gate["hard_boundaries"])
 
 
 if __name__ == "__main__":
