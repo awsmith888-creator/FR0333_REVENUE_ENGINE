@@ -1,0 +1,34 @@
+name: FR0333 Chat to Work Bridge Delta 1.0 Validate
+
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_chat_to_work_bridge_0001.json'
+      - 'RavenCloudTaskbar/fr0333_chat_to_work_bridge.py'
+      - 'RavenCloudTaskbar/test_fr0333_chat_to_work_bridge.py'
+      - 'RavenCloudTaskbar/fr0333_delta_1_0_chat_to_work_bridge_upgrade.json'
+      - 'RavenCloudTaskbar/README_chat_to_work_bridge_0001.md'
+      - '.github/workflows/fr0333-chat-to-work-bridge-delta-1-0-validate.yml'
+  push:
+    branches:
+      - upgrade/chat-to-work-bridge-delta-1-0
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: RavenCloudTaskbar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run anchored delta regression rail
+        run: python -m unittest -v test_fr0333_chat_to_work_bridge.py
+      - name: Verify anchored stop-image to repository-write override
+        run: >-
+          python fr0333_chat_to_work_bridge.py
+          --text "Stop trying to make pictures. Write the bridge into the system."
+          --prior-lane IMAGE_GENERATION
+          --tool-class GITHUB_WRITE

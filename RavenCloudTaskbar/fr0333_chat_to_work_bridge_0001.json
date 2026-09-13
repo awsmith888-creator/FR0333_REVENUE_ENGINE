@@ -1,0 +1,101 @@
+{
+  "identifier": "FR0333.CHAT.TO.WORK.BRIDGE.0001",
+  "version": "0.2.0",
+  "state": "DELTA_1_0_REPOSITORY_UPGRADE_CANDIDATE",
+  "delta_address": "∆.1.0",
+  "reference_point": {
+    "identifier": "RP.1",
+    "ref": "main",
+    "sha": "5c02d0c313f53244fd98dccffe11bbb97f6be2e1"
+  },
+  "humanlock": true,
+  "humanlock_authorization": "GRANTED_FOR_THIS_REPOSITORY_UPGRADE",
+  "pipeline": [
+    "SOURCE_LOCK",
+    "INTENT_COMPILE",
+    "LANE_DETECT",
+    "TOOL_GATE",
+    "DECOMPOSE",
+    "EXECUTE",
+    "FAILURE_LOOP",
+    "LOGIC_GATE",
+    "OUTPUT_GATE",
+    "CHOMP",
+    "STAY"
+  ],
+  "lane_priority": [
+    "EXPLICIT_STOP_OR_OVERRIDE",
+    "REPOSITORY_WRITE",
+    "IMAGE_EDIT",
+    "IMAGE_GENERATION",
+    "RESEARCH",
+    "TEXT"
+  ],
+  "lanes": {
+    "REPOSITORY_WRITE": {
+      "allowed_tools": ["GITHUB_READ", "GITHUB_WRITE", "LOCAL_VALIDATION"],
+      "blocked_tools": ["IMAGE_GENERATION"],
+      "rule": "REPOSITORY_WRITE_NE_IMAGE_GENERATION"
+    },
+    "IMAGE_EDIT": {
+      "allowed_tools": ["IMAGE_GENERATION"],
+      "blocked_tools": ["GITHUB_WRITE"],
+      "rule": "IMAGE_EDIT_REQUIRES_USABLE_IMAGE_TARGET"
+    },
+    "IMAGE_GENERATION": {
+      "allowed_tools": ["IMAGE_GENERATION"],
+      "blocked_tools": ["GITHUB_WRITE"],
+      "rule": "IMAGE_GENERATION_REQUIRES_EXPLICIT_CURRENT_IMAGE_INTENT"
+    },
+    "RESEARCH": {
+      "allowed_tools": ["PUBLIC_SEARCH", "CONNECTED_SOURCE_READ"],
+      "blocked_tools": ["IMAGE_GENERATION", "GITHUB_WRITE"],
+      "rule": "RESEARCH_NE_MUTATION"
+    },
+    "TEXT": {
+      "allowed_tools": [],
+      "blocked_tools": ["IMAGE_GENERATION", "GITHUB_WRITE"],
+      "rule": "TEXT_ONLY_UNLESS_CURRENT_INTENT_REQUIRES_TOOL"
+    }
+  },
+  "override_rules": [
+    "LATEST_USER_INTENT_OVERRIDES_PRIOR_ACTIVE_INTENT",
+    "EXPLICIT_STOP_CANCELS_PENDING_EXECUTION",
+    "EXPLICIT_STOP_IMAGE_CANCELS_IMAGE_LANE",
+    "NO_CROSS_LANE_FALLTHROUGH",
+    "FAILED_TOOL_NE_PERMISSION_TO_TRY_DIFFERENT_LANE",
+    "TOOL_CALL_REQUIRES_LANE_MATCH",
+    "SOURCE_LOCK_PRECEDES_EXECUTION",
+    "OUTPUT_GATE_PRECEDES_COMPLETION_CLAIM",
+    "EXTERNAL_RUNTIME_REQUIRES_EMPIRICAL_RECEIPT",
+    "REPOSITORY_PRESENCE_NE_EXTERNAL_RUNTIME"
+  ],
+  "image_queue_contract": {
+    "n_in_equals_n_out": true,
+    "one_source_one_output": true,
+    "one_output_one_canvas": true,
+    "collage": "REJECT",
+    "contact_sheet": "REJECT",
+    "duplicate_output": "REJECT",
+    "count_mismatch": "REJECT",
+    "source_bound_batch_requires_readable_source_count": true,
+    "explicit_stop_cancels_pending_batch": true
+  },
+  "repository_write_contract": {
+    "branch_write_preferred": true,
+    "direct_main_write": "HOLD_UNLESS_EXPLICITLY_AUTHORIZED",
+    "merge": "AUTHORIZED_BY_HUMANLOCK_FOR_DELTA_1_0_SUBJECT_TO_EXACT_HEAD_CI",
+    "external_runtime_claim": "RECEIPT_REQUIRED"
+  },
+  "terminal_states": {
+    "true": "T.20",
+    "hold": "U.21",
+    "false": "F.6"
+  },
+  "evidence_boundaries": [
+    "REPOSITORY_CI_PASS_NE_EXTERNAL_RUNTIME_PASS",
+    "HUMANLOCK_AUTHORIZATION_NE_EXTERNAL_RUNTIME_RECEIPT",
+    "DELTA_REQUIRES_REFERENCE_POINT",
+    "DELTA_1_0_IS_MEASURED_FROM_RP_1"
+  ]
+}

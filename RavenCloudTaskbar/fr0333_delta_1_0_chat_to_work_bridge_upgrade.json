@@ -1,0 +1,36 @@
+{
+  "identifier": "FR0333.CHAT.TO.WORK.BRIDGE.DELTA.1.0",
+  "delta_address": "∆.1.0",
+  "reference_point": {
+    "identifier": "RP.1",
+    "type": "GIT_COMMIT",
+    "ref": "main",
+    "sha": "5c02d0c313f53244fd98dccffe11bbb97f6be2e1"
+  },
+  "relation": "RP.1_TO_DELTA_1_0",
+  "source_pr": 30,
+  "source_pr_verified_head": "ebec6aded3c5a0bfff2db9ffba55320002ba08c0",
+  "upgrade_scope": [
+    "CHAT_TO_WORK_BRIDGE_SPEC",
+    "DETERMINISTIC_ROUTER",
+    "REGRESSION_TEST_RAIL",
+    "CI_VALIDATION",
+    "REFERENCE_POINT_BINDING"
+  ],
+  "humanlock": {
+    "required": true,
+    "authorization": "GRANTED_BY_HUMAN_OPERATOR_FOR_THIS_UPGRADE"
+  },
+  "repository_state": "INTEGRATION_CANDIDATE_PENDING_EXACT_HEAD_CI",
+  "external_runtime": "U.21.HOLD",
+  "adobe_external_runtime": "U.21.HOLD",
+  "chatgpt_product_runtime_control": "F.6.NOT_CLAIMED",
+  "laws": [
+    "DELTA_REQUIRES_REFERENCE_POINT",
+    "DELTA_1_0_CANNOT_FLOAT",
+    "REPOSITORY_CI_PASS_NE_EXTERNAL_RUNTIME_PASS",
+    "HUMANLOCK_AUTHORIZATION_NE_EXTERNAL_RUNTIME_RECEIPT",
+    "NO_CROSS_LANE_FALLTHROUGH",
+    "TEN_REQUESTED_EQ_TEN_DELIVERED_WHEN_TEN_VALID_SOURCES_EXIST"
+  ]
+}
