@@ -46,7 +46,13 @@
     {"inventory_id":"INV.0.41","artifact":".github/workflows/fr0333-bits-bones-cultural-capital-transfer-validate.yml","role":"CI_VALIDATION","git_blob_sha":"c0e3c29e3fd03739decac869f2bc041c37856c43"},
     {"inventory_id":"INV.0.42","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.8","git_blob_sha":"3341b3086a94ee1be66b25014509f1d147114a7e"},
     {"inventory_id":"INV.0.43","artifact":"RavenCloudTaskbar/README.md","role":"TASKBAR_README_EXPOSURE_FOR_0.8","git_blob_sha":"86bfb178ddfc8eac65e7be21c3e23993bcd2b9dc"},
-    {"inventory_id":"INV.0.44","artifact":"RavenCloudTaskbar/taskbars.json","role":"TASKBAR_REGISTRATION_FOR_0.8","git_blob_sha":"fed924db16059748dcd1b07dcc6d2d43788107e9"}
+    {"inventory_id":"INV.0.44","artifact":"RavenCloudTaskbar/taskbars.json","role":"TASKBAR_REGISTRATION_FOR_0.8","git_blob_sha":"fed924db16059748dcd1b07dcc6d2d43788107e9"},
+    {"inventory_id":"INV.0.45","artifact":"RavenCloudTaskbar/fr0333_chat_to_work_bridge_0001.json","role":"CHAT_TO_WORK_BRIDGE_SPECIFICATION","git_blob_sha":"92b282d7b104bee5d113fad439a3bad3acd37206"},
+    {"inventory_id":"INV.0.46","artifact":"RavenCloudTaskbar/fr0333_chat_to_work_bridge.py","role":"CHAT_TO_WORK_BRIDGE_ROUTER","git_blob_sha":"b0e0e0e9c8f2605b7b1227077bf28996c02030b8"},
+    {"inventory_id":"INV.0.47","artifact":"RavenCloudTaskbar/test_fr0333_chat_to_work_bridge.py","role":"CHAT_TO_WORK_BRIDGE_REGRESSION_RAIL","git_blob_sha":"0c9fdf3a401660a9c75975c1538ebca1e4a90125"},
+    {"inventory_id":"INV.0.48","artifact":"RavenCloudTaskbar/README_chat_to_work_bridge_0001.md","role":"CHAT_TO_WORK_BRIDGE_README","git_blob_sha":"01968f399e73710efbfddeab9ba5a861e7f0ff0b"},
+    {"inventory_id":"INV.0.49","artifact":".github/workflows/fr0333-chat-to-work-bridge-validate.yml","role":"CHAT_TO_WORK_BRIDGE_CI_VALIDATION","git_blob_sha":"fd72712a2577a3c456a66263ce9f1bb6e2877429"},
+    {"inventory_id":"INV.0.50","artifact":"RavenCloudTaskbar/taskbars.json","role":"TASKBAR_REGISTRATION_FOR_CHAT_TO_WORK_BRIDGE","git_blob_sha":"0f91789dfb3a9ad99eadd54a9857d1ab61982ca6"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",
@@ -78,6 +84,13 @@
     "POPULARIZATION_NE_ORIGIN",
     "STRUCTURAL_BARRIER_NE_ABSOLUTE_BARRIER",
     "AUDIO_IDENTITY_NE_VISUAL_IDENTITY",
-    "LABEL_MARKETING_INTENT_REQUIRES_STRONG_SOURCE_FOR_T20"
+    "LABEL_MARKETING_INTENT_REQUIRES_STRONG_SOURCE_FOR_T20",
+    "LATEST_USER_INTENT_OVERRIDES_PRIOR_ACTIVE_INTENT",
+    "EXPLICIT_STOP_CANCELS_PENDING_EXECUTION",
+    "REPOSITORY_WRITE_NE_IMAGE_GENERATION",
+    "NO_CROSS_LANE_FALLTHROUGH",
+    "TOOL_CALL_REQUIRES_LANE_MATCH",
+    "SOURCE_LOCK_PRECEDES_EXECUTION",
+    "OUTPUT_GATE_PRECEDES_COMPLETION_CLAIM"
   ]
 }
