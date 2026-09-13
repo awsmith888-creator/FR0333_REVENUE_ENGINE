@@ -32,6 +32,26 @@ class FindHubRememberedStateBoundaryTests(unittest.TestCase):
         doc["terminal_logic"]["T.99"] = doc["terminal_logic"].pop("T.20")
         self.assertEqual(validate_spec(doc)["state"], "FAIL")
 
+    def test_humanlock_false_mutation_fails(self):
+        doc = copy.deepcopy(SPEC)
+        doc["zero_lion_logic_gate"]["humanlock"] = False
+        self.assertEqual(validate_spec(doc)["state"], "FAIL")
+
+    def test_humanlock_disable_capability_mutation_fails(self):
+        doc = copy.deepcopy(SPEC)
+        doc["zero_lion_logic_gate"]["humanlock_can_be_disabled"] = True
+        self.assertEqual(validate_spec(doc)["state"], "FAIL")
+
+    def test_authorized_action_cannot_remove_humanlock(self):
+        doc = copy.deepcopy(SPEC)
+        doc["zero_lion_logic_gate"]["authorized_action_complete_does_not_remove_humanlock"] = False
+        self.assertEqual(validate_spec(doc)["state"], "FAIL")
+
+    def test_external_runtime_cannot_be_smuggled_through_authorization(self):
+        doc = copy.deepcopy(SPEC)
+        doc["authorization_receipt"]["external_runtime_authorized"] = True
+        self.assertEqual(validate_spec(doc)["state"], "FAIL")
+
     def test_valid_remembered_record_holds_present_location(self):
         record = {
             "ITEM_ID": "PASSPORT.1",
