@@ -38,7 +38,8 @@
     {"inventory_id":"INV.0.33","artifact":"RavenCloudTaskbar/test_fr0333_ai_safe_spec_adoption_genius.py","role":"LOCAL_TEST_RAIL","git_blob_sha":"857e7fb80d9c52c69e8228a40c1c11d3b9b234d9"},
     {"inventory_id":"INV.0.34","artifact":"RavenCloudTaskbar/README_ai_safe_spec_adoption_0001.md","role":"README","git_blob_sha":"86edc90b4537cf595beb0bf89c316d2c3d205d2b"},
     {"inventory_id":"INV.0.35","artifact":".github/workflows/fr0333-ai-safe-spec-adoption-validate.yml","role":"CI_VALIDATION","git_blob_sha":"5855d8eccb730fa0f76daf89b164ca85a427ec3f"},
-    {"inventory_id":"INV.0.36","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.7","git_blob_sha":"33ec229814064e12002b7c83605e790073486c30"}
+    {"inventory_id":"INV.0.36","artifact":"RavenCloudTaskbar/fr0333_golden_chain_index_0001.json","role":"GOLDEN_CHAIN_INDEX_REVISION_FOR_0.7","git_blob_sha":"33ec229814064e12002b7c83605e790073486c30"},
+    {"inventory_id":"INV.0.37","artifact":"RavenCloudTaskbar/fr0333_taskbars_stronghold_root_0001.json","role":"TASKBAR_STRONGHOLD_ROOT_MANIFEST","git_blob_sha":"0b3cb4f1a1461e84bccd834494d27885fe6f3a65"}
   ],
   "boundaries": [
     "INVENTORY_PRESENCE_NE_EXTERNAL_RUNTIME",

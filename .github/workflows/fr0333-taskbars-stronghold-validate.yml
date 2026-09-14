@@ -1,0 +1,76 @@
+name: FR0333 Taskbars Stronghold Validate
+
+on:
+  push:
+    branches:
+      - isolated-repair-fr0333-stronghold-0001
+    paths:
+      - RavenCloudTaskbar/taskbars.json
+      - RavenCloudTaskbar/fr0333_taskbars_stronghold_root_0001.json
+      - RavenCloudTaskbar/fr0333_taskbars_stronghold_0001.schema.json
+      - RavenCloudTaskbar/fr0333_taskbars_stronghold_validate.py
+      - RavenCloudTaskbar/test_fr0333_taskbars_stronghold.py
+      - .github/workflows/fr0333-taskbars-stronghold-validate.yml
+  pull_request:
+    paths:
+      - RavenCloudTaskbar/taskbars.json
+      - RavenCloudTaskbar/fr0333_taskbars_stronghold_root_0001.json
+      - RavenCloudTaskbar/fr0333_taskbars_stronghold_0001.schema.json
+      - RavenCloudTaskbar/fr0333_taskbars_stronghold_validate.py
+      - RavenCloudTaskbar/test_fr0333_taskbars_stronghold.py
+      - .github/workflows/fr0333-taskbars-stronghold-validate.yml
+
+permissions:
+  contents: read
+
+jobs:
+  stronghold:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install validation dependency
+        run: python -m pip install 'jsonschema>=4.23,<5'
+
+      - name: Parse stronghold JSON
+        run: |
+          python -m json.tool RavenCloudTaskbar/taskbars.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_taskbars_stronghold_root_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_taskbars_stronghold_0001.schema.json >/dev/null
+
+      - name: Validate rooted taskbar set
+        run: python RavenCloudTaskbar/fr0333_taskbars_stronghold_validate.py
+
+      - name: Run stronghold adversarial tests
+        run: |
+          cd RavenCloudTaskbar
+          python -m unittest -v test_fr0333_taskbars_stronghold.py
+
+      - name: Verify no provisioned cloud credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${AWS_ACCESS_KEY_ID:-}"
+          test -z "${AWS_SECRET_ACCESS_KEY:-}"
+          test -z "${AZURE_CLIENT_SECRET:-}"
+          test -z "${GOOGLE_APPLICATION_CREDENTIALS:-}"
+
+      - name: Stronghold summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ## FR0333 Taskbars Stronghold
+          - 21 unique taskbar IDs required.
+          - Current-main metadata is hash-rooted and immutable under this contract.
+          - HumanLock must remain ACTIVE_IMMUTABLE.
+          - PR #17 contributes exactly two pinned records.
+          - PR #19 contributes exactly one pinned record.
+          - Any record mutation, duplicate ID, metadata drift, file hash drift, or keyed-set root drift fails CI.
+          - CI is tamper-evident validation, not a GitHub branch-protection ruleset.
+          - Validation pass does not authorize merge or promotion.
+          EOF
