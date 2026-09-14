@@ -3,6 +3,27 @@
   "observed_at": "2026-09-14",
   "architecture_state": "LOCKED.BASELINE",
   "humanlock": true,
+  "humanlock_contract": {
+    "identifier": "Z.26.21.HUMANLOCK",
+    "state": "ACTIVE_IMMUTABLE",
+    "can_be_disabled": false,
+    "semantic_role": "HUMAN_AUTHORIZATION_BOUNDARY",
+    "biometric_or_neural_interface": false,
+    "cryptographic_signature_equivalence": false,
+    "automatic_bypass": "F.6",
+    "removal_or_downgrade": "REJECT",
+    "merge_requires_explicit_human_authorization": true,
+    "canonical_promotion_requires_explicit_human_authorization": true,
+    "authorization_path": [
+      "HUMAN.OPERATOR",
+      "Z.26.21.HUMANLOCK",
+      "HUMAN.AUTHORIZATION",
+      "PARTITION.ROUTING",
+      "STATE.VALIDATION",
+      "RECEIPT",
+      "PASS.HOLD.REJECT"
+    ]
+  },
   "purpose": "Create one bounded, source-backed master comparator for major ChatGPT-like frontier assistants without merging proprietary model weights, inventing cross-provider runtime access, or altering the frozen FR0333 lane architecture.",
   "integration_mode": {
     "mode": "EXTERNAL.ORCHESTRATION.BY.COMPARISON.NOT.MODEL.FUSION",
@@ -173,6 +194,10 @@
     "PLAN.ACCESS != FR0333.PERFORMANCE.DELTA",
     "PROVIDER.NOT.CONNECTED != PROVIDER.RUNTIME.PASS",
     "EXTERNAL.MODEL.OUTPUT != GROUND.TRUTH",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+    "HUMANLOCK.REMOVAL.OR.DOWNGRADE = REJECT",
+    "MERGE.REQUIRES.EXPLICIT.HUMAN.AUTHORIZATION",
+    "CANONICAL.PROMOTION.REQUIRES.EXPLICIT.HUMAN.AUTHORIZATION",
     "NO.NEW.LANE",
     "NO.TASKBARS.JSON.MUTATION",
     "NO.AUTONOMOUS.PROMOTION"
@@ -183,6 +208,7 @@
     "cross_provider_live_runtime": "U.21.NOT.CONNECTED",
     "measured_fr0333_performance_gain": "U.21.UNMEASURED",
     "chatgpt_core_model_changed": "F.6",
+    "humanlock_state": "ACTIVE_IMMUTABLE",
     "canonical_promotion": "HUMANLOCK_REQUIRED"
   }
 }
