@@ -1,0 +1,53 @@
+{
+  "golden_chain_id": "GC.SB.0031",
+  "state": "REGISTERED.DRAFT.UNMERGED",
+  "predecessor": "GC.SB.0030",
+  "predecessor_requirement": "GC.SB.0030 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0031 IS PROMOTED",
+  "package_id": "FR0333.CLOTILDA.ANSON.DNA.SEPARATION.0001",
+  "primary_record": "RavenCloudTaskbar/fr0333_clotilda_anson_dna_separation_0001.json",
+  "classification": "HISTORICAL_SCIENTIFIC_CLAIM_SEPARATION_REGISTER",
+  "humanlock": true,
+  "promotion": "U.21.HOLD.UNTIL_PREDECESSOR_REVIEW_EXACT_HEAD_CI_AND_HUMAN_AUTHORIZATION",
+  "terminal_state": "U.21.HOLD",
+  "terminal_reason": "Authenticated captive human DNA from Clotilda is not publicly established; Facebook full-video provenance is not directly observed.",
+  "established_counts": {
+    "anson_remains": 36,
+    "anson_dna_obtained": 31,
+    "anson_low_coverage_genomes": 18,
+    "anson_uniparental_haplotypes": 31
+  },
+  "unresolved": [
+    "CLOTILDA_AUTHENTICATED_CAPTIVE_HUMAN_DNA",
+    "CLOTILDA_PUBLIC_POSITIVE_OR_NEGATIVE_LAB_RESULT",
+    "FACEBOOK_COMPLETE_VIDEO_TRANSCRIPT",
+    "FACEBOOK_EDITORIAL_PROVENANCE"
+  ],
+  "gates": [
+    "SOURCE_ID_PRESENT",
+    "CLAIM_TO_SOURCE_BINDING_PRESENT",
+    "PINPOINT_PRESENT",
+    "MEASUREMENT_SCOPE_PRESENT",
+    "PUBLIC_SEARCH_BOUNDARY_DECLARED",
+    "RAW_BYTE_HASH_STATE_DECLARED",
+    "ANSON_AND_CLOTILDA_SEPARATED",
+    "SAMPLE_AND_RESULT_SEPARATED",
+    "ABSENCE_AND_NEGATIVE_RESULT_SEPARATED",
+    "OBSERVATION_CORRELATION_CAUSATION_SEPARATED",
+    "LEGAL_CATEGORIES_SEPARATED",
+    "APPEND_ONLY_CORRECTION_POLICY",
+    "HUMANLOCK_ACTIVE"
+  ],
+  "hard_boundaries": [
+    "ANSON_STREET_DNA != CLOTILDA_DNA",
+    "SAMPLE_COLLECTION != DNA_RECOVERY",
+    "NO_PUBLIC_RESULT_LOCATED != NEGATIVE_LAB_RESULT",
+    "INDEXED_TEXT_MATCH != EDITORIAL_PROVENANCE",
+    "CONVICT_LEASING != DEBT_PEONAGE",
+    "GOLDEN_CHAIN_REGISTRATION != CANONICAL_PROMOTION"
+  ],
+  "runtime": {
+    "external_runtime": "NOT_APPLICABLE.PUBLIC_EVIDENCE_REGISTER",
+    "monitoring": "NONE",
+    "automatic_promotion": false
+  }
+}
