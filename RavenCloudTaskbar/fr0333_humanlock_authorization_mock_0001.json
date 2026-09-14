@@ -1,0 +1,74 @@
+{
+  "identifier": "FR0333.HUMANLOCK.AUTHORIZATION.MOCK.SUITE.0001",
+  "architecture_state": "LOCKED.BASELINE",
+  "humanlock": "ACTIVE_IMMUTABLE",
+  "source_pr": 41,
+  "demonstration_target_head": "767e5ecc96a1b50b3896c9c51256aced1b27afb9",
+  "expected_target_action": "MERGE",
+  "mock_authorization": {
+    "authorization_id": "FR0333.HUMANLOCK.AUTH.MOCK.0001",
+    "humanlock_id": "Z.26.21.HUMANLOCK",
+    "target_action": "MERGE",
+    "repository": "awsmith888-creator/FR0333_REVENUE_ENGINE",
+    "pull_request": 41,
+    "target_head": "767e5ecc96a1b50b3896c9c51256aced1b27afb9",
+    "authorization_state": "EXPLICIT.HUMAN.AUTHORIZED",
+    "authorized_by_role": "HUMAN.OPERATOR",
+    "human_authorization_present": true,
+    "issued_at": "2026-09-14T14:00:00-04:00",
+    "audit_receipt": "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001",
+    "signature_state": "NOT_APPLICABLE_OR_SEPARATELY_VERIFIED",
+    "signature_required_by_policy": false,
+    "mock_only": true,
+    "authorization_scope": "SIMULATION_ONLY",
+    "live_execution_eligible": false,
+    "payload_hash": "ae6be6435f859c4a5d7780a6f0b60dfefd1294d680713238f16c80eb22d8b738"
+  },
+  "expected_positive_result": {
+    "decision": "PASS.MOCK_ONLY",
+    "truth_state": "T.20",
+    "qualifier": "STRUCTURAL.AUTHORIZATION.PASS.SIMULATION_ONLY",
+    "humanlock_boundary_reached": true,
+    "action_eligible": false
+  },
+  "negative_tests": [
+    {
+      "test_id": "AUTH-NEG-001-STALE-HEAD",
+      "mutation": {"target_head": "0000000000000000000000000000000000000001"},
+      "expected_decision": "REJECT.STALE_OR_MISMATCHED_HEAD",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "test_id": "AUTH-NEG-002-WRONG-ACTION",
+      "mutation": {"target_action": "CANONICAL_PROMOTION"},
+      "expected_decision": "REJECT.WRONG_ACTION",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "test_id": "AUTH-NEG-003-MISSING-HUMAN-AUTH",
+      "mutation": {"human_authorization_present": false, "authorization_state": "NOT.AUTHORIZED"},
+      "expected_decision": "REJECT.MISSING_HUMAN_AUTHORIZATION",
+      "expected_truth_state": "U.21"
+    }
+  ],
+  "hold_semantics": {
+    "route": [
+      "AUTHORIZATION.INVALID.OR.ABSENT",
+      "EMIT.NEW.HOLD.RECEIPT",
+      "TRUTH.STATE.U.21",
+      "QUALIFIER.HUMANLOCK.HOLD",
+      "NO.ROLLBACK",
+      "NO.PROMOTION"
+    ],
+    "append_only": true
+  },
+  "boundaries": [
+    "MOCK.AUTHORIZATION != LIVE.AUTHORIZATION",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+    "NEW.COMMIT.INVALIDATES.PRIOR.HEAD_BOUND.AUTHORIZATION",
+    "NO.NEW.LANE",
+    "NO.TASKBARS.JSON.MUTATION",
+    "NO.MERGE",
+    "NO.PROMOTION"
+  ]
+}
