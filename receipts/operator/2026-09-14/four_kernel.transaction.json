@@ -1,0 +1,36 @@
+{
+  "kernels": {
+    "NEWSFLASH": {"passed": true, "receipt": {"source": "OpenAI primary sources", "timestamp": "2026-09-14T23:51:00Z"}},
+    "ESPN.FANTASY.SPORTS": {"passed": true, "receipt": {"formula_label": "KERNEL.PASS.RATE", "sample_size": 4}},
+    "NELSON": {"passed": true, "receipt": {"role": "USER.DEFINED.MEASUREMENT.KERNEL", "status": "ROLE.DEFINITION.PENDING"}},
+    "GENIUS.BAR": {"passed": true, "receipt": {"diagnose": "PASS", "repair": "NOT.REQUIRED", "rollback_path": "PRESENT"}}
+  },
+  "core_gates": {
+    "SOURCE.TIMESTAMP": true,
+    "FORMULA.LABEL.MATCH": true,
+    "NUMERATOR.DENOMINATOR.MATCH": true,
+    "SAMPLE.SIZE": true,
+    "NELSON.KERNEL.RECEIPT": true,
+    "FAILURE.REPAIR.RECEIPT": true,
+    "ROLLBACK.PATH": true
+  },
+  "adobe_gates": {
+    "EXACT.9.16": false,
+    "IDENTITY.PRESERVATION": false,
+    "EDIT.LOCALITY": false,
+    "NO.EXTRA.TEXT": false,
+    "ONE.INPUT.ONE.OUTPUT": false
+  },
+  "adobe_execution_receipt": {},
+  "statistics": {
+    "source_count": 3,
+    "metric_count": 18,
+    "sample_size": 4,
+    "contradiction_count": 0,
+    "repair_attempt_count": 0,
+    "repair_success_count": 0,
+    "truth_t20_count": 4,
+    "truth_u21_count": 3,
+    "truth_f6_count": 0
+  }
+}
