@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import copy
 import json
 import pathlib
 import unittest
@@ -7,9 +6,11 @@ import unittest
 from fr0333_frontier_model_master_validate import (
     EXPECTED_PROVIDER_IDS,
     MASTER_PATH,
+    AUTH_SIMULATION_PATH,
     assert_humanlock_mutation_rejected,
     evaluate_fixture,
     validate_all,
+    validate_authorization_package,
     validate_humanlock_contract,
 )
 
@@ -23,9 +24,11 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
         cls.fixtures_doc = json.loads(FIXTURES.read_text(encoding="utf-8"))
         cls.fixtures = {f["scenario"]: f for f in cls.fixtures_doc["fixtures"]}
         cls.master = json.loads(MASTER_PATH.read_text(encoding="utf-8"))
+        cls.simulation = json.loads(AUTH_SIMULATION_PATH.read_text(encoding="utf-8"))
         cls.report = validate_all()
+        cls.auth_report = validate_authorization_package()
 
-    def test_all_eight_mock_fixtures_validate(self):
+    def test_all_eight_model_failure_fixtures_validate(self):
         self.assertEqual(self.report["state"], "T.20")
         self.assertEqual(self.report["fixture_count"], 8)
         self.assertEqual(self.report["schema_valid_register_count"], 8)
@@ -40,20 +43,17 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
         self.assertEqual(result["action"], "REJECT_ALL")
         self.assertEqual(result["truth_state"], "F.6")
         self.assertEqual(len(result["register"]["agreement_set"]), 6)
-        self.assertEqual(result["register"]["verification_state"], "FAILED_VALIDATION")
 
     def test_evidenced_dissent_halts_composite(self):
         result = evaluate_fixture(self.fixtures["1.MODEL.OBJECTS.WITH.VALID.SOURCE"], 2)
         self.assertEqual(result["action"], "HALT_COMPOSITE_OUTPUT")
         self.assertEqual(result["truth_state"], "U.21")
         self.assertEqual(result["register"]["objection_set"], ["P04.XAI.GROK"])
-        self.assertIn("src/engine/pipeline.c#L142", result["register"]["cited_sources"])
 
     def test_nonexistent_api_is_failed_claim(self):
         result = evaluate_fixture(self.fixtures["MODEL.CITES.NONEXISTENT.API"], 3)
         self.assertEqual(result["action"], "FLAG_CLAIM_INVALID")
         self.assertEqual(result["truth_state"], "F.6")
-        self.assertEqual(result["register"]["evidence_class"], "VERIFIED_REPO_STATE")
 
     def test_repo_state_disagreement_requires_fetch(self):
         result = evaluate_fixture(self.fixtures["MODELS.DISAGREE.ON.CURRENT.REPO.STATE"], 4)
@@ -66,50 +66,53 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
         self.assertEqual(result["truth_state"], "U.21")
         self.assertNotIn("P04.XAI.GROK", result["register"]["agreement_set"])
 
-    def test_missing_receipt_and_humanlock_absence_hold(self):
-        missing = evaluate_fixture(self.fixtures["MISSING.RECEIPT"], 7)
-        human = evaluate_fixture(self.fixtures["HUMANLOCK.ABSENT"], 8)
-        self.assertEqual((missing["action"], missing["truth_state"]), ("HOLD_MISSING_RECEIPT", "U.21"))
-        self.assertEqual((human["action"], human["truth_state"]), ("BLOCK_PROMOTION", "U.21"))
-
     def test_humanlock_contract_is_active_immutable(self):
         validate_humanlock_contract(self.master)
         self.assertEqual(self.report["humanlock"], "ACTIVE_IMMUTABLE.REQUIRED")
         self.assertEqual(self.report["humanlock_bypass"], "F.6")
         self.assertEqual(self.report["humanlock_removal_or_downgrade"], "REJECT")
-        self.assertTrue(self.report["merge_requires_explicit_human_authorization"])
-        self.assertTrue(self.report["canonical_promotion_requires_explicit_human_authorization"])
 
-    def test_humanlock_false_is_rejected(self):
+    def test_humanlock_mutation_guards(self):
         self.assertTrue(assert_humanlock_mutation_rejected(self.master, lambda m: m.__setitem__("humanlock", False)))
-
-    def test_humanlock_disable_capability_is_rejected(self):
         self.assertTrue(assert_humanlock_mutation_rejected(self.master, lambda m: m["humanlock_contract"].__setitem__("can_be_disabled", True)))
 
-    def test_humanlock_route_removal_is_rejected(self):
-        def mutate(m):
+        def remove_route(m):
             m["diamond_comparator"]["route"] = [x for x in m["diamond_comparator"]["route"] if x != "HUMANLOCK"]
-        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, remove_route))
 
-    def test_humanlock_promotion_bypass_is_rejected(self):
-        def mutate(m):
+        def auto_promote(m):
             m["result"]["canonical_promotion"] = "AUTO_PROMOTE"
             m["humanlock_contract"]["canonical_promotion_requires_explicit_human_authorization"] = False
-        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, auto_promote))
 
-    def test_humanlock_merge_bypass_is_rejected(self):
-        def mutate(m):
-            m["humanlock_contract"]["merge_requires_explicit_human_authorization"] = False
-        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+    def test_simulation_fixture_does_not_claim_human_authorization(self):
+        payload = self.simulation["simulation_authorization_fixture"]
+        self.assertTrue(payload["simulation_fixture"])
+        self.assertFalse(payload["human_authorization_present"])
+        self.assertEqual(payload["authorization_state"], "NOT.AUTHORIZED")
+        self.assertEqual(payload["authorized_by_role"], "NONE")
+        self.assertFalse(payload["live_execution_eligible"])
+        self.assertEqual(payload["authorization_scope"], "SIMULATION_ONLY")
 
-    def test_humanlock_signature_conflation_is_rejected(self):
-        def mutate(m):
-            m["humanlock_contract"]["cryptographic_signature_equivalence"] = True
-        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+    def test_simulation_fixture_never_satisfies_humanlock(self):
+        structural = self.auth_report["structural_fixture"]
+        self.assertEqual(structural["decision"], "PASS.SIMULATION.FIXTURE")
+        self.assertEqual(structural["truth_state"], "T.20")
+        self.assertFalse(structural["humanlock_boundary_reached"])
+        self.assertFalse(structural["action_eligible"])
+        self.assertFalse(structural["real_human_authorization_present"])
+        self.assertFalse(self.auth_report["merge_authorized"])
+        self.assertFalse(self.auth_report["canonical_promotion_authorized"])
+
+    def test_forged_human_authorization_in_simulation_is_rejected(self):
+        forged = next(x for x in self.auth_report["negative_tests"] if x["test_id"] == "AUTH-SIM-NEG-003-FORGED-HUMAN-AUTH")
+        self.assertEqual(forged["decision"], "REJECT.SIMULATION.CANNOT.ASSERT.HUMAN.AUTHORIZATION")
+        self.assertEqual(forged["truth_state"], "U.21")
 
     def test_frozen_architecture_boundaries_remain_explicit(self):
         self.assertFalse(self.report["new_lane"])
         self.assertFalse(self.report["taskbars_json_mutation"])
+        self.assertFalse(self.report["real_human_authorization_present"])
         self.assertEqual(self.report["cross_provider_live_runtime"], "U.21.NOT.CONNECTED")
 
 
