@@ -7,10 +7,14 @@ from fr0333_frontier_model_master_validate import (
     EXPECTED_PROVIDER_IDS,
     MASTER_PATH,
     AUTH_SIMULATION_PATH,
+    HUMANLOCK_RECEIPT_PATH,
     assert_humanlock_mutation_rejected,
+    build_exact_head_ci_receipt,
     evaluate_fixture,
     validate_all,
     validate_authorization_package,
+    validate_exact_head_ci_receipt,
+    validate_humanlock_compliance_receipt,
     validate_humanlock_contract,
 )
 
@@ -25,6 +29,7 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
         cls.fixtures = {f["scenario"]: f for f in cls.fixtures_doc["fixtures"]}
         cls.master = json.loads(MASTER_PATH.read_text(encoding="utf-8"))
         cls.simulation = json.loads(AUTH_SIMULATION_PATH.read_text(encoding="utf-8"))
+        cls.compliance_template = json.loads(HUMANLOCK_RECEIPT_PATH.read_text(encoding="utf-8"))
         cls.report = validate_all()
         cls.auth_report = validate_authorization_package()
 
@@ -108,6 +113,34 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
         forged = next(x for x in self.auth_report["negative_tests"] if x["test_id"] == "AUTH-SIM-NEG-003-FORGED-HUMAN-AUTH")
         self.assertEqual(forged["decision"], "REJECT.SIMULATION.CANNOT.ASSERT.HUMAN.AUTHORIZATION")
         self.assertEqual(forged["truth_state"], "U.21")
+
+    def test_committed_receipt_is_symbolic_template_not_stale_head_claim(self):
+        validate_humanlock_compliance_receipt(self.compliance_template)
+        self.assertEqual(self.compliance_template["source_head_binding"], "GITHUB_SHA")
+        self.assertNotIn("source_head", self.compliance_template)
+        self.assertNotIn("run_id", self.compliance_template["verification_environment"])
+
+    def test_exact_head_ci_receipt_binds_runtime_identity(self):
+        head = "a" * 40
+        receipt = build_exact_head_ci_receipt(self.compliance_template, head, "123456", "2")
+        validated = validate_exact_head_ci_receipt(receipt, head, "123456", "2")
+        self.assertEqual(validated["source_head"], head)
+        self.assertFalse(validated["merge_authorized"])
+        self.assertFalse(validated["canonical_promotion_authorized"])
+
+    def test_stale_head_and_run_receipts_fail_closed(self):
+        head = "b" * 40
+        receipt = build_exact_head_ci_receipt(self.compliance_template, head, "777", "1")
+        with self.assertRaises(AssertionError):
+            validate_exact_head_ci_receipt(receipt, "c" * 40, "777", "1")
+        with self.assertRaises(AssertionError):
+            validate_exact_head_ci_receipt(receipt, head, "778", "1")
+
+    def test_static_template_rejects_literal_source_head(self):
+        candidate = dict(self.compliance_template)
+        candidate["source_head"] = "d" * 40
+        with self.assertRaises(AssertionError):
+            validate_humanlock_compliance_receipt(candidate)
 
     def test_frozen_architecture_boundaries_remain_explicit(self):
         self.assertFalse(self.report["new_lane"])
