@@ -36,6 +36,24 @@ class AIImageToolMetricsTests(unittest.TestCase):
     def test_golden_chain_binding(self):
         self.assertEqual(GOLDEN_CHAIN_ID, "GC.SB.0027")
 
+    def test_numeric_role_mutation_1_7_does_not_auto_regulate_seven(self):
+        report = compile_report([self.change()])
+        control = report["numeric_role_control"]
+        self.assertEqual(control["mutation"], "1.7")
+        self.assertEqual(control["seven_regulator_state"], "CONDITIONAL")
+        self.assertEqual(
+            control["activation_condition"],
+            "EIGHT.CONDITION.REACHED.AND.INCOMING.POWER.REQUIRES.REGULATION",
+        )
+        self.assertTrue(control["digit_value_ne_functional_role"])
+        self.assertFalse(control["suffix_7_inherits_regulator_role"])
+        self.assertFalse(control["gc_sb_0027_auto_regulator"])
+        self.assertEqual(
+            control["position_27_role"],
+            "UNASSIGNED.UNLESS.SEPARATELY.ESTABLISHED",
+        )
+        self.assertTrue(report["gate"]["suffix_7_auto_regulator_forbidden"])
+
     def test_verified_release_requires_availability_receipt(self):
         with self.assertRaises(ValueError):
             self.change(availability_receipt=None)
