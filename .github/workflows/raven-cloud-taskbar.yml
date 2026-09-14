@@ -27,6 +27,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Validate GC.SB.0027 numeric-role mutation 1.7
+        run: python -m unittest RavenCloudTaskbar.test_ai_image_tool_metrics -v
       - name: Build and validate taskbar
         run: python RavenCloudTaskbar/build.py
       - name: Verify no provisioned cloud credentials
