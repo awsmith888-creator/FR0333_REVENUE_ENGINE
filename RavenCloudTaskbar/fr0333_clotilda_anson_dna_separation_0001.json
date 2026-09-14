@@ -1,0 +1,367 @@
+{
+  "id": "FR0333.CLOTILDA.ANSON.DNA.SEPARATION.0001",
+  "version": "2.0.0",
+  "record_class": "CLAIM_LEVEL_HISTORICAL_AND_SCIENTIFIC_EVIDENCE_REGISTER",
+  "state": "SPECIFICATION.EVIDENCE_BOUNDED.DRAFT.UNMERGED",
+  "observed_at": "2026-09-14",
+  "golden_chain_position": "GC.SB.0031",
+  "golden_chain_predecessor": "GC.SB.0030",
+  "humanlock": true,
+  "canonical_promotion": "U.21.HOLD",
+  "scope": {
+    "questions": [
+      "WHICH_SITE_PRODUCED_AUTHENTICATED_HUMAN_DNA",
+      "WHAT_IS_PUBLICLY_ESTABLISHED_FOR_CLOTILDA_SEDIMENT_ANALYSIS",
+      "WHAT_CAN_BE_CONCLUDED_FROM_THE_FACEBOOK_POST",
+      "WHAT_FORCED_LABOR_STATES_ARE_ESTABLISHED_AFTER_1865"
+    ],
+    "excluded_claims": [
+      "PRIVATE_OR_UNPUBLISHED_LAB_RESULTS",
+      "COMPLETE_WEB_OR_INDEX_CENSUS",
+      "COMPLETE_TRANSCRIPT_OF_UNRETRIEVED_FACEBOOK_VIDEO",
+      "COLLECTIVE_LEGISLATIVE_MOTIVE_WITHOUT_DIRECT_PRIMARY_EVIDENCE"
+    ]
+  },
+  "state_grammar": {
+    "T.20": "SUPPORTED_BY_IDENTIFIED_EVIDENCE_WITHIN_STATED_SCOPE",
+    "U.21": "UNRESOLVED_OR_NOT_PUBLICLY_ESTABLISHED",
+    "F.6": "AFFIRMATIVELY_REJECTED_BY_SUFFICIENT_CONTRARY_EVIDENCE",
+    "prohibition": "ABSENCE_OF_PUBLICATION_MUST_NOT_BE_PROMOTED_TO_F.6"
+  },
+  "claims": [
+    {
+      "id": "C.01",
+      "proposition": "Thirty-six African-descended individuals dating to the late eighteenth century were unearthed at the Anson Street African Burial Ground in Charleston, South Carolina.",
+      "state": "T.20",
+      "evidence_class": "PEER_REVIEWED.PRIMARY_RESEARCH",
+      "sources": [
+        "S.01"
+      ],
+      "pinpoint": "SIGNIFICANCE; ABSTRACT"
+    },
+    {
+      "id": "C.02",
+      "proposition": "Mitochondrial and nuclear human DNA were obtained from 31 of the 36 Anson Street individuals.",
+      "state": "T.20",
+      "evidence_class": "PEER_REVIEWED.PRIMARY_RESEARCH",
+      "sources": [
+        "S.01"
+      ],
+      "pinpoint": "RESULTS.SEQUENCING_AND_ADNA_AUTHENTICATION"
+    },
+    {
+      "id": "C.03",
+      "proposition": "Eighteen Anson Street individuals produced low-coverage genomes meeting the study's autosomal-analysis threshold.",
+      "state": "T.20",
+      "evidence_class": "PEER_REVIEWED.PRIMARY_RESEARCH",
+      "sources": [
+        "S.01"
+      ],
+      "pinpoint": "SIGNIFICANCE; RESULTS.PCA_AND_ADMIXTURE_ANALYSES"
+    },
+    {
+      "id": "C.04",
+      "proposition": "The study reports 31 uniparental haplotypes.",
+      "state": "T.20",
+      "evidence_class": "PEER_REVIEWED.PRIMARY_RESEARCH",
+      "sources": [
+        "S.01"
+      ],
+      "pinpoint": "ABSTRACT"
+    },
+    {
+      "id": "C.05",
+      "proposition": "No autosomal kin were identified among the analyzed Anson Street individuals; one shared maternal haplotype was reported for two individuals.",
+      "state": "T.20",
+      "evidence_class": "PEER_REVIEWED.PRIMARY_RESEARCH",
+      "sources": [
+        "S.01"
+      ],
+      "pinpoint": "ABSTRACT; DISCUSSION"
+    },
+    {
+      "id": "C.06",
+      "proposition": "Every Anson Street individual is proven by direct individual documentation to have been legally enslaved.",
+      "state": "U.21",
+      "evidence_class": "INFERENCE_BOUNDARY",
+      "sources": [
+        "S.01"
+      ],
+      "pinpoint": "INTRODUCTION states presumed enslaved status and says direct identity or status documentation was not found."
+    },
+    {
+      "id": "C.07",
+      "proposition": "Clotilda carried 110 captive Africans into Alabama in 1860 after overseas importation had been prohibited.",
+      "state": "T.20",
+      "evidence_class": "OFFICIAL_INSTITUTIONAL_AND_CONTEMPORARY_PROJECT_REPORTING",
+      "sources": [
+        "S.03",
+        "S.05"
+      ],
+      "pinpoint": "Clotilda project history"
+    },
+    {
+      "id": "C.08",
+      "proposition": "In May 2022, scientific samples from the Clotilda site were collected under protocol, secured in sterilized receptacles, and transferred by Dr. Frankie West for laboratory analysis.",
+      "state": "T.20",
+      "evidence_class": "STATE_HISTORICAL_COMMISSION.FIELD_RECORD",
+      "sources": [
+        "S.02"
+      ],
+      "pinpoint": "May 2022 field briefings"
+    },
+    {
+      "id": "C.09",
+      "proposition": "The Clotilda project publicly described an attempt to recover possible human DNA from hold sediment, with mitochondrial DNA identified as the expected informative target if recovery succeeded.",
+      "state": "T.20",
+      "evidence_class": "PROJECT_REPORTING.WITH_SCIENTIST_ATTRIBUTION",
+      "sources": [
+        "S.03",
+        "S.05"
+      ],
+      "pinpoint": "DNA recovery attempt and stated limitations"
+    },
+    {
+      "id": "C.10",
+      "proposition": "Authenticated human DNA attributable to Clotilda captives has been publicly reported with laboratory methods, contamination controls, sequence data, and results.",
+      "state": "U.21",
+      "evidence_class": "NO_PUBLIC_RESULT_LOCATED.BOUNDED_SEARCH",
+      "sources": [
+        "S.02",
+        "S.03",
+        "S.04",
+        "S.05"
+      ],
+      "pinpoint": "Sources establish sampling or analysis activity, not a released positive result."
+    },
+    {
+      "id": "C.11",
+      "proposition": "No human DNA exists in any Clotilda specimen.",
+      "state": "U.21",
+      "evidence_class": "NEGATIVE_RESULT_NOT_ESTABLISHED",
+      "sources": [
+        "S.02",
+        "S.03",
+        "S.04",
+        "S.05"
+      ],
+      "pinpoint": "No public negative laboratory report located."
+    },
+    {
+      "id": "C.12",
+      "proposition": "The Facebook post presents the headline claim that DNA was found from a 160-year-old slave ship.",
+      "state": "T.20",
+      "evidence_class": "ORIGINAL_SOCIAL_POST.OBSERVED_HEADLINE",
+      "sources": [
+        "S.06"
+      ],
+      "pinpoint": "Post title and supplied screenshot"
+    },
+    {
+      "id": "C.13",
+      "proposition": "The Facebook post's Clotilda DNA attribution is verified by a released Clotilda laboratory result.",
+      "state": "U.21",
+      "evidence_class": "UNVERIFIED_CLAIM",
+      "sources": [
+        "S.02",
+        "S.03",
+        "S.04",
+        "S.05",
+        "S.06"
+      ],
+      "pinpoint": "No claim-to-laboratory receipt located."
+    },
+    {
+      "id": "C.14",
+      "proposition": "Indexed Facebook text overlaps the independently published Anson Street cemetery account, proving the exact editorial process used to create the video.",
+      "state": "U.21",
+      "evidence_class": "CORRELATED_TEXT_MATCH.NOT_CAUSAL_PROVENANCE",
+      "sources": [
+        "S.01",
+        "S.06"
+      ],
+      "pinpoint": "Textual convergence supports probable conflation; complete video transcript and edit lineage were not retrieved."
+    },
+    {
+      "id": "C.15",
+      "proposition": "The Thirteenth Amendment abolished slavery and involuntary servitude while retaining an exception for punishment after due conviction.",
+      "state": "T.20",
+      "evidence_class": "PRIMARY_CONSTITUTIONAL_TEXT",
+      "sources": [
+        "S.07"
+      ],
+      "pinpoint": "Amendment XIII Section 1"
+    },
+    {
+      "id": "C.16",
+      "proposition": "After 1865, discriminatory criminal enforcement and convict leasing subjected predominantly Black prisoners to compulsory, often unpaid labor for public and private beneficiaries.",
+      "state": "T.20",
+      "evidence_class": "SMITHSONIAN_HISTORICAL_SYNTHESIS",
+      "sources": [
+        "S.08"
+      ],
+      "pinpoint": "Convict Leasing exhibit"
+    },
+    {
+      "id": "C.17",
+      "proposition": "Debt peonage and convict leasing had identical legal status.",
+      "state": "F.6",
+      "evidence_class": "LEGAL_CATEGORY_CONTRADICTION",
+      "sources": [
+        "S.07",
+        "S.08",
+        "S.09"
+      ],
+      "pinpoint": "Punishment exception and criminal custody must be separated from federally prohibited debt peonage."
+    },
+    {
+      "id": "C.18",
+      "proposition": "The punishment exception was collectively adopted for the specifically proven purpose of re-enslaving Black Americans after emancipation.",
+      "state": "U.21",
+      "evidence_class": "LEGISLATIVE_MOTIVE_NOT_ESTABLISHED_BY_TEXT_ALONE",
+      "sources": [
+        "S.07"
+      ],
+      "pinpoint": "Constitutional text establishes the exception, not the asserted collective motive."
+    }
+  ],
+  "sources": [
+    {
+      "id": "S.01",
+      "authority": "PEER_REVIEWED_PRIMARY_RESEARCH",
+      "title": "Community-engaged ancient DNA project reveals diverse origins of 18th-century African descendants in Charleston, South Carolina",
+      "publisher": "Proceedings of the National Academy of Sciences",
+      "date": "2023-01-09",
+      "doi": "10.1073/pnas.2201620120",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9934026/",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.02",
+      "authority": "STATE_HISTORICAL_COMMISSION",
+      "title": "Clotilda Briefings and Photos",
+      "publisher": "Alabama Historical Commission",
+      "date": "2022-05",
+      "url": "https://ahc.alabama.gov/Clotilda-Photos.aspx",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.03",
+      "authority": "PROJECT_REPORTING",
+      "title": "DNA recovery attempt begins on last American slave ship",
+      "publisher": "National Geographic",
+      "date": "2022-05-12",
+      "url": "https://www.nationalgeographic.com/magazine/article/dna-recovery-attempt-begins-on-last-american-slave-ship-clotilda",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.04",
+      "authority": "INVESTIGATOR_INSTITUTION_PROFILE",
+      "title": "Dr. Frankie L. West",
+      "publisher": "Western Carolina University",
+      "url": "https://www.wcu.edu/faculty/flwest.aspx",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.05",
+      "authority": "INSTITUTIONAL_SECONDARY_REPORTING",
+      "title": "Unlocking the Secrets of the Clotilda, the Last Known Slave Ship",
+      "publisher": "Smithsonian Magazine",
+      "date": "2022-05-19",
+      "url": "https://www.smithsonianmag.com/smart-news/unlocking-the-secrets-of-clotilda-the-last-known-slave-ship-180980107/",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.06",
+      "authority": "ORIGINAL_SOCIAL_POST_FOR_ITS_OWN_PUBLISHED_CLAIM_ONLY",
+      "title": "#BHDNA DNA Found from 160 Year Old Slave Ship",
+      "publisher": "Facebook",
+      "url": "https://www.facebook.com/100083101733851/posts/1077807878332593/",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "HEADLINE_AND_INDEX_EXCERPT_OBSERVED.FULL_VIDEO_NOT_RETRIEVED"
+    },
+    {
+      "id": "S.07",
+      "authority": "PRIMARY_CONSTITUTIONAL_TEXT",
+      "title": "Thirteenth Amendment to the United States Constitution",
+      "publisher": "National Archives",
+      "date": "1865-12-06",
+      "url": "https://www.archives.gov/milestone-documents/13th-amendment",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.08",
+      "authority": "NATIONAL_MUSEUM_HISTORICAL_SYNTHESIS",
+      "title": "Convict Leasing",
+      "publisher": "Smithsonian National Museum of African American History and Culture",
+      "url": "https://www.searchablemuseum.com/convict-leasing/",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "URL_METADATA_AND_CONTENT_OBSERVED.NO_RAW_BYTE_HASH"
+    },
+    {
+      "id": "S.09",
+      "authority": "FEDERAL_STATUTORY_TEXT",
+      "title": "Peonage abolished",
+      "publisher": "Office of the Law Revision Counsel, U.S. House of Representatives",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section1994",
+      "retrieved_at": "2026-09-14",
+      "raw_byte_sha256": null,
+      "receipt_state": "CANONICAL_URL_REGISTERED.CONTENT_RETRIEVAL_NOT_HASHED"
+    }
+  ],
+  "search_boundary": {
+    "searched_surfaces": [
+      "ALABAMA_HISTORICAL_COMMISSION",
+      "WESTERN_CAROLINA_UNIVERSITY",
+      "NATIONAL_GEOGRAPHIC",
+      "SMITHSONIAN",
+      "PUBMED_PMC",
+      "GENERAL_WEB_INDEX"
+    ],
+    "result_scope": "BOUNDED_PUBLIC_SEARCH.NOT_COMPLETE_WEB_OR_PRIVATE_LAB_CENSUS",
+    "last_checked": "2026-09-14",
+    "promotion_requirement_for_C10": [
+      "NAMED_LAB_OR_AUTHORIZED_PROJECT_RELEASE",
+      "SPECIMEN_PROVENANCE_TO_CLOTILDA",
+      "AUTHENTICATION_AND_CONTAMINATION_CONTROLS",
+      "REPORTED_SEQUENCE_OR_HAPLOGROUP_RESULT",
+      "CLAIM_LEVEL_SOURCE_RECEIPT"
+    ]
+  },
+  "hard_invariants": [
+    "ANSON_STREET_DNA != CLOTILDA_DNA",
+    "SAMPLE_COLLECTION != DNA_RECOVERY",
+    "LAB_TRANSFER != POSITIVE_RESULT",
+    "ANALYSIS_ACTIVITY != AUTHENTICATED_CAPTIVE_DNA",
+    "NO_PUBLIC_RESULT_LOCATED != NEGATIVE_LAB_RESULT",
+    "ABSENCE_OF_PUBLICATION != PROOF_OF_NO_DNA",
+    "HEADLINE != LABORATORY_RECEIPT",
+    "INDEXED_TEXT_MATCH != EDITORIAL_PROVENANCE",
+    "CORRELATED != CAUSAL",
+    "PRESUMED_ENSLAVED_STATUS != INDIVIDUALLY_DOCUMENTED_LEGAL_STATUS",
+    "PUNISHMENT_EXCEPTION != ALL_FORCED_LABOR_LEGAL",
+    "CONVICT_LEASING != DEBT_PEONAGE",
+    "CONSTITUTIONAL_TEXT != COLLECTIVE_MOTIVE_PROOF",
+    "REPOSITORY_REGISTRATION != CANONICAL_PROMOTION"
+  ],
+  "correction_policy": {
+    "mode": "APPEND_ONLY",
+    "overwrite_prior_observation": false,
+    "future_clotilda_result": "CREATE_SUPERSEDING_DELTA_WITH_NEW_SOURCE_RECEIPT",
+    "prohibited": "SILENT_REWRITE"
+  }
+}
