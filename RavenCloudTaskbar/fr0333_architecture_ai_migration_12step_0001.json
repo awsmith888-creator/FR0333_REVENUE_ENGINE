@@ -1,0 +1,156 @@
+{
+  "identifier": "FR0333.ARCHITECTURE.AI.MIGRATION.12STEP.0001",
+  "spec_state": "WORKING.SPEC",
+  "origin": "NEWLY.AUTHORED.CONTROL.ARTIFACT.NOT.RECOVERED.HISTORICAL.DOCUMENT",
+  "architecture_state": "LOCKED.BASELINE",
+  "humanlock": "ACTIVE_IMMUTABLE",
+  "purpose": "Define the fixed handoff between technical migration work and explicit human authorization without creating a new architecture lane.",
+  "execution_classes": [
+    "DOCUMENTATION.ONLY",
+    "AUTOMATED.TEST",
+    "SIMULATION.ONLY",
+    "LIVE.READ_ONLY",
+    "LIVE.MUTATION.REQUIRES.HUMANLOCK"
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "migration_action": "Lock current baseline, branch, exact head, and architecture invariants.",
+      "execution_class": "DOCUMENTATION.ONLY",
+      "gate": "NO.MUTATION",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 2,
+      "migration_action": "Define the migration target: the AI capability, provider, or component that is changing.",
+      "execution_class": "DOCUMENTATION.ONLY",
+      "gate": "SCOPE.MUST.BE.EXPLICIT",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 3,
+      "migration_action": "Inventory affected files, dependencies, schemas, evidence sources, and HumanLock boundaries.",
+      "execution_class": "LIVE.READ_ONLY",
+      "gate": "OBSERVATION.ONLY",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 4,
+      "migration_action": "Build synthetic fixtures for expected success, failure, timeout, disagreement, stale-head, missing-receipt, and bypass attempts.",
+      "execution_class": "SIMULATION.ONLY",
+      "gate": "SIMULATION.CANNOT.AUTHORIZE",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 5,
+      "migration_action": "Run schema, contract, deterministic-hash, and semantic validators.",
+      "execution_class": "AUTOMATED.TEST",
+      "gate": "FAIL.CLOSED",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 6,
+      "migration_action": "Verify provider and runtime capability evidence independently of marketing or model agreement.",
+      "execution_class": "LIVE.READ_ONLY",
+      "gate": "OUTPUT != VERIFIED.FACT",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 7,
+      "migration_action": "Run failure-recovery tests, including partial-provider results and retry behavior.",
+      "execution_class": "AUTOMATED.TEST",
+      "gate": "NO.FALSE.CONSENSUS",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 8,
+      "migration_action": "Verify HumanLock cannot be disabled, bypassed, redefined, or satisfied by a simulation fixture.",
+      "execution_class": "AUTOMATED.TEST",
+      "gate": "ANY.VIOLATION -> U.21.HOLD",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 9,
+      "migration_action": "Build the migration candidate and generate the complete evidence and receipt package.",
+      "execution_class": "AUTOMATED.TEST",
+      "gate": "CANDIDATE.ONLY",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 10,
+      "migration_action": "Run exact-head CI and reconcile receipts, unresolved disagreements, unsupported critical claims, and Stronghold integrity.",
+      "execution_class": "AUTOMATED.TEST",
+      "gate": "TECHNICAL.CLEARANCE.ONLY",
+      "authorization_effect": "NONE",
+      "may_satisfy_humanlock": false
+    },
+    {
+      "step": 11,
+      "migration_action": "Present the exact-head audit package to the real human operator for explicit action-specific authorization.",
+      "execution_class": "LIVE.MUTATION.REQUIRES.HUMANLOCK",
+      "gate": "HUMANLOCK.BOUNDARY",
+      "authorization_effect": "HUMAN.DECISION.ONLY",
+      "may_satisfy_humanlock": true,
+      "requires_real_human_operator": true,
+      "requires_exact_action": true,
+      "requires_exact_head": true,
+      "requires_explicit_authorization": true,
+      "simulation_can_satisfy": false
+    },
+    {
+      "step": 12,
+      "migration_action": "Only after valid HumanLock authorization, perform the authorized merge, promotion, or deployment action and generate a post-action receipt.",
+      "execution_class": "LIVE.MUTATION.REQUIRES_HUMANLOCK",
+      "gate": "EXACT.ACTION.ONLY",
+      "authorization_effect": "CONSUME.VALID.STEP11.RECEIPT.ONLY",
+      "may_satisfy_humanlock": false,
+      "requires_valid_step11_receipt": true,
+      "requires_exact_action_match": true,
+      "requires_exact_head_match": true
+    }
+  ],
+  "critical_handoff": {
+    "technical_clearance_step": 10,
+    "authorization_step": 11,
+    "authorized_action_step": 12,
+    "technical_clearance_is_authorization": false,
+    "steps_1_through_10_can_imply_step_11": false,
+    "step_12_without_valid_step_11_authorization": "U.21.HOLD"
+  },
+  "controlling_invariants": [
+    "SIMULATION.FIXTURE != HUMAN.AUTHORIZATION",
+    "CI.SUCCESS != HUMAN.AUTHORIZATION",
+    "MODEL.AGREEMENT != VERIFIED.FACT",
+    "CRYPTOGRAPHIC.SIGNATURE != HUMANLOCK",
+    "HUMANLOCK = EXPLICIT.HUMAN.AUTHORIZATION.BOUNDARY",
+    "NEW.COMMIT -> PRIOR.HEAD.AUTHORIZATION.INVALID",
+    "NO.AUTHORIZATION -> U.21.HOLD -> NO.MERGE -> NO.PROMOTION",
+    "STEP.10.TECHNICAL.CLEARANCE != STEP.11.AUTHORIZATION",
+    "STEP.12.REQUIRES.VALID.STEP.11.EXACT.ACTION.EXACT.HEAD.AUTHORIZATION"
+  ],
+  "pr41_position": {
+    "pull_request": 41,
+    "technical_work_steps": "4.THROUGH.10",
+    "step_11": "NOT.CLEARED",
+    "step_12": "BLOCKED",
+    "real_human_authorization_present": false,
+    "merge_authorized": false,
+    "canonical_promotion_authorized": false
+  },
+  "boundaries": {
+    "new_lane": false,
+    "taskbars_json_mutation": false,
+    "autonomous_promotion": false,
+    "merge_performed": false,
+    "promotion_performed": false
+  }
+}
