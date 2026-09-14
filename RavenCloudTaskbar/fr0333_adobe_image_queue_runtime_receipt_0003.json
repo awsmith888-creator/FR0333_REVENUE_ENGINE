@@ -1,0 +1,211 @@
+{
+  "identifier": "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0003",
+  "observed_at": "2026-09-14",
+  "provider": "ADOBE_FIREFLY_CONNECTED_RUNTIME",
+  "scope": "BOUNDED_EXTERNAL_IMAGE_RUNTIME_AND_TEN_SLOT_QUEUE_WITNESS",
+  "humanlock": true,
+  "effective_connector_caps": {
+    "IMAGE_GENERATE": {
+      "requested_variations_probe": 4,
+      "returned_variations_probe": 1,
+      "effective_outputs_per_call": 1,
+      "state": "T.20",
+      "qualifier": "BOUNDED_EFFECTIVE_CONNECTOR_CAP"
+    },
+    "IMAGE_INSTRUCT_EDIT": {
+      "requested_variations_probe": 4,
+      "returned_variations_probe": 1,
+      "effective_outputs_per_call": 1,
+      "state": "T.20",
+      "qualifier": "BOUNDED_EFFECTIVE_CONNECTOR_CAP"
+    },
+    "ten_slot_dispatch_plan": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    "ten_slot_provider_call_count": 10,
+    "boundary": "N_PARAMETER_SCHEMA_MAX_4_NE_EFFECTIVE_CONNECTED_RUNTIME_CAP_4"
+  },
+  "dimension_observation": {
+    "requested_generation_size": [1080, 1920],
+    "observed_native_generation_size": [1072, 1920],
+    "native_exact_delivery_state": "F.6",
+    "normalization_operation": "image_crop_and_resize",
+    "normalized_delivery_size": [1080, 1920],
+    "normalized_exact_delivery_state": "T.20",
+    "boundary": "REQUESTED_1080x1920_NE_NATIVE_1080x1920"
+  },
+  "queue": {
+    "requested_count": 10,
+    "final_delivered_count": 10,
+    "final_unique_slots": 10,
+    "collage_or_contact_sheet_detected_final": false,
+    "multi_panel_detected_final": false,
+    "final_exact_dimensions": true,
+    "final_visual_readback": "PASS",
+    "retry_policy_observed": "FAILED_SLOT_ONLY",
+    "failed_first_pass_slots": ["Q09"],
+    "retried_slots": ["Q09"],
+    "preserved_successful_slots": ["Q01", "Q02", "Q03", "Q04", "Q05", "Q06", "Q07", "Q08", "Q10"],
+    "state": "T.20",
+    "qualifier": "BOUNDED_TEN_SLOT_EXTERNAL_RUNTIME_PASS"
+  },
+  "slots": [
+    {
+      "slot_id": "Q01",
+      "generation_request_id": "32ab7a98-35b3-48c0-aff4-0c28d37d9938",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:45a602ed-ef8f-4a7f-b81a-c1e79738779e",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "b0476ada-a4a3-4578-b568-99efa017a53d",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:6e97feb3-7945-41e4-9d53-ded5811e03c1",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q02",
+      "generation_request_id": "6b8ce2dd-19d4-4edc-a180-24bec9275c3c",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:ae75c64f-1fe6-41a2-aed0-6f56ab02c43d",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "804a37a4-81a3-4ff0-b39e-8f8ce43b3a63",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:e8b0c1c8-a7ec-49a5-9722-5152dc8e4d2d",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q03",
+      "generation_request_id": "9781fd21-9448-4a08-8159-4148c999714a",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:e8851c49-3ced-4b26-b575-89e55dd8018f",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "7efeb651-86c0-4db8-b1af-ab9c8177d877",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:3d8e8813-8bd8-499b-a202-744b3a7ad4c4",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q04",
+      "generation_request_id": "55530eb2-161b-4e1a-aa5b-01fdfb0fb091",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:17ae6114-432c-47c7-9fab-360adf67980c",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "2e712c9e-7814-4bb1-afeb-6d86a825b849",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:ba3ee235-26f6-48b5-9e0f-d2c21769edb8",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q05",
+      "generation_request_id": "72daf620-942f-43a3-bb61-024924679d60",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:4d477deb-3728-477a-a137-4a7c76f1825f",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "6a889517-6304-45ae-8e1f-c7d64a118870",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:49842134-fda2-4129-9f9a-34e2c3299496",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q06",
+      "generation_request_id": "5c49fe02-8952-4382-b7ec-4ab1a7018cbd",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:587a4bfd-b5a2-4489-a155-19f4a7324715",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "6129438a-abdc-44d8-8a46-5279211465ea",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:34a4abbb-c75e-4993-a368-09746c36fee1",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q07",
+      "generation_request_id": "5c58717b-6f8f-4e01-bb36-16d4b4fa1b0a",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:25fb3644-f41b-4bc1-ae6c-bcf557c67865",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "c8171a51-6690-4f42-9252-5153405dbb41",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:c523d13d-26b4-46af-907d-42c2833e9616",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q08",
+      "generation_request_id": "25481e47-8b73-4136-8548-d54a27fc0c96",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:d5ab9f9a-c3f9-4347-bd89-1e09e830f67d",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "23518bc4-29d1-4164-9465-0cd12453e7eb",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:eb01ea71-ee29-4b6c-80d3-7a186a802251",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q09",
+      "initial_generation_request_id": "f7459fcd-e796-4146-929d-f7b1d827b0e5",
+      "initial_readback": "FAIL_INTENT_ALIGNMENT_HUMAN_REFLECTION_PRESENT",
+      "retry_generation_request_id": "f6362267-33f9-4b0f-922b-fa358575047b",
+      "retry_generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:231c09a4-f901-41ad-ac55-45914305a8bf",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "e56f790a-5c05-4407-a0a1-d2984538f424",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:8dcdebb2-5afd-486d-95b7-7e85246010c4",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    },
+    {
+      "slot_id": "Q10",
+      "generation_request_id": "54a8544a-5531-492d-b32d-a95078e233d5",
+      "generation_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:ee8f63cf-d1ee-4ad8-979c-ba645abcc37a",
+      "source_dimensions": [1072, 1920],
+      "normalization_request_id": "efbf554d-095b-4fa5-a40d-5c8474044101",
+      "final_output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:ad08d0fe-7de7-49c0-86c3-54b5eb226f6d",
+      "final_dimensions": [1080, 1920],
+      "readback": "PASS"
+    }
+  ],
+  "additional_runtime_witnesses": {
+    "single_instruct_edit": {
+      "request_id": "41cd2401-ac0b-4cf1-92e2-b6e65eee55a2",
+      "output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:c7ba0571-a07e-4cf6-9816-d84597b6fa47",
+      "state": "T.20",
+      "qualifier": "BOUNDED"
+    },
+    "human_generation": {
+      "request_id": "5abe3f95-b654-4ad3-bd55-4356596104f1",
+      "output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:d0f4a391-1757-4314-9d74-7832dcb70d81",
+      "visual_readback": "PASS",
+      "state": "T.20",
+      "qualifier": "BOUNDED_SINGLE_HUMAN_OUTPUT"
+    },
+    "lightroom_preset": {
+      "preset": "Portraits - Medium & Deep Skin 01",
+      "request_id": "59ca3170-74c3-420f-bcd4-756a749837df",
+      "output_url": "https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:a4cc299c-2030-40b9-bac6-828d95ef5f19",
+      "visual_readback": "PASS",
+      "state": "T.20",
+      "qualifier": "BOUNDED"
+    },
+    "generated_asset_persistence": {
+      "searchable_in_adobe_genai_assets": true,
+      "observed_asset_count_for_original_queue": 10,
+      "state": "T.20",
+      "qualifier": "BOUNDED"
+    }
+  },
+  "quality_promotion": {
+    "state": "U.21",
+    "qualifier": "HOLD",
+    "user_acceptance": "NOT_OBSERVED_FOR_DIAGNOSTIC_QUEUE",
+    "reason": "Runtime integrity and bounded visual readback are established for the diagnostic queue, but universal aesthetic acceptance and every Adobe product surface are not established."
+  },
+  "boundaries": [
+    "N.PARAMETER.MAX.4 != EFFECTIVE.CONNECTOR.CAP.4",
+    "CURRENT.EFFECTIVE.CONNECTOR.OUTPUTS.PER.CALL = 1",
+    "REQUESTED.1080x1920 != NATIVE.OUTPUT.1080x1920",
+    "NATIVE.1072x1920 -> NORMALIZE -> 1080x1920",
+    "TEN.REQUESTED = TEN.FINAL.DELIVERED",
+    "FAILED.Q09 -> RETRY.Q09",
+    "RETRY.FAILED.SLOT != REGENERATE.SUCCESSFUL.SLOTS",
+    "TEN.SLOT.RUNTIME.PASS != UNIVERSAL.ADOBE.PRODUCT.CAPACITY",
+    "CONNECTOR.RUNTIME.PASS != USER.AESTHETIC.ACCEPTANCE",
+    "USER.ACCEPTANCE.NOT.OBSERVED = QUALITY.PROMOTION.HOLD"
+  ],
+  "result": {
+    "fr0333_adobe_image_tested_surface": "T.20.PASS.BOUNDED",
+    "ten_slot_generate_runtime": "T.20.PASS.BOUNDED",
+    "exact_1080_1920_after_normalization": "T.20.PASS.BOUNDED",
+    "human_generation": "T.20.PASS.BOUNDED",
+    "single_instruct_edit": "T.20.PASS.BOUNDED",
+    "lightroom_preset_runtime": "T.20.PASS.BOUNDED",
+    "generated_asset_persistence": "T.20.PASS.BOUNDED",
+    "universal_adobe_surface": "U.21.HOLD"
+  }
+}
