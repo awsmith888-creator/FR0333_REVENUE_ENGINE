@@ -116,7 +116,7 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
 
     def test_committed_receipt_is_symbolic_template_not_stale_head_claim(self):
         validate_humanlock_compliance_receipt(self.compliance_template)
-        self.assertEqual(self.compliance_template["source_head_binding"], "GITHUB_SHA")
+        self.assertEqual(self.compliance_template["source_head_binding"], "FR0333_EXPECTED_HEAD")
         self.assertNotIn("source_head", self.compliance_template)
         self.assertNotIn("run_id", self.compliance_template["verification_environment"])
 
