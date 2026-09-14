@@ -1,7 +1,8 @@
 {
   "id": "FR0333.OPENAI.GENERATED.LINK.DISCLOSURE.BOUNDARY.0001",
   "record_class": "ADVERSARIAL.PROVENANCE.BOUNDARY",
-  "state": "SOURCE_CONTENT_VERIFIED_BOUNDED",
+  "state": "T.20",
+  "verification_scope": "BOUNDED",
   "source": {
     "class": "OPENAI.OFFICIAL.HELP.CENTER",
     "canonical_url": "https://help.openai.com/en/articles/10984597",
@@ -13,10 +14,12 @@
     "claim": "CHATGPT.MAY.CONSTRUCT.CONTEXT.AWARE.URLS",
     "state": "T.20"
   },
-  "transmission_event": {
-    "claim": "USER.VISITS.OR.CLICKS.GENERATED.LINK",
+  "conditional_navigation": {
+    "claim": "USER.VISIT.OR.CLICK.CAN.TRANSMIT.ENCODED.CONTEXT",
     "state": "T.20"
   },
+  "observed_click_state": "U.21.NOT_ESTABLISHED",
+  "observed_disclosure_state": "U.21.NOT_ESTABLISHED",
   "potential_result": {
     "claim": "ENCODED.CONTEXT.CAN.BE.TRANSMITTED.TO.DESTINATION",
     "state": "T.20"
@@ -36,17 +39,23 @@
   },
   "boundaries": [
     "GENERATED.LINK.DISPLAY != AUTOMATIC.EXFILTRATION",
+    "CONDITIONAL.TRANSMISSION != OBSERVED.EVENT",
     "POTENTIAL.DISCLOSURE != OBSERVED.DISCLOSURE",
-    "LINK.CONFIRMATION != DESTINATION.TRUSTWORTHINESS"
+    "LINK.CONFIRMATION != DESTINATION.TRUSTWORTHINESS",
+    "SOURCE.CONTENT.VERIFIED != RAW.SOURCE.HASH.ESTABLISHED"
   ],
   "observed_search_navigation_artifact": {
     "classification": "OBSERVED.SEARCH.NAVIGATION.ARTIFACT.NOT.CANONICAL.SOURCE",
     "url": "https://www.google.com/search?client=ms-android-google&sourceid=chrome-mobile&ie=UTF-8&cud=0&sxsrf=APpeQntSMeHa-DJ2dYu_4w3SjR5pqiYg1w%3A1789392507132&mstk=AUtExfCyc3ZmlLipxDTQurfndCUlGStRvaPtqTY9loE28_OmgodPlYrwLD6HO4Hq2eTvKyl2ojj7mwM_wwTqm03SvWkp-0r_os4QU4cpsBmt5cZa5nzWmg_mW3dpvcfk5sf8xUIi12zm28-7KF8cOZlCn75KnG8uuMaSnATKYpigaOhW_8RPrVZHEut7e0e-qpwX-nB80ggO-9r12h_HxsM6_uHRDvK9NYS_OqjHopB7o5mSGfHQhYXQ7kK3yxHiS1g8VeblCGrlpR17F_XqOnIzxK0Nwh7fp3xrJgtLR0x0ga_wc4rsnycQado7&mtid=Hf2matKuEYW8p84P8ITS2AU&csuir=1&aep=26&q=AI+Development+Slowdown+Agreement&ved=0CAkQ2_wOahcKEwjw_--9lu6WAxUAAAAAHQAAAAAQKg&atvm=2&udm=50"
   },
   "verification": {
-    "record_audited": "T.20",
-    "source_content_verified": "T.20.BOUNDED",
+    "record_structure_reviewed": "T.20",
+    "source_content_verified": "T.20",
+    "source_content_verification_scope": "BOUNDED",
     "raw_source_hash": "U.21.NOT_ESTABLISHED",
+    "receipt_state": "U.21.NOT_ESTABLISHED",
+    "canonical_promotion_state": "U.21.HOLD",
+    "promotion_authorized": false,
     "external_runtime": "NOT.APPLICABLE",
     "humanlock": true
   }
