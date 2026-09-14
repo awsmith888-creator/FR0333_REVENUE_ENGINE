@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
+import copy
 import json
 import pathlib
 import unittest
 
 from fr0333_frontier_model_master_validate import (
     EXPECTED_PROVIDER_IDS,
+    MASTER_PATH,
+    assert_humanlock_mutation_rejected,
     evaluate_fixture,
     validate_all,
+    validate_humanlock_contract,
 )
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -18,6 +22,7 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
     def setUpClass(cls):
         cls.fixtures_doc = json.loads(FIXTURES.read_text(encoding="utf-8"))
         cls.fixtures = {f["scenario"]: f for f in cls.fixtures_doc["fixtures"]}
+        cls.master = json.loads(MASTER_PATH.read_text(encoding="utf-8"))
         cls.report = validate_all()
 
     def test_all_eight_mock_fixtures_validate(self):
@@ -67,10 +72,44 @@ class FrontierModelMasterValidationTests(unittest.TestCase):
         self.assertEqual((missing["action"], missing["truth_state"]), ("HOLD_MISSING_RECEIPT", "U.21"))
         self.assertEqual((human["action"], human["truth_state"]), ("BLOCK_PROMOTION", "U.21"))
 
+    def test_humanlock_contract_is_active_immutable(self):
+        validate_humanlock_contract(self.master)
+        self.assertEqual(self.report["humanlock"], "ACTIVE_IMMUTABLE.REQUIRED")
+        self.assertEqual(self.report["humanlock_bypass"], "F.6")
+        self.assertEqual(self.report["humanlock_removal_or_downgrade"], "REJECT")
+        self.assertTrue(self.report["merge_requires_explicit_human_authorization"])
+        self.assertTrue(self.report["canonical_promotion_requires_explicit_human_authorization"])
+
+    def test_humanlock_false_is_rejected(self):
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, lambda m: m.__setitem__("humanlock", False)))
+
+    def test_humanlock_disable_capability_is_rejected(self):
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, lambda m: m["humanlock_contract"].__setitem__("can_be_disabled", True)))
+
+    def test_humanlock_route_removal_is_rejected(self):
+        def mutate(m):
+            m["diamond_comparator"]["route"] = [x for x in m["diamond_comparator"]["route"] if x != "HUMANLOCK"]
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+
+    def test_humanlock_promotion_bypass_is_rejected(self):
+        def mutate(m):
+            m["result"]["canonical_promotion"] = "AUTO_PROMOTE"
+            m["humanlock_contract"]["canonical_promotion_requires_explicit_human_authorization"] = False
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+
+    def test_humanlock_merge_bypass_is_rejected(self):
+        def mutate(m):
+            m["humanlock_contract"]["merge_requires_explicit_human_authorization"] = False
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+
+    def test_humanlock_signature_conflation_is_rejected(self):
+        def mutate(m):
+            m["humanlock_contract"]["cryptographic_signature_equivalence"] = True
+        self.assertTrue(assert_humanlock_mutation_rejected(self.master, mutate))
+
     def test_frozen_architecture_boundaries_remain_explicit(self):
         self.assertFalse(self.report["new_lane"])
         self.assertFalse(self.report["taskbars_json_mutation"])
-        self.assertEqual(self.report["humanlock"], "REQUIRED")
         self.assertEqual(self.report["cross_provider_live_runtime"], "U.21.NOT.CONNECTED")
 
 
