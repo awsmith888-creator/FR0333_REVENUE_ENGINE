@@ -25,7 +25,9 @@ on:
       - 'RavenCloudTaskbar/human_tool_contribution_evidence_inventory.json'
       - '.github/workflows/fr0333-human-tool-evidence-validate.yml'
   push:
-    branches: [main]
+    branches:
+      - main
+      - codex/human-tool-contribution-evidence-0001
     paths:
       - 'RavenCloudTaskbar/README_human_tool_contribution_evidence.md'
       - 'RavenCloudTaskbar/README_genius_bar_comparability_normalization.md'
@@ -109,12 +111,15 @@ jobs:
           - `FR0333.TRANSCRIPT.CONFIDENCE.HUMANLOCK.0001` v0.12 validates as SPECIFICATION.
           - `FR0333.PUBLIC.BENEFIT.HUMAN.CENTERED.0001` v0.20 validates as SYSTEM.ROOT governing reference.
           - `GC.SB.0028` manifest parses and remains REGISTERED.DRAFT.UNMERGED.
+          - Predecessor numeric-role mutation `1.7` preserves `SEVEN.REGULATOR.STATE = CONDITIONAL`; suffix `.7` does not auto-assign regulator function.
           - `FR0333.TRUMP.BBC.DEFAMATION.LITIGATION.EVIDENCE.0001` validates as an evidence-bounded public-litigation register.
           - `GC.SB.0029` manifest parses and remains REGISTERED.DRAFT.UNMERGED.
           - `FR0333.GENIUS.BAR.COMPARABILITY.NORMALIZATION.0001` Draft 2020-12 structural schema validates against a finalized canonical record.
           - `CANONICAL.JSON.V1 -> UTF8 -> SHA256` comparability-key generation is deterministic under the declared field normalization rules.
           - N.01-N.12 adversarial normalization cases are covered by the Genius Bar suite.
-          - The combined deterministic suite expects 53 tests: 10 base + 12 human-centered + 12 litigation + 19 Genius Bar.
+          - The combined deterministic suite expects 54 tests: 10 base + 13 human-centered + 12 litigation + 19 Genius Bar.
+          - `DIGIT.VALUE != FUNCTIONAL.ROLE` remains controlling.
+          - `SUFFIX.7 != AUTOMATIC.REGULATOR` remains controlling.
           - `EXACT.CANONICAL.DECIMAL.EQUALITY != RAW.BYTE.IDENTITY` remains controlling.
           - `FORMATTING.DIFFERENCE != SEMANTIC.DIFFERENCE` remains controlling.
           - `REVERSIBLE.REPRESENTATION != EXACT.UNDERLYING.TRUTH` remains controlling.
