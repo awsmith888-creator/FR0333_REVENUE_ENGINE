@@ -3,6 +3,15 @@
   "state": "REGISTERED.DRAFT.UNMERGED",
   "predecessor": "GC.SB.0027",
   "predecessor_requirement": "GC.SB.0027 MUST EXIST IN TARGET HISTORY BEFORE GC.SB.0028 IS PROMOTED",
+  "predecessor_numeric_role_contract": {
+    "mutation": "1.7",
+    "seven_regulator_state": "CONDITIONAL",
+    "activation_condition": "EIGHT.CONDITION.REACHED.AND.INCOMING.POWER.REQUIRES.REGULATION",
+    "digit_value_ne_functional_role": true,
+    "suffix_7_inherits_regulator_role": false,
+    "gc_sb_0027_auto_regulator": false,
+    "position_27_role": "UNASSIGNED.UNLESS.SEPARATELY.ESTABLISHED"
+  },
   "package_id": "FR0333.HUMAN.CENTERED.EVIDENCE.ACCESS.PACKAGE.0001",
   "humanlock": true,
   "promotion": "HOLD.UNTIL.MERGE.ORDER.AND.REVIEW.SATISFIED",
@@ -61,6 +70,8 @@
     "AGREEMENT != PROOF",
     "UNKNOWN != PASS",
     "SYSTEM.UNCERTAINTY != USER.NONCOMPLIANCE",
-    "GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT"
+    "GOLDEN.CHAIN.REGISTRATION != PRODUCTION.DEPLOYMENT",
+    "DIGIT.VALUE != FUNCTIONAL.ROLE",
+    "SUFFIX.7 != AUTOMATIC.REGULATOR"
   ]
 }
