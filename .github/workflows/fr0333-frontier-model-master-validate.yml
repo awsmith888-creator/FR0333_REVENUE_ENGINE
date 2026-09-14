@@ -9,8 +9,11 @@ on:
       - "RavenCloudTaskbar/fr0333_humanlock_compliance_receipt_0001.json"
       - "RavenCloudTaskbar/fr0333_humanlock_authorization_0001.schema.json"
       - "RavenCloudTaskbar/fr0333_humanlock_authorization_simulation_fixture_0001.json"
+      - "RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_0001.json"
       - "RavenCloudTaskbar/fr0333_frontier_model_master_validate.py"
       - "RavenCloudTaskbar/test_fr0333_frontier_model_master_validate.py"
+      - "RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_validate.py"
+      - "RavenCloudTaskbar/test_fr0333_architecture_ai_migration_12step_validate.py"
       - ".github/workflows/fr0333-frontier-model-master-validate.yml"
   workflow_dispatch:
 
@@ -35,9 +38,14 @@ jobs:
           python -m json.tool RavenCloudTaskbar/fr0333_humanlock_compliance_receipt_0001.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_humanlock_authorization_0001.schema.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_humanlock_authorization_simulation_fixture_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_0001.json >/dev/null
       - name: Run frontier model comparator validator
         run: python RavenCloudTaskbar/fr0333_frontier_model_master_validate.py
       - name: Run frontier model comparator tests
         run: python RavenCloudTaskbar/test_fr0333_frontier_model_master_validate.py
+      - name: Run 12-step AI migration validator
+        run: python RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_validate.py
+      - name: Run 12-step AI migration tests
+        run: python RavenCloudTaskbar/test_fr0333_architecture_ai_migration_12step_validate.py
       - name: Verify frozen Stronghold taskbar blob
         run: test "$(git hash-object RavenCloudTaskbar/taskbars.json)" = "056d63083395b5d092a23c4764cc81520acad8cb"
