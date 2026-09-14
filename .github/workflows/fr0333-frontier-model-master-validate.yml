@@ -25,6 +25,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify literal checked-out head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -49,3 +55,18 @@ jobs:
         run: python RavenCloudTaskbar/test_fr0333_architecture_ai_migration_12step_validate.py
       - name: Verify frozen Stronghold taskbar blob
         run: test "$(git hash-object RavenCloudTaskbar/taskbars.json)" = "056d63083395b5d092a23c4764cc81520acad8cb"
+      - name: Generate and validate exact-head HumanLock CI receipt
+        env:
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          mkdir -p artifacts
+          python RavenCloudTaskbar/fr0333_frontier_model_master_validate.py --emit-ci-receipt artifacts/fr0333_humanlock_exact_head_receipt.json
+          python -m json.tool artifacts/fr0333_humanlock_exact_head_receipt.json >/dev/null
+      - name: Upload exact-head HumanLock CI receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-humanlock-exact-head-receipt-${{ github.run_id }}
+          path: artifacts/fr0333_humanlock_exact_head_receipt.json
+          if-no-files-found: error
