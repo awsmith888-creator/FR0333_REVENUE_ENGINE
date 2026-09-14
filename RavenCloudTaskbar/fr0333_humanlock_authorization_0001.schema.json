@@ -5,20 +5,20 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "authorization_id": {"type": "string", "pattern": "^FR0333\\.HUMANLOCK\\.AUTH\\.(MOCK\\.)?[0-9]{4}$"},
+    "authorization_id": {"type": "string", "pattern": "^FR0333\\.HUMANLOCK\\.AUTH\\.(SIM\\.)?[0-9]{4}$"},
     "humanlock_id": {"const": "Z.26.21.HUMANLOCK"},
     "target_action": {"type": "string", "enum": ["MERGE", "CANONICAL_PROMOTION"]},
     "repository": {"const": "awsmith888-creator/FR0333_REVENUE_ENGINE"},
     "pull_request": {"const": 41},
     "target_head": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
     "authorization_state": {"type": "string", "enum": ["EXPLICIT.HUMAN.AUTHORIZED", "NOT.AUTHORIZED"]},
-    "authorized_by_role": {"const": "HUMAN.OPERATOR"},
+    "authorized_by_role": {"type": "string", "enum": ["NONE", "HUMAN.OPERATOR"]},
     "human_authorization_present": {"type": "boolean"},
     "issued_at": {"type": "string", "format": "date-time"},
     "audit_receipt": {"const": "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001"},
     "signature_state": {"type": "string", "enum": ["NOT_APPLICABLE_OR_SEPARATELY_VERIFIED", "PRESENT.UNVERIFIED", "VERIFIED"]},
     "signature_required_by_policy": {"type": "boolean"},
-    "mock_only": {"type": "boolean"},
+    "simulation_fixture": {"type": "boolean"},
     "authorization_scope": {"type": "string", "enum": ["SIMULATION_ONLY", "LIVE_TARGET_ACTION"]},
     "live_execution_eligible": {"type": "boolean"},
     "payload_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
@@ -37,31 +37,39 @@
     "audit_receipt",
     "signature_state",
     "signature_required_by_policy",
-    "mock_only",
+    "simulation_fixture",
     "authorization_scope",
     "live_execution_eligible",
     "payload_hash"
   ],
   "allOf": [
     {
-      "if": {"properties": {"mock_only": {"const": true}}},
+      "if": {"properties": {"simulation_fixture": {"const": true}}, "required": ["simulation_fixture"]},
       "then": {
         "properties": {
+          "authorization_state": {"const": "NOT.AUTHORIZED"},
+          "authorized_by_role": {"const": "NONE"},
+          "human_authorization_present": {"const": false},
           "authorization_scope": {"const": "SIMULATION_ONLY"},
           "live_execution_eligible": {"const": false}
         }
       }
     },
     {
-      "if": {"properties": {"authorization_scope": {"const": "LIVE_TARGET_ACTION"}}},
+      "if": {"properties": {"simulation_fixture": {"const": false}}, "required": ["simulation_fixture"]},
       "then": {
         "properties": {
-          "mock_only": {"const": false},
-          "live_execution_eligible": {"const": true},
+          "authorization_state": {"const": "EXPLICIT.HUMAN.AUTHORIZED"},
+          "authorized_by_role": {"const": "HUMAN.OPERATOR"},
           "human_authorization_present": {"const": true},
-          "authorization_state": {"const": "EXPLICIT.HUMAN.AUTHORIZED"}
+          "authorization_scope": {"const": "LIVE_TARGET_ACTION"},
+          "live_execution_eligible": {"const": true}
         }
       }
+    },
+    {
+      "if": {"properties": {"signature_required_by_policy": {"const": true}}, "required": ["signature_required_by_policy"]},
+      "then": {"properties": {"signature_state": {"const": "VERIFIED"}}}
     }
   ]
 }
