@@ -1,9 +1,18 @@
 {
   "id": "FR0333.AI.IMAGE.TOOL.METRICS.0001",
   "golden_chain_id": "GC.SB.0027",
-  "version": "1.0.1",
+  "version": "1.7.0",
   "state": "LOCAL_TEST_VERIFIED",
   "purpose": "Measure consequential image-generation and photo-editing workflow changes without promoting previews or vendor claims to verified releases.",
+  "numeric_role_control": {
+    "mutation": "1.7",
+    "seven_regulator_state": "CONDITIONAL",
+    "activation_condition": "EIGHT.CONDITION.REACHED.AND.INCOMING.POWER.REQUIRES.REGULATION",
+    "digit_value_ne_functional_role": true,
+    "suffix_7_inherits_regulator_role": false,
+    "gc_sb_0027_auto_regulator": false,
+    "position_27_role": "UNASSIGNED.UNLESS.SEPARATELY.ESTABLISHED"
+  },
   "capabilities": [
     "IDENTITY_PRESERVATION",
     "REMASTERING",
@@ -24,7 +33,7 @@
   "runtime_gate": "RELEASE_AVAILABILITY_DOES_NOT_ESTABLISH_RUNTIME_VERIFICATION",
   "automation": "NONE",
   "humanlock": true,
-  "governing_gate": "VERIFIED_RELEASE != PREVIEW != VENDOR_CLAIM; OBSERVED != CORRELATED != CAUSAL",
+  "governing_gate": "VERIFIED_RELEASE != PREVIEW != VENDOR_CLAIM; OBSERVED != CORRELATED != CAUSAL; DIGIT.VALUE != FUNCTIONAL.ROLE; SUFFIX.7 != AUTOMATIC.REGULATOR",
   "child_reference_packs": [
     {
       "id": "FR0333.ADOBE.MARIAH.CAREY.CHOMP.0001",
