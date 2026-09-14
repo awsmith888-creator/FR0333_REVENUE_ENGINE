@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/rsi_delta_candidate.schema.json",
+  "title": "FR0333 RSI Delta Candidate Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "timestamp",
+    "topic",
+    "sources",
+    "claims",
+    "claim_sources",
+    "notes"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "pattern": "^FR0333\\.RSI\\.OBSERVATION\\.PIPELINE\\.\\d{4}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T"
+    },
+    "topic": {
+      "const": "bounded_recursive_self_improvement"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 2,
+      "uniqueItems": true
+    },
+    "claims": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "enum": ["T.20", "U.21", "F.6"]
+      }
+    },
+    "claim_sources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minItems": 1,
+        "uniqueItems": true
+      }
+    },
+    "transition_receipts": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

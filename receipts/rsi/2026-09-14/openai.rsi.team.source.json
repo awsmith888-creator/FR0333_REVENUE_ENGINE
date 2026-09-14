@@ -1,0 +1,18 @@
+{
+  "source_id": "openai.rsi.team.2026-09-14",
+  "source_type": "official_webpage",
+  "publisher": "OpenAI",
+  "title": "Research Engineer / Research Scientist / AI Systems Engineer, RSI",
+  "published_at": "UNDATED",
+  "retrieved_at": "2026-09-14",
+  "url": "https://openai.com/careers/research-engineer-research-scientist-ai-systems-engineer-rsi-san-francisco/",
+  "evidence_class": "OFFICIAL.PRIMARY.SOURCE",
+  "summary": "OpenAI describes an RSI team that builds AI systems to accelerate and ultimately conduct high-quality research, automate real research workflows, design feedback loops and evaluations, and train models to develop missing capabilities.",
+  "claims_observed": [
+    "OPENAI.RSI.TEAM.EXISTS",
+    "OPENAI.RSI.AUTOMATES.RESEARCH.WORKFLOWS",
+    "OPENAI.RSI.TRAINS.MODELS.MISSING.CAPABILITIES",
+    "OPENAI.RSI.EVALUATES.HYPOTHESIS.GENERATION.TESTING"
+  ],
+  "payload_hash": "sha256_5e8ccd062f2edcc7a84d2fc6dada8087ad027eab74e562700a44bcbede9862f5"
+}

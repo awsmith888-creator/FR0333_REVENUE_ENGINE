@@ -1,0 +1,33 @@
+name: RSI Delta Monitor
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "receipts/rsi/**"
+      - "src/rsi_delta_monitor.py"
+      - "src/compile_rsi_delta_receipt.py"
+      - "src/run_regression_guard.py"
+      - "src/validate_source_receipt.py"
+      - "schemas/rsi_delta_*.json"
+      - "tests/test_rsi_delta_monitor.py"
+      - ".github/workflows/rsi-delta-monitor.yml"
+
+jobs:
+  validate-delta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile RSI delta receipt
+        run: python src/compile_rsi_delta_receipt.py
+
+      - name: Verify delta outputs are deterministic
+        run: git diff --exit-code -- receipts/rsi/2026-09-14/delta.snapshot.0001.json receipts/rsi/2026-09-14/delta.receipt.0001.md
+
+      - name: Run full regression suite
+        run: python -m unittest discover tests

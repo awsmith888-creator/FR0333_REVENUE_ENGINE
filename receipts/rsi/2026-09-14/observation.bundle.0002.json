@@ -1,0 +1,42 @@
+{
+  "record_id": "FR0333.RSI.OBSERVATION.PIPELINE.0002",
+  "timestamp": "2026-09-14T22:30:00Z",
+  "topic": "bounded_recursive_self_improvement",
+  "sources": [
+    "openai.research_acceleration.2026-09-06",
+    "anthropic.when_ai_builds_itself.2026-09",
+    "openai.rsi.team.2026-09-14",
+    "openai.rsi.safety.2026-09-14"
+  ],
+  "claims": {
+    "AI.ASSISTS.AI.RESEARCH": "T.20",
+    "AI.WRITES.AI.DEVELOPMENT.CODE": "T.20",
+    "AI.RUNS.RESEARCH.EXPERIMENTS": "T.20",
+    "AI.PROPOSES.HYPOTHESES": "T.20",
+    "AI.EVALUATES.AI.RELATED.WORK": "T.20",
+    "FULL.AUTONOMOUS.SELF.SUCCESSOR.DESIGN": "U.21",
+    "CURRENT.RUNTIME.CAN.SELF.REWRITE.MODEL.WEIGHTS": "F.6",
+    "OPENAI.RSI.TEAM.EXISTS": "T.20",
+    "OPENAI.RSI.AUTOMATES.RESEARCH.WORKFLOWS": "T.20",
+    "OPENAI.RSI.TRAINS.MODELS.MISSING.CAPABILITIES": "T.20",
+    "OPENAI.RSI.EVALUATES.HYPOTHESIS.GENERATION.TESTING": "T.20",
+    "OPENAI.RSI.SAFETY.PROGRAM.EXISTS": "T.20",
+    "OPENAI.RSI.SCALABLE.OVERSIGHT.FOCUS": "T.20",
+    "OPENAI.RSI.AUTOMATED.AUDITING.FOCUS": "T.20",
+    "OPENAI.RSI.LOSS.OF.CONTROL.MITIGATION.FOCUS": "T.20"
+  },
+  "claim_sources": {
+    "OPENAI.RSI.TEAM.EXISTS": ["openai.rsi.team.2026-09-14"],
+    "OPENAI.RSI.AUTOMATES.RESEARCH.WORKFLOWS": ["openai.rsi.team.2026-09-14"],
+    "OPENAI.RSI.TRAINS.MODELS.MISSING.CAPABILITIES": ["openai.rsi.team.2026-09-14"],
+    "OPENAI.RSI.EVALUATES.HYPOTHESIS.GENERATION.TESTING": ["openai.rsi.team.2026-09-14"],
+    "OPENAI.RSI.SAFETY.PROGRAM.EXISTS": ["openai.rsi.safety.2026-09-14"],
+    "OPENAI.RSI.SCALABLE.OVERSIGHT.FOCUS": ["openai.rsi.safety.2026-09-14"],
+    "OPENAI.RSI.AUTOMATED.AUDITING.FOCUS": ["openai.rsi.safety.2026-09-14"],
+    "OPENAI.RSI.LOSS.OF.CONTROL.MITIGATION.FOCUS": ["openai.rsi.safety.2026-09-14"]
+  },
+  "notes": {
+    "boundary": "New evidence establishes OpenAI RSI team and RSI safety program descriptions. It does not establish full autonomous recursive self-improvement or self-directed hosted-model weight rewriting.",
+    "runtime_scope": "Delta monitoring upgrades repository evidence handling and change detection only."
+  }
+}

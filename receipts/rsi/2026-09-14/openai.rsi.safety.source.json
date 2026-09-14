@@ -1,0 +1,18 @@
+{
+  "source_id": "openai.rsi.safety.2026-09-14",
+  "source_type": "official_webpage",
+  "publisher": "OpenAI",
+  "title": "Researcher, Recursive Self-Improvement Safety",
+  "published_at": "UNDATED",
+  "retrieved_at": "2026-09-14",
+  "url": "https://openai.com/careers/researcher-recursive-self-improvement-safety-san-francisco/",
+  "evidence_class": "OFFICIAL.PRIMARY.SOURCE",
+  "summary": "OpenAI describes a Preparedness role focused on recursive self-improvement safety, including scalable oversight, automated auditing, pre-deployment risk assessment, control measures, and RSI-relevant training interventions.",
+  "claims_observed": [
+    "OPENAI.RSI.SAFETY.PROGRAM.EXISTS",
+    "OPENAI.RSI.SCALABLE.OVERSIGHT.FOCUS",
+    "OPENAI.RSI.AUTOMATED.AUDITING.FOCUS",
+    "OPENAI.RSI.LOSS.OF.CONTROL.MITIGATION.FOCUS"
+  ],
+  "payload_hash": "sha256_a9b9d88a819f0cf6bec08d679f36c91ceb2551664fa0fc0a5bb4aca09b632bfc"
+}
