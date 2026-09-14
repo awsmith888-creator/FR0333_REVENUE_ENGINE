@@ -1,0 +1,55 @@
+{
+  "record_id": "FR0333.OPERATOR.FOUR.KERNEL.UPGRADE.0001",
+  "architecture_id": "FR0333.ADOBE.FOUR.KERNEL.HARDENER.0001",
+  "kernels": {
+    "NEWSFLASH": {"passed": true, "receipt_present": true},
+    "ESPN.FANTASY.SPORTS": {"passed": true, "receipt_present": true},
+    "NELSON": {"passed": true, "receipt_present": true},
+    "GENIUS.BAR": {"passed": true, "receipt_present": true}
+  },
+  "core_gates": {
+    "SOURCE.TIMESTAMP": true,
+    "FORMULA.LABEL.MATCH": true,
+    "NUMERATOR.DENOMINATOR.MATCH": true,
+    "SAMPLE.SIZE": true,
+    "NELSON.KERNEL.RECEIPT": true,
+    "FAILURE.REPAIR.RECEIPT": true,
+    "ROLLBACK.PATH": true
+  },
+  "adobe_gates": {
+    "EXACT.9.16": false,
+    "IDENTITY.PRESERVATION": false,
+    "EDIT.LOCALITY": false,
+    "NO.EXTRA.TEXT": false,
+    "ONE.INPUT.ONE.OUTPUT": false
+  },
+  "statistics": {
+    "kernel_count": 4,
+    "active_kernel_count": 4,
+    "kernel_pass_rate": 1.0,
+    "kernel_bitword": "1111",
+    "decimal_state": 15,
+    "required_core_gate_count": 7,
+    "passed_core_gate_count": 7,
+    "core_gate_pass_rate": 1.0,
+    "required_adobe_gate_count": 5,
+    "passed_adobe_gate_count": 0,
+    "adobe_gate_pass_rate": 0.0,
+    "source_count": 3,
+    "metric_count": 18,
+    "sample_size": 4,
+    "contradiction_count": 0,
+    "repair_attempt_count": 0,
+    "repair_success_count": 0,
+    "truth_t20_count": 4,
+    "truth_u21_count": 3,
+    "truth_f6_count": 0
+  },
+  "operator_route": "OPEN",
+  "adobe_route": "HOLD",
+  "adobe_live_traversal_receipt": "U.21",
+  "humanlock": "ACTIVE",
+  "base_model_weights": "UNCHANGED",
+  "platform_permissions": "UNCHANGED",
+  "payload_hash": "sha256_79974cab8329634056aba534efcf9c67c4bab628ef29116e88b615e7a5cdfca0"
+}

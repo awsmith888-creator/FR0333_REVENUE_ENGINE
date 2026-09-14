@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/four_kernel_transaction.schema.json",
+  "title": "FR0333 Four Kernel Transaction",
+  "type": "object",
+  "required": ["kernels", "core_gates", "adobe_gates", "adobe_execution_receipt", "statistics"],
+  "properties": {
+    "kernels": {
+      "type": "object",
+      "required": ["NEWSFLASH", "ESPN.FANTASY.SPORTS", "NELSON", "GENIUS.BAR"],
+      "additionalProperties": false
+    },
+    "core_gates": {"type": "object"},
+    "adobe_gates": {"type": "object"},
+    "adobe_execution_receipt": {"type": "object"},
+    "statistics": {"type": "object"}
+  }
+}
