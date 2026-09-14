@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import argparse
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -210,8 +212,10 @@ def validate_master(master):
 def validate_humanlock_compliance_receipt(receipt):
     assert receipt["identifier"] == "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001"
     assert receipt["source_pr"] == 41
-    assert receipt["source_head"] == "767e5ecc96a1b50b3896c9c51256aced1b27afb9"
-    assert receipt["status"] == "FROZEN_VALIDATED"
+    assert receipt["status"] == "STATIC.CONTROL.TEMPLATE"
+    assert receipt["committed_file_role"] == "STATIC.CONTROL.TEMPLATE.NOT.EXACT_HEAD.RECEIPT"
+    assert receipt["source_head_binding"] == "GITHUB_SHA"
+    assert "source_head" not in receipt
     contract = receipt["contract_configuration"]
     assert contract["humanlock_id"] == "Z.26.21.HUMANLOCK"
     assert contract["humanlock_state"] == "ACTIVE_IMMUTABLE"
@@ -223,13 +227,66 @@ def validate_humanlock_compliance_receipt(receipt):
     assert policy["merge_requires_explicit_human_authorization"] == "T.20"
     assert policy["canonical_promotion_requires_explicit_human_authorization"] == "T.20"
     assert policy["humanlock_equivalent_to_signature"] is False
-    assert all(row["expected"] == "REJECT" and row["verified"] is True for row in receipt["mutation_test_matrix"])
+    mutations = {row["mutation"]: row for row in receipt["mutation_test_matrix"]}
+    assert mutations["STALE.SOURCE.HEAD"]["expected"] == "REJECT"
+    assert mutations["STALE.WORKFLOW.RUN"]["expected"] == "REJECT"
+    assert all(row["expected"] == "REJECT" and row["verified"] is True for row in mutations.values())
+    verification = receipt["verification_environment"]
+    assert verification["exact_head_binding"] == "GITHUB_SHA"
+    assert verification["workflow_run_id_binding"] == "GITHUB_RUN_ID"
+    assert verification["workflow_run_attempt_binding"] == "GITHUB_RUN_ATTEMPT"
+    assert verification["runtime_receipt_role"] == "EPHEMERAL.CI.ARTIFACT"
+    assert "run_id" not in verification
+    assert "run_number" not in verification
     target = receipt["target_runtime_boundaries"]
     assert target["pr41_merge_truth_state"] == "U.21"
     assert target["pr41_canonical_promotion_truth_state"] == "U.21"
     assert target["new_lane"] is False
     assert target["taskbars_json_mutation"] is False
 
+
+def build_exact_head_ci_receipt(template, github_sha, github_run_id, github_run_attempt):
+    validate_humanlock_compliance_receipt(template)
+    assert isinstance(github_sha, str)
+    assert len(github_sha) == 40
+    assert all(character in "0123456789abcdef" for character in github_sha)
+    run_id = int(github_run_id)
+    run_attempt = int(github_run_attempt)
+    assert run_id > 0
+    assert run_attempt > 0
+    return {
+        "identifier": "FR0333.HUMANLOCK.EXACT.HEAD.CI.RECEIPT.0001",
+        "template_identifier": template["identifier"],
+        "source_pr": template["source_pr"],
+        "source_head": github_sha,
+        "workflow_run_id": run_id,
+        "workflow_run_attempt": run_attempt,
+        "status": "CI.EXACT.HEAD.VALIDATED",
+        "humanlock": "ACTIVE_IMMUTABLE",
+        "humanlock_bypass": "F.6",
+        "merge_authorized": False,
+        "canonical_promotion_authorized": False,
+        "live_authorization_created": False,
+        "new_lane": False,
+        "taskbars_json_mutation": False,
+        "precision_boundary": "CI.EXACT.HEAD.VALIDATED != MERGE.AUTHORIZED != CANONICAL.PROMOTION.AUTHORIZED",
+    }
+
+
+def validate_exact_head_ci_receipt(receipt, expected_sha, expected_run_id, expected_run_attempt):
+    assert receipt["identifier"] == "FR0333.HUMANLOCK.EXACT.HEAD.CI.RECEIPT.0001"
+    assert receipt["source_head"] == expected_sha
+    assert receipt["workflow_run_id"] == int(expected_run_id)
+    assert receipt["workflow_run_attempt"] == int(expected_run_attempt)
+    assert receipt["status"] == "CI.EXACT.HEAD.VALIDATED"
+    assert receipt["humanlock"] == "ACTIVE_IMMUTABLE"
+    assert receipt["humanlock_bypass"] == "F.6"
+    assert receipt["merge_authorized"] is False
+    assert receipt["canonical_promotion_authorized"] is False
+    assert receipt["live_authorization_created"] is False
+    assert receipt["new_lane"] is False
+    assert receipt["taskbars_json_mutation"] is False
+    return receipt
 
 def evaluate_authorization(payload, auth_validator, expected_action, expected_head):
     if payload["payload_hash"] != _authorization_payload_hash(payload):
@@ -316,8 +373,8 @@ def validate_authorization_package(receipt=None, auth_schema=None, simulation_su
     assert simulation_suite["humanlock"] == "ACTIVE_IMMUTABLE"
     expected_head = simulation_suite["demonstration_target_head"]
     expected_action = simulation_suite["expected_target_action"]
-    assert expected_head == receipt["source_head"]
     assert expected_action == "MERGE"
+    assert simulation_suite["simulation_authorization_fixture"]["simulation_fixture"] is True
 
     base_payload = simulation_suite["simulation_authorization_fixture"]
     structural = evaluate_authorization(base_payload, auth_validator, expected_action, expected_head)
@@ -363,7 +420,7 @@ def validate_authorization_package(receipt=None, auth_schema=None, simulation_su
         "state": "T.20",
         "qualifier": "SIMULATION.AUTHORIZATION.FIXTURE.PASS",
         "compliance_receipt": receipt["identifier"],
-        "compliance_source_head": receipt["source_head"],
+        "compliance_source_head_binding": receipt["source_head_binding"],
         "structural_fixture": structural,
         "negative_test_count": len(negative_results),
         "negative_tests": negative_results,
@@ -432,6 +489,30 @@ def validate_all(master=None, fixtures_doc=None, schema=None):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--emit-ci-receipt")
+    args = parser.parse_args()
+
+    if args.emit_ci_receipt:
+        template = _load(HUMANLOCK_RECEIPT_PATH)
+        receipt = build_exact_head_ci_receipt(
+            template,
+            os.environ["GITHUB_SHA"],
+            os.environ["GITHUB_RUN_ID"],
+            os.environ["GITHUB_RUN_ATTEMPT"],
+        )
+        validate_exact_head_ci_receipt(
+            receipt,
+            os.environ["GITHUB_SHA"],
+            os.environ["GITHUB_RUN_ID"],
+            os.environ["GITHUB_RUN_ATTEMPT"],
+        )
+        output_path = Path(args.emit_ci_receipt)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(receipt, indent=2))
+        return
+
     report = validate_all()
     print(json.dumps(report, indent=2))
     raise SystemExit(0 if report["state"] == "T.20" else 1)
