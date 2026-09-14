@@ -4,13 +4,15 @@ import json
 from dataclasses import dataclass, asdict
 from typing import Callable, Dict, Iterable, List, Sequence
 
-
 TARGET_ASPECT = "9:16"
 TARGET_WIDTH = 1080
 TARGET_HEIGHT = 1920
+OBSERVED_NATIVE_GENERATE_WIDTH = 1072
+OBSERVED_NATIVE_GENERATE_HEIGHT = 1920
 IMAGE_GENERATE = "IMAGE_GENERATE"
 IMAGE_INSTRUCT_EDIT = "IMAGE_INSTRUCT_EDIT"
-IMAGE_GENERATE_MAX_VARIATIONS = 4
+IMAGE_GENERATE_EFFECTIVE_CAP = 1
+IMAGE_INSTRUCT_EDIT_EFFECTIVE_CAP = 1
 READBACK_PASS = "PASS"
 
 
@@ -63,7 +65,6 @@ def _stable_hash(payload: Dict) -> str:
 def compile_slots(scene_contracts: List[Dict], reference_policy: str = "INDEPENDENT_SLOT") -> List[SlotIntent]:
     if not 1 <= len(scene_contracts) <= 10:
         raise QueueIntegrityError("queue size must be between 1 and 10")
-
     slots: List[SlotIntent] = []
     for index, scene in enumerate(scene_contracts, start=1):
         slot_id = f"Q{index:02d}"
@@ -77,28 +78,39 @@ def compile_slots(scene_contracts: List[Dict], reference_policy: str = "INDEPEND
             "reference_policy": reference_policy,
             "input_reference_ids": refs,
         }
-        slots.append(
-            SlotIntent(
-                slot_id=slot_id,
-                intent_hash=_stable_hash(payload),
-                scene_contract=scene_text,
-                reference_policy=reference_policy,
-                input_reference_ids=refs,
-            )
-        )
+        slots.append(SlotIntent(
+            slot_id=slot_id,
+            intent_hash=_stable_hash(payload),
+            scene_contract=scene_text,
+            reference_policy=reference_policy,
+            input_reference_ids=refs,
+        ))
     return slots
 
 
-def image_generate_chunk_plan(slot_count: int) -> List[int]:
+def operation_cap(operation: str) -> int:
+    if operation == IMAGE_GENERATE:
+        return IMAGE_GENERATE_EFFECTIVE_CAP
+    if operation == IMAGE_INSTRUCT_EDIT:
+        return IMAGE_INSTRUCT_EDIT_EFFECTIVE_CAP
+    raise QueueIntegrityError(f"unsupported operation: {operation}")
+
+
+def operation_chunk_plan(slot_count: int, operation: str) -> List[int]:
     if not 1 <= slot_count <= 10:
         raise QueueIntegrityError("queue size must be between 1 and 10")
+    cap = operation_cap(operation)
     remaining = slot_count
-    plan = []
+    plan: List[int] = []
     while remaining:
-        size = min(IMAGE_GENERATE_MAX_VARIATIONS, remaining)
+        size = min(cap, remaining)
         plan.append(size)
         remaining -= size
     return plan
+
+
+def image_generate_chunk_plan(slot_count: int) -> List[int]:
+    return operation_chunk_plan(slot_count, IMAGE_GENERATE)
 
 
 def _chunks(slots: Sequence[SlotIntent], plan: Sequence[int]) -> Iterable[List[SlotIntent]]:
@@ -120,53 +132,28 @@ def _validate_receipt_binding(slot: SlotIntent, receipt: SlotReceipt) -> None:
         raise QueueIntegrityError(f"intent hash mismatch for {slot.slot_id}")
 
 
-def dispatch_slots(
-    slots: Iterable[SlotIntent],
-    provider_call: Callable,
-    operation: str = IMAGE_GENERATE,
-) -> List[SlotReceipt]:
+def dispatch_slots(slots: Iterable[SlotIntent], provider_call: Callable, operation: str = IMAGE_GENERATE) -> List[SlotReceipt]:
     slots = list(slots)
     receipts: List[SlotReceipt] = []
+    plan = operation_chunk_plan(len(slots), operation)
 
-    if operation == IMAGE_GENERATE:
-        plan = image_generate_chunk_plan(len(slots))
-        for batch_index, batch in enumerate(_chunks(slots, plan), start=1):
-            batch_receipts = provider_call(batch, batch_index)
-            if not isinstance(batch_receipts, list):
-                raise QueueIntegrityError(f"batch {batch_index} provider response must be a list")
-            if len(batch_receipts) != len(batch):
-                raise QueueIntegrityError(
-                    f"batch {batch_index} cardinality mismatch: requested {len(batch)}, got {len(batch_receipts)}"
-                )
-            for variation_index, (slot, receipt) in enumerate(zip(batch, batch_receipts), start=1):
-                _validate_receipt_binding(slot, receipt)
-                if receipt.operation != IMAGE_GENERATE:
-                    raise QueueIntegrityError(f"{slot.slot_id} operation mismatch")
-                if receipt.batch_index != batch_index:
-                    raise QueueIntegrityError(f"{slot.slot_id} batch index mismatch")
-                if receipt.batch_size != len(batch):
-                    raise QueueIntegrityError(f"{slot.slot_id} batch size mismatch")
-                if receipt.provider_variation_index != variation_index:
-                    raise QueueIntegrityError(f"{slot.slot_id} variation index mismatch")
-                receipts.append(receipt)
-        return receipts
-
-    if operation == IMAGE_INSTRUCT_EDIT:
-        # Capacity is not independently verified for this operation.
-        # Fail safe by dispatching singletons until a provider-specific cap is proven.
-        for batch_index, slot in enumerate(slots, start=1):
-            receipt = provider_call(slot)
-            _validate_receipt_binding(slot, receipt)
-            if receipt.operation != IMAGE_INSTRUCT_EDIT:
-                raise QueueIntegrityError(f"{slot.slot_id} operation mismatch")
-            if receipt.batch_index != batch_index or receipt.batch_size != 1:
-                raise QueueIntegrityError(f"{slot.slot_id} singleton batch metadata mismatch")
-            if receipt.provider_variation_index != 1:
-                raise QueueIntegrityError(f"{slot.slot_id} singleton variation index mismatch")
-            receipts.append(receipt)
-        return receipts
-
-    raise QueueIntegrityError(f"unsupported operation: {operation}")
+    # Current connected Adobe runtime is singleton for both generate and instruct-edit.
+    # The public n parameter may accept values through 4, but observed runtime output
+    # cardinality is one. Fail closed to one slot per provider call.
+    for batch_index, batch in enumerate(_chunks(slots, plan), start=1):
+        if len(batch) != 1:
+            raise QueueIntegrityError("effective Adobe connector cap requires singleton dispatch")
+        slot = batch[0]
+        receipt = provider_call(slot)
+        _validate_receipt_binding(slot, receipt)
+        if receipt.operation != operation:
+            raise QueueIntegrityError(f"{slot.slot_id} operation mismatch")
+        if receipt.batch_index != batch_index or receipt.batch_size != 1:
+            raise QueueIntegrityError(f"{slot.slot_id} singleton batch metadata mismatch")
+        if receipt.provider_variation_index != 1:
+            raise QueueIntegrityError(f"{slot.slot_id} singleton variation index mismatch")
+        receipts.append(receipt)
+    return receipts
 
 
 def reconcile(slots: List[SlotIntent], receipts: List[SlotReceipt], operation: str = IMAGE_GENERATE) -> Dict:
@@ -174,15 +161,13 @@ def reconcile(slots: List[SlotIntent], receipts: List[SlotReceipt], operation: s
     slot_ids = [slot.slot_id for slot in slots]
     receipt_by_slot = {receipt.slot_id: receipt for receipt in receipts}
     duplicate_slot_ids = len(receipt_by_slot) != len(receipts)
-
     missing_slots = [slot_id for slot_id in slot_ids if slot_id not in receipt_by_slot]
     unexpected_slots = sorted(set(receipt_by_slot) - set(slot_ids))
 
     output_assets = [r.output_asset_id for r in receipts if r.output_asset_id]
     provider_output_coordinates = [
         (r.provider_request_id, r.provider_variation_index)
-        for r in receipts
-        if r.provider_request_id and r.provider_variation_index > 0
+        for r in receipts if r.provider_request_id and r.provider_variation_index > 0
     ]
     fingerprints = [r.visual_fingerprint for r in receipts if r.visual_fingerprint]
     request_ids = [r.provider_request_id for r in receipts if r.provider_request_id]
@@ -192,11 +177,8 @@ def reconcile(slots: List[SlotIntent], receipts: List[SlotReceipt], operation: s
     duplicate_visual_fingerprints = len(fingerprints) != len(set(fingerprints))
 
     readback_fields = (
-        "readback_state",
-        "anatomy_readback",
-        "realism_readback",
-        "clothing_variance_readback",
-        "intent_alignment_readback",
+        "readback_state", "anatomy_readback", "realism_readback",
+        "clothing_variance_readback", "intent_alignment_readback",
     )
     readback_failures = {
         r.slot_id: [field for field in readback_fields if getattr(r, field) != READBACK_PASS]
@@ -205,36 +187,23 @@ def reconcile(slots: List[SlotIntent], receipts: List[SlotReceipt], operation: s
     readback_failures = {k: v for k, v in readback_failures.items() if v}
 
     exact_dimension_failures = [
-        r.slot_id for r in receipts
-        if r.width != TARGET_WIDTH or r.height != TARGET_HEIGHT
+        r.slot_id for r in receipts if r.width != TARGET_WIDTH or r.height != TARGET_HEIGHT
     ]
 
-    expected_plan = image_generate_chunk_plan(requested) if operation == IMAGE_GENERATE else [1] * requested
-    expected_batch_by_slot = {}
-    slot_cursor = 0
-    for batch_index, batch_size in enumerate(expected_plan, start=1):
-        for variation_index in range(1, batch_size + 1):
-            if slot_cursor >= requested:
-                break
-            expected_batch_by_slot[slot_ids[slot_cursor]] = (batch_index, batch_size, variation_index)
-            slot_cursor += 1
-
+    expected_plan = operation_chunk_plan(requested, operation)
+    expected_batch_by_slot = {
+        slot_id: (index, 1, 1) for index, slot_id in enumerate(slot_ids, start=1)
+    }
     batch_metadata_failures = [
-        r.slot_id
-        for r in receipts
+        r.slot_id for r in receipts
         if expected_batch_by_slot.get(r.slot_id) != (r.batch_index, r.batch_size, r.provider_variation_index)
         or r.operation != operation
     ]
 
     failed_slots = [
-        r.slot_id
-        for r in receipts
+        r.slot_id for r in receipts
         if r.execution_state != "PASS_RUNTIME"
-        or r.readback_state != READBACK_PASS
-        or r.anatomy_readback != READBACK_PASS
-        or r.realism_readback != READBACK_PASS
-        or r.clothing_variance_readback != READBACK_PASS
-        or r.intent_alignment_readback != READBACK_PASS
+        or any(getattr(r, field) != READBACK_PASS for field in readback_fields)
         or r.aspect_ratio != TARGET_ASPECT
         or r.width != TARGET_WIDTH
         or r.height != TARGET_HEIGHT
@@ -245,47 +214,36 @@ def reconcile(slots: List[SlotIntent], receipts: List[SlotReceipt], operation: s
         or not r.visual_fingerprint
         or r.slot_id in batch_metadata_failures
     ]
-
     collage_slots = [r.slot_id for r in receipts if r.collage_detected or r.multi_panel_detected]
 
     count_ok = requested == len(receipts)
     unique_assets_ok = len(output_assets) == requested and len(set(output_assets)) == requested
-    unique_provider_outputs_ok = (
-        len(provider_output_coordinates) == requested
-        and len(set(provider_output_coordinates)) == requested
-    )
+    unique_provider_outputs_ok = len(provider_output_coordinates) == requested and len(set(provider_output_coordinates)) == requested
     unique_fingerprints_ok = len(fingerprints) == requested and len(set(fingerprints)) == requested
+    expected_provider_call_count = requested
+    provider_call_count_ok = len(set(request_ids)) == requested
 
-    if operation == IMAGE_GENERATE:
-        expected_provider_call_count = len(expected_plan)
-        provider_call_count_ok = len(set(request_ids)) == expected_provider_call_count
-    else:
-        expected_provider_call_count = requested
-        provider_call_count_ok = len(set(request_ids)) == requested
-
-    queue_pass = all(
-        [
-            count_ok,
-            not duplicate_slot_ids,
-            not missing_slots,
-            not unexpected_slots,
-            not duplicate_output_assets,
-            not duplicate_provider_outputs,
-            not duplicate_visual_fingerprints,
-            not failed_slots,
-            not collage_slots,
-            not readback_failures,
-            not exact_dimension_failures,
-            not batch_metadata_failures,
-            unique_assets_ok,
-            unique_provider_outputs_ok,
-            unique_fingerprints_ok,
-            provider_call_count_ok,
-        ]
-    )
+    queue_pass = all([
+        count_ok,
+        not duplicate_slot_ids,
+        not missing_slots,
+        not unexpected_slots,
+        not duplicate_output_assets,
+        not duplicate_provider_outputs,
+        not duplicate_visual_fingerprints,
+        not failed_slots,
+        not collage_slots,
+        not readback_failures,
+        not exact_dimension_failures,
+        not batch_metadata_failures,
+        unique_assets_ok,
+        unique_provider_outputs_ok,
+        unique_fingerprints_ok,
+        provider_call_count_ok,
+    ])
 
     return {
-        "identifier": "FR0333.IMAGE.QUEUE.RUNTIME.RECEIPT.CHECK.0002",
+        "identifier": "FR0333.IMAGE.QUEUE.RUNTIME.RECEIPT.CHECK.0003",
         "state": "T.20.PASS" if queue_pass else "F.6.REJECT",
         "operation": operation,
         "requested_count": requested,
@@ -308,12 +266,8 @@ def reconcile(slots: List[SlotIntent], receipts: List[SlotReceipt], operation: s
         "duplicate_provider_outputs": duplicate_provider_outputs,
         "duplicate_visual_fingerprints": duplicate_visual_fingerprints,
         "retry_slots": sorted(set(missing_slots + failed_slots)),
-        "preserve_slots": sorted(
-            slot_id
-            for slot_id in slot_ids
-            if slot_id not in set(missing_slots + failed_slots)
-        ),
-        "external_runtime_state": "U.21.NOT.PROVEN_UNLESS_RECEIPTS_ARE_REAL_PROVIDER_RECEIPTS",
+        "preserve_slots": sorted(slot_id for slot_id in slot_ids if slot_id not in set(missing_slots + failed_slots)),
+        "external_runtime_state": "T.20.BOUNDED_ONLY_WHEN_RECEIPTS_BIND_REAL_PROVIDER_OUTPUTS_AND_NORMALIZED_DIMENSIONS",
     }
 
 
@@ -323,8 +277,10 @@ def receipt_to_dict(receipt: SlotReceipt) -> Dict:
 
 def main() -> None:
     print("FR0333.IMAGE.QUEUE.RUNTIME.0001 provider-neutral dispatcher loaded")
-    print("IMAGE_GENERATE.TEN_SLOT_PLAN=4+4+2")
-    print("QUEUE.RUNTIME=U.21.NOT.PROVEN")
+    print("IMAGE_GENERATE.TEN_SLOT_PLAN=1+1+1+1+1+1+1+1+1+1")
+    print("IMAGE_INSTRUCT_EDIT.TEN_SLOT_PLAN=1+1+1+1+1+1+1+1+1+1")
+    print("NATIVE.GENERATE.DIMENSION.OBSERVED=1072x1920")
+    print("DELIVERY.NORMALIZATION.REQUIRED=1080x1920")
 
 
 if __name__ == "__main__":
