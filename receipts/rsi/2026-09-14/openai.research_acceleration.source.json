@@ -1,0 +1,16 @@
+{
+  "source_id": "openai.research_acceleration.2026-09-06",
+  "source_type": "official_webpage",
+  "publisher": "OpenAI",
+  "title": "Research acceleration: The view inside OpenAI",
+  "published_at": "2026-09-06",
+  "retrieved_at": "2026-09-14",
+  "url": "https://openai.com/index/research-acceleration-view-inside-openai/",
+  "evidence_class": "OFFICIAL.PRIMARY.SOURCE",
+  "summary": "OpenAI says it has reached its automated research intern milestone and is building an automated AI researcher, under human supervision, to accelerate deep-learning and alignment research through iterative improvements.",
+  "claims_observed": [
+    "AI.ASSISTS.AI.RESEARCH",
+    "BOUNDED.SELF.IMPROVEMENT.LOOPS.EXIST"
+  ],
+  "payload_hash": "sha256_30504651643c60fa89b83eec65241ba21c9b89e54556636fdb76838253fd0a3b"
+}

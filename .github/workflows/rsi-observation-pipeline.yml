@@ -1,0 +1,56 @@
+name: RSI Observation Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/rsi-observation-pipeline-0001
+    paths:
+      - "receipts/rsi/**"
+      - "src/**"
+      - "schemas/**"
+      - "tests/**"
+      - ".github/workflows/rsi-observation-pipeline.yml"
+  pull_request:
+    paths:
+      - "receipts/rsi/**"
+      - "src/**"
+      - "schemas/**"
+      - "tests/**"
+      - ".github/workflows/rsi-observation-pipeline.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-compile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build observation bundle
+        run: python src/build_observation_bundle.py
+
+      - name: Compile markdown receipt
+        run: python src/compile_receipt_markdown.py
+
+      - name: Verify generated files are deterministic
+        run: git diff --exit-code -- receipts/rsi/2026-09-14/observation.bundle.json receipts/rsi/2026-09-14/observation.bundle.hash.json receipts/rsi/2026-09-14/receipt.md
+
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Pipeline summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ## FR0333 RSI Observation Pipeline
+          - Primary-source receipts are canonical-hash bound.
+          - Observation states are restricted to T.20, U.21, or F.6.
+          - Append-only regression tests reject deletion, unsourced T.20/F.6 injection, unauthorized state changes, metadata pollution, and cooccurrence-to-causation leakage.
+          - This pipeline does not modify hosted model weights or platform permissions.
+          - HUMANLOCK remains the promotion boundary.
+          EOF

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/source_receipt.schema.json",
+  "title": "FR0333 Source Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "source_type",
+    "publisher",
+    "title",
+    "published_at",
+    "retrieved_at",
+    "url",
+    "evidence_class",
+    "payload_hash"
+  ],
+  "properties": {
+    "source_id": {"type": "string", "minLength": 1},
+    "source_type": {"type": "string", "minLength": 1},
+    "publisher": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "published_at": {"type": "string", "minLength": 4},
+    "retrieved_at": {"type": "string", "minLength": 10},
+    "url": {"type": "string", "pattern": "^https://"},
+    "evidence_class": {"type": "string", "minLength": 1},
+    "summary": {"type": "string"},
+    "claims_observed": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "payload_hash": {"type": "string", "pattern": "^sha256_[0-9a-f]{64}$"}
+  }
+}
