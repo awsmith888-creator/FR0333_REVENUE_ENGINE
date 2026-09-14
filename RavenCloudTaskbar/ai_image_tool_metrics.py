@@ -9,7 +9,14 @@ from typing import Iterable
 
 MODULE_ID = "FR0333.AI.IMAGE.TOOL.METRICS.0001"
 GOLDEN_CHAIN_ID = "GC.SB.0027"
-VERSION = "1.0.0"
+VERSION = "1.7.0"
+NUMERIC_ROLE_MUTATION = "1.7"
+SEVEN_REGULATOR_STATE = "CONDITIONAL"
+SEVEN_REGULATOR_ACTIVATION = "EIGHT.CONDITION.REACHED.AND.INCOMING.POWER.REQUIRES.REGULATION"
+DIGIT_VALUE_NE_FUNCTIONAL_ROLE = True
+SUFFIX_7_INHERITS_REGULATOR_ROLE = False
+GC_SB_0027_AUTO_REGULATOR = False
+POSITION_27_ROLE = "UNASSIGNED.UNLESS.SEPARATELY.ESTABLISHED"
 
 
 class EvidenceState(StrEnum):
@@ -103,6 +110,15 @@ def compile_report(changes: Iterable[ToolChange]) -> dict[str, object]:
         "module": MODULE_ID,
         "golden_chain": GOLDEN_CHAIN_ID,
         "version": VERSION,
+        "numeric_role_control": {
+            "mutation": NUMERIC_ROLE_MUTATION,
+            "seven_regulator_state": SEVEN_REGULATOR_STATE,
+            "activation_condition": SEVEN_REGULATOR_ACTIVATION,
+            "digit_value_ne_functional_role": DIGIT_VALUE_NE_FUNCTIONAL_ROLE,
+            "suffix_7_inherits_regulator_role": SUFFIX_7_INHERITS_REGULATOR_ROLE,
+            "gc_sb_0027_auto_regulator": GC_SB_0027_AUTO_REGULATOR,
+            "position_27_role": POSITION_27_ROLE,
+        },
         "record_count": len(records),
         "capability_metrics_by_evidence": metrics_by_evidence,
         "evidence_lanes": lanes,
@@ -113,6 +129,8 @@ def compile_report(changes: Iterable[ToolChange]) -> dict[str, object]:
             "release_availability_ne_runtime_verification": True,
             "cross_lane_aggregation_forbidden": True,
             "observed_ne_correlated_ne_causal": True,
+            "digit_value_ne_functional_role": True,
+            "suffix_7_auto_regulator_forbidden": True,
         },
     }
 
