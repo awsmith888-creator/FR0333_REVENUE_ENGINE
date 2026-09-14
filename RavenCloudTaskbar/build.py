@@ -12,6 +12,7 @@ IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0004.json"
 ADOBE_RECEIPT = ROOT / "fr0333_adobe_image_runtime_receipt_0001.json"
 ADOBE_QUEUE_FAILURE = ROOT / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
 ADOBE_QUEUE_RUNTIME = ROOT / "fr0333_adobe_image_queue_runtime_receipt_0003.json"
+ADOBE_EXAMPLES = ROOT / "fr0333_adobe_runtime_examples_inventory_0001.json"
 
 REQUIRED_TASKBAR_FIELDS = {
     "id", "project", "lane", "state", "evidence_state",
@@ -48,6 +49,7 @@ def load_and_validate():
     connector = load_json(ADOBE_RECEIPT)
     historical_failure = load_json(ADOBE_QUEUE_FAILURE)
     runtime = load_json(ADOBE_QUEUE_RUNTIME)
+    examples = load_json(ADOBE_EXAMPLES)
 
     assert taskbars["humanlock"] is True
     assert taskbars.get("humanlock_state", "ACTIVE_IMMUTABLE") == "ACTIVE_IMMUTABLE"
@@ -128,6 +130,25 @@ def load_and_validate():
     assert runtime["result"]["universal_adobe_surface"] == "U.21.HOLD"
     assert runtime["quality_promotion"]["state"] == "U.21"
 
+    assert examples["identifier"] == "FR0333.ADOBE.RUNTIME.EXAMPLES.INVENTORY.0001"
+    assert examples["humanlock"] is True
+    assert examples["chain_bindings"]["runtime_receipt"] == "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0003"
+    assert examples["chain_bindings"]["new_taskbar_slot"] is False
+    assert examples["chain_bindings"]["taskbars_json_mutation"] is False
+    assert examples["visual_family"]["selected_asset_count"] == 19
+    assert examples["visual_family"]["canonical_visual_anchor_count"] == 6
+    assert len(examples["visual_family"]["canonical_visual_anchors"]) == 6
+    assert examples["visual_family"]["user_acceptance"]["state"] == "T.20"
+    assert len(examples["assets"]) == 19
+    assert len({item["artifact_id"] for item in examples["assets"]}) == 19
+    assert len({item["asset_urn"] for item in examples["assets"]}) == 19
+    assert examples["method_receipt"]["final_requested_count"] == 10
+    assert examples["method_receipt"]["final_delivered_count"] == 10
+    assert examples["method_receipt"]["retried_slots"] == ["Q09"]
+    assert examples["method_receipt"]["chain_route"].count("CHOMP") == 2
+    assert examples["result"]["inventory_complete"] == "T.20"
+    assert examples["result"]["universal_adobe_surface"] == "U.21.HOLD"
+
     hard = set(gate["hard_boundaries"])
     for boundary in (
         "TEN.REQUESTED = TEN.DELIVERED",
@@ -140,7 +161,7 @@ def load_and_validate():
         assert boundary in hard
 
     assert gate["golden_chain_route"].count("CHOMP") == 2
-    return taskbars, lumen, gate, connector, historical_failure, runtime
+    return taskbars, lumen, gate, connector, historical_failure, runtime, examples
 
 
 def card(item):
@@ -156,7 +177,7 @@ def build_html(taskbars, lumen):
 
 
 def main():
-    taskbars, lumen, gate, connector, historical_failure, runtime = load_and_validate()
+    taskbars, lumen, gate, connector, historical_failure, runtime, examples = load_and_validate()
     DIST.mkdir(exist_ok=True)
     docs = {
         "taskbars.json": taskbars,
@@ -165,6 +186,7 @@ def main():
         "fr0333_adobe_image_runtime_receipt_0001.json": connector,
         "fr0333_adobe_image_queue_runtime_receipt_0002.json": historical_failure,
         "fr0333_adobe_image_queue_runtime_receipt_0003.json": runtime,
+        "fr0333_adobe_runtime_examples_inventory_0001.json": examples,
     }
     (DIST / "index.html").write_text(build_html(taskbars, lumen), encoding="utf-8")
     for name, doc in docs.items():
