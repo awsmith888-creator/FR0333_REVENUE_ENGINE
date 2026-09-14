@@ -6,9 +6,12 @@ on:
       - "RavenCloudTaskbar/fr0333_image_quality_gate_0004.json"
       - "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
       - "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
+      - "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json"
+      - "RavenCloudTaskbar/fr0333_adobe_runtime_examples_inventory_0001.json"
       - "RavenCloudTaskbar/fr0333_image_quality_runtime_genius.py"
       - "RavenCloudTaskbar/test_fr0333_image_quality_runtime_genius.py"
       - "RavenCloudTaskbar/README_image_quality_runtime_0004.md"
+      - "RavenCloudTaskbar/README_adobe_runtime_examples_0001.md"
       - "RavenCloudTaskbar/build.py"
       - "RavenCloudTaskbar/taskbars.json"
       - ".github/workflows/fr0333-image-quality-runtime-validate.yml"
@@ -29,8 +32,12 @@ jobs:
         run: python -m json.tool RavenCloudTaskbar/fr0333_image_quality_gate_0004.json >/dev/null
       - name: Validate prior Adobe runtime receipt JSON
         run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json >/dev/null
-      - name: Validate observed queue failure receipt JSON
+      - name: Validate historical queue failure receipt JSON
         run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json >/dev/null
+      - name: Validate bounded ten-slot Adobe runtime receipt JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json >/dev/null
+      - name: Validate Adobe runtime examples inventory JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_adobe_runtime_examples_inventory_0001.json >/dev/null
       - name: Run image quality runtime Genius rail
         run: python RavenCloudTaskbar/fr0333_image_quality_runtime_genius.py
       - name: Run image quality runtime tests
