@@ -10,6 +10,9 @@ HERE = Path(__file__).resolve().parent
 MASTER_PATH = HERE / "fr0333_frontier_model_master_benchmark_0001.json"
 FIXTURES_PATH = HERE / "fr0333_frontier_model_mock_fixtures_0001.json"
 SCHEMA_PATH = HERE / "fr0333_disagreement_register_0001.schema.json"
+HUMANLOCK_RECEIPT_PATH = HERE / "fr0333_humanlock_compliance_receipt_0001.json"
+AUTH_SCHEMA_PATH = HERE / "fr0333_humanlock_authorization_0001.schema.json"
+AUTH_MOCK_PATH = HERE / "fr0333_humanlock_authorization_mock_0001.json"
 
 EXPECTED_PROVIDER_IDS = [
     "P01.OPENAI.CHATGPT",
@@ -192,6 +195,180 @@ def validate_master(master):
     assert master["diamond_comparator"]["consensus_rule"] == "MODEL.AGREEMENT != VERIFIED.FACT"
 
 
+def _authorization_payload_hash(payload):
+    material = copy.deepcopy(payload)
+    material.pop("payload_hash", None)
+    return _canonical_hash(material)
+
+
+def _with_recomputed_payload_hash(payload):
+    candidate = copy.deepcopy(payload)
+    candidate["payload_hash"] = _authorization_payload_hash(candidate)
+    return candidate
+
+
+def validate_humanlock_compliance_receipt(receipt):
+    assert receipt["identifier"] == "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001"
+    assert receipt["source_pr"] == 41
+    assert receipt["source_head"] == "767e5ecc96a1b50b3896c9c51256aced1b27afb9"
+    assert receipt["status"] == "FROZEN_VALIDATED"
+    contract = receipt["contract_configuration"]
+    assert contract["humanlock_id"] == "Z.26.21.HUMANLOCK"
+    assert contract["humanlock_state"] == "ACTIVE_IMMUTABLE"
+    assert contract["humanlock_can_be_disabled"] == "F.6"
+    assert contract["automatic_bypass"] == "F.6"
+    assert contract["removal_or_downgrade"] == "REJECT"
+    assert contract["definition_invariant"] == "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE"
+    policy = receipt["authorization_policy"]
+    assert policy["merge_requires_explicit_human_authorization"] == "T.20"
+    assert policy["canonical_promotion_requires_explicit_human_authorization"] == "T.20"
+    assert policy["humanlock_equivalent_to_signature"] is False
+    assert all(row["expected"] == "REJECT" and row["verified"] is True for row in receipt["mutation_test_matrix"])
+    verify = receipt["verification_environment"]
+    assert verify["frontier_model_ci_run_id"] == 34878039174
+    assert verify["frontier_model_ci_result"] == "T.20"
+    assert verify["raven_cloud_taskbar_run_id"] == 34878039109
+    assert verify["raven_cloud_taskbar_result"] == "T.20"
+    target = receipt["target_runtime_boundaries"]
+    assert target["pr41_merge_truth_state"] == "U.21"
+    assert target["pr41_canonical_promotion_truth_state"] == "U.21"
+    assert target["new_lane"] is False
+    assert target["taskbars_json_mutation"] is False
+
+
+def evaluate_authorization(payload, auth_validator, expected_action, expected_head):
+    auth_validator.validate(payload)
+    if payload["payload_hash"] != _authorization_payload_hash(payload):
+        return {
+            "decision": "REJECT.PAYLOAD_HASH_MISMATCH",
+            "truth_state": "U.21",
+            "qualifier": "HUMANLOCK.HOLD",
+            "humanlock_boundary_reached": False,
+            "action_eligible": False,
+        }
+    if payload["target_action"] != expected_action:
+        return {
+            "decision": "REJECT.WRONG_ACTION",
+            "truth_state": "U.21",
+            "qualifier": "HUMANLOCK.HOLD",
+            "humanlock_boundary_reached": False,
+            "action_eligible": False,
+        }
+    if payload["target_head"] != expected_head:
+        return {
+            "decision": "REJECT.STALE_OR_MISMATCHED_HEAD",
+            "truth_state": "U.21",
+            "qualifier": "HUMANLOCK.HOLD",
+            "humanlock_boundary_reached": False,
+            "action_eligible": False,
+        }
+    if payload["authorization_state"] != "EXPLICIT.HUMAN.AUTHORIZED" or payload["human_authorization_present"] is not True:
+        return {
+            "decision": "REJECT.MISSING_HUMAN_AUTHORIZATION",
+            "truth_state": "U.21",
+            "qualifier": "HUMANLOCK.HOLD",
+            "humanlock_boundary_reached": False,
+            "action_eligible": False,
+        }
+    if payload["mock_only"] is True:
+        assert payload["authorization_scope"] == "SIMULATION_ONLY"
+        assert payload["live_execution_eligible"] is False
+        return {
+            "decision": "PASS.MOCK_ONLY",
+            "truth_state": "T.20",
+            "qualifier": "STRUCTURAL.AUTHORIZATION.PASS.SIMULATION_ONLY",
+            "humanlock_boundary_reached": True,
+            "action_eligible": False,
+        }
+    if payload["authorization_scope"] != "LIVE_TARGET_ACTION" or payload["live_execution_eligible"] is not True:
+        return {
+            "decision": "REJECT.LIVE_SCOPE_NOT_ELIGIBLE",
+            "truth_state": "U.21",
+            "qualifier": "HUMANLOCK.HOLD",
+            "humanlock_boundary_reached": False,
+            "action_eligible": False,
+        }
+    return {
+        "decision": "PASS.LIVE.AUTHORIZATION.STRUCTURE",
+        "truth_state": "T.20",
+        "qualifier": "HUMANLOCK.AUTHORIZATION.STRUCTURE.PASS",
+        "humanlock_boundary_reached": True,
+        "action_eligible": True,
+    }
+
+
+def validate_authorization_package(receipt=None, auth_schema=None, mock_suite=None):
+    receipt = receipt or _load(HUMANLOCK_RECEIPT_PATH)
+    auth_schema = auth_schema or _load(AUTH_SCHEMA_PATH)
+    mock_suite = mock_suite or _load(AUTH_MOCK_PATH)
+
+    validate_humanlock_compliance_receipt(receipt)
+    Draft202012Validator.check_schema(auth_schema)
+    auth_validator = Draft202012Validator(auth_schema)
+
+    assert mock_suite["identifier"] == "FR0333.HUMANLOCK.AUTHORIZATION.MOCK.SUITE.0001"
+    assert mock_suite["architecture_state"] == "LOCKED.BASELINE"
+    assert mock_suite["humanlock"] == "ACTIVE_IMMUTABLE"
+    expected_head = mock_suite["demonstration_target_head"]
+    expected_action = mock_suite["expected_target_action"]
+    assert expected_head == receipt["source_head"]
+    assert expected_action == "MERGE"
+
+    base_payload = mock_suite["mock_authorization"]
+    positive = evaluate_authorization(base_payload, auth_validator, expected_action, expected_head)
+    assert positive == mock_suite["expected_positive_result"]
+
+    negative_results = []
+    for test in mock_suite["negative_tests"]:
+        candidate = copy.deepcopy(base_payload)
+        candidate.update(test["mutation"])
+        candidate = _with_recomputed_payload_hash(candidate)
+        result = evaluate_authorization(candidate, auth_validator, expected_action, expected_head)
+        assert result["decision"] == test["expected_decision"]
+        assert result["truth_state"] == test["expected_truth_state"]
+        assert result["action_eligible"] is False
+        negative_results.append({
+            "test_id": test["test_id"],
+            "decision": result["decision"],
+            "truth_state": result["truth_state"],
+        })
+
+    hold_route = mock_suite["hold_semantics"]["route"]
+    assert hold_route == [
+        "AUTHORIZATION.INVALID.OR.ABSENT",
+        "EMIT.NEW.HOLD.RECEIPT",
+        "TRUTH.STATE.U.21",
+        "QUALIFIER.HUMANLOCK.HOLD",
+        "NO.ROLLBACK",
+        "NO.PROMOTION",
+    ]
+    assert mock_suite["hold_semantics"]["append_only"] is True
+    boundaries = set(mock_suite["boundaries"])
+    assert "MOCK.AUTHORIZATION != LIVE.AUTHORIZATION" in boundaries
+    assert "NEW.COMMIT.INVALIDATES.PRIOR.HEAD_BOUND.AUTHORIZATION" in boundaries
+    assert "NO.NEW.LANE" in boundaries
+    assert "NO.TASKBARS.JSON.MUTATION" in boundaries
+    assert "NO.MERGE" in boundaries
+    assert "NO.PROMOTION" in boundaries
+
+    return {
+        "identifier": "FR0333.HUMANLOCK.AUTHORIZATION.MOCK.VALIDATION.RECEIPT.0001",
+        "state": "T.20",
+        "qualifier": "MOCK.AUTHORIZATION.PACKAGE.PASS",
+        "compliance_receipt": receipt["identifier"],
+        "compliance_source_head": receipt["source_head"],
+        "positive_control": positive,
+        "negative_test_count": len(negative_results),
+        "negative_tests": negative_results,
+        "live_authorization_created": False,
+        "merge_authorized": False,
+        "canonical_promotion_authorized": False,
+        "humanlock": "ACTIVE_IMMUTABLE",
+        "new_lane": False,
+        "taskbars_json_mutation": False,
+    }
+
+
 def validate_all(master=None, fixtures_doc=None, schema=None):
     master = master or _load(MASTER_PATH)
     fixtures_doc = fixtures_doc or _load(FIXTURES_PATH)
@@ -220,17 +397,18 @@ def validate_all(master=None, fixtures_doc=None, schema=None):
         and r["register"]["resolution_state"] in {"OPEN", "INVESTIGATING"}
     )
     failed_claims = sum(1 for r in results if r["truth_state"] == "F.6")
+    authorization_package = validate_authorization_package()
 
     return {
         "identifier": "FR0333.FRONTIER.MODEL.MOCK.VALIDATION.RECEIPT.0001",
-        "state": "T.20" if len(results) == 8 else "F.6",
-        "qualifier": "MOCK.PIPELINE.MECHANICS.PASS" if len(results) == 8 else "MOCK.PIPELINE.MECHANICS.FAIL",
+        "state": "T.20" if len(results) == 8 and authorization_package["state"] == "T.20" else "F.6",
+        "qualifier": "MOCK.PIPELINE.MECHANICS.PASS" if len(results) == 8 and authorization_package["state"] == "T.20" else "MOCK.PIPELINE.MECHANICS.FAIL",
         "fixture_count": len(results),
         "schema_valid_register_count": len(results),
         "failed_claim_fixture_count": failed_claims,
         "unresolved_high_or_critical_count": unresolved_high_or_critical,
         "promotion_candidate": False,
-        "promotion_hold_reason": "MOCK.FAILURE.SUITE.INTENTIONALLY.CONTAINS.BLOCKERS",
+        "promotion_hold_reason": "MOCK.FAILURE.SUITE.INTENTIONALLY.CONTAINS.BLOCKERS.AND.NO_LIVE_HUMAN_AUTHORIZATION_EXISTS",
         "humanlock": "ACTIVE_IMMUTABLE.REQUIRED",
         "humanlock_bypass": "F.6",
         "humanlock_removal_or_downgrade": "REJECT",
@@ -239,6 +417,7 @@ def validate_all(master=None, fixtures_doc=None, schema=None):
         "new_lane": False,
         "taskbars_json_mutation": False,
         "cross_provider_live_runtime": "U.21.NOT.CONNECTED",
+        "authorization_package": authorization_package,
         "results": results,
     }
 
