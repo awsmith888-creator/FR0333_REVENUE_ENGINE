@@ -109,7 +109,7 @@
     {
       "step": 12,
       "migration_action": "Only after valid HumanLock authorization, perform the authorized merge, promotion, or deployment action and generate a post-action receipt.",
-      "execution_class": "LIVE.MUTATION.REQUIRES_HUMANLOCK",
+      "execution_class": "LIVE.MUTATION.REQUIRES.HUMANLOCK",
       "gate": "EXACT.ACTION.ONLY",
       "authorization_effect": "CONSUME.VALID.STEP11.RECEIPT.ONLY",
       "may_satisfy_humanlock": false,
