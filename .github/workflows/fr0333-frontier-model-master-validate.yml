@@ -57,9 +57,9 @@ jobs:
         run: test "$(git hash-object RavenCloudTaskbar/taskbars.json)" = "056d63083395b5d092a23c4764cc81520acad8cb"
       - name: Generate and validate exact-head HumanLock CI receipt
         env:
-          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          FR0333_EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          FR0333_WORKFLOW_RUN_ID: ${{ github.run_id }}
+          FR0333_WORKFLOW_RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
           mkdir -p artifacts
           python RavenCloudTaskbar/fr0333_frontier_model_master_validate.py --emit-ci-receipt artifacts/fr0333_humanlock_exact_head_receipt.json
