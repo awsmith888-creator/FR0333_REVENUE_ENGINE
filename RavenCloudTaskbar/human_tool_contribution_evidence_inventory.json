@@ -1,10 +1,19 @@
 {
   "id": "FR0333.HUMAN.TOOL.CONTRIBUTION.EVIDENCE.0001",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "state": "SPECIFICATION_CI_GATE_ACTIVE",
   "golden_chain_position": "GC.SB.0028",
   "golden_chain_state": "REGISTERED.DRAFT.UNMERGED",
   "golden_chain_predecessor": "GC.SB.0027",
+  "predecessor_numeric_role_contract": {
+    "mutation": "1.7",
+    "seven_regulator_state": "CONDITIONAL",
+    "activation_condition": "EIGHT.CONDITION.REACHED.AND.INCOMING.POWER.REQUIRES.REGULATION",
+    "digit_value_ne_functional_role": true,
+    "suffix_7_inherits_regulator_role": false,
+    "gc_sb_0027_auto_regulator": false,
+    "position_27_role": "UNASSIGNED.UNLESS.SEPARATELY.ESTABLISHED"
+  },
   "humanlock": true,
   "promotion": "CLAIM.SPECIFIC",
   "runtime": {
@@ -84,13 +93,13 @@
   ],
   "local_verification": {
     "base_tests": 10,
-    "human_centered_extension_tests": 12,
+    "human_centered_extension_tests": 13,
     "litigation_evidence_tests": 12,
     "genius_bar_comparability_tests": 19,
-    "expected_total": 53,
+    "expected_total": 54,
     "new_suite_local_verified": 19,
     "failed_in_new_suite_local_run": 0,
-    "scope": "SCHEMA_SPEC_EVIDENCE_BOUNDARY_AND_COMPARABILITY_FIXTURES"
+    "scope": "SCHEMA_SPEC_EVIDENCE_BOUNDARY_COMPARABILITY_AND_NUMERIC_ROLE_FIXTURES"
   },
   "ci_verification": {
     "state": "CI.GATE.ACTIVE",
@@ -98,6 +107,7 @@
     "last_observed_success_run_number": 21,
     "last_observed_success_head": "7705c8be3c94b97fe680f9d0c9d271c8e82d6a7f",
     "current_head_receipt_is_external_to_inventory_commit": true,
+    "current_mutated_head_exact_ci": "PENDING",
     "policy": "EVERY MUTATED HEAD MUST PASS BEFORE PROMOTION"
   },
   "runtime_boundary": "LOCAL_OR_CI_VALIDATION_DOES_NOT_ESTABLISH_AUTHENTICATED_EXTERNAL_RUNTIME",
@@ -122,6 +132,9 @@
     "FORMATTING.DIFFERENCE != SEMANTIC.DIFFERENCE",
     "RAW.STATE != CANONICAL.STATE",
     "NUMERIC.IDENTITY != SEMANTIC.IDENTITY",
+    "DIGIT.VALUE != FUNCTIONAL.ROLE",
+    "SUFFIX.7 != AUTOMATIC.REGULATOR",
+    "SEVEN.REGULATOR.STATE = CONDITIONAL",
     "REVERSIBLE.REPRESENTATION != EXACT.UNDERLYING.TRUTH",
     "VALID.RECORD != VALID.FOR.EVERY.USE",
     "NORMALIZED != COMPARABLE",
