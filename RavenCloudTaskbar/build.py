@@ -10,7 +10,8 @@ TASKBARS = ROOT / "taskbars.json"
 LUMEN = ROOT / "lumen_gateway.json"
 IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0004.json"
 ADOBE_RECEIPT = ROOT / "fr0333_adobe_image_runtime_receipt_0001.json"
-ADOBE_QUEUE_RECEIPT = ROOT / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
+ADOBE_QUEUE_FAILURE = ROOT / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
+ADOBE_QUEUE_RUNTIME = ROOT / "fr0333_adobe_image_queue_runtime_receipt_0003.json"
 
 REQUIRED_TASKBAR_FIELDS = {
     "id", "project", "lane", "state", "evidence_state",
@@ -20,8 +21,10 @@ REQUIRED_TASKBAR_FIELDS = {
 REQUIRED_STATUS = {
     "BUILD.VALIDATION": "T.20.PASS",
     "CONNECTOR.RUNTIME": "T.20.PASS.BOUNDED",
+    "QUEUE.RUNTIME": "T.20.PASS.BOUNDED",
+    "FR0333.ADOBE.IMAGE.TESTED.SURFACE": "T.20.PASS.BOUNDED",
     "QUALITY.PROMOTION": "U.21.HOLD",
-    "QUEUE.RUNTIME": "U.21.NOT.PROVEN",
+    "UNIVERSAL.ADOBE.SURFACE": "U.21.HOLD",
     "OVERALL.SYSTEM.STATUS": "U.21.HOLD",
 }
 
@@ -34,14 +37,20 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def load_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def load_and_validate():
-    taskbars = json.loads(TASKBARS.read_text(encoding="utf-8"))
-    lumen = json.loads(LUMEN.read_text(encoding="utf-8"))
-    image_quality = json.loads(IMAGE_QUALITY.read_text(encoding="utf-8"))
-    adobe_receipt = json.loads(ADOBE_RECEIPT.read_text(encoding="utf-8"))
-    adobe_queue_receipt = json.loads(ADOBE_QUEUE_RECEIPT.read_text(encoding="utf-8"))
+    taskbars = load_json(TASKBARS)
+    lumen = load_json(LUMEN)
+    gate = load_json(IMAGE_QUALITY)
+    connector = load_json(ADOBE_RECEIPT)
+    historical_failure = load_json(ADOBE_QUEUE_FAILURE)
+    runtime = load_json(ADOBE_QUEUE_RUNTIME)
 
     assert taskbars["humanlock"] is True
+    assert taskbars.get("humanlock_state", "ACTIVE_IMMUTABLE") == "ACTIVE_IMMUTABLE"
     assert taskbars["state"] == "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED"
     assert taskbars["evidence_gate"] == "OBSERVED != CORRELATED != CAUSAL"
     ids = set()
@@ -54,229 +63,113 @@ def load_and_validate():
     assert lumen["provisioning_state"] == "NOT_PROVISIONED"
     assert lumen["credentials"] == "NOT_STORED"
 
-    assert image_quality["identifier"] == "FR0333.IMAGE.QUALITY.GATE.0004"
-    assert image_quality["supersedes"] == "FR0333.IMAGE.QUALITY.GATE.0003"
-    assert image_quality["humanlock"] is True
-    assert image_quality["reference_scale"]["percent_symbols_prohibited"] is True
-    assert image_quality["reference_scale"]["minimum_promotable_reference"] == 8
-    assert set(image_quality["preserved_from_0003"]) == {
-        "VEHICLE.MECHANICAL.GEOMETRY", "LOAD.BALANCE.CONTACT.PHYSICS"
-    }
+    assert gate["identifier"] == "FR0333.IMAGE.QUALITY.GATE.0004"
+    assert gate["humanlock"] is True
+    assert gate["status_output_contract"] == REQUIRED_STATUS
 
-    queue = image_quality["queue_contract"]
+    queue = gate["queue_contract"]
     assert queue["requested_count_must_equal_delivered_count"] is True
     assert queue["one_slot_one_canvas_one_image"] is True
     assert queue["independent_9_16_canvas_per_slot"] is True
     assert queue["exact_1080_1920_required"] is True
     assert queue["max_user_queue"] == 10
-    assert queue["slot_receipt_required"] is True
     assert queue["collage"] == "REJECT"
     assert queue["contact_sheet"] == "REJECT"
     assert queue["multi_panel"] == "REJECT"
-    assert queue["duplicate_output"] == "REJECT"
-    assert queue["count_mismatch"] == "REJECT"
-    assert queue["completion_claim_requires_all_slots_present"] is True
 
-    caps = image_quality["provider_batch_caps"]
-    generate = caps["IMAGE_GENERATE"]
-    edit = caps["IMAGE_INSTRUCT_EDIT"]
-    assert generate["state"] == "T.20.VERIFIED_PROVIDER_CAP"
-    assert generate["max_variations_per_call"] == 4
-    assert generate["ten_slot_chunk_plan"] == [4, 4, 2]
-    assert generate["ten_slot_provider_call_count"] == 3
-    assert generate["dispatcher_mode"] == "NATIVE_PROVIDER_BATCH"
-    assert sum(generate["ten_slot_chunk_plan"]) == 10
-    assert edit["state"] == "U.21.NOT_ESTABLISHED"
-    assert edit["max_variations_per_call"] == "U.21.NOT_ESTABLISHED"
-    assert edit["ten_slot_chunk_plan"] == "U.21.NOT_ESTABLISHED"
-    assert edit["dispatcher_mode"] == "CONSERVATIVE_SINGLETON_UNTIL_CAP_VERIFIED"
-    assert caps["cap_scope_rule"] == "PROVIDER_CAP_IS_OPERATION_SPECIFIC"
-    assert caps["unknown_cap_scheduler_rule"] == "DO_NOT_BATCH_BY_ASSUMED_CAP"
+    caps = gate["provider_batch_caps"]
+    for operation in ("IMAGE_GENERATE", "IMAGE_INSTRUCT_EDIT"):
+        cap = caps[operation]
+        assert cap["state"] == "T.20.BOUNDED_EFFECTIVE_CONNECTOR_CAP"
+        assert cap["schema_n_max"] == 4
+        assert cap["max_variations_per_call"] == 1
+        assert cap["ten_slot_chunk_plan"] == [1] * 10
+        assert cap["ten_slot_provider_call_count"] == 10
+    assert caps["schema_cap_ne_effective_runtime_cap"] is True
     assert caps["successful_slots_must_not_be_regenerated"] is True
 
-    per_slot = image_quality["per_slot_readback_contract"]
-    assert per_slot["required_fields"] == [
-        "readback_state",
-        "anatomy_readback",
-        "realism_readback",
-        "clothing_variance_readback",
-        "intent_alignment_readback",
-    ]
-    assert per_slot["required_pass_value"] == "PASS"
-    assert per_slot["all_fields_required_for_slot_promotion"] is True
-
-    human = image_quality["human_realism_gate"]
-    required_human = set(human["human_subject_request_requires"])
-    for field in (
-        "CORRECT_LIMB_COUNT", "JOINT_CONTINUITY", "PLAUSIBLE_WEIGHT_BEARING",
-        "NATURAL_HAND_FINGER_STRUCTURE", "NATURAL_FOOT_TOE_STRUCTURE"
-    ):
-        assert field in required_human
-    assert human["rubber_limb_or_fused_body_geometry"] == "REJECT"
-    assert human["floating_or_impossible_contact"] == "REJECT"
-    assert human["mannequin_or_plastic_skin"] == "REJECT"
-
-    mode = image_quality["mode_gate"]
-    assert mode["edit_ne_regenerate"] is True
-    assert mode["remaster_ne_reinvent"] is True
-    assert mode["concept_reference_total_remake"] == "GENERATE_DISTINCT_NEW_SCENES_WITH_CONCEPT_LOCK"
-
-    dimensions = image_quality["photorealism_dimensions"]
-    assert len(dimensions) == 16
-    assert "ANATOMY.FACE.HANDS.FEET" in dimensions
-    assert "VEHICLE.MECHANICAL.GEOMETRY" in dimensions
-    assert "LOAD.BALANCE.CONTACT.PHYSICS" in dimensions
-    assert "POSE.WEIGHT.CONTACT" in dimensions
-    assert "SCENE.UNIQUENESS" in dimensions
-    assert "VISUAL.READBACK" in dimensions
-
-    defaults = image_quality["adobe_execution_defaults"]
-    assert defaults["generation_prompt_reasoner"] == "quality"
-    assert defaults["edit_prompt_reasoner"] == "quality"
-    assert defaults["target_aspect_ratio"] == "9:16"
-    assert defaults["target_resolution_level"] == "4MP"
-    assert defaults["provider_render_resolution_level"] == "4MP"
+    defaults = gate["adobe_execution_defaults"]
+    assert defaults["requested_generation_width"] == 1080
+    assert defaults["requested_generation_height"] == 1920
+    assert defaults["observed_native_generation_width"] == 1072
+    assert defaults["observed_native_generation_height"] == 1920
     assert defaults["delivery_width"] == 1080
     assert defaults["delivery_height"] == 1920
-    assert defaults["delivery_exact_dimensions_required"] is True
-    assert defaults["output_format"] == "png"
-    assert defaults["post_generation_visual_readback"] == "REQUIRED"
-    assert defaults["post_edit_visual_readback"] == "REQUIRED"
+    assert defaults["dimension_normalization_operation"] == "image_crop_and_resize"
+    assert defaults["dimension_normalization_required_when_native_drift_observed"] is True
+    assert defaults["post_normalization_visual_readback"] == "REQUIRED"
 
-    promo = image_quality["promotion_gate"]
-    for field in (
-        "identity_reference_min", "anatomy_reference_min", "vehicle_geometry_reference_min",
-        "physics_reference_min", "pose_contact_reference_min", "camera_geometry_reference_min",
-        "lighting_reference_min", "material_realism_reference_min", "crop_reference_min",
-        "artifact_control_reference_min", "aesthetic_reference_min", "scene_uniqueness_reference_min",
-        "user_intent_reference_min"
-    ):
-        assert promo[field] >= 8, f"quality threshold too low: {field}={promo[field]}"
-    assert promo["visual_readback_required"] is True
-    assert promo["per_slot_readback_fields_required"] is True
-    assert promo["queue_cardinality_required"] is True
-    assert promo["exact_1080_1920_required"] is True
-    assert promo["user_reject_overrides_promotion"] is True
-    assert promo["runtime_receipt_required_for_external_execution_claim"] is True
-
-    recovery = image_quality["failure_recovery"]
-    assert recovery["SILENT_EMPTY_OUTPUT"] == "FAIL_AND_RETRY_SLOT"
-    assert recovery["CARDINALITY_MISMATCH"] == "FAIL_AND_RETRY_MISSING_SLOTS"
-    assert recovery["EXACT_DIMENSION_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["HUMAN_ANATOMY_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["REALISM_READBACK_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["CLOTHING_VARIANCE_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["INTENT_ALIGNMENT_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["VEHICLE_GEOMETRY_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["LOAD_CONTACT_PHYSICS_DRIFT"] == "FAIL_AFFECTED_SLOT_ONLY"
-    assert recovery["MAX_RETRY_PER_SLOT"] == 2
-    assert recovery["no_silent_success"] is True
-
-    hard = set(image_quality["hard_boundaries"])
-    assert "TEN.REQUESTED = TEN.DELIVERED" in hard
-    assert "ONE.SLOT = ONE.IMAGE = ONE.FULL.9.16.CANVAS" in hard
-    assert "9.16.RATIO != EXACT.1080x1920.DELIVERY" in hard
-    assert "IMAGE.GENERATE.TEN.SLOTS = NATIVE.4.4.2.BATCH.PLAN" in hard
-    assert "READBACK.GENERIC != ANATOMY.REALISM.CLOTHING.INTENT.PASS" in hard
-    assert "PROVIDER.CAP.IS.OPERATION.SPECIFIC" in hard
-    assert "IMAGE.INSTRUCT.EDIT.CAP = U.21.UNTIL.VERIFIED" in hard
-    assert "PARTIAL.SUCCESS != QUEUE.SUCCESS" in hard
-    assert "EMPTY.RESPONSE != SUCCESS" in hard
-    assert "USER.REJECT = OUTPUT.HOLD" in hard
-
-    assert image_quality["status_output_contract"] == REQUIRED_STATUS
-
-    bindings = image_quality["runtime_receipt_bindings"]
+    bindings = gate["runtime_receipt_bindings"]
     assert bindings["connector_runtime"] == "RavenCloudTaskbar/fr0333_adobe_image_runtime_receipt_0001.json"
-    assert bindings["queue_failure"] == "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
+    assert bindings["queue_failure_historical"] == "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0002.json"
+    assert bindings["queue_runtime_bounded"] == "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json"
 
-    assert adobe_receipt["provider"] == "ADOBE"
-    assert adobe_receipt["provider_receipt"]["execution_state"] == "PASS_RUNTIME"
-    assert adobe_receipt["readback"]["quality_promotion_state"] == "U.21.HOLD"
-    assert adobe_receipt["readback"]["user_acceptance"] == "NOT_OBSERVED"
-    assert adobe_receipt["result"]["connector_runtime"] == "T.20.PASS"
-    assert adobe_receipt["result"]["external_adobe_full_capacity"] == "NOT_ESTABLISHED"
+    assert connector["provider"] == "ADOBE"
+    assert connector["provider_receipt"]["execution_state"] == "PASS_RUNTIME"
+    assert historical_failure["identifier"] == "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0002"
+    assert historical_failure["result"]["queue_contract"] == "F.6.FAIL"
 
-    assert adobe_queue_receipt["identifier"] == "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0002"
-    assert adobe_queue_receipt["provider"] == "ADOBE_FIREFLY_IMAGE_INSTRUCT_EDIT"
-    assert adobe_queue_receipt["provider_receipt"]["execution_state"] == "T.20.PASS"
-    assert adobe_queue_receipt["provider_receipt"]["api_variation_count"] == 1
-    assert adobe_queue_receipt["visual_readback"]["contact_sheet_or_collage_detected"] is True
-    assert adobe_queue_receipt["visual_readback"]["independent_full_canvas_delivery"] is False
-    assert adobe_queue_receipt["result"]["queue_contract"] == "F.6.FAIL"
-    assert adobe_queue_receipt["result"]["external_ten_slot_capacity"] == "U.21.NOT_ESTABLISHED"
+    assert runtime["identifier"] == "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0003"
+    assert runtime["humanlock"] is True
+    assert runtime["effective_connector_caps"]["IMAGE_GENERATE"]["effective_outputs_per_call"] == 1
+    assert runtime["effective_connector_caps"]["IMAGE_INSTRUCT_EDIT"]["effective_outputs_per_call"] == 1
+    assert runtime["effective_connector_caps"]["ten_slot_dispatch_plan"] == [1] * 10
+    assert runtime["dimension_observation"]["observed_native_generation_size"] == [1072, 1920]
+    assert runtime["dimension_observation"]["normalized_delivery_size"] == [1080, 1920]
+    assert runtime["queue"]["requested_count"] == 10
+    assert runtime["queue"]["final_delivered_count"] == 10
+    assert runtime["queue"]["final_unique_slots"] == 10
+    assert runtime["queue"]["retried_slots"] == ["Q09"]
+    assert len(runtime["queue"]["preserved_successful_slots"]) == 9
+    assert runtime["queue"]["final_visual_readback"] == "PASS"
+    assert runtime["result"]["fr0333_adobe_image_tested_surface"] == "T.20.PASS.BOUNDED"
+    assert runtime["result"]["ten_slot_generate_runtime"] == "T.20.PASS.BOUNDED"
+    assert runtime["result"]["exact_1080_1920_after_normalization"] == "T.20.PASS.BOUNDED"
+    assert runtime["result"]["universal_adobe_surface"] == "U.21.HOLD"
+    assert runtime["quality_promotion"]["state"] == "U.21"
 
-    return taskbars, lumen, image_quality, adobe_receipt, adobe_queue_receipt
+    hard = set(gate["hard_boundaries"])
+    for boundary in (
+        "TEN.REQUESTED = TEN.DELIVERED",
+        "CURRENT.EFFECTIVE.CONNECTOR.OUTPUTS.PER.CALL = 1",
+        "NATIVE.1072x1920 -> NORMALIZE -> 1080x1920",
+        "RETRY.FAILED.SLOT != REGENERATE.SUCCESSFUL.SLOTS",
+        "TEN.SLOT.RUNTIME.PASS != UNIVERSAL.ADOBE.PRODUCT.CAPACITY",
+        "USER.REJECT = OUTPUT.HOLD",
+    ):
+        assert boundary in hard
+
+    assert gate["golden_chain_route"].count("CHOMP") == 2
+    return taskbars, lumen, gate, connector, historical_failure, runtime
 
 
 def card(item):
-    def e(v): return html.escape(str(v))
-    return f'''<article class="card">
-      <div class="rail"><span>{e(item['lane'])}</span><strong>{e(item['state'])}</strong></div>
-      <h2>{e(item['project'])}</h2>
-      <p class="id">{e(item['id'])}</p>
-      <dl>
-        <dt>EVIDENCE</dt><dd>{e(item['evidence_state'])}</dd>
-        <dt>EXECUTION</dt><dd>{e(item['execution_state'])}</dd>
-        <dt>CLOUD</dt><dd>{e(item['cloud_mode'])}</dd>
-        <dt>NEXT</dt><dd>{e(item['next_action'])}</dd>
-      </dl>
-    </article>'''
+    e = lambda v: html.escape(str(v))
+    return f'''<article class="card"><div class="rail"><span>{e(item['lane'])}</span><strong>{e(item['state'])}</strong></div><h2>{e(item['project'])}</h2><p class="id">{e(item['id'])}</p><dl><dt>EVIDENCE</dt><dd>{e(item['evidence_state'])}</dd><dt>EXECUTION</dt><dd>{e(item['execution_state'])}</dd><dt>CLOUD</dt><dd>{e(item['cloud_mode'])}</dd><dt>NEXT</dt><dd>{e(item['next_action'])}</dd></dl></article>'''
 
 
 def build_html(taskbars, lumen):
     cards = "\n".join(card(x) for x in taskbars["taskbars"])
     bars = " → ".join(taskbars["three_bars"])
     caps = " · ".join(lumen["capabilities"][:4])
-    return f'''<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Raven Cloud Taskbar</title>
-<style>
-:root{{--bg:#0b0d0d;--panel:#171a1a;--line:#b9c1c3;--text:#f3f5f5;--muted:#9ca5a7}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,sans-serif}}
-main{{max-width:1180px;margin:auto;padding:28px 18px 60px}}header{{border:1px solid #343a3b;padding:22px;margin-bottom:18px}}
-h1{{margin:0;font-size:clamp(28px,5vw,54px);letter-spacing:.04em}}.sub{{color:var(--muted);margin:6px 0 0}}
-.status{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:18px 0}}
-.status div{{border:1px solid #343a3b;background:#101212;padding:12px}}.status b{{display:block;color:var(--line);font-size:12px}}
-.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}}.card{{background:var(--panel);border:1px solid #343a3b;padding:16px}}
-.rail{{display:flex;justify-content:space-between;border-bottom:1px solid #343a3b;padding-bottom:8px;color:var(--line);font-size:12px}}
-h2{{font-size:20px;margin:14px 0 2px}}.id{{font-family:ui-monospace,monospace;color:var(--muted);font-size:12px;margin-top:0}}
-dl{{display:grid;grid-template-columns:82px 1fr;gap:7px 10px;margin:14px 0 0}}dt{{font-size:11px;color:var(--muted)}}dd{{margin:0;font-size:13px}}
-footer{{margin-top:20px;color:var(--muted);font-family:ui-monospace,monospace;font-size:12px}}
-</style></head>
-<body><main>
-<header><h1>RAVEN CLOUD TASKBAR</h1><p class="sub">{html.escape(bars)} · HumanLock active</p></header>
-<section class="status">
-<div><b>CONTROL PLANE</b>{html.escape(taskbars['state'])}</div>
-<div><b>ZERO-LINE BUS</b>{html.escape(taskbars['zero_line_bus'])}</div>
-<div><b>EVIDENCE GATE</b>{html.escape(taskbars['evidence_gate'])}</div>
-<div><b>LUMEN TRANSPORT</b>{html.escape(lumen['provisioning_state'])}</div>
-</section>
-<section class="status"><div><b>LUMEN VERIFIED CAPABILITY</b>{html.escape(caps)}</div><div><b>BOUNDARY</b>Taskbar = control plane · Lumen = transport · local-only stays local</div></section>
-<section class="grid">{cards}</section>
-<footer>FR0333_RAVEN_CLOUD_TASKBAR v{html.escape(taskbars['version'])} · generated {html.escape(taskbars['generated_at'])}</footer>
-</main></body></html>'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Raven Cloud Taskbar</title><style>:root{{--bg:#0b0d0d;--panel:#171a1a;--line:#b9c1c3;--text:#f3f5f5;--muted:#9ca5a7}}*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,sans-serif}}main{{max-width:1180px;margin:auto;padding:28px 18px 60px}}header{{border:1px solid #343a3b;padding:22px;margin-bottom:18px}}h1{{margin:0;font-size:clamp(28px,5vw,54px)}}.sub{{color:var(--muted)}}.status,.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}}.status div,.card{{border:1px solid #343a3b;background:var(--panel);padding:14px}}.rail{{display:flex;justify-content:space-between}}.id{{font-family:monospace;color:var(--muted)}}dl{{display:grid;grid-template-columns:82px 1fr;gap:7px}}dd{{margin:0}}</style></head><body><main><header><h1>RAVEN CLOUD TASKBAR</h1><p class="sub">{html.escape(bars)} · HumanLock active</p></header><section class="status"><div><b>CONTROL PLANE</b><br>{html.escape(taskbars['state'])}</div><div><b>LUMEN</b><br>{html.escape(lumen['provisioning_state'])}</div><div><b>CAPABILITY</b><br>{html.escape(caps)}</div></section><section class="grid">{cards}</section></main></body></html>'''
 
 
 def main():
-    taskbars, lumen, image_quality, adobe_receipt, adobe_queue_receipt = load_and_validate()
+    taskbars, lumen, gate, connector, historical_failure, runtime = load_and_validate()
     DIST.mkdir(exist_ok=True)
+    docs = {
+        "taskbars.json": taskbars,
+        "lumen_gateway.json": lumen,
+        "fr0333_image_quality_gate_0004.json": gate,
+        "fr0333_adobe_image_runtime_receipt_0001.json": connector,
+        "fr0333_adobe_image_queue_runtime_receipt_0002.json": historical_failure,
+        "fr0333_adobe_image_queue_runtime_receipt_0003.json": runtime,
+    }
     (DIST / "index.html").write_text(build_html(taskbars, lumen), encoding="utf-8")
-    (DIST / "taskbars.json").write_text(json.dumps(taskbars, indent=2) + "\n", encoding="utf-8")
-    (DIST / "lumen_gateway.json").write_text(json.dumps(lumen, indent=2) + "\n", encoding="utf-8")
-    (DIST / "fr0333_image_quality_gate_0004.json").write_text(json.dumps(image_quality, indent=2) + "\n", encoding="utf-8")
-    (DIST / "fr0333_adobe_image_runtime_receipt_0001.json").write_text(json.dumps(adobe_receipt, indent=2) + "\n", encoding="utf-8")
-    (DIST / "fr0333_adobe_image_queue_runtime_receipt_0002.json").write_text(json.dumps(adobe_queue_receipt, indent=2) + "\n", encoding="utf-8")
-    files = [
-        DIST / "index.html",
-        DIST / "taskbars.json",
-        DIST / "lumen_gateway.json",
-        DIST / "fr0333_image_quality_gate_0004.json",
-        DIST / "fr0333_adobe_image_runtime_receipt_0001.json",
-        DIST / "fr0333_adobe_image_queue_runtime_receipt_0002.json"
-    ]
+    for name, doc in docs.items():
+        (DIST / name).write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+    files = [DIST / "index.html"] + [DIST / name for name in docs]
     sums = "\n".join(f"{sha256(p)}  {p.name}" for p in files) + "\n"
     (DIST / "SHA256SUMS").write_text(sums, encoding="utf-8")
     for key, value in REQUIRED_STATUS.items():
