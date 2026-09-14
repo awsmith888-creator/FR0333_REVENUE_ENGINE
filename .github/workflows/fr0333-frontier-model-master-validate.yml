@@ -6,6 +6,9 @@ on:
       - "RavenCloudTaskbar/fr0333_frontier_model_master_benchmark_0001.json"
       - "RavenCloudTaskbar/fr0333_frontier_model_mock_fixtures_0001.json"
       - "RavenCloudTaskbar/fr0333_disagreement_register_0001.schema.json"
+      - "RavenCloudTaskbar/fr0333_humanlock_compliance_receipt_0001.json"
+      - "RavenCloudTaskbar/fr0333_humanlock_authorization_0001.schema.json"
+      - "RavenCloudTaskbar/fr0333_humanlock_authorization_simulation_fixture_0001.json"
       - "RavenCloudTaskbar/fr0333_frontier_model_master_validate.py"
       - "RavenCloudTaskbar/test_fr0333_frontier_model_master_validate.py"
       - ".github/workflows/fr0333-frontier-model-master-validate.yml"
@@ -29,6 +32,9 @@ jobs:
           python -m json.tool RavenCloudTaskbar/fr0333_frontier_model_master_benchmark_0001.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_frontier_model_mock_fixtures_0001.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_disagreement_register_0001.schema.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_humanlock_compliance_receipt_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_humanlock_authorization_0001.schema.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_humanlock_authorization_simulation_fixture_0001.json >/dev/null
       - name: Run frontier model comparator validator
         run: python RavenCloudTaskbar/fr0333_frontier_model_master_validate.py
       - name: Run frontier model comparator tests
