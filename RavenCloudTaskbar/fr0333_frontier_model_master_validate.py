@@ -214,7 +214,7 @@ def validate_humanlock_compliance_receipt(receipt):
     assert receipt["source_pr"] == 41
     assert receipt["status"] == "STATIC.CONTROL.TEMPLATE"
     assert receipt["committed_file_role"] == "STATIC.CONTROL.TEMPLATE.NOT.EXACT_HEAD.RECEIPT"
-    assert receipt["source_head_binding"] == "GITHUB_SHA"
+    assert receipt["source_head_binding"] == "FR0333_EXPECTED_HEAD"
     assert "source_head" not in receipt
     contract = receipt["contract_configuration"]
     assert contract["humanlock_id"] == "Z.26.21.HUMANLOCK"
@@ -232,9 +232,10 @@ def validate_humanlock_compliance_receipt(receipt):
     assert mutations["STALE.WORKFLOW.RUN"]["expected"] == "REJECT"
     assert all(row["expected"] == "REJECT" and row["verified"] is True for row in mutations.values())
     verification = receipt["verification_environment"]
-    assert verification["exact_head_binding"] == "GITHUB_SHA"
-    assert verification["workflow_run_id_binding"] == "GITHUB_RUN_ID"
-    assert verification["workflow_run_attempt_binding"] == "GITHUB_RUN_ATTEMPT"
+    assert verification["exact_head_binding"] == "FR0333_EXPECTED_HEAD"
+    assert verification["workflow_run_id_binding"] == "FR0333_WORKFLOW_RUN_ID"
+    assert verification["workflow_run_attempt_binding"] == "FR0333_WORKFLOW_RUN_ATTEMPT"
+    assert verification["github_event_sha_semantics"] == "SYNTHETIC.MERGE.COMMIT.ON.PULL_REQUEST.NOT.EXACT.PR.HEAD"
     assert verification["runtime_receipt_role"] == "EPHEMERAL.CI.ARTIFACT"
     assert "run_id" not in verification
     assert "run_number" not in verification
@@ -497,15 +498,15 @@ def main():
         template = _load(HUMANLOCK_RECEIPT_PATH)
         receipt = build_exact_head_ci_receipt(
             template,
-            os.environ["GITHUB_SHA"],
-            os.environ["GITHUB_RUN_ID"],
-            os.environ["GITHUB_RUN_ATTEMPT"],
+            os.environ["FR0333_EXPECTED_HEAD"],
+            os.environ["FR0333_WORKFLOW_RUN_ID"],
+            os.environ["FR0333_WORKFLOW_RUN_ATTEMPT"],
         )
         validate_exact_head_ci_receipt(
             receipt,
-            os.environ["GITHUB_SHA"],
-            os.environ["GITHUB_RUN_ID"],
-            os.environ["GITHUB_RUN_ATTEMPT"],
+            os.environ["FR0333_EXPECTED_HEAD"],
+            os.environ["FR0333_WORKFLOW_RUN_ID"],
+            os.environ["FR0333_WORKFLOW_RUN_ATTEMPT"],
         )
         output_path = Path(args.emit_ci_receipt)
         output_path.parent.mkdir(parents=True, exist_ok=True)
