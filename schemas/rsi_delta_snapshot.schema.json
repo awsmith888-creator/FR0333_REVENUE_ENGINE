@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/rsi_delta_snapshot.schema.json",
+  "title": "FR0333 RSI Delta Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "baseline_record_id",
+    "candidate_record_id",
+    "baseline_payload_hash",
+    "candidate_payload_hash",
+    "observed_at",
+    "new_verified_facts",
+    "promotions",
+    "demotions",
+    "state_changes",
+    "removed_claims",
+    "retained_unknowns",
+    "unchanged_verified_facts",
+    "unchanged_false_claims",
+    "source_ids_added",
+    "status"
+  ],
+  "properties": {
+    "record_id": {"const": "FR0333.RSI.DELTA.MONITOR.0001"},
+    "baseline_record_id": {"type": "string"},
+    "candidate_record_id": {"type": "string"},
+    "baseline_payload_hash": {"type": "string", "pattern": "^sha256_[0-9a-f]{64}$"},
+    "candidate_payload_hash": {"type": "string", "pattern": "^sha256_[0-9a-f]{64}$"},
+    "observed_at": {"type": "string"},
+    "new_verified_facts": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "promotions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "demotions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "state_changes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "removed_claims": {"type": "array", "items": {"type": "string"}, "maxItems": 0},
+    "retained_unknowns": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unchanged_verified_facts": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unchanged_false_claims": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "source_ids_added": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "status": {"enum": ["VERIFIED.DELTA", "NO.VERIFIED.DELTA"]}
+  }
+}

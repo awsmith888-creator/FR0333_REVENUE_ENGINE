@@ -1,0 +1,40 @@
+{
+  "record_id": "FR0333.RSI.DELTA.MONITOR.0001",
+  "baseline_record_id": "FR0333.RSI.OBSERVATION.PIPELINE.0001",
+  "candidate_record_id": "FR0333.RSI.OBSERVATION.PIPELINE.0002",
+  "baseline_payload_hash": "sha256_a66400f6d139a3cd0c3839a0521e7d45ac5d36c7153027426e7669a5fc4ba318",
+  "candidate_payload_hash": "sha256_452dae84e44fdc56e1ccde1eb43508e2d37eca5662d3c121741e8bc033ddf589",
+  "observed_at": "2026-09-14T22:30:00Z",
+  "new_verified_facts": [
+    "OPENAI.RSI.AUTOMATED.AUDITING.FOCUS",
+    "OPENAI.RSI.AUTOMATES.RESEARCH.WORKFLOWS",
+    "OPENAI.RSI.EVALUATES.HYPOTHESIS.GENERATION.TESTING",
+    "OPENAI.RSI.LOSS.OF.CONTROL.MITIGATION.FOCUS",
+    "OPENAI.RSI.SAFETY.PROGRAM.EXISTS",
+    "OPENAI.RSI.SCALABLE.OVERSIGHT.FOCUS",
+    "OPENAI.RSI.TEAM.EXISTS",
+    "OPENAI.RSI.TRAINS.MODELS.MISSING.CAPABILITIES"
+  ],
+  "promotions": [],
+  "demotions": [],
+  "state_changes": [],
+  "removed_claims": [],
+  "retained_unknowns": [
+    "FULL.AUTONOMOUS.SELF.SUCCESSOR.DESIGN"
+  ],
+  "unchanged_verified_facts": [
+    "AI.ASSISTS.AI.RESEARCH",
+    "AI.EVALUATES.AI.RELATED.WORK",
+    "AI.PROPOSES.HYPOTHESES",
+    "AI.RUNS.RESEARCH.EXPERIMENTS",
+    "AI.WRITES.AI.DEVELOPMENT.CODE"
+  ],
+  "unchanged_false_claims": [
+    "CURRENT.RUNTIME.CAN.SELF.REWRITE.MODEL.WEIGHTS"
+  ],
+  "source_ids_added": [
+    "openai.rsi.safety.2026-09-14",
+    "openai.rsi.team.2026-09-14"
+  ],
+  "status": "VERIFIED.DELTA"
+}
