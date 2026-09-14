@@ -1,0 +1,37 @@
+name: FR0333 Clotilda Anson Evidence Validate
+
+on:
+  push:
+    paths:
+      - "RavenCloudTaskbar/fr0333_clotilda_anson_dna_separation_0001.json"
+      - "RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0031.json"
+      - "RavenCloudTaskbar/validate_clotilda_anson_dna_separation.py"
+      - "RavenCloudTaskbar/test_clotilda_anson_dna_separation.py"
+      - ".github/workflows/fr0333-clotilda-anson-evidence-validate.yml"
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_clotilda_anson_dna_separation_0001.json"
+      - "RavenCloudTaskbar/fr0333_golden_chain_gc_sb_0031.json"
+      - "RavenCloudTaskbar/validate_clotilda_anson_dna_separation.py"
+      - "RavenCloudTaskbar/test_clotilda_anson_dna_separation.py"
+      - ".github/workflows/fr0333-clotilda-anson-evidence-validate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile validator and tests
+        run: python -m py_compile RavenCloudTaskbar/validate_clotilda_anson_dna_separation.py RavenCloudTaskbar/test_clotilda_anson_dna_separation.py
+      - name: Validate canonical evidence record
+        run: python RavenCloudTaskbar/validate_clotilda_anson_dna_separation.py
+      - name: Run fail-closed mutation suite
+        working-directory: RavenCloudTaskbar
+        run: python -m unittest -v test_clotilda_anson_dna_separation.py
