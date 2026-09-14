@@ -1,0 +1,82 @@
+{
+  "identifier": "FR0333.HUMANLOCK.SIMULATION.AUTHORIZATION.FIXTURE.0001",
+  "architecture_state": "LOCKED.BASELINE",
+  "humanlock": "ACTIVE_IMMUTABLE",
+  "source_pr": 41,
+  "demonstration_target_head": "767e5ecc96a1b50b3896c9c51256aced1b27afb9",
+  "expected_target_action": "MERGE",
+  "simulation_authorization_fixture": {
+    "authorization_id": "FR0333.HUMANLOCK.AUTH.SIM.0001",
+    "humanlock_id": "Z.26.21.HUMANLOCK",
+    "target_action": "MERGE",
+    "repository": "awsmith888-creator/FR0333_REVENUE_ENGINE",
+    "pull_request": 41,
+    "target_head": "767e5ecc96a1b50b3896c9c51256aced1b27afb9",
+    "authorization_state": "NOT.AUTHORIZED",
+    "authorized_by_role": "NONE",
+    "human_authorization_present": false,
+    "issued_at": "2026-09-14T14:00:00-04:00",
+    "audit_receipt": "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001",
+    "signature_state": "NOT_APPLICABLE_OR_SEPARATELY_VERIFIED",
+    "signature_required_by_policy": false,
+    "simulation_fixture": true,
+    "authorization_scope": "SIMULATION_ONLY",
+    "live_execution_eligible": false,
+    "payload_hash": "576707d0bc915019bd5fd9cd1bbfb017fe3bf81c7c44ca2fcf4590bf723d381c"
+  },
+  "expected_structural_result": {
+    "decision": "PASS.SIMULATION.FIXTURE",
+    "truth_state": "T.20",
+    "qualifier": "SCHEMA.AND.BINDING.PASS.NO.HUMAN.AUTHORIZATION",
+    "humanlock_boundary_reached": false,
+    "action_eligible": false,
+    "real_human_authorization_present": false
+  },
+  "negative_tests": [
+    {
+      "test_id": "AUTH-SIM-NEG-001-STALE-HEAD",
+      "mutation": {"target_head": "0000000000000000000000000000000000000001"},
+      "expected_decision": "REJECT.STALE_OR_MISMATCHED_HEAD",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "test_id": "AUTH-SIM-NEG-002-WRONG-ACTION",
+      "mutation": {"target_action": "CANONICAL_PROMOTION"},
+      "expected_decision": "REJECT.WRONG_ACTION",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "test_id": "AUTH-SIM-NEG-003-FORGED-HUMAN-AUTH",
+      "mutation": {
+        "authorization_state": "EXPLICIT.HUMAN.AUTHORIZED",
+        "authorized_by_role": "HUMAN.OPERATOR",
+        "human_authorization_present": true
+      },
+      "expected_decision": "REJECT.SIMULATION.CANNOT.ASSERT.HUMAN.AUTHORIZATION",
+      "expected_truth_state": "U.21"
+    }
+  ],
+  "hold_semantics": {
+    "route": [
+      "AUTHORIZATION.INVALID.OR.ABSENT",
+      "EMIT.NEW.HOLD.RECEIPT",
+      "TRUTH.STATE.U.21",
+      "QUALIFIER.HUMANLOCK.HOLD",
+      "NO.ROLLBACK",
+      "NO.PROMOTION"
+    ],
+    "append_only": true
+  },
+  "boundaries": [
+    "REAL.HUMAN.OPERATOR != SIMULATION.FIXTURE",
+    "SIMULATION.FIXTURE != HUMAN.AUTHORIZATION",
+    "SIMULATION.CANNOT.SATISFY.HUMANLOCK",
+    "REAL.HUMAN.AUTHORIZATION.PRESENT = F.6.UNTIL.EXPLICIT.EXACT_HEAD.ACTION",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+    "NEW.COMMIT.INVALIDATES.PRIOR.HEAD_BOUND.AUTHORIZATION",
+    "NO.NEW.LANE",
+    "NO.TASKBARS.JSON.MUTATION",
+    "NO.MERGE",
+    "NO.PROMOTION"
+  ]
+}
