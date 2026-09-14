@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.TASKBARS.STRONGHOLD.SCHEMA.0001",
+  "title": "FR0333 Taskbars Stronghold Schema",
+  "type": "object",
+  "required": [
+    "system",
+    "version",
+    "generated_at",
+    "state",
+    "humanlock",
+    "humanlock_state",
+    "humanlock_can_be_disabled",
+    "three_bars",
+    "zero_line_bus",
+    "evidence_gate",
+    "cloud_policy",
+    "taskbars"
+  ],
+  "properties": {
+    "system": {"const": "FR0333_RAVEN_CLOUD_TASKBAR"},
+    "version": {"const": "1.0.9"},
+    "generated_at": {"type": "string"},
+    "state": {"const": "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED"},
+    "humanlock": {"const": true},
+    "humanlock_state": {"const": "ACTIVE_IMMUTABLE"},
+    "humanlock_can_be_disabled": {"const": false},
+    "three_bars": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "STRUCTURE"},
+        {"const": "DISCIPLINE"},
+        {"const": "CONTINUITY"}
+      ],
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "zero_line_bus": {"const": "(((100.1.0.100.1)))"},
+    "evidence_gate": {"const": "OBSERVED != CORRELATED != CAUSAL"},
+    "cloud_policy": {
+      "type": "object",
+      "required": ["default", "raw_private_evidence", "hash_required", "receipt_required", "external_execution"],
+      "properties": {
+        "default": {"const": "METADATA_FIRST"},
+        "raw_private_evidence": {"const": "LOCAL_OR_EXPLICITLY_APPROVED_ONLY"},
+        "hash_required": {"const": true},
+        "receipt_required": {"const": true},
+        "external_execution": {"const": "HUMAN_APPROVAL_REQUIRED"}
+      },
+      "additionalProperties": false
+    },
+    "taskbars": {
+      "type": "array",
+      "minItems": 21,
+      "maxItems": 21,
+      "items": {
+        "type": "object",
+        "required": ["id", "project", "lane", "state", "evidence_state", "execution_state", "cloud_mode", "next_action"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "project": {"type": "string", "minLength": 1},
+          "lane": {"type": "string", "minLength": 1},
+          "state": {"type": "string", "minLength": 1},
+          "evidence_state": {"type": "string", "minLength": 1},
+          "execution_state": {"type": "string", "minLength": 1},
+          "cloud_mode": {"type": "string", "minLength": 1},
+          "next_action": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
