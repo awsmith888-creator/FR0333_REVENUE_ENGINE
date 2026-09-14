@@ -68,6 +68,24 @@
     "TB.FR0333.ADOBE.MARIAH.CAREY.CHOMP.0001": "f8544b4ac89dbdb9a1206c0ea3c4162a0302885c4d08ee0574a72e2a383109bb",
     "TB.FR0333.GC.SB.0028.HUMAN.CENTERED.EVIDENCE": "36768c0860ced1a1ed940a1fd9b8473e73fd5be63f840e561aec1007262e7b9f"
   },
+  "enforcement_artifacts": {
+    "schema": {
+      "artifact": "RavenCloudTaskbar/fr0333_taskbars_stronghold_0001.schema.json",
+      "git_blob_sha": "199a1ae818a424e5dbde7139b418491bfc31d0e2"
+    },
+    "validator": {
+      "artifact": "RavenCloudTaskbar/fr0333_taskbars_stronghold_validate.py",
+      "git_blob_sha": "471546e54981d54b9a20544e29df9b0cf4dd1fdb"
+    },
+    "adversarial_tests": {
+      "artifact": "RavenCloudTaskbar/test_fr0333_taskbars_stronghold.py",
+      "git_blob_sha": "82e71dda8719cfb3a4f9acb9d63aea8f0cca0520"
+    },
+    "ci_workflow": {
+      "artifact": ".github/workflows/fr0333-taskbars-stronghold-validate.yml",
+      "git_blob_sha": "368d576eb27fc0a8f3ef0dff73d8790390e13477"
+    }
+  },
   "guards": [
     "EXACTLY_21_UNIQUE_TASKBAR_IDS",
     "DUPLICATE_ID_REJECT",
@@ -86,9 +104,11 @@
   ],
   "rooting": {
     "golden_chain_inventory_target": "RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json",
+    "inventory_parent_blob_sha": "f01e3ef2f4a6c0e8ed20591882d6e003d98147d4",
     "inventory_policy": "APPEND_ONLY_ARTIFACT_INVENTORY",
+    "required_inventory_id": "INV.0.37",
     "inventory_entry_role": "TASKBAR_STRONGHOLD_ROOT_MANIFEST",
-    "status": "PENDING_APPEND_AFTER_MANIFEST_BLOB_CAPTURE"
+    "status": "APPEND_ONLY_ROOTING_REQUIRED"
   },
   "boundaries": [
     "TAMPER_EVIDENT_NE_TAMPER_PROOF",
