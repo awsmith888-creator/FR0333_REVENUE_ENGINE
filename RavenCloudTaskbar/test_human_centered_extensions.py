@@ -61,6 +61,24 @@ class HumanCenteredExtensionTests(unittest.TestCase):
         self.assertEqual(CHAIN["predecessor"], "GC.SB.0027")
         self.assertIn("MUST EXIST", CHAIN["predecessor_requirement"])
 
+    def test_09_numeric_role_mutation_1_7_preserves_conditional_seven(self) -> None:
+        control = CHAIN["predecessor_numeric_role_contract"]
+        self.assertEqual(control["mutation"], "1.7")
+        self.assertEqual(control["seven_regulator_state"], "CONDITIONAL")
+        self.assertEqual(
+            control["activation_condition"],
+            "EIGHT.CONDITION.REACHED.AND.INCOMING.POWER.REQUIRES.REGULATION",
+        )
+        self.assertTrue(control["digit_value_ne_functional_role"])
+        self.assertFalse(control["suffix_7_inherits_regulator_role"])
+        self.assertFalse(control["gc_sb_0027_auto_regulator"])
+        self.assertEqual(
+            control["position_27_role"],
+            "UNASSIGNED.UNLESS.SEPARATELY.ESTABLISHED",
+        )
+        self.assertIn("DIGIT.VALUE != FUNCTIONAL.ROLE", CHAIN["hard_boundaries"])
+        self.assertIn("SUFFIX.7 != AUTOMATIC.REGULATOR", CHAIN["hard_boundaries"])
+
     def test_10_all_three_modules_registered(self) -> None:
         ids = {CHAIN["primary_module"], *(item["id"] for item in CHAIN["linked_modules"])}
         self.assertEqual(
