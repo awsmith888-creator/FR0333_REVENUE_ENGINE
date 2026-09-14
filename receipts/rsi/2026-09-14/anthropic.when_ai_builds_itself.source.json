@@ -1,0 +1,20 @@
+{
+  "source_id": "anthropic.when_ai_builds_itself.2026-09",
+  "source_type": "official_webpage",
+  "publisher": "Anthropic",
+  "title": "When AI builds itself",
+  "published_at": "2026-09",
+  "retrieved_at": "2026-09-14",
+  "url": "https://www.anthropic.com/institute/recursive-self-improvement",
+  "evidence_class": "OFFICIAL.PRIMARY.SOURCE",
+  "summary": "Anthropic reports that Claude already writes a large share of its code, runs and evaluates experiments, and can propose hypotheses in bounded research loops, while stating that fully autonomous successor-model development has not yet been achieved.",
+  "claims_observed": [
+    "AI.ASSISTS.AI.RESEARCH",
+    "AI.WRITES.AI.DEVELOPMENT.CODE",
+    "AI.RUNS.RESEARCH.EXPERIMENTS",
+    "AI.PROPOSES.HYPOTHESES",
+    "AI.EVALUATES.AI.RELATED.WORK",
+    "FULL.AUTONOMOUS.SELF.SUCCESSOR.DESIGN.NOT.ESTABLISHED"
+  ],
+  "payload_hash": "sha256_0242e13708ff3e4d117859e3592f335b208fdb66481c35cddd6b36b70ede25c1"
+}

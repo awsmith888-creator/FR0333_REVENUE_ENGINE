@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/migration_receipt.schema.json",
+  "title": "FR0333 State Transition Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "key",
+    "source_ids",
+    "timestamp",
+    "evidence_class",
+    "prior_state",
+    "new_state",
+    "payload_hash"
+  ],
+  "properties": {
+    "key": {"type": "string", "minLength": 1},
+    "source_ids": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "timestamp": {"type": "string", "minLength": 10},
+    "evidence_class": {"type": "string", "minLength": 1},
+    "prior_state": {"enum": ["T.20", "U.21", "F.6"]},
+    "new_state": {"enum": ["T.20", "U.21", "F.6"]},
+    "payload_hash": {"type": "string", "pattern": "^sha256_[0-9a-f]{64}$"}
+  }
+}
