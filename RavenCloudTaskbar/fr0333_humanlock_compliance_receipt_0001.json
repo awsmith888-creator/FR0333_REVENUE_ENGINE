@@ -1,0 +1,48 @@
+{
+  "identifier": "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001",
+  "source_pr": 41,
+  "source_head": "767e5ecc96a1b50b3896c9c51256aced1b27afb9",
+  "status": "FROZEN_VALIDATED",
+  "scope": "PR41.HUMANLOCK.ANTI_BYPASS.CONTRACT",
+  "contract_configuration": {
+    "humanlock_id": "Z.26.21.HUMANLOCK",
+    "humanlock_state": "ACTIVE_IMMUTABLE",
+    "humanlock_can_be_disabled": "F.6",
+    "automatic_bypass": "F.6",
+    "removal_or_downgrade": "REJECT",
+    "definition_invariant": "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE"
+  },
+  "authorization_policy": {
+    "merge_requires_explicit_human_authorization": "T.20",
+    "canonical_promotion_requires_explicit_human_authorization": "T.20",
+    "authorization_receipt_role": "STRUCTURED.EVIDENCE.OF.HUMAN.AUTHORIZATION",
+    "cryptographic_signature_role": "OPTIONAL_OR_REQUIRED_SUPPORTING_PROOF_ACCORDING_TO_SEPARATE_POLICY",
+    "humanlock_equivalent_to_signature": false
+  },
+  "mutation_test_matrix": [
+    {"mutation": "DISABLE.HUMANLOCK", "expected": "REJECT", "verified": true},
+    {"mutation": "REMOVE.ROUTE.GATE", "expected": "REJECT", "verified": true},
+    {"mutation": "ENABLE.AUTO.PROMOTION", "expected": "REJECT", "verified": true},
+    {"mutation": "REMOVE.MERGE.AUTH", "expected": "REJECT", "verified": true},
+    {"mutation": "SIGNATURE_EQ_HUMANLOCK", "expected": "REJECT", "verified": true}
+  ],
+  "verification_environment": {
+    "frontier_model_ci_run_id": 34878039174,
+    "frontier_model_ci_run_number": 5,
+    "frontier_model_ci_result": "T.20",
+    "frontier_model_ci_qualifier": "EXACT_HEAD_PASS",
+    "raven_cloud_taskbar_run_id": 34878039109,
+    "raven_cloud_taskbar_run_number": 359,
+    "raven_cloud_taskbar_result": "T.20",
+    "stronghold": "INTACT"
+  },
+  "target_runtime_boundaries": {
+    "pr41_merge_truth_state": "U.21",
+    "pr41_merge_qualifier": "HUMANLOCK.HOLD",
+    "pr41_canonical_promotion_truth_state": "U.21",
+    "pr41_canonical_promotion_qualifier": "HUMANLOCK.HOLD",
+    "new_lane": false,
+    "taskbars_json_mutation": false
+  },
+  "precision_boundary": "ACTIVE_IMMUTABLE denotes immutability within the validated FR0333 repository contract. Unauthorized automated bypass, route modification, or policy downgrade must fail validation closed. This receipt does not claim host-level or physical administrative tamper-proofing at GitHub."
+}
