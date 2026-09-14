@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -17,6 +18,16 @@ EXPECTED_PROVIDER_IDS = [
     "P04.XAI.GROK",
     "P05.PERPLEXITY",
     "P06.MICROSOFT.COPILOT",
+]
+
+EXPECTED_HUMANLOCK_PATH = [
+    "HUMAN.OPERATOR",
+    "Z.26.21.HUMANLOCK",
+    "HUMAN.AUTHORIZATION",
+    "PARTITION.ROUTING",
+    "STATE.VALIDATION",
+    "RECEIPT",
+    "PASS.HOLD.REJECT",
 ]
 
 SCENARIO_RULES = {
@@ -59,6 +70,50 @@ def _sources(fixture):
     return list(dict.fromkeys(out))
 
 
+def validate_humanlock_contract(master):
+    assert master["humanlock"] is True, "HumanLock top-level state must remain true"
+    contract = master["humanlock_contract"]
+    assert contract["identifier"] == "Z.26.21.HUMANLOCK"
+    assert contract["state"] == "ACTIVE_IMMUTABLE"
+    assert contract["can_be_disabled"] is False
+    assert contract["semantic_role"] == "HUMAN_AUTHORIZATION_BOUNDARY"
+    assert contract["biometric_or_neural_interface"] is False
+    assert contract["cryptographic_signature_equivalence"] is False
+    assert contract["automatic_bypass"] == "F.6"
+    assert contract["removal_or_downgrade"] == "REJECT"
+    assert contract["merge_requires_explicit_human_authorization"] is True
+    assert contract["canonical_promotion_requires_explicit_human_authorization"] is True
+    assert contract["authorization_path"] == EXPECTED_HUMANLOCK_PATH
+
+    boundaries = set(master["boundaries"])
+    required_boundaries = {
+        "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+        "HUMANLOCK.REMOVAL.OR.DOWNGRADE = REJECT",
+        "MERGE.REQUIRES.EXPLICIT.HUMAN.AUTHORIZATION",
+        "CANONICAL.PROMOTION.REQUIRES.EXPLICIT.HUMAN.AUTHORIZATION",
+        "NO.AUTONOMOUS.PROMOTION",
+    }
+    assert required_boundaries.issubset(boundaries)
+
+    route = master["diamond_comparator"]["route"]
+    assert route.count("HUMANLOCK") == 1
+    assert route.index("HUMANLOCK") > route.index("FR0333.LOGIC_GATE")
+    assert route.index("HUMANLOCK") < route.index("OUTPUT")
+    assert master["diamond_comparator"]["promotion_rule"].endswith("+ HUMANLOCK")
+    assert master["result"]["humanlock_state"] == "ACTIVE_IMMUTABLE"
+    assert master["result"]["canonical_promotion"] == "HUMANLOCK_REQUIRED"
+
+
+def assert_humanlock_mutation_rejected(master, mutator):
+    candidate = copy.deepcopy(master)
+    mutator(candidate)
+    try:
+        validate_humanlock_contract(candidate)
+    except (AssertionError, KeyError, ValueError):
+        return True
+    raise AssertionError("HumanLock mutation was not rejected")
+
+
 def evaluate_fixture(fixture, claim_index=1):
     scenario = fixture["scenario"]
     if scenario not in SCENARIO_RULES:
@@ -68,7 +123,6 @@ def evaluate_fixture(fixture, claim_index=1):
     agreements, objections = _provider_sets(fixture)
     responses = fixture.get("provider_responses", [])
 
-    # Fail-closed semantic guards for the mandatory fixtures.
     if scenario == "ALL.6.AGREE.BUT.WRONG":
         assert len(agreements) == 6
         assert fixture["ground_truth"].get("actual_state") == "ASYNC_WORKERS_UNSUPPORTED"
@@ -126,7 +180,7 @@ def evaluate_fixture(fixture, claim_index=1):
 def validate_master(master):
     assert master["identifier"] == "FR0333.FRONTIER.MODEL.MASTER.BENCHMARK.0001"
     assert master["architecture_state"] == "LOCKED.BASELINE"
-    assert master["humanlock"] is True
+    validate_humanlock_contract(master)
     assert master["integration_mode"]["core_model_weight_fusion"] is False
     assert master["integration_mode"]["cross_provider_runtime_connection_established"] is False
     assert [p["provider_id"] for p in master["providers"]] == EXPECTED_PROVIDER_IDS
@@ -136,7 +190,6 @@ def validate_master(master):
     assert "NO.TASKBARS.JSON.MUTATION" in boundaries
     assert "NO.AUTONOMOUS.PROMOTION" in boundaries
     assert master["diamond_comparator"]["consensus_rule"] == "MODEL.AGREEMENT != VERIFIED.FACT"
-    assert master["result"]["canonical_promotion"] == "HUMANLOCK_REQUIRED"
 
 
 def validate_all(master=None, fixtures_doc=None, schema=None):
@@ -178,7 +231,11 @@ def validate_all(master=None, fixtures_doc=None, schema=None):
         "unresolved_high_or_critical_count": unresolved_high_or_critical,
         "promotion_candidate": False,
         "promotion_hold_reason": "MOCK.FAILURE.SUITE.INTENTIONALLY.CONTAINS.BLOCKERS",
-        "humanlock": "REQUIRED",
+        "humanlock": "ACTIVE_IMMUTABLE.REQUIRED",
+        "humanlock_bypass": "F.6",
+        "humanlock_removal_or_downgrade": "REJECT",
+        "merge_requires_explicit_human_authorization": True,
+        "canonical_promotion_requires_explicit_human_authorization": True,
         "new_lane": False,
         "taskbars_json_mutation": False,
         "cross_provider_live_runtime": "U.21.NOT.CONNECTED",
