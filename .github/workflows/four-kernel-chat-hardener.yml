@@ -16,6 +16,11 @@ on:
       - "src/compile_four_kernel_receipt_v3.py"
       - "schemas/four_kernel_transaction_v3.schema.json"
       - "tests/test_four_kernel_hardener_v3.py"
+      - "src/agent_simulation_hardener_0001.py"
+      - "src/historical_entity_normalizer_0001.py"
+      - "schemas/agent_simulation_hardener_0001.schema.json"
+      - "schemas/historical_entity_normalization_0001.json"
+      - "tests/test_agent_simulation_hardener_0001.py"
       - "receipts/operator/**"
       - ".github/workflows/four-kernel-chat-hardener.yml"
 
@@ -49,6 +54,19 @@ jobs:
           from jsonschema import validate
           schema=json.load(open('schemas/four_kernel_transaction_v3.schema.json', encoding='utf-8'))
           tx=json.load(open('receipts/operator/2026-09-15/four_kernel.transaction.v3.json', encoding='utf-8'))
+          validate(instance=tx, schema=schema)
+          PY
+      - name: Validate agent simulation hardener 0001
+        run: |
+          python -m json.tool schemas/agent_simulation_hardener_0001.schema.json >/dev/null
+          python -m json.tool schemas/historical_entity_normalization_0001.json >/dev/null
+          python -m json.tool receipts/operator/2026-09-15/agent_simulation.batch.0001.json >/dev/null
+          python -m json.tool receipts/operator/2026-09-15/historical_entity_resolution.batch.0001.json >/dev/null
+          python - <<'PY'
+          import json
+          from jsonschema import validate
+          schema=json.load(open('schemas/agent_simulation_hardener_0001.schema.json', encoding='utf-8'))
+          tx=json.load(open('receipts/operator/2026-09-15/agent_simulation.batch.0001.json', encoding='utf-8'))
           validate(instance=tx, schema=schema)
           PY
       - name: Compile four-kernel receipt v1
