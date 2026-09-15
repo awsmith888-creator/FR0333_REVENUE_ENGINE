@@ -1,0 +1,153 @@
+{
+  "upgrade_id": "FR0333.OPERATOR.FOUR.KERNEL.UPGRADE.0002",
+  "architecture_id": "FR0333.ADOBE.FOUR.KERNEL.HARDENER.0001",
+  "kernels": {
+    "NEWSFLASH": {
+      "passed": true,
+      "receipt": {
+        "role": "CURRENT.SIGNAL.INTAKE",
+        "status": "ACTIVE",
+        "observed_at": "2026-09-15T12:00:00Z",
+        "signal": "NATIONAL.NEWS.AUDIENCE.MEASUREMENT.CALIBRATION"
+      }
+    },
+    "ESPN.FANTASY.SPORTS": {
+      "passed": true,
+      "receipt": {
+        "role": "NUMERIC.STATISTICAL.BONE",
+        "status": "ACTIVE",
+        "formula_label": "AUDIENCE.MEASUREMENT.INTEGRITY",
+        "sample_size": 4,
+        "unit_policy": "EXPLICIT"
+      }
+    },
+    "NELSON": {
+      "passed": true,
+      "receipt": {
+        "role": "USER.DEFINED.MEASUREMENT.KERNEL",
+        "status": "DEFINED.ACTIVE",
+        "measurement_contract": "SOURCE+PERIOD+METRIC+UNIT+SCOPE+RECEIPT"
+      }
+    },
+    "GENIUS.BAR": {
+      "passed": true,
+      "receipt": {
+        "role": "DIAGNOSE.CONTRADICT.REPAIR",
+        "status": "ACTIVE",
+        "diagnose": "PASS",
+        "repair": "NOT.REQUIRED",
+        "rollback_path": "PRESENT"
+      }
+    }
+  },
+  "core_gates": {
+    "SOURCE.TIMESTAMP": true,
+    "FORMULA.LABEL.MATCH": true,
+    "NUMERATOR.DENOMINATOR.MATCH": true,
+    "SAMPLE.SIZE": true,
+    "NELSON.KERNEL.RECEIPT": true,
+    "FAILURE.REPAIR.RECEIPT": true,
+    "ROLLBACK.PATH": true,
+    "NELSON.ROLE.DEFINED": true,
+    "MEASUREMENT.SOURCE.BOUND": true,
+    "MEASUREMENT.PERIOD.BOUND": true,
+    "COMPARISON.SCOPE.BOUND": true
+  },
+  "adobe_gates": {
+    "EXACT.9.16": false,
+    "IDENTITY.PRESERVATION": false,
+    "EDIT.LOCALITY": false,
+    "NO.EXTRA.TEXT": false,
+    "ONE.INPUT.ONE.OUTPUT": false
+  },
+  "adobe_execution_receipt": {},
+  "nelson_measurement": {
+    "kernel_name": "NELSON",
+    "source_receipts": [
+      {
+        "source_id": "SRC.NIELSEN.EVENING.2026.08.31",
+        "publisher": "ADWEEK.TVNEWSER",
+        "underlying_measurement": "NIELSEN.BIG.DATA.PLUS.PANEL",
+        "evidence_class": "INDEPENDENT.CORROBORATION",
+        "measurement_period": "WEEK.OF.2026.08.31",
+        "url": "https://www.adweek.com/tvnewser/week-of-aug-31-2026-evening-news-ratings/"
+      },
+      {
+        "source_id": "SRC.NIELSEN.EVENING.2026.08.24",
+        "publisher": "ADWEEK.TVNEWSER",
+        "underlying_measurement": "NIELSEN.BIG.DATA.PLUS.PANEL",
+        "evidence_class": "INDEPENDENT.CORROBORATION",
+        "measurement_period": "WEEK.OF.2026.08.24",
+        "url": "https://www.adweek.com/tvnewser/week-of-aug-24-2026-evening-news-ratings/"
+      },
+      {
+        "source_id": "SRC.CBS.60MINUTES.2025.26",
+        "publisher": "PARAMOUNT.PRESS.EXPRESS",
+        "underlying_measurement": "NIELSEN.MOST.CURRENT.RATINGS",
+        "evidence_class": "ORIGINAL",
+        "measurement_period": "SEASON.2025.26",
+        "url": "https://www.paramountpressexpress.com/cbs-news-and-stations/shows/60-minutes/releases/?view=112909-60-minutes-makes-television-history-by-marking-52-straight-seasons-as-americas-1-news-program"
+      }
+    ],
+    "measurements": [
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.31","metric":"TOTAL.VIEWERS","value":8508000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.31","metric":"A25.54.VIEWERS","value":1102000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.31","metric":"WOW.TOTAL.PCT","value":-3,"unit":"PERCENT","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.31","metric":"WOW.A25.54.PCT","value":-10,"unit":"PERCENT","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"TOTAL.VIEWERS","value":6988000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"A25.54.VIEWERS","value":1103000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"WOW.TOTAL.PCT","value":-1,"unit":"PERCENT","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"WOW.A25.54.PCT","value":3,"unit":"PERCENT","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"TOTAL.VIEWERS","value":4037000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"A25.54.VIEWERS","value":544000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"WOW.TOTAL.PCT","value":3,"unit":"PERCENT","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"WOW.A25.54.PCT","value":2,"unit":"PERCENT","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.24","metric":"TOTAL.VIEWERS","value":8731000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.24"},
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.24","metric":"A25.54.VIEWERS","value":1219000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.24"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.24","metric":"TOTAL.VIEWERS","value":7052000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.24"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.24","metric":"A25.54.VIEWERS","value":1070000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.24"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.24","metric":"TOTAL.VIEWERS","value":3916000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.24"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.24","metric":"A25.54.VIEWERS","value":531000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.24"},
+      {"program":"CBS.60.MINUTES","measurement_period":"SEASON.2025.26","metric":"SEASON.AVG.TOTAL.VIEWERS","value":9100000,"unit":"VIEWERS","source_id":"SRC.CBS.60MINUTES.2025.26"},
+      {"program":"CBS.60.MINUTES","measurement_period":"SEASON.2025.26","metric":"YOY.TOTAL.PCT","value":9,"unit":"PERCENT","source_id":"SRC.CBS.60MINUTES.2025.26"},
+      {"program":"CBS.60.MINUTES","measurement_period":"SEASON.2025.26","metric":"YOY.A25.54.PCT","value":5,"unit":"PERCENT","source_id":"SRC.CBS.60MINUTES.2025.26"},
+      {"program":"CBS.60.MINUTES","measurement_period":"SEASON.2025.26","metric":"SOCIAL.VIDEO.VIEWS","value":2500000000,"unit":"VIEWS","source_id":"SRC.CBS.60MINUTES.2025.26"},
+      {"program":"CBS.60.MINUTES","measurement_period":"SEASON.2025.26","metric":"SOCIAL.ENGAGEMENTS","value":105000000,"unit":"ENGAGEMENTS.MINIMUM","source_id":"SRC.CBS.60MINUTES.2025.26"},
+      {"program":"CBS.60.MINUTES","measurement_period":"SEASON.2025.26","metric":"SOCIAL.FOLLOWERS","value":17000000,"unit":"FOLLOWERS.APPROX","source_id":"SRC.CBS.60MINUTES.2025.26"}
+    ],
+    "comparison_groups": [
+      {
+        "group_id": "EVENING.NEWS.WEEKLY.2026.08.31",
+        "programs": ["ABC.WORLD.NEWS.TONIGHT", "NBC.NIGHTLY.NEWS", "CBS.EVENING.NEWS"],
+        "measurement_period": "WEEK.OF.2026.08.31",
+        "comparable": true
+      },
+      {
+        "group_id": "CONTEXT.60.MINUTES.SEASON.2025.26",
+        "programs": ["CBS.60.MINUTES"],
+        "measurement_period": "SEASON.2025.26",
+        "comparable": false,
+        "context_only": true
+      }
+    ],
+    "cross_period_ranking_allowed": false,
+    "pending_claims": [
+      {"claim_id": "SEP14.EVENING.NEWS.SPECIFIC.RATINGS", "state": "U.21.AWAITING.NIELSEN"},
+      {"claim_id": "SEP13.60.MINUTES.PREMIERE.RATING", "state": "U.21.AWAITING.NIELSEN"}
+    ]
+  },
+  "statistics": {
+    "source_count": 3,
+    "metric_count": 24,
+    "sample_size": 4,
+    "program_count": 4,
+    "measurement_period_count": 3,
+    "comparable_program_count": 3,
+    "contradiction_count": 0,
+    "repair_attempt_count": 0,
+    "repair_success_count": 0,
+    "truth_t20_count": 8,
+    "truth_u21_count": 2,
+    "truth_f6_count": 0
+  }
+}
