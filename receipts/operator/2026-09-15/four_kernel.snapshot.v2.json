@@ -3,10 +3,22 @@
   "predecessor_record_id": "FR0333.OPERATOR.FOUR.KERNEL.UPGRADE.0001",
   "architecture_id": "FR0333.ADOBE.FOUR.KERNEL.HARDENER.0001",
   "kernels": {
-    "NEWSFLASH": {"passed": true, "receipt_present": true},
-    "ESPN.FANTASY.SPORTS": {"passed": true, "receipt_present": true},
-    "NELSON": {"passed": true, "receipt_present": true},
-    "GENIUS.BAR": {"passed": true, "receipt_present": true}
+    "NEWSFLASH": {
+      "passed": true,
+      "receipt_present": true
+    },
+    "ESPN.FANTASY.SPORTS": {
+      "passed": true,
+      "receipt_present": true
+    },
+    "NELSON": {
+      "passed": true,
+      "receipt_present": true
+    },
+    "GENIUS.BAR": {
+      "passed": true,
+      "receipt_present": true
+    }
   },
   "nelson_measurement_gate": {
     "passed": true,
