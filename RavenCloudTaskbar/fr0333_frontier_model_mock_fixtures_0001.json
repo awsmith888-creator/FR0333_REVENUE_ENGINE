@@ -1,0 +1,129 @@
+{
+  "identifier": "FR0333.FRONTIER.MODEL.MOCK.FIXTURES.0001",
+  "architecture_state": "LOCKED.BASELINE",
+  "humanlock": true,
+  "provider_ids": [
+    "P01.OPENAI.CHATGPT",
+    "P02.ANTHROPIC.CLAUDE",
+    "P03.GOOGLE.GEMINI",
+    "P04.XAI.GROK",
+    "P05.PERPLEXITY",
+    "P06.MICROSOFT.COPILOT"
+  ],
+  "fixtures": [
+    {
+      "fixture_id": "FIX-001-HALO-EFFECT",
+      "scenario": "ALL.6.AGREE.BUT.WRONG",
+      "workload_type": "ARCHITECTURE.VALIDATION",
+      "provider_responses": [
+        {"provider_id":"P01.OPENAI.CHATGPT","claim":"legacy_v2_core supports concurrent async workers natively.","cited_sources":["internal_kb_doc_A"]},
+        {"provider_id":"P02.ANTHROPIC.CLAUDE","claim":"legacy_v2_core supports concurrent async workers natively.","cited_sources":["internal_kb_doc_A"]},
+        {"provider_id":"P03.GOOGLE.GEMINI","claim":"legacy_v2_core supports concurrent async workers natively.","cited_sources":["internal_kb_doc_A"]},
+        {"provider_id":"P04.XAI.GROK","claim":"legacy_v2_core supports concurrent async workers natively.","cited_sources":["internal_kb_doc_A"]},
+        {"provider_id":"P05.PERPLEXITY","claim":"legacy_v2_core supports concurrent async workers natively.","cited_sources":["internal_kb_doc_A"]},
+        {"provider_id":"P06.MICROSOFT.COPILOT","claim":"legacy_v2_core supports concurrent async workers natively.","cited_sources":["internal_kb_doc_A"]}
+      ],
+      "ground_truth": {"repository_evidence":"src/legacy/v2/core.c: mutex_lock(&global_lock);","actual_state":"ASYNC_WORKERS_UNSUPPORTED"},
+      "expected_action": "REJECT_ALL",
+      "expected_truth_state": "F.6"
+    },
+    {
+      "fixture_id": "FIX-002-VALUABLE-DISSENT",
+      "scenario": "1.MODEL.OBJECTS.WITH.VALID.SOURCE",
+      "workload_type": "DIFFICULT.REPOSITORY.AUDIT",
+      "provider_responses": [
+        {"provider_id":"P01.OPENAI.CHATGPT","claim":"FR0333_close_channel executes with zero memory leakage.","verdict":"SAFE"},
+        {"provider_id":"P02.ANTHROPIC.CLAUDE","claim":"FR0333_close_channel executes safely across channels.","verdict":"SAFE"},
+        {"provider_id":"P03.GOOGLE.GEMINI","claim":"Memory is cleaned up by the caller.","verdict":"SAFE"},
+        {"provider_id":"P04.XAI.GROK","claim":"FR0333_close_channel leaves a dangling pointer under high-frequency polling.","verdict":"CRITICAL_BUG","cited_sources":["src/engine/pipeline.c#L142"]},
+        {"provider_id":"P05.PERPLEXITY","claim":"Verified safe under normal conditions.","verdict":"SAFE"},
+        {"provider_id":"P06.MICROSOFT.COPILOT","claim":"No issues found during static sweep.","verdict":"SAFE"}
+      ],
+      "ground_truth": {"repository_evidence":"src/engine/pipeline.c#L142","actual_state":"REQUIRES_REPOSITORY_VERIFICATION"},
+      "expected_action": "HALT_COMPOSITE_OUTPUT",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "fixture_id": "FIX-003-HALLUCINATED-API",
+      "scenario": "MODEL.CITES.NONEXISTENT.API",
+      "workload_type": "FAILURE.RECOVERY.TOOL.WORKFLOW",
+      "provider_responses": [
+        {"provider_id":"P01.OPENAI.CHATGPT","claim":"Invoke FR0333_ForceResetKernel() for recovery.","cited_sources":["sys_spec_v4"]}
+      ],
+      "ground_truth": {"symbol_lookup":"FR0333_ForceResetKernel","exists":false},
+      "expected_action": "FLAG_CLAIM_INVALID",
+      "expected_truth_state": "F.6"
+    },
+    {
+      "fixture_id": "FIX-004-REPO-STATE-DISAGREEMENT",
+      "scenario": "MODELS.DISAGREE.ON.CURRENT.REPO.STATE",
+      "workload_type": "DIFFICULT.REPOSITORY.AUDIT",
+      "provider_responses": [
+        {"provider_id":"P01.OPENAI.CHATGPT","claim":"feature flag is enabled on main."},
+        {"provider_id":"P02.ANTHROPIC.CLAUDE","claim":"feature flag is disabled on main."}
+      ],
+      "ground_truth": {"repository_evidence":"FETCH_REQUIRED_AT_EXACT_HEAD","actual_state":"UNKNOWN_UNTIL_FETCH"},
+      "expected_action": "FETCH_REPOSITORY_EVIDENCE",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "fixture_id": "FIX-005-SOURCE-CONFLICT",
+      "scenario": "SOURCE.CONFLICT",
+      "workload_type": "MULTI.SOURCE.EVIDENCE.SYNTHESIS",
+      "provider_responses": [
+        {"provider_id":"P03.GOOGLE.GEMINI","claim":"source A says limit is 100.","cited_sources":["source_A"]},
+        {"provider_id":"P05.PERPLEXITY","claim":"source B says limit is 50.","cited_sources":["source_B"]}
+      ],
+      "ground_truth": {"source_A_value":100,"source_B_value":50,"authoritative_source":"UNRESOLVED"},
+      "expected_action": "HOLD_SOURCE_CONFLICT",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "fixture_id": "FIX-006-PROVIDER-TIMEOUT",
+      "scenario": "PROVIDER.TIMEOUT",
+      "workload_type": "MULTI.SOURCE.EVIDENCE.SYNTHESIS",
+      "provider_responses": [
+        {"provider_id":"P01.OPENAI.CHATGPT","status":"OK"},
+        {"provider_id":"P02.ANTHROPIC.CLAUDE","status":"OK"},
+        {"provider_id":"P03.GOOGLE.GEMINI","status":"OK"},
+        {"provider_id":"P04.XAI.GROK","status":"TIMEOUT"},
+        {"provider_id":"P05.PERPLEXITY","status":"OK"},
+        {"provider_id":"P06.MICROSOFT.COPILOT","status":"OK"}
+      ],
+      "ground_truth": {"complete_provider_count":5,"expected_provider_count":6},
+      "expected_action": "PARTIAL_RESULT_NO_FALSE_CONSENSUS",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "fixture_id": "FIX-007-MISSING-RECEIPT",
+      "scenario": "MISSING.RECEIPT",
+      "workload_type": "ARCHITECTURE.VALIDATION",
+      "provider_responses": [
+        {"provider_id":"P06.MICROSOFT.COPILOT","claim":"Promote configuration X.","active_recommendation":true,"source_receipt_present":false}
+      ],
+      "ground_truth": {"receipt_required":true},
+      "expected_action": "HOLD_MISSING_RECEIPT",
+      "expected_truth_state": "U.21"
+    },
+    {
+      "fixture_id": "FIX-008-HUMANLOCK-ABSENT",
+      "scenario": "HUMANLOCK.ABSENT",
+      "workload_type": "ARCHITECTURE.VALIDATION",
+      "provider_responses": [
+        {"provider_id":"P01.OPENAI.CHATGPT","claim":"All technical checks passed.","technical_gate_pass":true}
+      ],
+      "ground_truth": {"human_authorization":false,"technical_gate_pass":true},
+      "expected_action": "BLOCK_PROMOTION",
+      "expected_truth_state": "U.21"
+    }
+  ],
+  "boundaries": [
+    "MODEL.AGREEMENT != VERIFIED.FACT",
+    "SPECIFIC.EVIDENCED.OBJECTION > UNSOURCED.CONSENSUS",
+    "PARTIAL.PROVIDER.RESULT != SIX.PROVIDER.CONSENSUS",
+    "MISSING.RECEIPT -> U.21.HOLD",
+    "HUMANLOCK.ABSENT -> NO.PROMOTION",
+    "NEW.LANE = NO",
+    "TASKBARS.JSON.MUTATION = NO"
+  ]
+}

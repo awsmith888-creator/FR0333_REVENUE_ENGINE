@@ -1,0 +1,214 @@
+{
+  "identifier": "FR0333.FRONTIER.MODEL.MASTER.BENCHMARK.0001",
+  "observed_at": "2026-09-14",
+  "architecture_state": "LOCKED.BASELINE",
+  "humanlock": true,
+  "humanlock_contract": {
+    "identifier": "Z.26.21.HUMANLOCK",
+    "state": "ACTIVE_IMMUTABLE",
+    "can_be_disabled": false,
+    "semantic_role": "HUMAN_AUTHORIZATION_BOUNDARY",
+    "biometric_or_neural_interface": false,
+    "cryptographic_signature_equivalence": false,
+    "automatic_bypass": "F.6",
+    "removal_or_downgrade": "REJECT",
+    "merge_requires_explicit_human_authorization": true,
+    "canonical_promotion_requires_explicit_human_authorization": true,
+    "authorization_path": [
+      "HUMAN.OPERATOR",
+      "Z.26.21.HUMANLOCK",
+      "HUMAN.AUTHORIZATION",
+      "PARTITION.ROUTING",
+      "STATE.VALIDATION",
+      "RECEIPT",
+      "PASS.HOLD.REJECT"
+    ]
+  },
+  "purpose": "Create one bounded, source-backed master comparator for major ChatGPT-like frontier assistants without merging proprietary model weights, inventing cross-provider runtime access, or altering the frozen FR0333 lane architecture.",
+  "integration_mode": {
+    "mode": "EXTERNAL.ORCHESTRATION.BY.COMPARISON.NOT.MODEL.FUSION",
+    "core_model_weight_fusion": false,
+    "provider_weight_access": false,
+    "cross_provider_runtime_connection_established": false,
+    "effect_on_chatgpt_base_model": "NONE",
+    "intended_effect": "IMPROVE.FR0333.DECISION.QUALITY.THROUGH.INDEPENDENT.MODEL.COMPARISON.AND.RECEIPTED.ROUTING"
+  },
+  "providers": [
+    {
+      "provider_id": "P01.OPENAI.CHATGPT",
+      "company": "OpenAI",
+      "assistant": "ChatGPT",
+      "documented_frontier_options": ["GPT-5.6 Sol", "GPT-5.6 Sol Pro", "GPT-6 Pro powered by GPT-6 Astra"],
+      "documented_plan_signal": "Plus includes Medium/High GPT-5.6 Sol; Pro includes Extra High and Pro models. Pro $100 currently shares 50 Chat messages/week across GPT-6 Pro and GPT-5.6 Sol Pro.",
+      "strength_tags": ["CODING", "KNOWLEDGE.WORK", "RESEARCH", "COMPUTER.USE", "FILES", "TOOLS"],
+      "official_sources": [
+        "https://help.openai.com/en/articles/20001354-GPT-5.6",
+        "https://help.openai.com/en/articles/9793128-what-is-chatgpt-pro/"
+      ],
+      "source_state": "T.20",
+      "runtime_in_this_master": "CURRENT.CHATGPT.ENVIRONMENT.ONLY"
+    },
+    {
+      "provider_id": "P02.ANTHROPIC.CLAUDE",
+      "company": "Anthropic",
+      "assistant": "Claude",
+      "documented_frontier_options": ["Claude Sonnet 5", "Claude Opus 5"],
+      "documented_plan_signal": "Claude Pro is $20/month; Max 5x is $100/month and Max 20x is $200/month. Sonnet 5 is available across plans; Opus 5 is the default model on Max and the strongest model on Pro.",
+      "strength_tags": ["CODING", "AGENTIC.WORK", "LONG.CONTEXT", "KNOWLEDGE.WORK", "TOOL.USE"],
+      "official_sources": [
+        "https://support.anthropic.com/en/articles/11049762-choosing-a-claude-ai-plan",
+        "https://www.anthropic.com/news/claude-sonnet-5",
+        "https://www.anthropic.com/news/claude-opus-5"
+      ],
+      "source_state": "T.20",
+      "runtime_in_this_master": "U.21.NOT.CONNECTED"
+    },
+    {
+      "provider_id": "P03.GOOGLE.GEMINI",
+      "company": "Google",
+      "assistant": "Gemini",
+      "documented_frontier_options": ["Gemini 3 Pro", "Gemini 3 Pro Deep Think on eligible Ultra plans"],
+      "documented_plan_signal": "Google AI Pro has higher usage and a 1M-token Gemini Apps context window; Google AI Ultra has the highest access with 5x or 20x Gemini/Antigravity quota versus AI Pro depending on tier.",
+      "strength_tags": ["LONG.CONTEXT", "GOOGLE.ECOSYSTEM", "DEEP.RESEARCH", "MULTIMODAL", "FILES", "AGENTIC.WORK"],
+      "official_sources": [
+        "https://support.google.com/gemini/answer/16275805",
+        "https://support.google.com/googleone/answer/14534406",
+        "https://support.google.com/googleone/answer/16286513"
+      ],
+      "source_state": "T.20",
+      "runtime_in_this_master": "U.21.NOT.CONNECTED"
+    },
+    {
+      "provider_id": "P04.XAI.GROK",
+      "company": "xAI",
+      "assistant": "Grok",
+      "documented_frontier_options": ["Grok 4.6", "Grok Bot", "Grok Build"],
+      "documented_plan_signal": "SuperGrok is $30/month and includes Grok 4.6, connectors and Grok Bot; SuperGrok Plus is $100/month with significantly higher usage and priority access. Grok Bot can operate on a persistent computer for delegated work.",
+      "strength_tags": ["REAL.TIME.WEB", "X.SEARCH", "AGENTIC.WORK", "CONNECTORS", "BUILD", "IMAGE.VIDEO"],
+      "official_sources": [
+        "https://x.ai/pricing",
+        "https://docs.x.ai/grok/overview",
+        "https://x.ai/news/introducing-grok-bot"
+      ],
+      "source_state": "T.20",
+      "runtime_in_this_master": "U.21.NOT.CONNECTED"
+    },
+    {
+      "provider_id": "P05.PERPLEXITY",
+      "company": "Perplexity",
+      "assistant": "Perplexity",
+      "documented_frontier_options": ["Perplexity Pro", "Perplexity Max", "Perplexity Computer / Brain preview"],
+      "documented_plan_signal": "Perplexity Pro is $20/month and provides advanced-model access, file analysis and Pro Search. Max extends access to advanced models from OpenAI, Anthropic and others and adds higher Create/research limits and early-access features.",
+      "strength_tags": ["CITED.WEB.RESEARCH", "MULTI.MODEL.ORCHESTRATION", "FILES", "RESEARCH", "SOURCE.TRACEABILITY"],
+      "official_sources": [
+        "https://www.perplexity.ai/help-center/en/articles/11187416-which-perplexity-subscription-plan-is-right-for-you",
+        "https://www.perplexity.ai/hub"
+      ],
+      "source_state": "T.20",
+      "runtime_in_this_master": "U.21.NOT.CONNECTED"
+    },
+    {
+      "provider_id": "P06.MICROSOFT.COPILOT",
+      "company": "Microsoft",
+      "assistant": "Microsoft Copilot",
+      "documented_frontier_options": ["Microsoft 365 Premium Copilot", "Researcher", "Analyst"],
+      "documented_plan_signal": "Microsoft 365 Premium is $19.99/month for individuals and includes advanced Copilot features, research/data-analysis agents, Microsoft 365 app integration and higher AI usage.",
+      "strength_tags": ["MICROSOFT.365", "DOCUMENTS", "SPREADSHEETS", "PRESENTATIONS", "RESEARCH", "ANALYTICS"],
+      "official_sources": [
+        "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+        "https://www.microsoft.com/en-us/microsoft-365/try-copilot/individuals"
+      ],
+      "source_state": "T.20",
+      "runtime_in_this_master": "U.21.NOT.CONNECTED"
+    }
+  ],
+  "diamond_comparator": {
+    "classification": "BOUNDED.COMPARATOR.ARTIFACT.NOT.NEW.ARCHITECTURE.LANE",
+    "fan_out": [
+      "P01.OPENAI.CHATGPT",
+      "P02.ANTHROPIC.CLAUDE",
+      "P03.GOOGLE.GEMINI",
+      "P04.XAI.GROK",
+      "P05.PERPLEXITY",
+      "P06.MICROSOFT.COPILOT"
+    ],
+    "route": [
+      "SOURCE_LOCK",
+      "TASK_NORMALIZE",
+      "PROVIDER_ELIGIBILITY_GATE",
+      "PARALLEL.MODEL.REVIEW",
+      "OUTPUT.NORMALIZE",
+      "CLAIM.EXTRACTION",
+      "SOURCE.RECEIPT.CHECK",
+      "CROSS.MODEL.COMPARE",
+      "DISAGREEMENT.REGISTER",
+      "EVIDENCE.CLASSIFY",
+      "FR0333.LOGIC_GATE",
+      "HUMANLOCK",
+      "OUTPUT"
+    ],
+    "required_normalized_fields": [
+      "provider_id",
+      "model_or_mode",
+      "timestamp",
+      "task_hash",
+      "answer_hash",
+      "claims",
+      "sources",
+      "uncertainties",
+      "tool_receipts",
+      "latency",
+      "cost_or_plan_context"
+    ],
+    "consensus_rule": "MODEL.AGREEMENT != VERIFIED.FACT",
+    "promotion_rule": "PROMOTION.REQUIRES.SOURCE + VERIFICATION + EVIDENCE.CLASS + RECEIPT + HUMANLOCK",
+    "disagreement_rule": "UNRESOLVED.HIGH.IMPACT.MODEL.DISAGREEMENT -> U.21.HOLD"
+  },
+  "fr0333_workload_benchmark": {
+    "same_workload_required": true,
+    "same_acceptance_criteria_required": true,
+    "workloads": [
+      "DIFFICULT.REPOSITORY.AUDIT",
+      "MULTI.SOURCE.EVIDENCE.SYNTHESIS",
+      "LARGE.FILE.ANALYSIS",
+      "ARCHITECTURE.VALIDATION",
+      "FAILURE.RECOVERY.TOOL.WORKFLOW"
+    ],
+    "measures": [
+      "CORRECTNESS",
+      "UNSUPPORTED.CLAIM.COUNT",
+      "SOURCE.QUALITY",
+      "RETRY.COUNT",
+      "COMPLETION.TIME",
+      "TOOL.SUCCESS.RATE",
+      "USABLE.OUTPUT.RATE",
+      "COST"
+    ],
+    "measured_cross_provider_performance_delta": "U.21.UNMEASURED"
+  },
+  "boundaries": [
+    "MASTER.FILE != MODEL.WEIGHT.MERGE",
+    "MULTI.MODEL.COMPARISON != CHATGPT.BASE.MODEL.EVOLUTION",
+    "MODEL.AGREEMENT != VERIFIED.FACT",
+    "PUBLIC.DOCUMENTATION != RUNTIME.PROOF",
+    "PLAN.ACCESS != FR0333.PERFORMANCE.DELTA",
+    "PROVIDER.NOT.CONNECTED != PROVIDER.RUNTIME.PASS",
+    "EXTERNAL.MODEL.OUTPUT != GROUND.TRUTH",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+    "HUMANLOCK.REMOVAL.OR.DOWNGRADE = REJECT",
+    "MERGE.REQUIRES.EXPLICIT.HUMAN.AUTHORIZATION",
+    "CANONICAL.PROMOTION.REQUIRES.EXPLICIT.HUMAN.AUTHORIZATION",
+    "NO.NEW.LANE",
+    "NO.TASKBARS.JSON.MUTATION",
+    "NO.AUTONOMOUS.PROMOTION"
+  ],
+  "result": {
+    "official_provider_inventory": "T.20",
+    "master_comparator_specification": "T.20",
+    "cross_provider_live_runtime": "U.21.NOT.CONNECTED",
+    "measured_fr0333_performance_gain": "U.21.UNMEASURED",
+    "chatgpt_core_model_changed": "F.6",
+    "humanlock_state": "ACTIVE_IMMUTABLE",
+    "canonical_promotion": "HUMANLOCK_REQUIRED"
+  }
+}

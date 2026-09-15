@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.DISAGREEMENT.REGISTER.SCHEMA.0001",
+  "title": "FR0333 Disagreement Register Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "enum": [
+        "P01.OPENAI.CHATGPT",
+        "P02.ANTHROPIC.CLAUDE",
+        "P03.GOOGLE.GEMINI",
+        "P04.XAI.GROK",
+        "P05.PERPLEXITY",
+        "P06.MICROSOFT.COPILOT"
+      ]
+    },
+    "model_or_mode": {"type": "string", "minLength": 1},
+    "task_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "claim_id": {"type": "string", "pattern": "^CLM-[0-9]{4}$"},
+    "claim_text_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "agreement_set": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "enum": ["P01.OPENAI.CHATGPT", "P02.ANTHROPIC.CLAUDE", "P03.GOOGLE.GEMINI", "P04.XAI.GROK", "P05.PERPLEXITY", "P06.MICROSOFT.COPILOT"]}
+    },
+    "objection_set": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "enum": ["P01.OPENAI.CHATGPT", "P02.ANTHROPIC.CLAUDE", "P03.GOOGLE.GEMINI", "P04.XAI.GROK", "P05.PERPLEXITY", "P06.MICROSOFT.COPILOT"]}
+    },
+    "cited_sources": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "evidence_class": {"type": "string", "enum": ["VERIFIED_REPO_STATE", "UNSUPPORTED_EXTERNAL_CLAIM", "CONFLICTING_INTERNAL_DOCS", "UNVERIFIED"]},
+    "verification_state": {"type": "string", "enum": ["PENDING", "VERIFIED_FACT", "FAILED_VALIDATION", "IRRESOLVABLE_CONFLICT"]},
+    "impact_level": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL_BLOCKER"]},
+    "resolution_state": {"type": "string", "enum": ["OPEN", "INVESTIGATING", "RESOLVED_BY_REPOSITORY_FACT", "OVERRIDDEN_BY_HUMAN"]},
+    "receipt_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "required": [
+    "provider_id",
+    "model_or_mode",
+    "task_hash",
+    "claim_id",
+    "claim_text_hash",
+    "agreement_set",
+    "objection_set",
+    "cited_sources",
+    "evidence_class",
+    "verification_state",
+    "impact_level",
+    "resolution_state",
+    "receipt_hash"
+  ]
+}

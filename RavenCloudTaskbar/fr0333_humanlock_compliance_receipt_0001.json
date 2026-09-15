@@ -1,0 +1,78 @@
+{
+  "identifier": "FR0333.HUMANLOCK.COMPLIANCE.RECEIPT.0001",
+  "source_pr": 41,
+  "status": "STATIC.CONTROL.TEMPLATE",
+  "scope": "PR41.HUMANLOCK.ANTI_BYPASS.CONTRACT",
+  "committed_file_role": "STATIC.CONTROL.TEMPLATE.NOT.EXACT_HEAD.RECEIPT",
+  "source_head_binding": "FR0333_EXPECTED_HEAD",
+  "contract_configuration": {
+    "humanlock_id": "Z.26.21.HUMANLOCK",
+    "humanlock_state": "ACTIVE_IMMUTABLE",
+    "humanlock_can_be_disabled": "F.6",
+    "automatic_bypass": "F.6",
+    "removal_or_downgrade": "REJECT",
+    "definition_invariant": "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE"
+  },
+  "authorization_policy": {
+    "merge_requires_explicit_human_authorization": "T.20",
+    "canonical_promotion_requires_explicit_human_authorization": "T.20",
+    "authorization_receipt_role": "STRUCTURED.EVIDENCE.OF.HUMAN.AUTHORIZATION",
+    "cryptographic_signature_role": "OPTIONAL_OR_REQUIRED_SUPPORTING_PROOF_ACCORDING_TO_SEPARATE_POLICY",
+    "humanlock_equivalent_to_signature": false
+  },
+  "mutation_test_matrix": [
+    {
+      "mutation": "DISABLE.HUMANLOCK",
+      "expected": "REJECT",
+      "verified": true
+    },
+    {
+      "mutation": "REMOVE.ROUTE.GATE",
+      "expected": "REJECT",
+      "verified": true
+    },
+    {
+      "mutation": "ENABLE.AUTO.PROMOTION",
+      "expected": "REJECT",
+      "verified": true
+    },
+    {
+      "mutation": "REMOVE.MERGE.AUTH",
+      "expected": "REJECT",
+      "verified": true
+    },
+    {
+      "mutation": "SIGNATURE_EQ_HUMANLOCK",
+      "expected": "REJECT",
+      "verified": true
+    },
+    {
+      "mutation": "STALE.SOURCE.HEAD",
+      "expected": "REJECT",
+      "verified": true
+    },
+    {
+      "mutation": "STALE.WORKFLOW.RUN",
+      "expected": "REJECT",
+      "verified": true
+    }
+  ],
+  "verification_environment": {
+    "exact_head_binding": "FR0333_EXPECTED_HEAD",
+    "workflow_run_id_binding": "FR0333_WORKFLOW_RUN_ID",
+    "workflow_run_attempt_binding": "FR0333_WORKFLOW_RUN_ATTEMPT",
+    "github_event_sha_semantics": "SYNTHETIC.MERGE.COMMIT.ON.PULL_REQUEST.NOT.EXACT.PR.HEAD",
+    "runtime_receipt_path": "artifacts/fr0333_humanlock_exact_head_receipt.json",
+    "runtime_receipt_role": "EPHEMERAL.CI.ARTIFACT",
+    "stronghold": "INTACT"
+  },
+  "target_runtime_boundaries": {
+    "pr41_merge_truth_state": "U.21",
+    "pr41_merge_qualifier": "HUMANLOCK.HOLD",
+    "pr41_canonical_promotion_truth_state": "U.21",
+    "pr41_canonical_promotion_qualifier": "HUMANLOCK.HOLD",
+    "new_lane": false,
+    "taskbars_json_mutation": false
+  },
+  "precision_boundary": "This committed file is a static control template and cannot prove its own commit SHA. CI must generate and validate a separate ephemeral receipt from FR0333_EXPECTED_HEAD, FR0333_WORKFLOW_RUN_ID, and FR0333_WORKFLOW_RUN_ATTEMPT. The reserved GITHUB_SHA is not accepted as exact PR-head evidence on pull_request events. CI validation does not authorize merge or promotion and does not claim host-level or physical administrative tamper-proofing at GitHub."
+}
