@@ -1,0 +1,39 @@
+name: FR0333 Genius Police Contact Gate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_police_contact_classification_gate.py"
+      - "RavenCloudTaskbar/test_fr0333_police_contact_classification_gate.py"
+      - "RavenCloudTaskbar/fr0333_genius_police_contact_sources_0001.json"
+      - ".github/workflows/fr0333-genius-police-contact-gate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "RavenCloudTaskbar/fr0333_police_contact_classification_gate.py"
+      - "RavenCloudTaskbar/test_fr0333_police_contact_classification_gate.py"
+      - "RavenCloudTaskbar/fr0333_genius_police_contact_sources_0001.json"
+      - ".github/workflows/fr0333-genius-police-contact-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate source register JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_genius_police_contact_sources_0001.json > /dev/null
+
+      - name: Run classification gate tests
+        working-directory: RavenCloudTaskbar
+        run: python -m unittest -v test_fr0333_police_contact_classification_gate.py
