@@ -8,6 +8,10 @@ on:
       - "src/compile_four_kernel_receipt.py"
       - "schemas/four_kernel_transaction.schema.json"
       - "tests/test_four_kernel_hardener.py"
+      - "src/four_kernel_hardener_v2.py"
+      - "src/compile_four_kernel_receipt_v2.py"
+      - "schemas/four_kernel_transaction_v2.schema.json"
+      - "tests/test_four_kernel_hardener_v2.py"
       - "receipts/operator/**"
       - ".github/workflows/four-kernel-chat-hardener.yml"
 
@@ -19,9 +23,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Compile four-kernel receipt
+      - name: Install JSON Schema validator
+        run: python -m pip install --disable-pip-version-check jsonschema
+      - name: Validate hardened transaction schema
+        run: |
+          python -m json.tool schemas/four_kernel_transaction_v2.schema.json >/dev/null
+          python -m json.tool receipts/operator/2026-09-15/four_kernel.transaction.v2.json >/dev/null
+          python - <<'PY'
+          import json
+          from jsonschema import validate
+          schema=json.load(open('schemas/four_kernel_transaction_v2.schema.json', encoding='utf-8'))
+          tx=json.load(open('receipts/operator/2026-09-15/four_kernel.transaction.v2.json', encoding='utf-8'))
+          validate(instance=tx, schema=schema)
+          PY
+      - name: Compile four-kernel receipt v1
         run: python src/compile_four_kernel_receipt.py
-      - name: Verify deterministic outputs
+      - name: Verify deterministic outputs v1
         run: git diff --exit-code -- receipts/operator/2026-09-14/four_kernel.snapshot.json receipts/operator/2026-09-14/four_kernel.receipt.md
+      - name: Compile four-kernel receipt v2
+        run: python src/compile_four_kernel_receipt_v2.py
+      - name: Verify deterministic outputs v2
+        run: git diff --exit-code -- receipts/operator/2026-09-15/four_kernel.snapshot.v2.json receipts/operator/2026-09-15/four_kernel.receipt.v2.md
       - name: Run full regression suite
         run: python -m unittest discover tests
