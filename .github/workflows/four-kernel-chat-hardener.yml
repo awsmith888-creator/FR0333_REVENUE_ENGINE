@@ -24,6 +24,9 @@ on:
       - "src/severe_variant_steward_0010.py"
       - "schemas/severe_variant_stewardship_0010.json"
       - "tests/test_severe_variant_steward_0010.py"
+      - "src/steward_observability_hardener_0011.py"
+      - "schemas/steward_observability_hardener_0011.schema.json"
+      - "tests/test_steward_observability_hardener_0011.py"
       - "receipts/operator/**"
       - ".github/workflows/four-kernel-chat-hardener.yml"
 
@@ -76,6 +79,17 @@ jobs:
         run: |
           python -m json.tool schemas/severe_variant_stewardship_0010.json >/dev/null
           python -m json.tool receipts/operator/2026-09-15/severe_variant.batch.0010.json >/dev/null
+      - name: Validate stewardship observability hardener 0011
+        run: |
+          python -m json.tool schemas/steward_observability_hardener_0011.schema.json >/dev/null
+          python -m json.tool receipts/operator/2026-09-15/steward_observability.batch.0011.json >/dev/null
+          python - <<'PY'
+          import json
+          from jsonschema import validate
+          schema=json.load(open('schemas/steward_observability_hardener_0011.schema.json', encoding='utf-8'))
+          tx=json.load(open('receipts/operator/2026-09-15/steward_observability.batch.0011.json', encoding='utf-8'))
+          validate(instance=tx, schema=schema)
+          PY
       - name: Compile four-kernel receipt v1
         run: python src/compile_four_kernel_receipt.py
       - name: Verify deterministic outputs v1
