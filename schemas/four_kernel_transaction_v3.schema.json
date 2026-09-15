@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/four_kernel_transaction_v3.schema.json",
+  "title": "FR0333 Four Kernel Transaction V3",
+  "type": "object",
+  "required": [
+    "upgrade_id",
+    "architecture_id",
+    "kernels",
+    "core_gates",
+    "adobe_gates",
+    "adobe_execution_receipt",
+    "nelson_measurement",
+    "statistics",
+    "evidence_hardening",
+    "interaction_hardening"
+  ],
+  "properties": {
+    "upgrade_id": {"const": "FR0333.OPERATOR.FOUR.KERNEL.UPGRADE.0003"},
+    "architecture_id": {"const": "FR0333.ADOBE.FOUR.KERNEL.HARDENER.0001"},
+    "kernels": {
+      "type": "object",
+      "required": ["NEWSFLASH", "ESPN.FANTASY.SPORTS", "NELSON", "GENIUS.BAR"],
+      "additionalProperties": false,
+      "properties": {
+        "NEWSFLASH": {"$ref": "#/$defs/kernel"},
+        "ESPN.FANTASY.SPORTS": {"$ref": "#/$defs/kernel"},
+        "NELSON": {"$ref": "#/$defs/kernel"},
+        "GENIUS.BAR": {"$ref": "#/$defs/kernel"}
+      }
+    },
+    "core_gates": {"type": "object"},
+    "adobe_gates": {"type": "object"},
+    "adobe_execution_receipt": {"type": "object"},
+    "nelson_measurement": {"type": "object"},
+    "statistics": {"type": "object"},
+    "evidence_hardening": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "claim_contract",
+        "humanlock",
+        "automatic_promotion",
+        "canonical_promotion",
+        "entity_normalization",
+        "source_receipts",
+        "claims",
+        "rejected_absolutes"
+      ],
+      "properties": {
+        "record_id": {"const": "FR0333.EVIDENCE.PROVENANCE.HARDENER.0001"},
+        "claim_contract": {"const": "CLAIM+TYPE+SCOPE+SOURCE+INDEPENDENCE+STATE+RECEIPT"},
+        "humanlock": {"const": "ACTIVE"},
+        "automatic_promotion": {"const": false},
+        "canonical_promotion": {"const": "U.21.HUMAN.REVIEW.REQUIRED"},
+        "entity_normalization": {
+          "type": "object",
+          "required": ["JERUSALEM", "UNITED STATES OF AMERICA"],
+          "properties": {
+            "JERUSALEM": {"const": "ISRAEL"},
+            "UNITED STATES OF AMERICA": {"const": "UNITED.STATES"}
+          }
+        },
+        "source_receipts": {
+          "type": "array",
+          "minItems": 6,
+          "items": {"$ref": "#/$defs/source_receipt"}
+        },
+        "claims": {
+          "type": "array",
+          "minItems": 8,
+          "items": {"$ref": "#/$defs/claim"}
+        },
+        "rejected_absolutes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["claim_id", "state"],
+            "properties": {
+              "claim_id": {"type": "string", "minLength": 1},
+              "state": {"const": "F.6"}
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "interaction_hardening": {
+      "type": "object",
+      "required": ["record_id", "chomp_chomp"],
+      "properties": {
+        "record_id": {"const": "FR0333.INTERACTION.STATE.HARDENER.0001"},
+        "chomp_chomp": {
+          "type": "object",
+          "required": [
+            "trigger",
+            "semantics",
+            "count_contract",
+            "preserve_source_set",
+            "preserve_order",
+            "preserve_active_ratio",
+            "generate_on_chomp",
+            "reinterpret_on_chomp",
+            "branch_expansion_on_chomp",
+            "new_explicit_instruction_required",
+            "count_examples"
+          ],
+          "properties": {
+            "trigger": {"const": "CHOMP CHOMP"},
+            "semantics": {"const": "FREEZE+STAY"},
+            "count_contract": {"const": "INPUT_COUNT==OUTPUT_COUNT"},
+            "preserve_source_set": {"const": true},
+            "preserve_order": {"const": true},
+            "preserve_active_ratio": {"const": true},
+            "generate_on_chomp": {"const": false},
+            "reinterpret_on_chomp": {"const": false},
+            "branch_expansion_on_chomp": {"const": false},
+            "new_explicit_instruction_required": {"const": true},
+            "count_examples": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": ["input", "output"],
+                "properties": {
+                  "input": {"type": "integer", "minimum": 0},
+                  "output": {"type": "integer", "minimum": 0}
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "kernel": {
+      "type": "object",
+      "required": ["passed", "receipt"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "receipt": {"type": "object", "minProperties": 1}
+      }
+    },
+    "source_receipt": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "publisher",
+        "authority_tier",
+        "evidence_class",
+        "independence_group",
+        "jurisdiction",
+        "accessed_at",
+        "url"
+      ],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "publisher": {"type": "string", "minLength": 1},
+        "authority_tier": {
+          "enum": [
+            "PRIMARY.GOVERNMENT",
+            "PRIMARY.INTERGOVERNMENTAL",
+            "PRIMARY.INSTITUTIONAL",
+            "PEER_REVIEWED",
+            "INDEPENDENT.SECONDARY"
+          ]
+        },
+        "evidence_class": {"enum": ["ORIGINAL", "INDEPENDENT.CORROBORATION", "PEER_REVIEWED"]},
+        "independence_group": {"type": "string", "minLength": 1},
+        "jurisdiction": {"type": "string", "minLength": 1},
+        "accessed_at": {"type": "string", "pattern": "^20[0-9]{2}-[0-9]{2}-[0-9]{2}$"},
+        "url": {"type": "string", "pattern": "^https://"}
+      },
+      "additionalProperties": false
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "claim_id",
+        "text",
+        "evidence_relation",
+        "scope",
+        "state",
+        "source_ids",
+        "requires_independent_corroboration",
+        "absolute_language",
+        "causal_scope"
+      ],
+      "properties": {
+        "claim_id": {"type": "string", "minLength": 1},
+        "text": {"type": "string", "minLength": 1},
+        "evidence_relation": {
+          "enum": [
+            "OBSERVED",
+            "CORRELATED",
+            "CAUSAL",
+            "LEGAL_STATUS",
+            "DIPLOMATIC_POLICY",
+            "INSTITUTIONAL_RECORD",
+            "STATISTICAL_DISPARITY"
+          ]
+        },
+        "scope": {"type": "string", "minLength": 1},
+        "state": {"enum": ["T.20", "U.21", "F.6"]},
+        "source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "requires_independent_corroboration": {"type": "boolean"},
+        "absolute_language": {"type": "boolean"},
+        "causal_scope": {"type": "string"},
+        "promotion_authorized": {"type": "boolean"},
+        "resolution_effect": {"type": "string"},
+        "vote_summary": {
+          "type": "object",
+          "properties": {
+            "yes": {"type": "integer"},
+            "no": {"type": "integer"},
+            "abstain": {"type": "integer"},
+            "non_voting": {"type": "integer"}
+          },
+          "required": ["yes", "no", "abstain", "non_voting"],
+          "additionalProperties": false
+        },
+        "vote_no_states": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  }
+}
