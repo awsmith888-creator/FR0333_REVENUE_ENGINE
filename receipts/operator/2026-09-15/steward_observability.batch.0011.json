@@ -1,0 +1,48 @@
+{
+  "record_id": "FR0333.STEWARD.OBSERVABILITY.HARDENER.0011",
+  "release_state": "BETA",
+  "production_capability_established": false,
+  "source_chain": [
+    {"source_id": "GOOGLE.FEED.SCREENSHOT.BATCH.2026-09-15", "class": "DISCOVERY_POINTER"},
+    {"source_id": "LUCID.AI.OFFICIAL.2026", "class": "FIRST_PARTY"},
+    {"source_id": "EPICOR.GROW.BI.OFFICIAL.2026", "class": "FIRST_PARTY"},
+    {"source_id": "GOOGLE.SYSTEM.SERVICES.RELEASE.NOTES.2026-09", "class": "FIRST_PARTY"},
+    {"source_id": "GOOGLE.GOOGLEBOOK.OFFICIAL.2026-05-12", "class": "FIRST_PARTY"},
+    {"source_id": "STACKAI.ENTERPRISE.AGENTS.OFFICIAL.2026", "class": "FIRST_PARTY"},
+    {"source_id": "9TO5GOOGLE.GOOGLEBOOK.PREORDER.2026-09-14", "class": "INDEPENDENT_SECONDARY"}
+  ],
+  "workflow_graph": {
+    "nodes": ["DISCOVER","OPEN_ORIGINAL","CLASSIFY","VERIFY","ACTION_GATE","TELEMETRY","RECEIPT"],
+    "edges": ["DISCOVER->OPEN_ORIGINAL","OPEN_ORIGINAL->CLASSIFY","CLASSIFY->VERIFY","VERIFY->ACTION_GATE","ACTION_GATE->TELEMETRY","TELEMETRY->RECEIPT"],
+    "visualization_is_ground_truth": false
+  },
+  "analytics_plane": {
+    "mode": "REPLICA",
+    "production_mutation_allowed": false
+  },
+  "agent_actions": [
+    {"action_id": "SOURCE.READ", "access": "READ", "human_approval_required": false},
+    {"action_id": "REPOSITORY.WRITE", "access": "WRITE", "human_approval_required": true},
+    {"action_id": "RUNTIME.EXECUTE", "access": "EXECUTE", "human_approval_required": true}
+  ],
+  "telemetry": {
+    "run_id": "OBSERVABILITY.SIM.0011",
+    "step_ids": ["S01","S02","S03","S04","S05","S06","S07"],
+    "errors": 0,
+    "latency_ms": 0,
+    "tool_calls": 0,
+    "unobserved_severe_events": 0
+  },
+  "cross_device_context": {
+    "enabled": true,
+    "source_device": "DECLARED.EXTERNAL.DEVICE",
+    "permission_scope": "READ_ONLY.EXPLICIT",
+    "implicit_merge_allowed": false
+  },
+  "vendor_metrics": [
+    {"metric_id": "LUCID.INTEGRATIONS", "value": "100+", "classification": "VENDOR_REPORTED", "state": "T.20.VENDOR.REPORTED"},
+    {"metric_id": "GROW.INTEGRATIONS", "value": "100+", "classification": "VENDOR_REPORTED", "state": "T.20.VENDOR.REPORTED"},
+    {"metric_id": "STACKAI.INTEGRATIONS", "value": "100+", "classification": "VENDOR_REPORTED", "state": "T.20.VENDOR.REPORTED"},
+    {"metric_id": "STACKAI.BANK.TIME.SAVED", "value": "8000+ hours/month", "classification": "VENDOR_REPORTED", "state": "U.21.EXTERNAL.VERIFICATION.REQUIRED"}
+  ]
+}

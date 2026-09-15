@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/steward_observability_hardener_0011.schema.json",
+  "title": "FR0333 Steward Observability Hardener 0011",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["record_id","release_state","production_capability_established","source_chain","workflow_graph","analytics_plane","agent_actions","telemetry","cross_device_context","vendor_metrics"],
+  "properties": {
+    "record_id": {"const": "FR0333.STEWARD.OBSERVABILITY.HARDENER.0011"},
+    "release_state": {"enum": ["ANNOUNCED","PREORDER","BETA","PRODUCTION"]},
+    "production_capability_established": {"type": "boolean"},
+    "source_chain": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id","class"],
+        "properties": {
+          "source_id": {"type": "string","minLength": 1},
+          "class": {"enum": ["DISCOVERY_POINTER","FIRST_PARTY","INDEPENDENT_SECONDARY","VENDOR_MARKETING"]}
+        }
+      }
+    },
+    "workflow_graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes","edges","visualization_is_ground_truth"],
+      "properties": {
+        "nodes": {"type": "array","minItems": 1,"items": {"type": "string"}},
+        "edges": {"type": "array","minItems": 1,"items": {"type": "string"}},
+        "visualization_is_ground_truth": {"const": false}
+      }
+    },
+    "analytics_plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode","production_mutation_allowed"],
+      "properties": {
+        "mode": {"enum": ["SNAPSHOT","REPLICA"]},
+        "production_mutation_allowed": {"const": false}
+      }
+    },
+    "agent_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action_id","access","human_approval_required"],
+        "properties": {
+          "action_id": {"type": "string","minLength": 1},
+          "access": {"enum": ["READ","WRITE","EXECUTE"]},
+          "human_approval_required": {"type": "boolean"}
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id","step_ids","errors","latency_ms","tool_calls","unobserved_severe_events"],
+      "properties": {
+        "run_id": {"type": "string","minLength": 1},
+        "step_ids": {"type": "array","minItems": 1,"items": {"type": "string"}},
+        "errors": {"type": "integer","minimum": 0},
+        "latency_ms": {"type": "integer","minimum": 0},
+        "tool_calls": {"type": "integer","minimum": 0},
+        "unobserved_severe_events": {"const": 0}
+      }
+    },
+    "cross_device_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled","implicit_merge_allowed"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "source_device": {"type": "string"},
+        "permission_scope": {"type": "string"},
+        "implicit_merge_allowed": {"const": false}
+      }
+    },
+    "vendor_metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["metric_id","value","classification","state"],
+        "properties": {
+          "metric_id": {"type": "string","minLength": 1},
+          "value": {},
+          "classification": {"enum": ["VENDOR_REPORTED","INDEPENDENT","OFFICIAL_RECORD"]},
+          "state": {"type": "string","minLength": 1}
+        }
+      }
+    }
+  }
+}
