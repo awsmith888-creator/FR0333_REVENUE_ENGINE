@@ -1,0 +1,33 @@
+{
+  "record_id": "FR0333-CTX-LOC-000001",
+  "record_type": "CONTEXT_SIGNAL",
+  "source": {
+    "provider": "Google Play Help",
+    "title": "Device Location in Google Play",
+    "url": "https://support.google.com/googleplay/answer/14239768",
+    "source_state": "USER_SUPPLIED_OFFICIAL_SOURCE"
+  },
+  "chain": [
+    "SOURCE",
+    "OBSERVE",
+    "CLASSIFY",
+    "INDEX",
+    "REPORT"
+  ],
+  "classification": {
+    "device_location_access": "OPTIONAL_USER_GRANTED",
+    "location_type": "APPROXIMATE",
+    "play_country_effect": "UNAFFECTED",
+    "local_recommendations": "MAY_USE_LOCATION",
+    "regional_content_rules": "MAY_USE_LOCATION",
+    "denial_effect": "LOCATION_REQUEST_CANCELED"
+  },
+  "evidence_boundary": {
+    "rule": "APPROXIMATE_LOCATION != EXACT_PHYSICAL_LOCATION != GOOGLE_PLAY_COUNTRY_SETTING",
+    "physical_presence_proof": false,
+    "authoritative_location_claim": false,
+    "allowed_use": "CONTEXTUAL_DEVICE_REGION_SIGNAL_ONLY"
+  },
+  "duplicate_policy": "COLLAPSE_IDENTICAL_SOURCE_OBSERVATIONS",
+  "promotion_policy": "NO_PHYSICAL_LOCATION_PROMOTION_WITHOUT_SEPARATE_AUTHORITATIVE_EVIDENCE"
+}

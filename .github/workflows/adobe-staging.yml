@@ -1,0 +1,123 @@
+name: Adobe Staging Gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Execution mode
+        required: true
+        type: choice
+        default: simulation
+        options:
+          - simulation
+          - live
+      api_profile:
+        description: Adobe API profile
+        required: true
+        type: choice
+        default: v3_async
+        options:
+          - v3_async
+          - v4_image5
+      prompt:
+        description: One bounded staging prompt
+        required: true
+        type: string
+        default: A dignified Black Onyx and Platinum editorial study, vertical composition, no text, no logos
+      confirm_live:
+        description: Enter STAGING_ONLY for a live Adobe operation
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fr0333-adobe-staging
+  cancel-in-progress: false
+
+jobs:
+  simulation:
+    if: ${{ inputs.mode == 'simulation' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: zllg
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify current source
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test --all-targets --verbose
+
+      - name: Run receipted simulation
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          FR0333_ADOBE_PROMPT: ${{ inputs.prompt }}
+          FIREFLY_API_PROFILE: ${{ inputs.api_profile }}
+        run: cargo run --bin fr0333-adobe-stage -- --simulate --output target/fr0333-staging
+
+      - name: Upload simulation receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-adobe-simulation-${{ github.run_id }}
+          path: zllg/target/fr0333-staging/
+          if-no-files-found: error
+          retention-days: 7
+
+  live-staging:
+    if: ${{ inputs.mode == 'live' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: adobe-staging
+    defaults:
+      run:
+        working-directory: zllg
+    steps:
+      - name: Enforce explicit staging confirmation
+        env:
+          FR0333_ALLOW_LIVE_ADOBE: ${{ inputs.confirm_live }}
+        run: test "$FR0333_ALLOW_LIVE_ADOBE" = "STAGING_ONLY"
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify current source
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test --all-targets --verbose
+
+      - name: Run one receipted Adobe staging operation
+        env:
+          FIREFLY_SERVICES_CLIENT_ID: ${{ secrets.FIREFLY_SERVICES_CLIENT_ID }}
+          FIREFLY_SERVICES_CLIENT_SECRET: ${{ secrets.FIREFLY_SERVICES_CLIENT_SECRET }}
+          FIREFLY_API_PROFILE: ${{ inputs.api_profile }}
+          FR0333_ALLOW_LIVE_ADOBE: ${{ inputs.confirm_live }}
+          FR0333_ADOBE_PROMPT: ${{ inputs.prompt }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: cargo run --bin fr0333-adobe-stage -- --live --output target/fr0333-staging
+
+      - name: Upload staging artifact and receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr0333-adobe-staging-${{ github.run_id }}
+          path: zllg/target/fr0333-staging/
+          if-no-files-found: warn
+          retention-days: 7
