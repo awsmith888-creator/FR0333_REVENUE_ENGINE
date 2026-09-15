@@ -1,0 +1,67 @@
+{
+  "identifier": "FR0333.FRONTIER.MODEL.MASTER.PROMOTION.RECEIPT.0001",
+  "created_at": "2026-09-15T08:08:48-04:00",
+  "promotion_target": "FR0333.FRONTIER.MODEL.MASTER.BENCHMARK.0001",
+  "source_pr": 41,
+  "source_pr_head": "aaae4cde0805e6056bcf36f17a68cc1ad6429156",
+  "source_merge_commit": "2cac8a66d7d435be8f9dbbd8b375c83ce088763f",
+  "source_main_head_before_mutation": "2cac8a66d7d435be8f9dbbd8b375c83ce088763f",
+  "merge_state": {
+    "pr_41_merged": true,
+    "merge_commit_verified_by_github": true,
+    "merge_already_completed_before_this_receipt": true
+  },
+  "humanlock": {
+    "identifier": "Z.26.21.HUMANLOCK",
+    "state": "ACTIVE_IMMUTABLE",
+    "authorization_state": "EXPLICIT.HUMAN.AUTHORIZED",
+    "authorized_action_scope": [
+      "CANONICAL.PROMOTION.OF.BOUNDED.COMPARATOR.PACKAGE",
+      "REPOSITORY.MUTATION.TO.ADD.PROMOTION.RECEIPT"
+    ],
+    "authorization_source": "CURRENT.CHAT.EXPLICIT.OPERATOR.REQUEST",
+    "device_context": "GOOGLE.PIXEL.10.OPERATOR.DEVICE.CONTEXT.ONLY",
+    "device_is_authorization_proof": false,
+    "cryptographic_signature_equivalence": false,
+    "automatic_bypass": "F.6"
+  },
+  "verification_receipts": {
+    "exact_pr_head_ci_run": 34891202963,
+    "exact_pr_head_ci_status": "T.20.SUCCESS",
+    "humanlock_ci_artifact_id": 10366243014,
+    "humanlock_ci_artifact_digest": "sha256:c69ad48ac54cda7c321f610245e1d38ac37b654f36c95b74fb816092135f29b7"
+  },
+  "promotion": {
+    "bounded_comparator_package": "T.20.CANONICAL.PROMOTED",
+    "cross_provider_live_runtime": "U.21.NOT_CONNECTED",
+    "measured_fr0333_performance_gain": "U.21.UNMEASURED",
+    "provider_runtime_provenance": "U.21.INCOMPLETE",
+    "chatgpt_core_model_changed": "F.6",
+    "provider_weight_merge": "F.6",
+    "autonomous_promotion": "F.6"
+  },
+  "mutation": {
+    "repository": "awsmith888-creator/FR0333_REVENUE_ENGINE",
+    "branch": "main",
+    "operation": "ADD.APPEND_ONLY.PROMOTION.RECEIPT",
+    "taskbars_json_mutation": false,
+    "existing_comparator_semantics_rewritten": false,
+    "external_claim_promoted_to_ground_truth": false
+  },
+  "boundaries": [
+    "PACKAGE.PROMOTION != CROSS.PROVIDER.RUNTIME.PASS",
+    "PACKAGE.PROMOTION != MEASURED.PERFORMANCE.GAIN",
+    "PACKAGE.PROMOTION != MODEL.WEIGHT.MERGE",
+    "PACKAGE.PROMOTION != CHATGPT.BASE.MODEL.EVOLUTION",
+    "DEVICE.CONTEXT != HUMAN.AUTHORIZATION.PROOF",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+    "EXTERNAL.MODEL.OUTPUT != GROUND.TRUTH",
+    "UNMEASURED.CLAIM -> U.21.HOLD"
+  ],
+  "result": {
+    "merge": "T.20.ALREADY.COMPLETED",
+    "bounded_package_canonical_promotion": "T.20",
+    "repository_mutation": "T.20.APPEND_ONLY",
+    "live_cross_provider_benchmark_promotion": "U.21.HOLD"
+  }
+}
