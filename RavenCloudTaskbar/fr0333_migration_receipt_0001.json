@@ -85,6 +85,13 @@
   "status": {
     "receipt_compiled": true,
     "branch_state": "DRAFT.UNMERGED",
+    "verified_structural_delta": "T.20",
+    "e6_e12_zero_leakage": "T.20",
+    "delta_count": 8,
+    "delta_additions": 8,
+    "delta_removals": 0,
+    "shared_field_modifications": 0,
+    "external_claim_promotion": "HOLD",
     "canonical_promotion": "HOLD.PENDING.HUMAN.MERGE",
     "humanlock": "ACTIVE"
   }

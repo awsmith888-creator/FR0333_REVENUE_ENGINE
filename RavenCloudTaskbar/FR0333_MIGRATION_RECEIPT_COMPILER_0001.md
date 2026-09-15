@@ -113,11 +113,17 @@ TERAFAB.REGULATORY.CAUSAL.CONNECTION     = U.21
 ## Receipt state
 
 ```text
-RECEIPT.COMPILED             = T.20
-BRANCH.STATE                 = DRAFT.UNMERGED
-CANONICAL.PROMOTION          = HOLD.PENDING.HUMAN.MERGE
-HUMANLOCK                    = ACTIVE
-NO.VERIFIED.DELTA            = STAY
+RECEIPT.COMPILED                 = T.20
+BRANCH.STATE                     = DRAFT.UNMERGED
+VERIFIED.STRUCTURAL.DELTA         = T.20
+E6.E12.ZERO.LEAKAGE               = T.20
+DELTA.COUNT                       = 8
+DELTA.ADDITIONS                   = 8
+DELTA.REMOVALS                    = 0
+SHARED.FIELD.MODIFICATIONS        = 0
+EXTERNAL.CLAIM.PROMOTION          = HOLD
+CANONICAL.PROMOTION               = HOLD.PENDING.HUMAN.MERGE
+HUMANLOCK                         = ACTIVE
 ```
 
-Future evidence must append a new receipt or a cryptographically bound transition receipt. This record must not be silently rewritten to convert an observation into correlation, correlation into causation, a proposed rule into enacted law, or an unresolved state into a verified state.
+The verified structural delta does not authorize promotion of unresolved external claims. Future external evidence must append a new receipt or a cryptographically bound transition receipt. This record must not be silently rewritten to convert an observation into correlation, correlation into causation, a proposed rule into enacted law, or an unresolved state into a verified state.
