@@ -1,0 +1,381 @@
+{
+  "upgrade_id": "FR0333.OPERATOR.FOUR.KERNEL.UPGRADE.0003",
+  "architecture_id": "FR0333.ADOBE.FOUR.KERNEL.HARDENER.0001",
+  "kernels": {
+    "NEWSFLASH": {
+      "passed": true,
+      "receipt": {
+        "role": "CURRENT.SIGNAL.INTAKE",
+        "status": "ACTIVE",
+        "observed_at": "2026-09-15T15:30:00Z",
+        "signal": "HISTORICAL.EVIDENCE.PROVENANCE.HARDENING"
+      }
+    },
+    "ESPN.FANTASY.SPORTS": {
+      "passed": true,
+      "receipt": {
+        "role": "NUMERIC.STATISTICAL.BONE",
+        "status": "ACTIVE",
+        "formula_label": "CLAIM.EVIDENCE.INTEGRITY",
+        "sample_size": 4,
+        "unit_policy": "EXPLICIT"
+      }
+    },
+    "NELSON": {
+      "passed": true,
+      "receipt": {
+        "role": "USER.DEFINED.MEASUREMENT.KERNEL",
+        "status": "DEFINED.ACTIVE",
+        "measurement_contract": "SOURCE+PERIOD+METRIC+UNIT+SCOPE+RECEIPT"
+      }
+    },
+    "GENIUS.BAR": {
+      "passed": true,
+      "receipt": {
+        "role": "DIAGNOSE.CONTRADICT.REPAIR",
+        "status": "ACTIVE",
+        "diagnose": "PASS",
+        "repair": "NOT.REQUIRED",
+        "rollback_path": "PRESENT"
+      }
+    }
+  },
+  "core_gates": {
+    "SOURCE.TIMESTAMP": true,
+    "FORMULA.LABEL.MATCH": true,
+    "NUMERATOR.DENOMINATOR.MATCH": true,
+    "SAMPLE.SIZE": true,
+    "NELSON.KERNEL.RECEIPT": true,
+    "FAILURE.REPAIR.RECEIPT": true,
+    "ROLLBACK.PATH": true,
+    "NELSON.ROLE.DEFINED": true,
+    "MEASUREMENT.SOURCE.BOUND": true,
+    "MEASUREMENT.PERIOD.BOUND": true,
+    "COMPARISON.SCOPE.BOUND": true
+  },
+  "adobe_gates": {
+    "EXACT.9.16": false,
+    "IDENTITY.PRESERVATION": false,
+    "EDIT.LOCALITY": false,
+    "NO.EXTRA.TEXT": false,
+    "ONE.INPUT.ONE.OUTPUT": false
+  },
+  "adobe_execution_receipt": {},
+  "nelson_measurement": {
+    "kernel_name": "NELSON",
+    "source_receipts": [
+      {
+        "source_id": "SRC.NIELSEN.EVENING.2026.08.31",
+        "publisher": "ADWEEK.TVNEWSER",
+        "underlying_measurement": "NIELSEN.BIG.DATA.PLUS.PANEL",
+        "evidence_class": "INDEPENDENT.CORROBORATION",
+        "measurement_period": "WEEK.OF.2026.08.31",
+        "url": "https://www.adweek.com/tvnewser/week-of-aug-31-2026-evening-news-ratings/"
+      },
+      {
+        "source_id": "SRC.CBS.60MINUTES.2025.26",
+        "publisher": "PARAMOUNT.PRESS.EXPRESS",
+        "underlying_measurement": "NIELSEN.MOST.CURRENT.RATINGS",
+        "evidence_class": "ORIGINAL",
+        "measurement_period": "SEASON.2025.26",
+        "url": "https://www.paramountpressexpress.com/cbs-news-and-stations/shows/60-minutes/"
+      }
+    ],
+    "measurements": [
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.31","metric":"TOTAL.VIEWERS","value":8508000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"ABC.WORLD.NEWS.TONIGHT","measurement_period":"WEEK.OF.2026.08.31","metric":"A25.54.VIEWERS","value":1102000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"TOTAL.VIEWERS","value":6988000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"NBC.NIGHTLY.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"A25.54.VIEWERS","value":1103000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"TOTAL.VIEWERS","value":4037000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"},
+      {"program":"CBS.EVENING.NEWS","measurement_period":"WEEK.OF.2026.08.31","metric":"A25.54.VIEWERS","value":544000,"unit":"VIEWERS","source_id":"SRC.NIELSEN.EVENING.2026.08.31"}
+    ],
+    "comparison_groups": [
+      {
+        "group_id": "EVENING.NEWS.WEEKLY.2026.08.31",
+        "programs": ["ABC.WORLD.NEWS.TONIGHT", "NBC.NIGHTLY.NEWS", "CBS.EVENING.NEWS"],
+        "measurement_period": "WEEK.OF.2026.08.31",
+        "comparable": true
+      },
+      {
+        "group_id": "CONTEXT.60.MINUTES.SEASON.2025.26",
+        "programs": ["CBS.60.MINUTES"],
+        "measurement_period": "SEASON.2025.26",
+        "comparable": false,
+        "context_only": true
+      }
+    ],
+    "cross_period_ranking_allowed": false,
+    "pending_claims": [
+      {"claim_id": "SEP14.EVENING.NEWS.SPECIFIC.RATINGS", "state": "U.21.AWAITING.NIELSEN"}
+    ]
+  },
+  "statistics": {
+    "source_count": 2,
+    "metric_count": 6,
+    "sample_size": 4,
+    "program_count": 3,
+    "measurement_period_count": 1,
+    "comparable_program_count": 3,
+    "contradiction_count": 0,
+    "repair_attempt_count": 0,
+    "repair_success_count": 0,
+    "truth_t20_count": 10,
+    "truth_u21_count": 2,
+    "truth_f6_count": 3
+  },
+  "evidence_hardening": {
+    "record_id": "FR0333.EVIDENCE.PROVENANCE.HARDENER.0001",
+    "claim_contract": "CLAIM+TYPE+SCOPE+SOURCE+INDEPENDENCE+STATE+RECEIPT",
+    "humanlock": "ACTIVE",
+    "automatic_promotion": false,
+    "canonical_promotion": "U.21.HUMAN.REVIEW.REQUIRED",
+    "entity_normalization": {
+      "JERUSALEM": "ISRAEL",
+      "UNITED STATES OF AMERICA": "UNITED.STATES"
+    },
+    "source_receipts": [
+      {
+        "source_id": "SRC.UN.A.RES.80.250",
+        "publisher": "UNITED.NATIONS.GENERAL.ASSEMBLY",
+        "authority_tier": "PRIMARY.INTERGOVERNMENTAL",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "UNITED.NATIONS",
+        "jurisdiction": "GLOBAL",
+        "accessed_at": "2026-09-15",
+        "url": "https://digitallibrary.un.org/record/4107547"
+      },
+      {
+        "source_id": "SRC.UCL.LBS",
+        "publisher": "UNIVERSITY.COLLEGE.LONDON",
+        "authority_tier": "PRIMARY.INSTITUTIONAL",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "UCL",
+        "jurisdiction": "UNITED.KINGDOM",
+        "accessed_at": "2026-09-15",
+        "url": "https://www.ucl.ac.uk/social-historical-sciences/history/research/research-projects-and-centres/centre-study-legacies-british-slavery-cslbs/cslbs-projects-and-partners/legacies-british-slave-ownership"
+      },
+      {
+        "source_id": "SRC.HARVARD.LEGACY",
+        "publisher": "HARVARD.UNIVERSITY",
+        "authority_tier": "PRIMARY.INSTITUTIONAL",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "HARVARD",
+        "jurisdiction": "UNITED.STATES",
+        "accessed_at": "2026-09-15",
+        "url": "https://legacyofslavery.harvard.edu/explore-report/"
+      },
+      {
+        "source_id": "SRC.CARICOM.REPARATIONS.2026",
+        "publisher": "CARIBBEAN.COMMUNITY",
+        "authority_tier": "PRIMARY.INTERGOVERNMENTAL",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "CARICOM",
+        "jurisdiction": "CARIBBEAN",
+        "accessed_at": "2026-09-15",
+        "url": "https://caricom.org/caricom-endorses-revised-ten-point-reparations-manifesto/"
+      },
+      {
+        "source_id": "SRC.AU.REPARATIONS.2026",
+        "publisher": "AFRICAN.UNION",
+        "authority_tier": "PRIMARY.INTERGOVERNMENTAL",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "AFRICAN.UNION",
+        "jurisdiction": "AFRICA",
+        "accessed_at": "2026-09-15",
+        "url": "https://au.int/en/speeches/20260324/auc-commissioner-hhs-high-level-event-reparatory-justice"
+      },
+      {
+        "source_id": "SRC.FED.SCF.2022",
+        "publisher": "BOARD.OF.GOVERNORS.FEDERAL.RESERVE.SYSTEM",
+        "authority_tier": "PRIMARY.GOVERNMENT",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "US.FEDERAL.RESERVE",
+        "jurisdiction": "UNITED.STATES",
+        "accessed_at": "2026-09-15",
+        "url": "https://www.federalreserve.gov/econres/notes/feds-notes/greater-wealth-greater-uncertainty-changes-in-racial-inequality-in-the-survey-of-consumer-finances-accessible-20231018.htm"
+      },
+      {
+        "source_id": "SRC.CENSUS.INCOME.2024",
+        "publisher": "UNITED.STATES.CENSUS.BUREAU",
+        "authority_tier": "PRIMARY.GOVERNMENT",
+        "evidence_class": "ORIGINAL",
+        "independence_group": "US.CENSUS",
+        "jurisdiction": "UNITED.STATES",
+        "accessed_at": "2026-09-15",
+        "url": "https://www2.census.gov/library/publications/2025/demo/p60-286.pdf"
+      },
+      {
+        "source_id": "SRC.FABER.ASR.2020",
+        "publisher": "AMERICAN.SOCIOLOGICAL.REVIEW",
+        "authority_tier": "PEER_REVIEWED",
+        "evidence_class": "PEER_REVIEWED",
+        "independence_group": "ASR.FABER.2020",
+        "jurisdiction": "UNITED.STATES",
+        "accessed_at": "2026-09-15",
+        "url": "https://journals.sagepub.com/doi/10.1177/0003122420948464"
+      },
+      {
+        "source_id": "SRC.NUNN.WANTCHEKON.AER.2011",
+        "publisher": "AMERICAN.ECONOMIC.REVIEW",
+        "authority_tier": "PEER_REVIEWED",
+        "evidence_class": "PEER_REVIEWED",
+        "independence_group": "AER.NUNN.WANTCHEKON.2011",
+        "jurisdiction": "AFRICA",
+        "accessed_at": "2026-09-15",
+        "url": "https://www.aeaweb.org/articles?id=10.1257%2Faer.101.7.3221"
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "UNGA.A.RES.80.250.VOTE",
+        "text": "UN General Assembly resolution A/RES/80/250 was adopted 123-3-52 on 2026-03-25; the no votes were Argentina, Israel, and the United States.",
+        "evidence_relation": "LEGAL_STATUS",
+        "scope": "UN.GENERAL.ASSEMBLY.80TH.SESSION",
+        "state": "T.20",
+        "source_ids": ["SRC.UN.A.RES.80.250"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE",
+        "resolution_effect": "NON_BINDING.GENERAL.ASSEMBLY.RESOLUTION",
+        "vote_summary": {"yes": 123, "no": 3, "abstain": 52, "non_voting": 15},
+        "vote_no_states": ["ARGENTINA", "ISRAEL", "UNITED.STATES"]
+      },
+      {
+        "claim_id": "UK.SLAVE.OWNER.COMPENSATION.20M",
+        "text": "The British Parliament provided GBP 20 million in compensation to former slave owners in the 1830s emancipation settlement.",
+        "evidence_relation": "INSTITUTIONAL_RECORD",
+        "scope": "BRITISH.EMPIRE.EMANCIPATION.1833",
+        "state": "T.20",
+        "source_ids": ["SRC.UCL.LBS"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "HARVARD.DIRECT.SLAVERY.TIES",
+        "text": "Harvard's institutional report documents direct and financial ties to slavery, including more than 70 people enslaved by Harvard leaders, faculty, and staff.",
+        "evidence_relation": "INSTITUTIONAL_RECORD",
+        "scope": "HARVARD.17TH.19TH.CENTURIES",
+        "state": "T.20",
+        "source_ids": ["SRC.HARVARD.LEGACY"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "CARICOM.REVISED.TEN.POINT.PLAN.2026",
+        "text": "CARICOM Heads of Government approved a revised Ten Point Plan for Reparatory Justice in July 2026.",
+        "evidence_relation": "DIPLOMATIC_POLICY",
+        "scope": "CARICOM.51ST.REGULAR.MEETING.2026",
+        "state": "T.20",
+        "source_ids": ["SRC.CARICOM.REPARATIONS.2026"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "AU.REPARATIONS.DECADE.2026.2035",
+        "text": "The African Union has institutionalized a multi-year reparatory justice agenda for Africans and people of African descent.",
+        "evidence_relation": "DIPLOMATIC_POLICY",
+        "scope": "AFRICAN.UNION.2026.2035",
+        "state": "T.20",
+        "source_ids": ["SRC.AU.REPARATIONS.2026"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "US.WEALTH.GAP.SCF.2022",
+        "text": "In the 2022 Survey of Consumer Finances, median wealth was USD 285,010 for White families and USD 44,890 for Black families.",
+        "evidence_relation": "STATISTICAL_DISPARITY",
+        "scope": "UNITED.STATES.SCF.2022",
+        "state": "T.20",
+        "source_ids": ["SRC.FED.SCF.2022"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "US.HOUSEHOLD.INCOME.GAP.2024",
+        "text": "Census reported 2024 median household income of USD 92,530 for non-Hispanic White households and USD 56,020 for Black households.",
+        "evidence_relation": "STATISTICAL_DISPARITY",
+        "scope": "UNITED.STATES.CPS.ASEC.2024",
+        "state": "T.20",
+        "source_ids": ["SRC.CENSUS.INCOME.2024"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "US.REDLINING.PERSISTENT.SEGREGATION",
+        "text": "Peer-reviewed evidence finds persistent later segregation associated with New Deal-era HOLC appraisal and related housing policy mechanisms.",
+        "evidence_relation": "CAUSAL",
+        "scope": "UNITED.STATES.CITIES.HOLC.1930.2010",
+        "state": "T.20",
+        "source_ids": ["SRC.FABER.ASR.2020"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "BOUNDED"
+      },
+      {
+        "claim_id": "AFRICA.SLAVE.TRADE.MISTRUST",
+        "text": "Peer-reviewed research reports a bounded causal relationship between ancestral exposure to African slave trades and lower present-day trust in studied populations.",
+        "evidence_relation": "CAUSAL",
+        "scope": "AFRICA.HISTORICAL.SLAVE.TRADES.TRUST",
+        "state": "T.20",
+        "source_ids": ["SRC.NUNN.WANTCHEKON.AER.2011"],
+        "requires_independent_corroboration": false,
+        "absolute_language": false,
+        "causal_scope": "BOUNDED"
+      },
+      {
+        "claim_id": "HISTORICAL.WEALTH.TRANSFER.INSTITUTIONAL.RECORD",
+        "text": "Independent institutional records document identifiable slavery-linked wealth transfers and institutional ties in Britain and the United States.",
+        "evidence_relation": "INSTITUTIONAL_RECORD",
+        "scope": "UNITED.KINGDOM+UNITED.STATES.HISTORICAL.RECORD",
+        "state": "T.20",
+        "source_ids": ["SRC.UCL.LBS", "SRC.HARVARD.LEGACY"],
+        "requires_independent_corroboration": true,
+        "absolute_language": false,
+        "causal_scope": "NOT.APPLICABLE"
+      },
+      {
+        "claim_id": "CURRENT.DISPARITY.TOTAL.ATTRIBUTION",
+        "text": "The exact proportion of present-day Black-White disparities attributable specifically to slavery rather than later and contemporary mechanisms is established.",
+        "evidence_relation": "CAUSAL",
+        "scope": "UNITED.STATES.PRESENT.DAY",
+        "state": "U.21",
+        "source_ids": [],
+        "requires_independent_corroboration": true,
+        "absolute_language": false,
+        "causal_scope": "UNRESOLVED",
+        "promotion_authorized": false
+      }
+    ],
+    "rejected_absolutes": [
+      {"claim_id": "ALL.WESTERN.WEALTH.FROM.SLAVERY", "state": "F.6"},
+      {"claim_id": "EVERY.CURRENT.DISPARITY.SOLELY.FROM.SLAVERY", "state": "F.6"},
+      {"claim_id": "ALL.BLACK.IDENTITY.ERASED", "state": "F.6"}
+    ]
+  },
+  "interaction_hardening": {
+    "record_id": "FR0333.INTERACTION.STATE.HARDENER.0001",
+    "chomp_chomp": {
+      "trigger": "CHOMP CHOMP",
+      "semantics": "FREEZE+STAY",
+      "count_contract": "INPUT_COUNT==OUTPUT_COUNT",
+      "preserve_source_set": true,
+      "preserve_order": true,
+      "preserve_active_ratio": true,
+      "generate_on_chomp": false,
+      "reinterpret_on_chomp": false,
+      "branch_expansion_on_chomp": false,
+      "new_explicit_instruction_required": true,
+      "count_examples": [
+        {"input": 1, "output": 1},
+        {"input": 6, "output": 6},
+        {"input": 10, "output": 10}
+      ]
+    }
+  }
+}
