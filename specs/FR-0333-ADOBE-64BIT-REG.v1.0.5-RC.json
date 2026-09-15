@@ -1,0 +1,116 @@
+{
+  "specification_metadata": {
+    "identifier": "FR-0333-ADOBE-64BIT-REG",
+    "layer": "Measurement & Validation",
+    "architecture_version": "1.0.5-RC",
+    "promotion_state": "SPEC_CI_VALIDATED/HOLD_PENDING_RUNTIME_VALIDATION",
+    "governing_constraints": [
+      "METADATA != PROVENANCE != AUTHENTICITY != IDENTITY != TRUTH",
+      "ACCESS != AUTHORITY",
+      "CRYPTOGRAPHIC VALIDITY != HUMAN IDENTITY != AUTHORIZATION",
+      "ABSENT != INVALID != CONFLICTING != SUSPICIOUS != PROVEN_FALSE",
+      "ZERO_LION HARD GATING ENFORCED"
+    ]
+  },
+  "schema_definitions": {
+    "evidence_class": {
+      "E_OBS": "Observed: Raw telemetry or directly parsed field; not automatically verified",
+      "E_MES": "Measured: Deterministic metric or cryptographic/structural validation result",
+      "E_DER": "Derived: Multi-field deterministic compilation",
+      "E_INF": "Inferred: Probabilistic/statistical approximation",
+      "E_CLM": "Claimed: Unverified assertion by an identity/tool"
+    },
+    "value_state": ["VALUE", "ABSENT", "UNKNOWN", "INVALID", "NOT_APPLICABLE", "ERROR"],
+    "zero_lion_gate": {
+      "PASS": "Execution proceeds; bit contribution valid",
+      "ROUTE_UNVERIFIED": "Route to unverified lineage branch; do not reinterpret absent provenance as invalid provenance",
+      "HALT_STREAM": "Block downstream trusted-verification path for this asset",
+      "HARD_PURGE": "Delete asset payload and unauthorized derived/telemetry data subject to verified retention obligations; retain only a non-source-derived minimal audit receipt when required",
+      "HALT_STREAM_IF_APPLICABLE": "If the bit is applicable and validation fails, block the downstream trusted-verification path; when not applicable, preserve NULL/NOT_APPLICABLE and do not halt",
+      "HALT_STREAM_ON_INVALID_APPLICABLE_STATUS": "If an applicable status resolves to an invalid verification status, block the downstream trusted-verification path; when not applicable, preserve NOT_APPLICABLE and do not halt"
+    },
+    "x509_status": ["VALID", "EXPIRED", "REVOKED", "NOT_YET_VALID", "UNTRUSTED_ROOT", "CHAIN_INVALID", "MALFORMED", "UNKNOWN", "NOT_APPLICABLE"]
+  },
+  "register_schema": {
+    "CLUSTER_01_ORIGIN": {
+      "BIT_01": {"field_name":"source_existence","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"asset_ingress_ping == 200","failure_state":"0","zero_lion_gate":"HALT_STREAM"},
+      "BIT_02": {"field_name":"source_id","datatype":"UUIDv4","evidence_class":"E_OBS","calculation":"extract_uuid(asset.header)","failure_state":"NULL","zero_lion_gate":"HALT_STREAM"},
+      "BIT_03": {"field_name":"creator_assertion","datatype":"STRING","evidence_class":"E_CLM","calculation":"extract_claim(asset.metadata.creator)","failure_state":"EMPTY_STRING","zero_lion_gate":"PASS"},
+      "BIT_04": {"field_name":"capture_time","datatype":"TIMESTAMP_ISO8601_OR_NULL","evidence_class":"E_OBS","calculation":"extract_timestamp(asset.exif.capture)","failure_state":"NULL","value_state_on_failure":"UNKNOWN","zero_lion_gate":"PASS"},
+      "BIT_05": {"field_name":"creation_tool","datatype":"STRING","evidence_class":"E_CLM","calculation":"extract_software_agent(asset.metadata)","failure_state":"UNKNOWN_AGENT","zero_lion_gate":"PASS"},
+      "BIT_06": {"field_name":"device_tool_assertion","datatype":"STRING","evidence_class":"E_CLM","calculation":"extract_hardware_signature(asset.exif.device)","failure_state":"UNSPECIFIED_HARDWARE","zero_lion_gate":"PASS"},
+      "BIT_07": {"field_name":"original_hash","datatype":"SHA256_HEX","evidence_class":"E_MES","calculation":"compute_sha256(asset.payload.original_bytes)","failure_state":"NULL_HASH","zero_lion_gate":"HALT_STREAM"},
+      "BIT_08": {"field_name":"source_availability","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"check_uri_status(asset.origin_uri)","failure_state":"0","zero_lion_gate":"PASS"}
+    },
+    "CLUSTER_02_INTEGRITY": {
+      "BIT_09": {"field_name":"current_hash","datatype":"SHA256_HEX","evidence_class":"E_MES","calculation":"compute_sha256(asset.payload.current_bytes)","failure_state":"NULL_HASH","zero_lion_gate":"HALT_STREAM"},
+      "BIT_10": {"field_name":"byte_identity_match","datatype":"BOOLEAN","evidence_class":"E_MES","calculation":"BIT_07 == BIT_09 ? 1 : 0","failure_state":"0","interpretation":"DESCRIPTIVE_ONLY_NOT_TAMPER_PROOF","zero_lion_gate":"PASS"},
+      "BIT_11": {"field_name":"signature_presence","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"has_cryptographic_signature(asset.manifest)","failure_state":"0","zero_lion_gate":"ROUTE_UNVERIFIED"},
+      "BIT_12": {"field_name":"signature_validity","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"BIT_11 == 1","calculation":"verify_signature(asset.manifest.signature, asset.manifest.public_key)","failure_state":"0","value_when_not_applicable":"NULL","value_state_when_not_applicable":"NOT_APPLICABLE","zero_lion_gate":"HALT_STREAM_IF_APPLICABLE"},
+      "BIT_13": {"field_name":"manifest_presence","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"has_c2pa_manifest(asset)","failure_state":"0","zero_lion_gate":"ROUTE_UNVERIFIED"},
+      "BIT_14": {"field_name":"manifest_validity","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"BIT_13 == 1","calculation":"validate_c2pa_structure(asset.manifest)","failure_state":"0","value_when_not_applicable":"NULL","value_state_when_not_applicable":"NOT_APPLICABLE","zero_lion_gate":"HALT_STREAM_IF_APPLICABLE"},
+      "BIT_15": {"field_name":"certificate_status","datatype":"ENUM_X509_EXPLICIT_STATUS","evidence_class":"E_MES","applicability":"BIT_11 == 1 && BIT_13 == 1 && asset.manifest.certificate != null","calculation":"verify_x509_chain_details(asset.manifest.certificate)","failure_state":"UNKNOWN","value_when_not_applicable":"NOT_APPLICABLE","zero_lion_gate":"HALT_STREAM_ON_INVALID_APPLICABLE_STATUS"},
+      "BIT_16": {"field_name":"tamper_suspected","datatype":"BOOLEAN","evidence_class":"E_DER","calculation":"((BIT_11 == 1 && BIT_12 == 0) || (BIT_13 == 1 && BIT_14 == 0) || signed_claim_binding_contradiction(asset) == 1) ? 1 : 0","failure_state":"1","interpretation":"SUSPICION_ONLY_NOT_PROOF_OF_TAMPERING","zero_lion_gate":"HALT_STREAM"}
+    },
+    "CLUSTER_03_EDIT_HISTORY": {
+      "BIT_17": {"field_name":"edit_count","datatype":"INTEGER_16_OR_NULL","evidence_class":"E_MES","applicability":"BIT_13 == 1","calculation":"count_manifest_actions(asset.manifest)","failure_state":"-1","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_18": {"field_name":"edit_timestamps","datatype":"ARRAY_TIMESTAMP_OR_NULL","evidence_class":"E_OBS","applicability":"BIT_13 == 1","calculation":"extract_action_timestamps(asset.manifest)","failure_state":"EMPTY_ARRAY","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_19": {"field_name":"edit_tool_declarations","datatype":"ARRAY_STRING_OR_NULL","evidence_class":"E_CLM","applicability":"BIT_13 == 1","calculation":"extract_action_software(asset.manifest)","failure_state":"EMPTY_ARRAY","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_20": {"field_name":"crop_resize_events","datatype":"INTEGER_8_OR_NULL","evidence_class":"E_MES","applicability":"BIT_13 == 1","calculation":"count_specific_actions(asset.manifest, ['c2pa.crop','c2pa.resize'])","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_21": {"field_name":"generative_edit_declaration","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_CLM","applicability":"BIT_13 == 1","calculation":"has_action_type(asset.manifest,'c2pa.generated') || contains_genai_metadata(asset)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_22": {"field_name":"non_generative_edit_declaration","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_CLM","applicability":"BIT_13 == 1","calculation":"has_action_type(asset.manifest,'c2pa.edited') && BIT_21 != 1","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_23": {"field_name":"parent_asset","datatype":"SHA256_HEX_OR_NULL","evidence_class":"E_DER","applicability":"BIT_13 == 1","calculation":"extract_parent_ingredient_hash(asset.manifest)","failure_state":"NULL_HASH","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_24": {"field_name":"derivative_depth","datatype":"INTEGER_8_OR_NULL","evidence_class":"E_DER","applicability":"BIT_13 == 1","calculation":"calculate_lineage_depth(asset.manifest)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"}
+    },
+    "CLUSTER_04_IDENTITY": {
+      "BIT_25": {"field_name":"signer_present","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"BIT_13 == 1 && asset.manifest.signer != null","failure_state":"0","zero_lion_gate":"ROUTE_UNVERIFIED"},
+      "BIT_26": {"field_name":"signer_credential_verification_state","datatype":"ENUM_VERIFY_STATE_OR_NULL","evidence_class":"E_MES","applicability":"BIT_25 == 1","calculation":"resolve_credential_trust(asset.manifest.signer.certificate)","failure_state":"UNVERIFIED","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_27": {"field_name":"credential_issuer","datatype":"STRING_OR_NULL","evidence_class":"E_OBS","applicability":"BIT_25 == 1","calculation":"extract_ca_common_name(asset.manifest.certificate)","failure_state":"UNKNOWN_ISSUER","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_28": {"field_name":"credential_validity","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"BIT_25 == 1","calculation":"check_cert_cryptography(asset.manifest.certificate)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"HALT_STREAM_IF_APPLICABLE"},
+      "BIT_29": {"field_name":"credential_expiration","datatype":"TIMESTAMP_ISO8601_OR_NULL","evidence_class":"E_OBS","applicability":"BIT_25 == 1","calculation":"extract_cert_expiration(asset.manifest.certificate)","failure_state":"NULL","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_30": {"field_name":"credential_key_usage","datatype":"ARRAY_STRING_OR_NULL","evidence_class":"E_OBS","applicability":"BIT_25 == 1","calculation":"extract_extended_key_usage(asset.manifest.certificate)","failure_state":"EMPTY_ARRAY","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_31": {"field_name":"pseudonymous_continuity","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_INF","applicability":"BIT_25 == 1 && asset.manifest.signer.id != null","calculation":"evaluate_did_rotation_history(asset.manifest.signer.id)","failure_state":"0","value_when_not_applicable":"NULL","authorization_use":"PROHIBITED","zero_lion_gate":"PASS"},
+      "BIT_32": {"field_name":"credential_binding_confidence","datatype":"FLOAT_32_OR_NULL","evidence_class":"E_INF","applicability":"BIT_25 == 1","calculation":"calculate_credential_binding_score(BIT_26,BIT_27,BIT_28)","failure_state":"0.0","value_when_not_applicable":"NULL","human_identity_claim":"PROHIBITED","zero_lion_gate":"PASS"}
+    },
+    "CLUSTER_05_RELATIONSHIP": {
+      "BIT_33": {"field_name":"asset_creator_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_DER","applicability":"asset.metadata.creator != null","calculation":"verify_edge(asset.id,asset.metadata.creator)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_34": {"field_name":"asset_parent_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_DER","applicability":"BIT_23 != null","calculation":"verify_edge(asset.id,BIT_23)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_35": {"field_name":"creator_tool_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_CLM","applicability":"BIT_13 == 1","calculation":"verify_signing_software_binding(asset.manifest)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_36": {"field_name":"signer_credential_control_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"BIT_25 == 1","calculation":"verify_key_control(asset.manifest.signer,asset.manifest.certificate)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"HALT_STREAM_IF_APPLICABLE"},
+      "BIT_37": {"field_name":"asset_manifest_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"BIT_13 == 1","calculation":"verify_manifest_binding(asset.payload.current_bytes,asset.manifest)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"HALT_STREAM_IF_APPLICABLE"},
+      "BIT_38": {"field_name":"transfer_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_OBS","applicability":"transfer_tracking_required(asset) == 1","calculation":"has_custody_transfer_record(asset)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_39": {"field_name":"authorization_edge","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"authorization_required(asset) == 1","calculation":"validate_authorization_token(asset.authorization_context)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"HALT_STREAM_IF_APPLICABLE"},
+      "BIT_40": {"field_name":"relationship_continuity","datatype":"FLOAT_32","evidence_class":"E_DER","calculation":"count_true_applicable(BIT_33..BIT_39) / count_applicable(BIT_33..BIT_39)","failure_state":"0.0","zero_lion_gate":"PASS"}
+    },
+    "CLUSTER_06_AUTHENTICITY": {
+      "BIT_41": {"field_name":"provenance_available","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"BIT_13","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_42": {"field_name":"provenance_verified","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"BIT_13 == 1","calculation":"(BIT_12 == 1 && BIT_14 == 1 && BIT_37 == 1) ? 1 : 0","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_43": {"field_name":"provenance_incomplete","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_DER","applicability":"BIT_13 == 1","calculation":"check_missing_mandatory_assertions(asset.manifest)","failure_state":"1","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_44": {"field_name":"provenance_conflict","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_DER","applicability":"BIT_13 == 1","calculation":"detect_assertion_contradictions(asset.manifest)","failure_state":"1","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_45": {"field_name":"synthetic_declaration","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_CLM","applicability":"BIT_21 != null","calculation":"BIT_21","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_46": {"field_name":"synthetic_detector_result","datatype":"FLOAT_32_OR_NULL","evidence_class":"E_INF","calculation":"execute_synthetic_analysis_models(asset.payload.current_bytes)","failure_state":"NULL","error_state":"ERROR","zero_lion_gate":"PASS"},
+      "BIT_47": {"field_name":"detector_confidence","datatype":"FLOAT_32_OR_NULL","evidence_class":"E_INF","applicability":"BIT_46 != null","calculation":"get_model_confidence_metric(asset.payload.current_bytes)","failure_state":"NULL","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_48": {"field_name":"detector_provenance_agreement","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_INF","applicability":"BIT_45 != null && BIT_46 != null && BIT_47 != null","calculation":"evaluate_agreement(BIT_45,BIT_46,BIT_47)","failure_state":"NULL","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"}
+    },
+    "CLUSTER_07_POPULATION": {
+      "BIT_49": {"field_name":"weekly_participants_count","datatype":"UINT_64","evidence_class":"E_MES","calculation":"get_global_counter(metrics.weekly_active_identities)","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_50": {"field_name":"weekly_assets_count","datatype":"UINT_64","evidence_class":"E_MES","calculation":"get_global_counter(metrics.weekly_ingested_assets)","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_51": {"field_name":"weekly_verified_assets_count","datatype":"UINT_64","evidence_class":"E_MES","calculation":"get_global_counter(metrics.weekly_verified_assets)","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_52": {"field_name":"weekly_rejected_assets_count","datatype":"UINT_64","evidence_class":"E_MES","calculation":"get_global_counter(metrics.weekly_failed_verification_assets)","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_53": {"field_name":"weekly_unique_provenance_chains_count","datatype":"UINT_64","evidence_class":"E_DER","calculation":"get_global_counter(metrics.weekly_root_manifest_hashes)","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_54": {"field_name":"weekly_repeat_participants_count","datatype":"UINT_64","evidence_class":"E_MES","calculation":"get_global_counter(metrics.identities_with_historical_match_30d)","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_55": {"field_name":"cluster_count","datatype":"UINT_32","evidence_class":"E_DER","calculation":"get_active_statistical_cluster_count()","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_56": {"field_name":"asset_metadata_field_density","datatype":"FLOAT_32","evidence_class":"E_MES","calculation":"count_populated_applicable_metadata_fields(asset.metadata) / count_applicable_schema_metadata_fields(asset)","failure_state":"0.0","zero_lion_gate":"PASS"}
+    },
+    "CLUSTER_08_ENGINE": {
+      "BIT_57": {"field_name":"ingest_success","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"pipeline.stage_ingest == SUCCESS","failure_state":"0","zero_lion_gate":"HALT_STREAM"},
+      "BIT_58": {"field_name":"verification_success","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_MES","applicability":"trusted_verification_path_entered(asset) == 1","calculation":"pipeline.stage_verification == SUCCESS","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_59": {"field_name":"asset_duplicate_detected","datatype":"BOOLEAN","evidence_class":"E_MES","calculation":"check_asset_deduplication_registry(BIT_09) == MATCH_FOUND ? 1 : 0","failure_state":"0","zero_lion_gate":"PASS"},
+      "BIT_60": {"field_name":"provenance_completeness","datatype":"FLOAT_32_OR_NULL","evidence_class":"E_MES","applicability":"BIT_13 == 1","calculation":"count_populated_applicable_required_fields(asset.manifest) / count_applicable_required_fields(asset.manifest)","failure_state":"0.0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_61": {"field_name":"edit_lineage_completeness","datatype":"BOOLEAN_OR_NULL","evidence_class":"E_DER","applicability":"BIT_13 == 1","calculation":"verify_unbroken_manifest_chain(asset.manifest)","failure_state":"0","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"},
+      "BIT_62": {"field_name":"consent_permission_state","datatype":"BOOLEAN","evidence_class":"E_OBS","calculation":"evaluate_explicit_user_consent_token(asset.authorization_context)","failure_state":"0","zero_lion_gate":"HARD_PURGE"},
+      "BIT_63": {"field_name":"privacy_minimization_state","datatype":"BOOLEAN","evidence_class":"E_MES","calculation":"confirm_pii_and_unauthorized_fields_purged(asset.telemetry_payload)","failure_state":"0","zero_lion_gate":"HARD_PURGE"},
+      "BIT_64": {"field_name":"feedback_usefulness","datatype":"FLOAT_32_OR_NULL","evidence_class":"E_INF","applicability":"BIT_62 == 1 && BIT_63 == 1","calculation":"evaluate_downstream_telemetry_signal_gain(asset.id)","failure_state":"NULL","value_when_not_applicable":"NULL","zero_lion_gate":"PASS"}
+    }
+  }
+}
