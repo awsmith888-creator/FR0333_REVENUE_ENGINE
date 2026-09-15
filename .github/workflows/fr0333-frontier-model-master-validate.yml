@@ -10,6 +10,7 @@ on:
       - "RavenCloudTaskbar/fr0333_humanlock_authorization_0001.schema.json"
       - "RavenCloudTaskbar/fr0333_humanlock_authorization_simulation_fixture_0001.json"
       - "RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_0001.json"
+      - "RavenCloudTaskbar/fr0333_frontier_model_master_promotion_receipt_0001.json"
       - "RavenCloudTaskbar/fr0333_frontier_model_master_validate.py"
       - "RavenCloudTaskbar/test_fr0333_frontier_model_master_validate.py"
       - "RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_validate.py"
@@ -45,6 +46,7 @@ jobs:
           python -m json.tool RavenCloudTaskbar/fr0333_humanlock_authorization_0001.schema.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_humanlock_authorization_simulation_fixture_0001.json >/dev/null
           python -m json.tool RavenCloudTaskbar/fr0333_architecture_ai_migration_12step_0001.json >/dev/null
+          python -m json.tool RavenCloudTaskbar/fr0333_frontier_model_master_promotion_receipt_0001.json >/dev/null
       - name: Run frontier model comparator validator
         run: python RavenCloudTaskbar/fr0333_frontier_model_master_validate.py
       - name: Run frontier model comparator tests
