@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.local/schemas/four_kernel_transaction_v2.schema.json",
+  "title": "FR0333 Four Kernel Transaction V2",
+  "type": "object",
+  "required": ["upgrade_id", "architecture_id", "kernels", "core_gates", "adobe_gates", "adobe_execution_receipt", "nelson_measurement", "statistics"],
+  "properties": {
+    "upgrade_id": {"const": "FR0333.OPERATOR.FOUR.KERNEL.UPGRADE.0002"},
+    "architecture_id": {"const": "FR0333.ADOBE.FOUR.KERNEL.HARDENER.0001"},
+    "kernels": {
+      "type": "object",
+      "required": ["NEWSFLASH", "ESPN.FANTASY.SPORTS", "NELSON", "GENIUS.BAR"],
+      "additionalProperties": false,
+      "properties": {
+        "NEWSFLASH": {"$ref": "#/$defs/kernel"},
+        "ESPN.FANTASY.SPORTS": {"$ref": "#/$defs/kernel"},
+        "NELSON": {
+          "allOf": [
+            {"$ref": "#/$defs/kernel"},
+            {
+              "properties": {
+                "receipt": {
+                  "type": "object",
+                  "required": ["role", "status", "measurement_contract"],
+                  "properties": {
+                    "role": {"const": "USER.DEFINED.MEASUREMENT.KERNEL"},
+                    "status": {"const": "DEFINED.ACTIVE"},
+                    "measurement_contract": {"const": "SOURCE+PERIOD+METRIC+UNIT+SCOPE+RECEIPT"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "GENIUS.BAR": {"$ref": "#/$defs/kernel"}
+      }
+    },
+    "core_gates": {"type": "object"},
+    "adobe_gates": {"type": "object"},
+    "adobe_execution_receipt": {"type": "object"},
+    "nelson_measurement": {
+      "type": "object",
+      "required": ["kernel_name", "source_receipts", "measurements", "comparison_groups", "cross_period_ranking_allowed", "pending_claims"],
+      "properties": {
+        "kernel_name": {"const": "NELSON"},
+        "source_receipts": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["source_id", "publisher", "underlying_measurement", "evidence_class", "measurement_period", "url"],
+            "properties": {
+              "source_id": {"type": "string", "minLength": 1},
+              "publisher": {"type": "string", "minLength": 1},
+              "underlying_measurement": {"type": "string", "minLength": 1},
+              "evidence_class": {"enum": ["ORIGINAL", "INDEPENDENT.CORROBORATION"]},
+              "measurement_period": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "pattern": "^https://"}
+            }
+          }
+        },
+        "measurements": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["program", "measurement_period", "metric", "value", "unit", "source_id"],
+            "properties": {
+              "program": {"type": "string", "minLength": 1},
+              "measurement_period": {"type": "string", "minLength": 1},
+              "metric": {"type": "string", "minLength": 1},
+              "value": {"type": "number"},
+              "unit": {"type": "string", "minLength": 1},
+              "source_id": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "comparison_groups": {"type": "array", "minItems": 2},
+        "cross_period_ranking_allowed": {"const": false},
+        "pending_claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["claim_id", "state"],
+            "properties": {
+              "claim_id": {"type": "string", "minLength": 1},
+              "state": {"type": "string", "pattern": "^U\\.21"}
+            }
+          }
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "required": ["source_count", "metric_count", "sample_size", "program_count", "measurement_period_count", "comparable_program_count", "truth_t20_count", "truth_u21_count", "truth_f6_count"]
+    }
+  },
+  "$defs": {
+    "kernel": {
+      "type": "object",
+      "required": ["passed", "receipt"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "receipt": {"type": "object", "minProperties": 1}
+      }
+    }
+  }
+}
