@@ -10,6 +10,8 @@ TASKBARS = ROOT / "taskbars.json"
 LUMEN = ROOT / "lumen_gateway.json"
 IMAGE_QUALITY = ROOT / "fr0333_image_quality_gate_0003.json"
 ADOBE_RECEIPT = ROOT / "fr0333_adobe_image_runtime_receipt_0001.json"
+OPENAI_GENERATED_LINK = ROOT / "fr0333_openai_generated_link_disclosure_boundary_0001.json"
+OPENAI_PRO_200_PAUSE = ROOT / "fr0333_openai_pro_200_pause_2026_09_10.json"
 
 REQUIRED_TASKBAR_FIELDS = {
     "id", "project", "lane", "state", "evidence_state",
@@ -25,11 +27,63 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+
+def _assert_no_compound_true_states(value, path="root"):
+    if isinstance(value, dict):
+        for key, child in value.items():
+            _assert_no_compound_true_states(child, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            _assert_no_compound_true_states(child, f"{path}[{index}]")
+    elif isinstance(value, str):
+        assert not value.startswith("T.20."), f"compound T.20 state at {path}: {value}"
+
+
+def validate_openai_evidence_records(generated_link, pro_pause):
+    for record in (generated_link, pro_pause):
+        assert record["state"] == "T.20"
+        assert record["source"]["raw_source_hash"] is None
+        assert record["source"]["raw_source_hash_state"] == "U.21.NOT_ESTABLISHED"
+        verification = record["verification"]
+        assert "record_audited" not in verification
+        assert verification["record_structure_reviewed"] == "T.20"
+        assert verification["source_content_verified"] == "T.20"
+        assert verification["raw_source_hash"] == "U.21.NOT_ESTABLISHED"
+        assert verification["receipt_state"] == "U.21.NOT_ESTABLISHED"
+        assert verification["canonical_promotion_state"] == "U.21.HOLD"
+        assert verification["promotion_authorized"] is False
+        assert verification["humanlock"] is True
+        _assert_no_compound_true_states(record)
+
+    assert "transmission_event" not in generated_link
+    assert generated_link["conditional_navigation"]["state"] == "T.20"
+    assert generated_link["observed_click_state"] == "U.21.NOT_ESTABLISHED"
+    assert generated_link["observed_disclosure_state"] == "U.21.NOT_ESTABLISHED"
+    assert generated_link["specific_context_heavy_url_trigger_mechanism"]["state"] == "U.21.INFERENCE"
+
+    assert pro_pause["lifecycle_state"] == "ACTIVE"
+    plan = pro_pause["plan_state"]
+    assert plan["new_pro_200_signups"] == "PAUSED"
+    assert plan["upgrades_to_pro_200"] == "PAUSED"
+    assert plan["upgrade_origins"] == ["FREE", "GO", "PLUS", "PRO.100"]
+    assert plan["new_pro_100_subscriptions"] == "UNAFFECTED"
+    assert plan["existing_pro_100_subscriptions"] == "UNAFFECTED"
+    assert plan["existing_pro_200_subscriptions"] == "UNAFFECTED"
+    assert pro_pause["verification"]["official_source_verification_scope"] == ["plan_state"]
+
+    secondary = pro_pause["secondary_context"]
+    assert secondary["evidence_class"] == "DERIVATIVE.SUMMARY"
+    assert secondary["source_relationship"] == "SHARED.PRIMARY.ORIGIN"
+    assert secondary["causal_claim_state"] == "U.21"
+
 def load_and_validate():
     taskbars = json.loads(TASKBARS.read_text(encoding="utf-8"))
     lumen = json.loads(LUMEN.read_text(encoding="utf-8"))
     image_quality = json.loads(IMAGE_QUALITY.read_text(encoding="utf-8"))
     adobe_receipt = json.loads(ADOBE_RECEIPT.read_text(encoding="utf-8"))
+    openai_generated_link = json.loads(OPENAI_GENERATED_LINK.read_text(encoding="utf-8"))
+    openai_pro_200_pause = json.loads(OPENAI_PRO_200_PAUSE.read_text(encoding="utf-8"))
+    validate_openai_evidence_records(openai_generated_link, openai_pro_200_pause)
 
     assert taskbars["humanlock"] is True
     assert taskbars["state"] == "CONTROL_PLANE_BUILT_NOT_CLOUD_PROVISIONED"

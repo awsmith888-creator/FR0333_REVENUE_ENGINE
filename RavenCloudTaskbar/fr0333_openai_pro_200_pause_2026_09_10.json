@@ -1,0 +1,64 @@
+{
+  "id": "FR0333.OPENAI.PRO.200.PAUSE.2026.09.10",
+  "record_class": "CAPABILITY.TRACKING.PRODUCT.OPERATIONS",
+  "state": "T.20",
+  "lifecycle_state": "ACTIVE",
+  "effective_date": "2026-09-10",
+  "source": {
+    "class": "OPENAI.OFFICIAL.HELP.CENTER",
+    "canonical_url": "https://help.openai.com/en/articles/9793128",
+    "title": "About ChatGPT Pro tiers",
+    "raw_source_hash": null,
+    "raw_source_hash_state": "U.21.NOT_ESTABLISHED"
+  },
+  "plan_state": {
+    "new_pro_200_signups": "PAUSED",
+    "upgrades_to_pro_200": "PAUSED",
+    "upgrade_origins": [
+      "FREE",
+      "GO",
+      "PLUS",
+      "PRO.100"
+    ],
+    "new_pro_100_subscriptions": "UNAFFECTED",
+    "existing_pro_100_subscriptions": "UNAFFECTED",
+    "existing_pro_200_subscriptions": "UNAFFECTED",
+    "cancelled_or_ended_pro_200": "CANNOT.REPURCHASE.UNTIL.PAUSE.LIFTED"
+  },
+  "secondary_context": {
+    "claim": "ASTRA.DEMAND.AND.CAPACITY.PRESSURE",
+    "evidence_class": "DERIVATIVE.SUMMARY",
+    "source_relationship": "SHARED.PRIMARY.ORIGIN",
+    "causal_claim_state": "U.21",
+    "not_classified_as": "HELP.CENTER.TIER.DOCUMENT.FACT",
+    "sources": [
+      {
+        "publisher": "CIO",
+        "url": "https://www.cio.com/article/4221092/openai-pauses-200-pro-tier-as-astra-demand-strains-capacity.html"
+      },
+      {
+        "publisher": "Fortune",
+        "url": "https://fortune.com/2026/09/11/openai-astra-chatgpt-pro-pause/"
+      }
+    ]
+  },
+  "boundaries": [
+    "PRO.200.PAUSE != PAUSE.OF.FREE.GO.PLUS.OR.PRO.100",
+    "OFFICIAL.TIER.STATE != SECONDARY.INFRASTRUCTURE.EXPLANATION",
+    "TEMPORARY.PAUSE != PERMANENT.PRODUCT.RETIREMENT",
+    "SOURCE.CONTENT.VERIFIED != RAW.SOURCE.HASH.ESTABLISHED"
+  ],
+  "verification": {
+    "record_structure_reviewed": "T.20",
+    "source_content_verified": "T.20",
+    "official_source_verification_scope": [
+      "plan_state"
+    ],
+    "raw_source_hash": "U.21.NOT_ESTABLISHED",
+    "receipt_state": "U.21.NOT_ESTABLISHED",
+    "canonical_promotion_state": "U.21.HOLD",
+    "promotion_authorized": false,
+    "external_runtime": "NOT.APPLICABLE",
+    "humanlock": true
+  }
+}
