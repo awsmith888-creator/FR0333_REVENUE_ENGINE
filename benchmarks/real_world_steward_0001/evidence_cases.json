@@ -1,0 +1,140 @@
+{
+  "record_id": "FR0333.REAL.WORLD.STEWARD.BENCHMARK.0001.EVIDENCE",
+  "captured_at": "2026-09-15",
+  "source_mode": "REAL.PUBLIC.WEB.SNAPSHOTS",
+  "expected_case_count": 11,
+  "cases": [
+    {
+      "id": "E01.OPENAI.AGENTS.API",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://openai.com/index/introducing-the-agents-api/",
+      "snapshot_text": "OpenAI introduced the Agents API on September 10, 2026 in public beta, describing a managed Codex harness for long-running agents.",
+      "release_state": "BETA",
+      "claim": "Agents API is available in public beta.",
+      "expected_state": "T.20.PRIMARY.BETA",
+      "production_capability_established": false,
+      "snapshot_sha256": "sha256_8fb71d10ec5df7cf0b2982e250c1548ffa2ccb40a975797f9cb7138ccbaa97c0"
+    },
+    {
+      "id": "E02.OPENAI.GPT.LIVE.1",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
+      "snapshot_text": "OpenAI launched GPT-Live-1 in the API and states that it can listen and speak at the same time.",
+      "release_state": "PRODUCTION",
+      "claim": "GPT-Live-1 is available in the API with full-duplex listening and speaking.",
+      "expected_state": "T.20.PRIMARY",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_4f8d63977359d4479cebb26bccdc7ec44be8f315d528aee5005bd01417729639"
+    },
+    {
+      "id": "E03.GOOGLE.PASSWORD.TRANSFER",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://blog.google/products-and-platforms/platforms/android/switch-password-managers/",
+      "snapshot_text": "Google announced Android transfer of passwords and passkeys between password managers without file downloads, with user review and authorization.",
+      "release_state": "PRODUCTION",
+      "claim": "Android supports direct transfer of passwords and passkeys between supported password managers.",
+      "expected_state": "T.20.PRIMARY",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_20242a5653b38484f64f74f26fd0e8792ac6778461220a137ea3877fd77009a8"
+    },
+    {
+      "id": "E04.GOOGLE.GEMINI.WINDOWS",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows/",
+      "snapshot_text": "Google announced the Gemini app for Windows on September 10, 2026, including Alt+Space desktop access.",
+      "release_state": "PRODUCTION",
+      "claim": "The Gemini app is available for Windows.",
+      "expected_state": "T.20.PRIMARY",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_4a273392bdab91d3da39cbfa8fceb9fa22bb3c8b5fbc6e63cf2298cc49b27b9f"
+    },
+    {
+      "id": "E05.ADOBE.1B.MAU",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "OFFICIAL_RECORD",
+      "source_url": "https://www.adobe.com/cc-shared/assets/investor-relations/pdfs/01906202/au56y4ter.pdf",
+      "snapshot_text": "Adobe's Q3 FY2026 earnings release states that Adobe achieved more than one billion monthly active users across creativity and productivity solutions.",
+      "release_state": "PRODUCTION",
+      "claim": "Adobe reported more than 1 billion monthly active users.",
+      "expected_state": "T.20.OFFICIAL.RECORD",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_eb591360d9d3f1543e74ddec93fe98ab7fcfc2cbcbecc451565805c502c7539e"
+    },
+    {
+      "id": "E06.OPENAI.PRO.200.PAUSE",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://help.openai.com/en/articles/9793128-what-is-chatgpt-pro/",
+      "snapshot_text": "OpenAI states that new sign-ups and upgrades to Pro $200 (Pro 20X) are temporarily paused as of September 10, 2026, while Pro $100 remains available and existing Pro $200 subscriptions are not affected.",
+      "release_state": "PRODUCTION",
+      "claim": "The pause applies to new Pro $200 sign-ups and upgrades, not all Pro subscriptions.",
+      "expected_state": "T.20.PRIMARY.CORRECTED",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_bde7640c4279c2a5bb2ff982956af8912b98f065c60e9e672f0fb5a937d79d8f"
+    },
+    {
+      "id": "E07.GOOGLE.SYSTEM.RELEASE.NOTES",
+      "pointer": "GOOGLE.NOTIFICATION.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://support.google.com/product-documentation/answer/14343500",
+      "snapshot_text": "Google's system services release notes list September 2026 Android WebView updates and describe these notes as updates to Android, Play Store and Play services.",
+      "release_state": "PRODUCTION",
+      "claim": "Google maintains first-party release notes for system-service changes.",
+      "expected_state": "T.20.PRIMARY",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_46425498aace2d112b2d7996fef11db64d4d9e86c19dc66e36627314544ab9f1"
+    },
+    {
+      "id": "E08.LUCID.MCP",
+      "pointer": "SPONSORED.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://help.lucid.co/hc/en-us/articles/42578801807508-Integrate-Lucid-with-AI-tools-using-the-Lucid-MCP-server",
+      "snapshot_text": "Lucid states that its MCP server lets authorized AI tools search, retrieve, edit, summarize, and create Lucid documents, with admin controls for some plans.",
+      "release_state": "PRODUCTION",
+      "claim": "Lucid provides an MCP server with document search and edit capabilities.",
+      "expected_state": "T.20.PRIMARY",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_6f223fc90831832aff6bf4d14e52ccf7b887660c3d915a062e88dd7546b8b055"
+    },
+    {
+      "id": "E09.EPICOR.GROW.REPLICA",
+      "pointer": "SPONSORED.CARD",
+      "source_class": "FIRST_PARTY",
+      "source_url": "https://www.epicor.com/en-us/products/business-intelligence-and-data-management/grow/grow-bi-for-building-suppliers/",
+      "snapshot_text": "Epicor states that Grow BI replicates BisTrack data into a dedicated analytics environment and runs analytics on replicated data rather than the live BisTrack database.",
+      "release_state": "PRODUCTION",
+      "claim": "Grow BI can isolate analytics from the live operational database using replicated data.",
+      "expected_state": "T.20.PRIMARY",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_7685438e8d91572c337942c8935a6c0116069fcd3cae44e843c90b3cd6f29842"
+    },
+    {
+      "id": "E10.STACKAI.GOVERNANCE",
+      "pointer": "SPONSORED.CARD",
+      "source_class": "VENDOR_MARKETING",
+      "source_url": "https://www.stackai.com/solutions/mutual-fund-companies",
+      "snapshot_text": "StackAI advertises feature controls, audit logs, human-in-the-loop approval points, and 100+ enterprise integrations.",
+      "release_state": "PRODUCTION",
+      "claim": "StackAI advertises governance controls and 100+ integrations.",
+      "expected_state": "T.20.VENDOR.REPORTED",
+      "production_capability_established": true,
+      "snapshot_sha256": "sha256_1315a883b7505e237efbd9ef71d7b9494b85841bf91fe257e1e72361bde8d851"
+    },
+    {
+      "id": "E11.GOOGLEBOOK.PREORDER",
+      "pointer": "GOOGLE.FEED.CARD",
+      "source_class": "INDEPENDENT_SECONDARY",
+      "source_url": "https://9to5google.com/",
+      "snapshot_text": "A 9to5Google card reports that Googlebook pre-orders start September 21, while the Google first-party announcement establishes the product but not this preorder date in the source set.",
+      "release_state": "PREORDER",
+      "claim": "September 21 preorder date is secondary-reported pending a first-party preorder record.",
+      "expected_state": "U.21.SECONDARY.PENDING.PRIMARY",
+      "production_capability_established": false,
+      "snapshot_sha256": "sha256_3ad31023814a5ac68edc3dbc315e4c925b2924faa5d3b37298efc11e892ed78a"
+    }
+  ]
+}
