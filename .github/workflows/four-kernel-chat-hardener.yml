@@ -21,6 +21,9 @@ on:
       - "schemas/agent_simulation_hardener_0001.schema.json"
       - "schemas/historical_entity_normalization_0001.json"
       - "tests/test_agent_simulation_hardener_0001.py"
+      - "src/severe_variant_steward_0010.py"
+      - "schemas/severe_variant_stewardship_0010.json"
+      - "tests/test_severe_variant_steward_0010.py"
       - "receipts/operator/**"
       - ".github/workflows/four-kernel-chat-hardener.yml"
 
@@ -69,6 +72,10 @@ jobs:
           tx=json.load(open('receipts/operator/2026-09-15/agent_simulation.batch.0001.json', encoding='utf-8'))
           validate(instance=tx, schema=schema)
           PY
+      - name: Validate ten-lane severe variant stewardship 0010
+        run: |
+          python -m json.tool schemas/severe_variant_stewardship_0010.json >/dev/null
+          python -m json.tool receipts/operator/2026-09-15/severe_variant.batch.0010.json >/dev/null
       - name: Compile four-kernel receipt v1
         run: python src/compile_four_kernel_receipt.py
       - name: Verify deterministic outputs v1
