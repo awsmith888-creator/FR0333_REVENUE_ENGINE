@@ -27,6 +27,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Validate PR17 successor E3 E4 manifest
+        run: python RavenCloudTaskbar/fr0333_pr17_successor_validate.py
+      - name: Run PR17 migrated deterministic rails
+        run: python -m unittest RavenCloudTaskbar.test_ai_image_tool_metrics RavenCloudTaskbar.test_mariah_carey_chomp -v
+      - name: Verify Stronghold taskbars blob
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object RavenCloudTaskbar/taskbars.json)" = "056d63083395b5d092a23c4764cc81520acad8cb"
       - name: Build and validate taskbar
         run: python RavenCloudTaskbar/build.py
       - name: Verify no provisioned cloud credentials
