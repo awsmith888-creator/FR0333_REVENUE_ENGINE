@@ -1,0 +1,29 @@
+name: FR0333 Image Queue Runtime Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_image_queue_runtime_0001.json"
+      - "RavenCloudTaskbar/fr0333_image_queue_runtime.py"
+      - "RavenCloudTaskbar/test_fr0333_image_queue_runtime.py"
+      - "RavenCloudTaskbar/README_image_queue_runtime_0001.md"
+      - ".github/workflows/fr0333-image-queue-runtime-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate queue runtime specification JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_image_queue_runtime_0001.json >/dev/null
+      - name: Load queue runtime dispatcher
+        run: python RavenCloudTaskbar/fr0333_image_queue_runtime.py
+      - name: Run queue runtime receipt-count tests
+        run: python RavenCloudTaskbar/test_fr0333_image_queue_runtime.py
