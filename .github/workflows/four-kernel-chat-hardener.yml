@@ -27,6 +27,9 @@ on:
       - "src/steward_observability_hardener_0011.py"
       - "schemas/steward_observability_hardener_0011.schema.json"
       - "tests/test_steward_observability_hardener_0011.py"
+      - "src/real_world_steward_benchmark_0001.py"
+      - "benchmarks/real_world_steward_0001/**"
+      - "tests/test_real_world_steward_benchmark_0001.py"
       - "receipts/operator/**"
       - ".github/workflows/four-kernel-chat-hardener.yml"
 
@@ -90,6 +93,12 @@ jobs:
           tx=json.load(open('receipts/operator/2026-09-15/steward_observability.batch.0011.json', encoding='utf-8'))
           validate(instance=tx, schema=schema)
           PY
+      - name: Validate real-world steward benchmark 0001
+        run: |
+          python -m json.tool benchmarks/real_world_steward_0001/evidence_cases.json >/dev/null
+          python -m json.tool benchmarks/real_world_steward_0001/historical_sample_50.json >/dev/null
+          python -m json.tool benchmarks/real_world_steward_0001/agent_cases.json >/dev/null
+          python -m unittest tests.test_real_world_steward_benchmark_0001
       - name: Compile four-kernel receipt v1
         run: python src/compile_four_kernel_receipt.py
       - name: Verify deterministic outputs v1
