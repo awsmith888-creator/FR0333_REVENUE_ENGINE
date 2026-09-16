@@ -1,0 +1,119 @@
+{
+  "record_id": "FR0333.HISTORICAL.ENTITY.NORMALIZATION.0001",
+  "dataset_scope": "SLAVE_TRADE_INVESTOR_13K",
+  "humanlock": "ACTIVE",
+  "auto_merge": false,
+  "raw_text_preservation": true,
+  "canonicalization_policy": {
+    "unicode_normalization": "NFKC",
+    "trim_outer_whitespace": true,
+    "collapse_internal_whitespace": true,
+    "preserve_original_punctuation": true,
+    "preserve_titles": true,
+    "preserve_diacritics_in_raw_value": true,
+    "casefold_only_for_candidate_matching": true
+  },
+  "identity_rules": [
+    {
+      "rule_id": "R01.SOURCE.PERSISTENT.ID",
+      "condition": "same archive-assigned persistent person/entity identifier",
+      "result": "T.20.SAME.ENTITY",
+      "merge_allowed": true,
+      "human_review_required": false
+    },
+    {
+      "rule_id": "R02.EXACT.NORMALIZED.NAME",
+      "condition": "exact normalized name with no shared persistent identifier",
+      "result": "U.21.CANDIDATE.MATCH",
+      "merge_allowed": false,
+      "human_review_required": true
+    },
+    {
+      "rule_id": "R03.EXPLICIT.ALIAS",
+      "condition": "primary source explicitly states alias, former name, maiden name, or alternate spelling",
+      "result": "T.20.ALIAS.LINK",
+      "merge_allowed": false,
+      "human_review_required": false
+    },
+    {
+      "rule_id": "R04.ORTHOGRAPHIC.VARIANT",
+      "condition": "abbreviation, spelling variation, OCR variation, or phonetic similarity without explicit source linkage",
+      "result": "U.21.CANDIDATE.MATCH",
+      "merge_allowed": false,
+      "human_review_required": true
+    },
+    {
+      "rule_id": "R05.TITLE.IS.NOT.IDENTITY",
+      "condition": "shared title, honorific, office, rank, or nobiliary style",
+      "result": "NO.IDENTITY.INFERENCE",
+      "merge_allowed": false,
+      "human_review_required": false
+    },
+    {
+      "rule_id": "R06.COLOCATION.IS.NOT.IDENTITY",
+      "condition": "same address, parish, city, company, vessel, or voyage",
+      "result": "NO.IDENTITY.INFERENCE",
+      "merge_allowed": false,
+      "human_review_required": false
+    },
+    {
+      "rule_id": "R07.RELATIONSHIP.IS.NOT.IDENTITY",
+      "condition": "family, business, church, political, estate, or household relationship",
+      "result": "RELATIONSHIP.EDGE.ONLY",
+      "merge_allowed": false,
+      "human_review_required": false
+    },
+    {
+      "rule_id": "R08.CONFLICTING.CHRONOLOGY",
+      "condition": "documented dates make proposed identity impossible",
+      "result": "F.6.SAME.ENTITY",
+      "merge_allowed": false,
+      "human_review_required": false
+    },
+    {
+      "rule_id": "R09.AMBIGUOUS.COLLISION",
+      "condition": "multiple plausible persons share a name or alias",
+      "result": "U.21.AMBIGUOUS",
+      "merge_allowed": false,
+      "human_review_required": true
+    },
+    {
+      "rule_id": "R10.NO.DEMOGRAPHIC.INFERENCE.FROM.NAME",
+      "condition": "attempt to infer race, ethnicity, religion, nationality, or legal status solely from a name",
+      "result": "F.6.INFERENCE",
+      "merge_allowed": false,
+      "human_review_required": false
+    }
+  ],
+  "blocked_heuristics": [
+    "SAME.SURNAME=>SAME.ENTITY",
+    "PHONETIC.MATCH=>SAME.ENTITY",
+    "SAME.ADDRESS=>SAME.ENTITY",
+    "SAME.TITLE=>SAME.ENTITY",
+    "SAME.COMPANY=>SAME.ENTITY",
+    "SAME.VOYAGE=>SAME.ENTITY",
+    "MODEL.CONFIDENCE.ALONE=>MERGE"
+  ],
+  "resolution_receipt_required_fields": [
+    "resolution_id",
+    "left_record_id",
+    "right_record_id",
+    "decision",
+    "rule_ids",
+    "source_ids",
+    "raw_values",
+    "normalized_values",
+    "review_state",
+    "timestamp"
+  ],
+  "allowed_decisions": [
+    "T.20.SAME.ENTITY",
+    "T.20.ALIAS.LINK",
+    "U.21.CANDIDATE.MATCH",
+    "U.21.AMBIGUOUS",
+    "F.6.SAME.ENTITY",
+    "NO.IDENTITY.INFERENCE",
+    "RELATIONSHIP.EDGE.ONLY"
+  ],
+  "causal_boundary": "ENTITY.RESOLUTION!=CAUSAL.ATTRIBUTION"
+}
