@@ -1,0 +1,28 @@
+name: FR0333 Migration Receipt Validate
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/fr0333_migration_receipt_0001.json"
+      - "RavenCloudTaskbar/FR0333_MIGRATION_RECEIPT_COMPILER_0001.md"
+      - "RavenCloudTaskbar/validate_migration_receipt_0001.py"
+      - ".github/workflows/fr0333-migration-receipt-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-migration-receipt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify E6 to E12 structural delta
+        run: python RavenCloudTaskbar/validate_migration_receipt_0001.py
