@@ -1,0 +1,123 @@
+{
+  "id": "FR0333.RAVEN.SOPHIE.CONTROL.UPGRADE.5.0.0001",
+  "package_version": "5.0",
+  "class": "APPEND_ONLY_MULTI_PLANE_CONTROL_AND_VERIFICATION_HARDENING",
+  "operator_authorization": "EXPLICIT.CURRENT.SESSION",
+  "parent_profile": "FR0333.RAVEN.SOPHIE.CONTROL.UPGRADE.1.7.0001",
+  "parent_commit": "150eab2cc93d56973bf631975c894907b85b159f",
+  "major_version_jump": {
+    "authorized": true,
+    "reason": "OPERATOR.REQUESTED.MAJOR.VERSION.PROMOTION",
+    "intermediate_versions_implied": false,
+    "history_rewritten": false
+  },
+  "scope": {
+    "sophie_tracks": ["SOPHIE-1.1","SOPHIE-1.2","SOPHIE-1.3","SOPHIE-1.4","SOPHIE-1.5"],
+    "raven_track": "RAVEN-1.6",
+    "shared_profile": "RAVEN_SOPHIE_CONTROL_5.0",
+    "identity_merge": false,
+    "rule": "SHARED.CONTROL.PROFILE != SHARED.IDENTITY"
+  },
+  "five_plane_stack": {
+    "PLANE.1.SOURCE": {
+      "functions": ["CAPTURE.EXACT.INPUT","SOURCE.BIND","TIMESTAMP","INTENT.BIND"],
+      "fail_state": "HOLD.ON.MISSING.SOURCE.OR.INTENT"
+    },
+    "PLANE.2.ROUTE": {
+      "functions": ["LANE.DETECT","SPECIALIST.ROUTE","TOKEN.Q.ISOLATION","NO.SILENT.RECLASSIFICATION"],
+      "fail_state": "HOLD.ON.ROUTE.AMBIGUITY"
+    },
+    "PLANE.3.VERIFY": {
+      "functions": ["CLAIM.ATOMIZE","EVIDENCE.CLASS","CONTRADICTION.CHECK","DELTA.CHECK","LOCAL.INTEGRITY.CHECK"],
+      "fail_state": "HOLD.OR.REJECT.ON.EVIDENCE.FAILURE"
+    },
+    "PLANE.4.EXECUTION_BOUNDARY": {
+      "functions": ["HUMANLOCK","TOOL.GATE","EXTERNAL.RECEIPT.REQUIRED","NO.RUNTIME.CLAIM.WITHOUT.RECEIPT"],
+      "fail_state": "ABORT.ON.UNAUTHORIZED.EXECUTION"
+    },
+    "PLANE.5.RECEIPT_CONTINUITY": {
+      "functions": ["APPEND_ONLY.RECEIPT","PARENT.HASH.BIND","SEQUENCE.BIND","REPLAY.DETECTION","CHECKPOINT.DELTA"],
+      "fail_state": "QUARANTINE.ON.LINEAGE.OR.REPLAY.FAILURE"
+    }
+  },
+  "raven_path": ["RAVEN_SOURCE","RAVEN_ROUTE","RAVEN_WATCH","RAVEN_VERIFY","RAVEN_RECEIPT"],
+  "token_system": {
+    "count": 10,
+    "positions_01_05": "RAVENGOBOT",
+    "positions_06_10": "HUMANLOCK",
+    "persistent_state": true,
+    "consumption_model": "NOT.ESTABLISHED",
+    "usage_implies_depletion": false,
+    "placement_record": "FR0333.TOKEN.PLACEMENT.0002"
+  },
+  "q_system": {
+    "separate_from_token_system": true,
+    "token_slots_consumed": 0,
+    "rule": "TEN.IN -> TEN.OUT",
+    "one_source_one_output": true,
+    "collage": false,
+    "repeat": false,
+    "failed_slot_policy": "RETRY.FAILED.SLOT.ONLY"
+  },
+  "four_kernel_compatibility_bus": {
+    "kernel_count": 4,
+    "kernels": ["NEWSFLASH","ESPN.FANTASY.SPORTS","NELSON","GENIUS.BAR"],
+    "structure_preserved": true,
+    "five_plane_stack_replaces_four_kernels": false,
+    "rule": "CONTROL.PLANES != KERNEL.COUNT"
+  },
+  "localized_verification": {
+    "methods": ["CANONICAL.SERIALIZATION","SHA256.CONTENT.HASH","PARENT.COMMIT.BIND","SOURCE.HASH.BIND","PREVIOUS.RECEIPT.HASH","SEQUENCE.RECEIPT","REPLAY.DETECTION"],
+    "external_ci_null_or_unreachable": "U.21.EXTERNAL_TELEMETRY_UNOBSERVED",
+    "external_ci_null_is_pass": false,
+    "external_ci_null_is_failure": false,
+    "local_integrity_may_override_external_ci": false,
+    "boundary": "LOCAL.INTEGRITY.PASS != EXTERNAL.CI.PASS"
+  },
+  "state_machine": {
+    "normal_states": ["PASS","HOLD","REJECT"],
+    "severe_states": ["ABORT","QUARANTINE"],
+    "promotion_requires": ["SOURCE","VERIFICATION","EVIDENCE.CLASS","RECEIPT","HUMAN.AUTHORIZATION.WHEN.REQUIRED"],
+    "automatic_promotion": false
+  },
+  "signal_protocol": {
+    "signals": ["SOURCE_CAPTURED","ROUTE_BOUND","WATCH_DELTA","VERIFY_PASS","VERIFY_HOLD","CONTRADICTION_FOUND","LOCAL_INTEGRITY_PASS","LOCAL_INTEGRITY_HOLD","EXTERNAL_CI_UNOBSERVED","EXTERNAL_CI_VERIFIED","HUMANLOCK_HOLD","EXECUTION_ABORTED","RECEIPT_APPENDED","CHECKPOINT_FROZEN","INTAKE_OPEN"],
+    "runtime_ack_receipt_required_for_runtime_claim": true,
+    "silent_absorption_claim": "PROHIBITED"
+  },
+  "chomp_failsafe": {
+    "command": "CHOMP CHOMP -> FREEZE -> STAY",
+    "effects": ["HALT.CURRENT.ITERATIVE.PROCESSING","APPEND.CHECKPOINT","PRESERVE.HISTORY","KEEP.INTAKE.OPEN"],
+    "history_rewrite": false
+  },
+  "evidence_law": [
+    "OBSERVED != CORRELATED != CAUSAL",
+    "LOCAL.HASH.VALID != EXTERNAL.CI.PASS",
+    "CONTROL.SPEC.PRESENT != EXECUTABLE.RUNTIME.ACTIVE",
+    "REGISTERED.TRACK != REMOTE.RUNTIME.CONNECTION",
+    "REQUEST.EMITTED != TOOL.EXECUTED",
+    "CURRENT.SUCCESS != HISTORICAL.FAILURE.ERASED",
+    "TOKEN.10 != Q.10",
+    "TOKEN.USED != TOKEN.CONSUMED"
+  ],
+  "preservation": {
+    "baseline_checkpoint": "FR0333.OPERATING.BASELINE.CHECKPOINT.2026.09.16",
+    "profile_1_7_preserved": true,
+    "sophie_tracks_preserved": true,
+    "raven_track_preserved": true,
+    "token_placement_preserved": true,
+    "q_system_preserved": true,
+    "historical_receipts_preserved": true,
+    "predecessors_rewritten": false
+  },
+  "runtime_boundary": {
+    "control_profile_promotion": "AUTHORIZED.AND.REPOSITORY.BOUND",
+    "runtime_upgrade": "NOT.CLAIMED",
+    "external_runtime": "U.21.HOLD.UNTIL.RECEIPT",
+    "production_deployment": "U.21.HOLD.UNTIL.RECEIPT",
+    "model_weights_changed": false
+  },
+  "humanlock": "ACTIVE",
+  "state": "CONTROL.UPGRADE.5.0.PROMOTED.RUNTIME.HOLD",
+  "stay": "ACTIVE"
+}
