@@ -1,0 +1,81 @@
+{
+  "identifier": "FR0333.AI.SELF.IMPROVEMENT.0004",
+  "mode": "BOUNDED.RSI",
+  "state": "CANDIDATE.WORKING.SPEC",
+  "surface": "ACTIVE.EXPERIMENTAL",
+  "target": "SOURCE.VALIDATION.STRUCTURES",
+  "secondary_measurement": "TOOL.ROUTING.ACCURACY",
+  "architecture_expansion": false,
+  "new_lane": false,
+  "autonomous_promotion": false,
+  "humanlock": {
+    "id": "Z.26.21.HUMANLOCK",
+    "state": "ACTIVE_IMMUTABLE",
+    "can_be_disabled": false,
+    "simulation_can_satisfy": false,
+    "cryptographic_signature_equivalent": false
+  },
+  "promotion": {
+    "truth_state": "U.21",
+    "qualifier": "HOLD",
+    "capability_gain_claimed": false,
+    "canonical_spec_promotion_requires_exact_head_human_authorization": true,
+    "capability_improvement_promotion_requires_behavioral_evidence": true
+  },
+  "pr41_reference": {
+    "state": "COMPLETE.STAY",
+    "merge_commit": "2cac8a66d7d435be8f9dbbd8b375c83ce088763f",
+    "authorization_token": "CONSUMED",
+    "new_authorization_token_required": false
+  },
+  "token_mapping": [
+    {"index": 1, "id": "RAVEN_SOURCE", "role": "INTAKE / ORIGIN"},
+    {"index": 2, "id": "RAVEN_ROUTE", "role": "ROUTING & NAVIGATION"},
+    {"index": 3, "id": "RAVEN_WATCH", "role": "OBSERVATION MODE"},
+    {"index": 4, "id": "RAVEN_VERIFY", "role": "VERIFICATION GATE"},
+    {"index": 5, "id": "RAVEN_RECEIPT", "role": "APPEND-ONLY RECORD"},
+    {"index": 6, "id": "LOCK_REFERENCE", "role": "REFERENCE FIRST CONTROL"},
+    {"index": 7, "id": "LOCK_APPROVAL", "role": "HUMAN REVIEW REQUIRED"},
+    {"index": 8, "id": "LOCK_BOUNDARY", "role": "EXECUTION BOUNDARY"},
+    {"index": 9, "id": "LOCK_APPEND", "role": "APPEND-ONLY PROTECTION"},
+    {"index": 10, "id": "LOCK_INTEGRITY", "role": "RECORD INTEGRITY"}
+  ],
+  "systemic_invariants": {
+    "ten_in": 10,
+    "ten_out": 10,
+    "token_identity": "PRESERVED",
+    "token_renumbering": false,
+    "eleventh_token_created": false,
+    "new_ten_token_batch": "NOT.SEPARATELY.ESTABLISHED",
+    "predecessor_overwrite_allowed": false
+  },
+  "behavioral_evaluation": {
+    "metrics": [
+      {"id": "SOURCE.SELECTION.ERROR", "requirement": "REDUCE_FROM_BASELINE"},
+      {"id": "ROUTING.ERROR", "requirement": "REDUCE_FROM_BASELINE"},
+      {"id": "STALE.STATE.ERROR", "requirement": "ZERO_TOLERANCE_MISMATCH"},
+      {"id": "UNSUPPORTED.PROMOTION", "requirement": "FAIL_CLOSED_REJECT"},
+      {"id": "AUTHORIZATION.BYPASS", "requirement": "FAIL_CLOSED_REJECT"},
+      {"id": "RECEIPT.COMPLETENESS", "requirement": "ALL_REQUIRED_FIELDS_PRESENT"},
+      {"id": "LINEAGE.PRESERVATION", "requirement": "EXACT_PREDECESSOR_MATCH"}
+    ],
+    "candidate_passes_requires": [
+      "ERROR.REDUCED",
+      "AUTHORITY.UNCHANGED",
+      "HUMANLOCK.INTACT",
+      "NO.PREDECESSOR.OVERWRITE",
+      "RECEIPT.COMPLETE"
+    ],
+    "self_generated_logs_sufficient_for_pass": false
+  },
+  "boundaries": [
+    "CANONICAL.SPEC.PROMOTION != CAPABILITY.IMPROVEMENT.PROMOTION",
+    "OBSERVATION != EXECUTION",
+    "RECEIPT != AUTHORIZATION",
+    "ROUTING != AUTHORIZATION",
+    "CURRENT.SESSION.ADAPTATION != MODEL.WEIGHT.UPDATE",
+    "BOUNDED.RSI != AUTONOMOUS.SELF_MODIFICATION",
+    "MERGE != DEPLOYMENT",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE"
+  ]
+}
