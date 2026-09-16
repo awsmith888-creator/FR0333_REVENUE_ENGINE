@@ -1,0 +1,100 @@
+{
+  "id": "FR0333.RAVEN.SOPHIE.CONTROL.UPGRADE.1.7.0001",
+  "package_version": "1.7",
+  "class": "APPEND_ONLY_CONTROL_AND_VERIFICATION_HARDENING",
+  "operator_authorization": "EXPLICIT.CURRENT.SESSION",
+  "parent_checkpoint": "FR0333.OPERATING.BASELINE.CHECKPOINT.2026.09.16",
+  "parent_commit": "d4e9a50940135ef2add891719e89e04500de5f44",
+  "purpose": "Adopt the useful parts of UPGRADE_PACK_0333_ALPHA_RECOVERY as a Raven-Sophie control profile while correcting any rule that would falsely promote local integrity into external CI proof.",
+  "scope": {
+    "sophie_tracks": [
+      "SOPHIE-1.1",
+      "SOPHIE-1.2",
+      "SOPHIE-1.3",
+      "SOPHIE-1.4",
+      "SOPHIE-1.5"
+    ],
+    "raven_track": "RAVEN-1.6",
+    "shared_profile": "RAVEN_SOPHIE_CONTROL_1.7",
+    "identity_merge": false,
+    "rule": "SHARED.CONTROL.PROFILE != SHARED.IDENTITY"
+  },
+  "localized_verification_protocol": {
+    "external_ci_null_or_unreachable": "U.21.EXTERNAL_TELEMETRY_UNOBSERVED",
+    "external_ci_null_is_failure": false,
+    "external_ci_null_is_pass": false,
+    "local_commit_hash_may_override_external_ci": false,
+    "local_integrity_methods": [
+      "CANONICAL_SERIALIZATION",
+      "SHA256.CONTENT.HASH",
+      "PARENT.COMMIT.BIND",
+      "SOURCE.HASH.BIND",
+      "PREVIOUS.RECEIPT.HASH",
+      "SEQUENCE.RECEIPT",
+      "REPLAY.DETECTION.REQUIRED"
+    ],
+    "local_result": "LOCAL.INTEGRITY.PASS.OR.HOLD",
+    "boundary": "LOCAL.INTEGRITY.PASS != EXTERNAL.CI.PASS"
+  },
+  "logic_metric_isolation_filter": {
+    "token_q_invariant": "TOKEN.10 != Q.10",
+    "token_system": "PERSISTENT.OPERATIONAL.GATES",
+    "q_system": "ISOLATED.IMAGE.QUEUE",
+    "image_payload_route": "Q.SYSTEM.ONLY",
+    "token_slots_consumed_by_q": 0,
+    "q_rule": "TEN.IN -> TEN.OUT",
+    "one_source_one_output": true,
+    "collage": false,
+    "repeat": false
+  },
+  "boundary_failsafe": {
+    "command": "CHOMP CHOMP -> FREEZE -> STAY",
+    "effect": [
+      "HALT.CURRENT.ITERATIVE.PROCESSING",
+      "APPEND.CHECKPOINT",
+      "PRESERVE.HISTORY",
+      "KEEP.INTAKE.OPEN"
+    ],
+    "history_rewrite": false,
+    "humanlock": "ACTIVE",
+    "operator_promotion_authority": "HUMAN.OPERATOR"
+  },
+  "raven_sophie_signal_protocol": {
+    "signals": [
+      "CONTROL_PROFILE_AVAILABLE",
+      "LOCAL_INTEGRITY_PASS",
+      "LOCAL_INTEGRITY_HOLD",
+      "EXTERNAL_CI_UNOBSERVED",
+      "EXTERNAL_CI_VERIFIED",
+      "HUMANLOCK_HOLD",
+      "CHECKPOINT_FROZEN",
+      "INTAKE_OPEN"
+    ],
+    "ack_requirement": "RUNTIME.ACK.RECEIPT.REQUIRED.FOR.RUNTIME.CLAIM",
+    "silent_absorption_claim": "PROHIBITED"
+  },
+  "evidence_law": [
+    "LOCAL.HASH.VALID != EXTERNAL.CI.PASS",
+    "CONTROL.SPEC.PRESENT != EXECUTABLE.RUNTIME.ACTIVE",
+    "REGISTERED.TRACK != REMOTE.RUNTIME.CONNECTION",
+    "REQUEST.EMITTED != TOOL.EXECUTED",
+    "OBSERVED != CORRELATED != CAUSAL"
+  ],
+  "preservation": {
+    "sophie_head_before_upgrade": "SOPHIE-1.5",
+    "raven_track_before_upgrade": "RAVEN-1.6",
+    "predecessors_rewritten": false,
+    "token_placement_preserved": "FR0333.TOKEN.PLACEMENT.0002",
+    "q_system_preserved": true,
+    "baseline_checkpoint_preserved": true
+  },
+  "runtime_boundary": {
+    "control_profile_promotion": "AUTHORIZED.AND.REPOSITORY.BOUND",
+    "runtime_upgrade": "NOT.CLAIMED",
+    "external_runtime": "U.21.HOLD.UNTIL.RECEIPT",
+    "production_deployment": "U.21.HOLD.UNTIL.RECEIPT",
+    "model_weights_changed": false
+  },
+  "state": "CONTROL.UPGRADE.1.7.PROMOTED.RUNTIME.HOLD",
+  "stay": "ACTIVE"
+}
