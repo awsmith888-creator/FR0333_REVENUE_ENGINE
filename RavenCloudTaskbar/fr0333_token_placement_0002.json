@@ -1,0 +1,42 @@
+{
+  "id": "FR0333.TOKEN.PLACEMENT.0002",
+  "parent_register": "FR0333.TOKEN.REGISTER.0001",
+  "purpose": "Bind the ten session token units to the already-established first-ten positions in the FR-0333 Internal Token Set without consuming or modifying Q image-queue slots.",
+  "placement_source": {
+    "artifact": "Internal token set v1.0 grid.png",
+    "source_class": "EXISTING.FR0333.INTERNAL.TOKEN.REFERENCE",
+    "rule": "RECOVER.EXISTING.PLACEMENT.DO.NOT.INVENT.NEW.ROLES",
+    "google_session_token_count": 10,
+    "note": "Google supplied the session token count/interface concept; role placement is recovered from the existing FR-0333 internal token reference, not inferred from Google."
+  },
+  "tokens": [
+    {"id":"TOKEN.01","canonical_token":"RAVEN_SOURCE","group":"RAVENGOBOT","position":1,"role":"INTAKE / ORIGIN","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.02","canonical_token":"RAVEN_ROUTE","group":"RAVENGOBOT","position":2,"role":"ROUTING & NAVIGATION","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.03","canonical_token":"RAVEN_WATCH","group":"RAVENGOBOT","position":3,"role":"OBSERVATION MODE","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.04","canonical_token":"RAVEN_VERIFY","group":"RAVENGOBOT","position":4,"role":"VERIFICATION GATE","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.05","canonical_token":"RAVEN_RECEIPT","group":"RAVENGOBOT","position":5,"role":"APPEND-ONLY RECORD","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.06","canonical_token":"LOCK_REFERENCE","group":"HUMANLOCK","position":6,"role":"REFERENCE FIRST","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.07","canonical_token":"LOCK_APPROVAL","group":"HUMANLOCK","position":7,"role":"HUMAN REVIEW REQUIRED","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.08","canonical_token":"LOCK_BOUNDARY","group":"HUMANLOCK","position":8,"role":"EXECUTION BOUNDARY","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.09","canonical_token":"LOCK_APPEND","group":"HUMANLOCK","position":9,"role":"APPEND-ONLY PROTECTION","state":"BOUND.RECOVERED"},
+    {"id":"TOKEN.10","canonical_token":"LOCK_INTEGRITY","group":"HUMANLOCK","position":10,"role":"RECORD INTEGRITY","state":"BOUND.RECOVERED"}
+  ],
+  "group_allocation": {
+    "RAVENGOBOT": [1,2,3,4,5],
+    "HUMANLOCK": [6,7,8,9,10]
+  },
+  "q_system": {
+    "binding": "NONE",
+    "slots_consumed": 0,
+    "ten_in_ten_out_rule": "UNCHANGED.Q.SPECIFIC"
+  },
+  "invariants": [
+    "TOKEN.10 != Q.10",
+    "TOKEN.PLACEMENT != Q.SLOT.PLACEMENT",
+    "GOOGLE.SESSION.TOKEN.COUNT != GOOGLE.DEFINED.TOKEN.ROLES",
+    "EXISTING.CANONICAL.ROLE.RECOVERY != NEW.ROLE.INVENTION",
+    "PRIOR.REGISTER.0001.PRESERVED"
+  ],
+  "humanlock": "ACTIVE",
+  "state": "PLACED.BOUNDED"
+}
