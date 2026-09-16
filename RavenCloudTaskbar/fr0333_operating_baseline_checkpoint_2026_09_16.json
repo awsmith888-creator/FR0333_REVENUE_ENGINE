@@ -1,0 +1,70 @@
+{
+  "id": "FR0333.OPERATING.BASELINE.CHECKPOINT.2026.09.16",
+  "class": "APPEND_ONLY_CHECKPOINT",
+  "purpose": "Conclude the current reconciliation cycle without closing future operator intake.",
+  "anchor": {
+    "main_head_before_checkpoint": "126fd5c8422d9fe8cc07d0ce19c288ef91e1bdf4",
+    "token_register_commit": "406b807abff32151dca54f185029668821889194",
+    "token_placement_commit": "126fd5c8422d9fe8cc07d0ce19c288ef91e1bdf4"
+  },
+  "lifecycle": {
+    "current_baseline": "CLOSED.CHECKPOINT",
+    "future_operator_intake": "OPEN",
+    "future_changes": "APPEND_ONLY.DELTA",
+    "historical_receipts": "PRESERVED",
+    "automatic_rewrite_of_prior_state": false,
+    "final_system_conclusion": false
+  },
+  "operator_model": {
+    "human_operator_selects_payload_and_intent": true,
+    "raven_source": "CAPTURE",
+    "raven_route": "ROUTE",
+    "raven_watch": "OBSERVE_DELTA_CONTRADICTION",
+    "raven_verify": "SEPARATE_EVIDENCE_FROM_INFERENCE",
+    "raven_receipt": "APPEND_EXECUTION_TRACE",
+    "humanlock": "ACTIVE",
+    "promotion_authority": "HUMAN.OPERATOR"
+  },
+  "token_system": {
+    "count": 10,
+    "consumption_model": "NOT.ESTABLISHED",
+    "usage_does_not_imply_depletion": true,
+    "positions_01_05": "RAVENGOBOT",
+    "positions_06_10": "HUMANLOCK",
+    "placement_record": "FR0333.TOKEN.PLACEMENT.0002",
+    "state": "PLACED.BOUNDED"
+  },
+  "q_system": {
+    "separate_from_token_system": true,
+    "token_slots_consumed": 0,
+    "rule": "TEN.IN -> TEN.OUT",
+    "one_source_one_output": true,
+    "collage": false,
+    "repeat": false
+  },
+  "state_doctrine": {
+    "historical_failure": "PRESERVED",
+    "superseded_failure": "PRESERVED.NON_CURRENT",
+    "exact_head_pass": "CURRENT.VERIFICATION.EVIDENCE.WHEN.RECEIPTED",
+    "merged_pass": "PROMOTED.REPOSITORY.STATE",
+    "draft_unmerged": "HOLD"
+  },
+  "verification_boundary": {
+    "repository_main_head_observed": "126fd5c8422d9fe8cc07d0ce19c288ef91e1bdf4",
+    "pr_triggered_workflow_runs_for_anchor": "NONE.RETURNED",
+    "legacy_commit_statuses_for_anchor": "NONE.RETURNED",
+    "ci_green_independently_established_for_anchor": false,
+    "note": "No returned workflow/status receipt is not a failure receipt. It means CI green is not independently established from the queried GitHub surfaces for this direct-to-main anchor."
+  },
+  "continuation_rule": "NEW.OPERATOR.PAYLOAD -> RAVEN.PATH -> NEW.RECEIPT -> DELTA.FROM.THIS.CHECKPOINT",
+  "invariants": [
+    "CHECKPOINT.CLOSED != INTAKE.CLOSED",
+    "NEW.INFORMATION != REWRITE.OLD.RECEIPT",
+    "TOKEN.10 != Q.10",
+    "TOKEN.USED != TOKEN.CONSUMED",
+    "OPERATOR.AUTHORITY > AGENT.AUTHORITY",
+    "HUMANLOCK = ACTIVE"
+  ],
+  "state": "BASELINE.CLOSED.INTAKE.OPEN",
+  "stay": "ACTIVE"
+}
