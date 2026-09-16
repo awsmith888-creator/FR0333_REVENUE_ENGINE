@@ -1,0 +1,37 @@
+{
+  "id": "FR0333.TOKEN.REGISTER.0001",
+  "purpose": "Hold ten token units separately from the Q image queue and its 10-in/10-out invariant.",
+  "source": {
+    "class": "USER.SUPPLIED.GOOGLE.OUTPUT",
+    "observation": "The supplied Google output described a set of 10 tokens for the active session.",
+    "verification_boundary": "The ten token units are recorded as user-supplied session assets. No additional game, currency, financial, cryptographic, or platform meaning is inferred."
+  },
+  "token_count": 10,
+  "tokens": [
+    {"id": "TOKEN.01", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.02", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.03", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.04", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.05", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.06", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.07", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.08", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.09", "state": "AVAILABLE.UNASSIGNED"},
+    {"id": "TOKEN.10", "state": "AVAILABLE.UNASSIGNED"}
+  ],
+  "bindings": {
+    "q_queue": "NONE",
+    "q_10_in_10_out_rule": "UNCHANGED.SEPARATE",
+    "image_slot_semantics": "NONE",
+    "taskbars_json_mutation": false
+  },
+  "invariants": [
+    "TOKEN.REGISTER != Q.QUEUE",
+    "TOKEN.COUNT.10 != Q.COUNT.10",
+    "TOKENS.DO.NOT.CONSUME.Q.SLOTS",
+    "Q.10.IN.10.OUT.REMAINS.Q.SPECIFIC",
+    "UNASSIGNED.TOKEN != IMPLIED.FUNCTION"
+  ],
+  "humanlock": "ACTIVE",
+  "state": "ACTIVE.BOUNDED"
+}
