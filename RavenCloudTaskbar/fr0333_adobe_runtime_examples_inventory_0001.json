@@ -1,0 +1,105 @@
+{
+  "identifier": "FR0333.ADOBE.RUNTIME.EXAMPLES.INVENTORY.0001",
+  "observed_at": "2026-09-14",
+  "architecture_state": "LOCKED.BASELINE",
+  "humanlock": true,
+  "purpose": "Bind the user-accepted Adobe visual examples to the bounded external runtime evidence without creating a new lane, taskbar slot, or universal Adobe-capacity claim.",
+  "chain_bindings": {
+    "quality_gate": "FR0333.IMAGE.QUALITY.GATE.0004",
+    "runtime_receipt": "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0003",
+    "historical_failure_receipt": "FR0333.ADOBE.IMAGE.QUEUE.RUNTIME.RECEIPT.0002",
+    "new_taskbar_slot": false,
+    "taskbars_json_mutation": false
+  },
+  "visual_family": {
+    "palette": ["BLACK.ONYX", "PLATINUM"],
+    "selected_asset_count": 19,
+    "canonical_visual_anchor_count": 6,
+    "canonical_visual_anchors": [
+      "A01.SPHERE",
+      "A04.STEPPED.MONOLITH",
+      "A06.SPIRAL",
+      "A08.PYRAMID",
+      "A10.RING",
+      "A11.FLOATING.CUBE"
+    ],
+    "user_acceptance": {
+      "state": "T.20",
+      "qualifier": "POSITIVE.SELECTED.SET.VISUAL.ACCEPTANCE.OBSERVED",
+      "scope": "THE_19_SELECTED_ADOBE_ASSETS_ONLY"
+    }
+  },
+  "method_receipt": {
+    "effective_connected_runtime_outputs_per_call": 1,
+    "ten_slot_dispatch_plan": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    "ten_slot_provider_call_count": 10,
+    "requested_generation_size": [1080, 1920],
+    "observed_native_generation_size": [1072, 1920],
+    "delivery_normalization_operation": "image_crop_and_resize",
+    "normalized_delivery_size": [1080, 1920],
+    "per_slot_visual_readback": "REQUIRED",
+    "first_pass_failed_slots": ["Q09"],
+    "retry_scope": "FAILED_SLOT_ONLY",
+    "retried_slots": ["Q09"],
+    "preserved_successful_slots": ["Q01", "Q02", "Q03", "Q04", "Q05", "Q06", "Q07", "Q08", "Q10"],
+    "final_requested_count": 10,
+    "final_delivered_count": 10,
+    "final_collage_detected": false,
+    "final_exact_delivery_dimensions": true,
+    "chain_route": [
+      "PROMPT_COMPILE",
+      "SINGLETON_DISPATCH",
+      "PROVIDER_RECEIPT",
+      "NATIVE_DIMENSION_OBSERVE",
+      "NORMALIZE_1080x1920",
+      "PER_SLOT_VISUAL_READBACK",
+      "COUNT_RECONCILE",
+      "RETRY_FAILED_SLOT_ONLY",
+      "HUMANLOCK",
+      "RECEIPT",
+      "CHOMP",
+      "CHOMP",
+      "STAY"
+    ]
+  },
+  "assets": [
+    {"artifact_id":"A01.SPHERE","asset_urn":"urn:aaid:sc:VA6C2:e7150e00-3286-4247-bae4-bc01ba733c94","name":"A single polished platinum sphere","role":"CANONICAL_VISUAL_ANCHOR"},
+    {"artifact_id":"A02.HUMAN.PORTRAIT","asset_urn":"urn:aaid:sc:VA6C2:8d49036d-a855-415c-a98b-7bb791fdce3f","name":"Photorealistic full-body portrait","role":"RUNTIME_HUMAN_GENERATION_EXAMPLE"},
+    {"artifact_id":"A03.GEOMETRY.EDIT","asset_urn":"urn:aaid:sc:VA6C2:137f30a8-f773-4261-a9d0-263e354a0001","name":"Keep the composition and geometry","role":"RUNTIME_EDIT_EXAMPLE"},
+    {"artifact_id":"A04.STEPPED.MONOLITH","asset_urn":"urn:aaid:sc:VA6C2:91732d47-9d1e-4cbb-b802-309fe27f9f9e","name":"Platinum stepped monolith","role":"CANONICAL_VISUAL_ANCHOR"},
+    {"artifact_id":"A05.SPHERE.BALANCE","asset_urn":"urn:aaid:sc:VA6C2:f30be23a-f936-4bdf-a7e5-b1505f25a810","name":"Platinum sphere balance","role":"QUEUE_RUNTIME_VISUAL_EXAMPLE"},
+    {"artifact_id":"A06.SPIRAL","asset_urn":"urn:aaid:sc:VA6C2:f39ee240-84d5-4d8e-a92e-90d87b5cd5d8","name":"Platinum spiral sculpture","role":"CANONICAL_VISUAL_ANCHOR"},
+    {"artifact_id":"A07.ARCH","asset_urn":"urn:aaid:sc:VA6C2:4decbd9f-11c3-4830-acd8-982ceb8594de","name":"Platinum arch sculpture","role":"QUEUE_RUNTIME_VISUAL_EXAMPLE"},
+    {"artifact_id":"A08.PYRAMID","asset_urn":"urn:aaid:sc:VA6C2:6cf434ca-0a85-496d-b262-20e66ca6130c","name":"Faceted platinum pyramid","role":"CANONICAL_VISUAL_ANCHOR"},
+    {"artifact_id":"A09.CYLINDER","asset_urn":"urn:aaid:sc:VA6C2:a3261e48-0c1b-438d-9ae4-9f301d7be507","name":"Tall platinum cylinder","role":"QUEUE_RUNTIME_VISUAL_EXAMPLE"},
+    {"artifact_id":"A10.RING","asset_urn":"urn:aaid:sc:VA6C2:7e3a17e1-8c2c-4de2-82a5-6fbd74a3a1c3","name":"Platinum ring sculpture","role":"CANONICAL_VISUAL_ANCHOR"},
+    {"artifact_id":"A11.FLOATING.CUBE","asset_urn":"urn:aaid:sc:VA6C2:4ad83ace-17b7-4a51-ae09-b98519aa5a03","name":"Floating platinum cube","role":"CANONICAL_VISUAL_ANCHOR"},
+    {"artifact_id":"A12.TRIANGULAR.PRISM","asset_urn":"urn:aaid:sc:VA6C2:7fa65b1f-505b-4da3-8f8b-17f4db9d2c1a","name":"Platinum triangular prism","role":"QUEUE_RUNTIME_VISUAL_EXAMPLE"},
+    {"artifact_id":"A13.QUEUE.DIAGNOSTIC","asset_urn":"urn:aaid:sc:VA6C2:ca1638e3-7d6c-42d7-b5dd-d3a39c858965","name":"FR0333 Adobe queue runtime diagnostic","role":"DIAGNOSTIC_ARTIFACT"},
+    {"artifact_id":"A14.DARK.BACKGROUND.EDIT","asset_urn":"urn:aaid:sc:VA6C2:10293016-c4d2-48c4-832b-32339eb41a1e","name":"Dark background edit","role":"RUNTIME_EDIT_EXAMPLE"},
+    {"artifact_id":"A15.TECHNICAL.DIAGNOSTIC","asset_urn":"urn:aaid:sc:VA6C2:7d999662-8da0-4d07-b028-7dd9a9957f26","name":"Technical diagnostic image","role":"DIAGNOSTIC_ARTIFACT"},
+    {"artifact_id":"A16.DOCUMENTARY","asset_urn":"urn:aaid:sc:VA6C2:71127c49-ad95-4b26-9f85-a42ea591a063","name":"Ultra-photorealistic documentary","role":"PRIOR_VISUAL_EXAMPLE"},
+    {"artifact_id":"A17.EDITORIAL.DANCE","asset_urn":"urn:aaid:sc:VA6C2:5d783504-c6eb-47df-8bda-d6629171cdcf","name":"Photorealistic editorial dance","role":"PRIOR_VISUAL_EXAMPLE"},
+    {"artifact_id":"A18.TOTAL.REMAKE","asset_urn":"urn:aaid:sc:VA6C2:ffe79f41-63b1-4f44-bc43-ef93e866b0c6","name":"Total remake generation","role":"PRIOR_VISUAL_EXAMPLE"},
+    {"artifact_id":"A19.FULL.FRAME.9.16","asset_urn":"urn:aaid:sc:VA6C2:544c216e-0e12-472f-bdef-d62df18a1db0","name":"Single full-frame 9:16 photorealistic","role":"PRIOR_VISUAL_EXAMPLE"}
+  ],
+  "boundaries": [
+    "SELECTED.SET.USER.ACCEPTANCE != UNIVERSAL.ADOBE.QUALITY.PROMOTION",
+    "SCHEMA.N.MAX.4 != EFFECTIVE.CONNECTED.RUNTIME.OUTPUTS.PER.CALL.4",
+    "CURRENT.EFFECTIVE.CONNECTOR.OUTPUTS.PER.CALL = 1",
+    "REQUESTED.1080x1920 != OBSERVED.NATIVE.1080x1920",
+    "NATIVE.1072x1920 -> NORMALIZE -> 1080x1920",
+    "TEN.REQUESTED = TEN.FINAL.DELIVERED",
+    "FAILED.Q09 -> RETRY.Q09",
+    "RETRY.FAILED.SLOT != REGENERATE.SUCCESSFUL.SLOTS",
+    "TEN.SLOT.RUNTIME.PASS != UNIVERSAL.ADOBE.PRODUCT.CAPACITY"
+  ],
+  "result": {
+    "inventory_complete": "T.20",
+    "selected_visual_examples": "T.20",
+    "bounded_runtime_method_documented": "T.20",
+    "selected_set_user_acceptance": "T.20",
+    "universal_adobe_surface": "U.21.HOLD",
+    "canonical_promotion": "HUMANLOCK_REQUIRED"
+  }
+}
