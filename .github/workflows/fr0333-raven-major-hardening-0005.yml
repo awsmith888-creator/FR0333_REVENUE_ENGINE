@@ -1,0 +1,49 @@
+name: FR0333 Raven Major Hardening 0005
+
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004.json'
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004_validate.py'
+      - 'RavenCloudTaskbar/test_fr0333_ai_self_improvement_0004_validate.py'
+      - 'RavenCloudTaskbar/fr0333_raven_major_hardening_0005.json'
+      - 'RavenCloudTaskbar/fr0333_raven_major_hardening_0005_validate.py'
+      - 'RavenCloudTaskbar/test_fr0333_raven_major_hardening_0005.py'
+      - 'RavenCloudTaskbar/README_raven_major_hardening_0005.md'
+      - '.github/workflows/fr0333-raven-major-hardening-0005.yml'
+  push:
+    branches:
+      - feature/raven-major-hardening-0005
+    paths:
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004.json'
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004_validate.py'
+      - 'RavenCloudTaskbar/test_fr0333_ai_self_improvement_0004_validate.py'
+      - 'RavenCloudTaskbar/fr0333_raven_major_hardening_0005.json'
+      - 'RavenCloudTaskbar/fr0333_raven_major_hardening_0005_validate.py'
+      - 'RavenCloudTaskbar/test_fr0333_raven_major_hardening_0005.py'
+      - 'RavenCloudTaskbar/README_raven_major_hardening_0005.md'
+      - '.github/workflows/fr0333-raven-major-hardening-0005.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-raven-major-hardening-0005:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate predecessor bounded RSI 0004
+        working-directory: RavenCloudTaskbar
+        run: python3 fr0333_ai_self_improvement_0004_validate.py
+      - name: Run predecessor anti-bypass tests
+        working-directory: RavenCloudTaskbar
+        run: python3 -m unittest -v test_fr0333_ai_self_improvement_0004_validate.py
+      - name: Validate Raven major hardening 0005
+        working-directory: RavenCloudTaskbar
+        run: python3 fr0333_raven_major_hardening_0005_validate.py
+      - name: Run Raven major hardening regression tests
+        working-directory: RavenCloudTaskbar
+        run: python3 -m unittest -v test_fr0333_raven_major_hardening_0005.py
