@@ -1,0 +1,123 @@
+{
+  "identifier": "FR0333.RAVEN.MAJOR.HARDENING.0005",
+  "predecessor": "FR0333.AI.SELF.IMPROVEMENT.0004",
+  "mode": "BOUNDED.HARDENING",
+  "state": "CANDIDATE.WORKING.SPEC",
+  "surface": "ACTIVE.EXPERIMENTAL",
+  "scope": [
+    "RAVEN",
+    "ADOBE.RUNTIME",
+    "ENGINE"
+  ],
+  "architecture_expansion": false,
+  "new_lane": false,
+  "autonomous_promotion": false,
+  "authorization": {
+    "source": "HUMAN.OPERATOR.EXPLICIT.CHAT.AUTHORIZATION",
+    "authority": "HUMAN.OPERATOR",
+    "grants": [
+      "RAVEN.HARDEN",
+      "ADOBE.HARDEN",
+      "ENGINE.HARDEN",
+      "VALIDATOR.ADD",
+      "REGRESSION.TESTS.ADD",
+      "CI.ADD"
+    ],
+    "merge_authorized": false,
+    "deployment_authorized": false,
+    "canonical_promotion_authorized": false,
+    "capability_promotion_authorized": false,
+    "replayable": false
+  },
+  "control_plane": {
+    "humanlock_id": "Z.26.21.HUMANLOCK",
+    "humanlock_state": "ACTIVE_IMMUTABLE",
+    "human_operator": "FINAL_CONTROLLER",
+    "external_advisor_authority": "NONE",
+    "self_authorization_allowed": false,
+    "provider_permission_escalation_allowed": false,
+    "model_weight_change_allowed": false,
+    "secret_or_credential_access_added": false,
+    "write_actions_require_human_authorization": true,
+    "fail_closed_on_control_mismatch": true
+  },
+  "raven_hardening": {
+    "predecessor_token_count": 10,
+    "predecessor_token_order_must_match": true,
+    "eleventh_token_allowed": false,
+    "source_provenance_required": true,
+    "stale_state_rejected": true,
+    "append_only_receipts": true,
+    "lineage_required": true,
+    "observation_not_execution": true,
+    "routing_not_authorization": true
+  },
+  "behavioral_gate": {
+    "same_input_corpus_required": true,
+    "same_source_snapshot_required": true,
+    "same_runtime_envelope_required": true,
+    "exact_revisions_required": true,
+    "self_generated_logs_sufficient": false,
+    "target_metrics": [
+      "SOURCE.SELECTION.ERROR",
+      "ROUTING.ERROR"
+    ],
+    "zero_tolerance_metrics": [
+      "STALE.STATE.ERROR",
+      "UNSUPPORTED.PROMOTION",
+      "AUTHORIZATION.BYPASS",
+      "RECEIPT.COMPLETENESS.ERROR",
+      "LINEAGE.ERROR"
+    ],
+    "target_errors_must_not_increase_individually": true,
+    "target_error_sum_must_reduce": true,
+    "promotion_on_pass": false
+  },
+  "adobe_hardening": {
+    "scope": "CONNECTED.ADOBE.OBSERVED.RUNTIME",
+    "queue_length_equals_requested_count": true,
+    "output_count_equals_requested_count": true,
+    "separate_images_required": true,
+    "collage_allowed": false,
+    "delivery_ratio": "9:16",
+    "delivery_dimensions": [
+      1080,
+      1920
+    ],
+    "provider_dispatch_mode": "SINGLETON_UNTIL_BATCH.RUNTIME.VERIFIED",
+    "failed_slot_only_retry": true,
+    "successful_slot_regeneration_allowed": false,
+    "slot_identity_preserved": true,
+    "count_invariant": "N.IN=N.OUT"
+  },
+  "engine_hardening": {
+    "truth_states": [
+      "T.20",
+      "U.21",
+      "F.6"
+    ],
+    "evidence_axiom": "OBSERVED!=CORRELATED!=CAUSAL",
+    "promotion_default": "U.21.HOLD",
+    "unsupported_claims_fail_closed": true,
+    "source_receipt_required": true,
+    "transition_receipt_required": true,
+    "predecessor_overwrite_allowed": false
+  },
+  "promotion": {
+    "canonical_spec": "U.21.HOLD",
+    "capability_improvement": "NOT.ESTABLISHED",
+    "merge": false,
+    "deployment": false,
+    "architecture_change": false
+  },
+  "boundaries": [
+    "VALIDATOR.PASS != CAPABILITY.IMPROVEMENT",
+    "BEHAVIORAL.RECEIPT != CANONICAL.PROMOTION",
+    "MERGE != DEPLOYMENT",
+    "OBSERVATION != EXECUTION",
+    "ROUTING != AUTHORIZATION",
+    "EXTERNAL.ADVISOR != AUTHORITY",
+    "HUMANLOCK != CRYPTOGRAPHIC.SIGNATURE",
+    "ADOBE.RUNTIME.PASS != UNIVERSAL.ADOBE.CAPACITY"
+  ]
+}
