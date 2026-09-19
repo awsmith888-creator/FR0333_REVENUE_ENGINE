@@ -1,0 +1,54 @@
+{
+  "id": "FR0333.ADOBE.PACKAGE.CERTIFICATE.AUDIT.0001",
+  "schema_version": "1.0.0",
+  "audit_base_sha": "aa6f17a23d67d01e0450f38712f3b020983f86ee",
+  "audit_date": "2026-09-19",
+  "mode": "APPEND_ONLY_BRANCH_REVIEW",
+  "artifacts": [
+    {"path": "RavenCloudTaskbar/fr0333_adobe_runtime_examples_inventory_0001.json", "git_blob_sha": "b6b7811432e963e0b2368158ec5249c0dfee3128", "class": "ADOBE.RUNTIME.INVENTORY"},
+    {"path": "RavenCloudTaskbar/fr0333_image_quality_gate_0004.json", "git_blob_sha": "d490a62b4c11bf2db5f55f2130890ec3e328218e", "class": "ADOBE.QUALITY.GATE"},
+    {"path": "RavenCloudTaskbar/fr0333_image_queue_runtime_0001.json", "git_blob_sha": "af991da6e382c347152c5e75048ada877844c168", "class": "ADOBE.QUEUE.RUNTIME"},
+    {"path": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json", "git_blob_sha": "397788fd7d7fafda31e7d7c4d839b3fa5f54ae75", "class": "ADOBE.RUNTIME.RECEIPT"},
+    {"path": "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json", "git_blob_sha": "33ec229814064e12002b7c83605e790073486c30", "class": "GOLDEN.CHAIN.INDEX"},
+    {"path": "RavenCloudTaskbar/fr0333_golden_chain_inventory_0001.json", "git_blob_sha": "2b409b812e2c21272926c9c577d7f2e4ac126cde", "class": "GOLDEN.CHAIN.INVENTORY"},
+    {"path": "RavenCloudTaskbar/fr0333_taskbars_stronghold_root_0001.json", "git_blob_sha": "0b3cb4f1a1461e84bccd834494d27885fe6f3a65", "class": "STRONGHOLD.IMMUTABLE.ROOT"},
+    {"path": "RavenCloudTaskbar/taskbars.json", "git_blob_sha": "056d63083395b5d092a23c4764cc81520acad8cb", "class": "CONTROL.PLANE.NO.MUTATION"},
+    {"path": ".github/workflows/fr0333-image-quality-runtime-validate.yml", "git_blob_sha": "c402df3df562511da70f8eec196f163937c196b3", "class": "QUALITY.CI"},
+    {"path": ".github/workflows/fr0333-image-queue-runtime-validate.yml", "git_blob_sha": "db9dd9163b7dd5c83209a936ca25e8b7fa97dc25", "class": "QUEUE.CI"}
+  ],
+  "portable_receipt": {
+    "package": "FR0333.SOPHIE.5.MODEL.5.2.PORTABLE.150",
+    "portable_certification": "150.150",
+    "reported_sha256": "da94802124cc488e45db43f15cafd983256aed5af3f862ef73bb4644d090819e",
+    "reported_integrity": "PASS",
+    "reported_handoff_readiness": "T.20",
+    "work_mode_required": false,
+    "source_class": "USER.CONFIRMED.RECEIPT",
+    "payload_path": "packages/FR0333.SOPHIE.5.MODEL.5.2.PORTABLE.150.zip",
+    "repository_payload_present": false,
+    "independent_hash_recomputation": "U.21.HOLD"
+  },
+  "observed_state": {
+    "golden_chain_index_entries": ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"],
+    "adobe_requested_outputs": 10,
+    "adobe_final_outputs": 10,
+    "delivery_dimensions": "1080x1920",
+    "humanlock": "ACTIVE_IMMUTABLE",
+    "universal_adobe_surface": "U.21.HOLD",
+    "stronghold_root_wording": "ROOTED_ON_ISOLATED_REPAIR_BRANCH",
+    "stronghold_correction_policy": "APPEND_ONLY_DO_NOT_REWRITE_ROOT"
+  },
+  "promotion_boundaries": [
+    "USER.CONFIRMED.RECEIPT != INDEPENDENT.HASH.RECOMPUTATION",
+    "PORTABLE.READINESS != LIVE.MODEL.EXECUTION",
+    "LOCAL.RUNTIME != PUBLIC.DEPLOYMENT",
+    "TEST.PASS != CANONICAL.PROMOTION",
+    "QUEUE.SPECIFICATION != VERIFIED.PRODUCTION.ENFORCEMENT"
+  ],
+  "humanlock": {
+    "required": true,
+    "automatic_merge": false,
+    "automatic_deployment": false,
+    "automatic_promotion": false
+  }
+}
