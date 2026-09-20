@@ -1,0 +1,36 @@
+name: FR0333 Weather Statistics Sidecar
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_weather_statistics.py'
+      - 'RavenCloudTaskbar/fr0333_weather_persistence.py'
+      - 'RavenCloudTaskbar/fr0333_weather_binding_schema.json'
+      - 'RavenCloudTaskbar/test_fr0333_weather_statistics.py'
+      - '.github/workflows/fr0333-weather-statistics-sidecar.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_weather_statistics.py'
+      - 'RavenCloudTaskbar/fr0333_weather_persistence.py'
+      - 'RavenCloudTaskbar/fr0333_weather_binding_schema.json'
+      - 'RavenCloudTaskbar/test_fr0333_weather_statistics.py'
+      - '.github/workflows/fr0333-weather-statistics-sidecar.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  weather-sidecar-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Validate schema JSON
+        run: python -m json.tool RavenCloudTaskbar/fr0333_weather_binding_schema.json >/dev/null
+      - name: Run weather boundary tests
+        run: python -m unittest -v RavenCloudTaskbar.test_fr0333_weather_statistics
