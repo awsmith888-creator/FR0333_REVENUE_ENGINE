@@ -1,0 +1,29 @@
+name: Validate Global Concept Fabric 0001
+
+on:
+  pull_request:
+    paths:
+      - 'specs/FR0333.GLOBAL.CONCEPT.FABRIC.0001.json'
+      - 'tests/test_global_concept_fabric_0001.py'
+      - '.github/workflows/validate-global-concept-fabric-0001.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-global-concept-fabric:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile validator
+        run: python -m py_compile tests/test_global_concept_fabric_0001.py
+      - name: Validate JSON syntax
+        run: python -m json.tool specs/FR0333.GLOBAL.CONCEPT.FABRIC.0001.json >/dev/null
+      - name: Run invariant tests
+        run: python -m unittest -v tests.test_global_concept_fabric_0001
