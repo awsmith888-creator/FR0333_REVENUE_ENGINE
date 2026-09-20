@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.DEEP.SEARCH.SRC02.SOURCEOBJECT.001",
+  "title": "FR0333 SRC02 SourceObject",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_object_version",
+    "source_id",
+    "run_id",
+    "query_id",
+    "retrieved_at",
+    "retrieval_method",
+    "source_class",
+    "uri",
+    "canonical_uri",
+    "title",
+    "publisher",
+    "published_at",
+    "raw_receipt",
+    "duplicate_state",
+    "duplicate_of",
+    "lineage"
+  ],
+  "properties": {
+    "source_object_version": {"const": "SRC02.SourceObject.1"},
+    "source_id": {"type": "string", "pattern": "^SRC02-SRC-[A-Fa-f0-9]{16}$"},
+    "run_id": {"type": "string", "minLength": 1},
+    "query_id": {"type": "string", "minLength": 1},
+    "retrieved_at": {"type": "string", "format": "date-time"},
+    "retrieval_method": {"enum": ["WEB", "API", "CONNECTOR", "USER_SUPPLIED", "OTHER"]},
+    "source_class": {"enum": ["PRIMARY", "SECONDARY", "AGGREGATOR", "SOCIAL", "UNKNOWN"]},
+    "uri": {"type": "string", "minLength": 1},
+    "canonical_uri": {"type": "string", "minLength": 1},
+    "title": {"type": ["string", "null"]},
+    "publisher": {"type": ["string", "null"]},
+    "published_at": {"type": ["string", "null"], "format": "date-time"},
+    "raw_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capture_pointer", "content_sha256", "capture_sha256"],
+      "properties": {
+        "capture_pointer": {"type": "string", "minLength": 1},
+        "content_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+        "capture_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+      }
+    },
+    "duplicate_state": {"enum": ["UNIQUE", "DUPLICATE"]},
+    "duplicate_of": {"type": ["string", "null"]},
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["retrieval_index", "normalization_version"],
+      "properties": {
+        "retrieval_index": {"type": "integer", "minimum": 0},
+        "normalization_version": {"const": "SRC02.NORMALIZE.1"}
+      }
+    }
+  },
+  "hard_gates": [
+    "RAW_RECEIPT_HASH_IMMUTABLE",
+    "NORMALIZED_FIELDS_NE_RAW_EVIDENCE",
+    "DUPLICATE_NE_SECOND_OBSERVATION",
+    "ABSENT_NE_ZERO",
+    "SOURCE_OBJECT_NE_OPPORTUNITY_RECORD"
+  ]
+}

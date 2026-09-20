@@ -1,0 +1,35 @@
+name: FR0333 SRC02 Measured Retrieval Validate
+
+on:
+  push:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_src02_source_object_schema.json'
+      - 'RavenCloudTaskbar/fr0333_src02_opportunity_record_schema.json'
+      - 'RavenCloudTaskbar/src02_measured_runner.py'
+      - 'RavenCloudTaskbar/test_src02_measured_runner.py'
+      - '.github/workflows/fr0333-src02-measured-retrieval.yml'
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_src02_source_object_schema.json'
+      - 'RavenCloudTaskbar/fr0333_src02_opportunity_record_schema.json'
+      - 'RavenCloudTaskbar/src02_measured_runner.py'
+      - 'RavenCloudTaskbar/test_src02_measured_runner.py'
+      - '.github/workflows/fr0333-src02-measured-retrieval.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Run SRC02 measured retrieval tests
+        working-directory: RavenCloudTaskbar
+        run: python -m unittest -v test_src02_measured_runner.py
