@@ -1,0 +1,46 @@
+{
+  "spec_id": "FR0333.GLOBAL.CONCEPT.FABRIC.0001",
+  "state": "SHADOW.CANDIDATE",
+  "authority": {
+    "canonical": "GOLDEN.CHAIN",
+    "fabric_role": "COMPATIBILITY.HARDENER",
+    "humanlock": "ACTIVE_IMMUTABLE",
+    "override_authority": false,
+    "promotion_authority": false,
+    "deployment_authority": false
+  },
+  "evidence_states": ["OBSERVED", "PLATFORM.REPORTED", "INDEPENDENT.VERIFIED", "DERIVED", "SIMULATED", "UNKNOWN"],
+  "modules": {
+    "GF.01": {"name":"PROVENANCE", "chain_stage":"SOURCE_LOCK", "concept_sources":["EUROPE"]},
+    "GF.02": {"name":"MULTILINGUAL", "chain_stage":"SOURCE_LOCK", "concept_sources":["EUROPE","INDIA"]},
+    "GF.03": {"name":"TOKEN.EFFICIENCY", "chain_stage":"INTENT_COMPILE", "concept_sources":["INDIA","KOREA"]},
+    "GF.04": {"name":"LONG.CONTEXT", "chain_stage":"DECOMPOSE", "concept_sources":["CHINA"]},
+    "GF.05": {"name":"SPECIALIST.ROUTING", "chain_stage":"LANE_DETECT", "concept_sources":["KOREA"]},
+    "GF.06": {"name":"HYBRID.EXECUTION", "chain_stage":"EXECUTE", "concept_sources":["MIDDLE.EAST","KOREA","CHINA"]},
+    "GF.07": {"name":"TOOL.RELIABILITY", "chain_stage":"TOOL_GATE", "concept_sources":["UNITED.STATES"]},
+    "GF.08": {"name":"FACTUALITY", "chain_stage":"LOGIC_GATE", "concept_sources":["GLOBAL"]},
+    "GF.09": {"name":"FAILURE.RECOVERY", "chain_stage":"FAILURE_LOOP", "concept_sources":["UNITED.STATES","KOREA","WPENGINE.PATTERN"]},
+    "GF.10": {"name":"CROSS.REGION", "chain_stage":"LOGIC_GATE", "concept_sources":["GLOBAL"]}
+  },
+  "module_contract": ["INPUT","OUTPUT","SOURCE","VERSION","METRICS","DEPENDENCIES","FAILURE.MODE","ROLLBACK","RECEIPT","STATE"],
+  "metrics": [
+    "G.01.ACCURACY","G.02.FAITHFULNESS","G.03.FACTUALITY","G.04.TOOL.RELIABILITY","G.05.CONTEXT.EFFICIENCY",
+    "G.06.TOKEN.EFFICIENCY","G.07.LATENCY","G.08.COST","G.09.LANGUAGE.COVERAGE","G.10.DOMAIN.SPECIALIZATION",
+    "G.11.PROVENANCE","G.12.FAILURE.RECOVERY","G.13.CROSS.REGION","G.14.CHAIN.RELIABILITY","G.15.HUMANLOCK"
+  ],
+  "hard_gates": ["PROVENANCE","FACTUALITY","SECURITY","HUMANLOCK"],
+  "soft_metrics": ["COST","LATENCY","TOKEN.EFFICIENCY","CONTEXT.EFFICIENCY"],
+  "invariants": [
+    "GLOBAL.DIFFERENCE != GLOBAL.INFERIORITY",
+    "COMPATIBLE != INSTALLED",
+    "INSTALLED != VALIDATED",
+    "VALIDATED != PROMOTED",
+    "CONCEPT != IMPLEMENTATION",
+    "BENCHMARK != RUNTIME",
+    "IMPROVEMENT != AUTHORITY",
+    "HARD_GATE.FAILURE => HOLD",
+    "SIMULATED != OBSERVED"
+  ],
+  "pipeline": ["TRANSLATE","ISOLATE","TEST","MEASURE","COMPARE","RECEIPT","HUMANLOCK"],
+  "promotion": "HOLD.PENDING.VALIDATION.AND.HUMAN.AUTHORIZATION"
+}
