@@ -31,6 +31,8 @@ jobs:
         run: python -m py_compile src/work_trunk_branch_fabric_v5.py
       - name: Run adversarial continuity suite
         run: python -m unittest -v tests.test_work_trunk_branch_fabric_v5
+      - name: Run complete regression suite
+        run: python -m unittest discover -s tests -v
       - name: Validate JSON artifacts
         run: |
           python -m json.tool schemas/work_trunk_branch_event_v5.schema.json >/dev/null
