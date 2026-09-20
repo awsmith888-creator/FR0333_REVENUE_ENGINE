@@ -1,0 +1,80 @@
+{
+  "record_id": "FR0333.SYSTEM.STATISTICAL.ANTI.HALLUCINATION.HARDENER.0004",
+  "reference_point": "2026-09-20",
+  "humanlock": "ACTIVE",
+  "automatic_promotion": false,
+  "kernels": {
+    "NEWSFLASH": "PASS",
+    "ESPN.FANTASY.SPORTS": "PASS",
+    "NELSON": "PASS",
+    "GENIUS.BAR": "PASS"
+  },
+  "sources": [
+    {"source_id":"CBS.SUNDAY.2026.09.20","publisher":"CBS News","lane":"CULTURE","evidence_class":"INDEPENDENT.SECONDARY","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.cbsnews.com/news/this-week-on-sunday-morning-sept-20-2026/"},
+    {"source_id":"VOGUE.EXHIBITIONS.2026.09.20","publisher":"Vogue","lane":"ART","evidence_class":"INDEPENDENT.SECONDARY","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.vogue.com/article/new-york-city-fall-2026-exhibition-calendar-peak-girlhood"},
+    {"source_id":"AAM.ATTENDANCE.2026","publisher":"American Alliance of Museums","lane":"CULTURE","evidence_class":"PRIMARY.INSTITUTIONAL","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.aam-us.org/2026/02/23/museum-attendance-trends-and-adaptations/"},
+    {"source_id":"NEA.PARTICIPATION.2022","publisher":"National Endowment for the Arts","lane":"CULTURE","evidence_class":"PRIMARY.INSTITUTIONAL","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.arts.gov/"},
+    {"source_id":"REUTERS.ART.MARKET.2026","publisher":"Reuters","lane":"ART","evidence_class":"INDEPENDENT.SECONDARY","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.reuters.com/world/china/global-art-market-returns-growth-upbeat-2026-ubs-report-says-2026-03-12/"},
+    {"source_id":"SERPENTINE.AI.ART.2026","publisher":"Vogue / Serpentine","lane":"ART","evidence_class":"INDEPENDENT.SECONDARY","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.vogue.com/article/serpentines-hans-ulrich-obrist-creatives-must-help-shape-ai"},
+    {"source_id":"MLB.SCORES.2026.09.19","publisher":"Major League Baseball","lane":"SPORTS","evidence_class":"PRIMARY.LEAGUE","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.mlb.com/scores/2026-09-19"},
+    {"source_id":"NFL.SCHEDULE.2026.W2","publisher":"National Football League","lane":"SPORTS","evidence_class":"PRIMARY.LEAGUE","accessed_at":"2026-09-20","access_state":"ACCESSIBLE","url":"https://www.nfl.com/schedules/2026/REG2/"},
+    {"source_id":"ESPN.NFL.WEEK3.ROUTE","publisher":"ESPN","lane":"SPORTS","evidence_class":"INDEPENDENT.SECONDARY","accessed_at":"2026-09-20","access_state":"CONFLICTING.PAGE","url":"https://www.espn.com/nfl/scoreboard/_/week/3/year/2026/seasontype/2"},
+    {"source_id":"ESPN.NFL.WEEK2.ROUTE","publisher":"ESPN","lane":"SPORTS","evidence_class":"INDEPENDENT.SECONDARY","accessed_at":"2026-09-20","access_state":"BLOCKED.JS","url":"https://www.espn.com/nfl/scoreboard/_/week/2/year/2026/seasontype/2"}
+  ],
+  "claims": [
+    {"claim_id":"LUCAS.MUSEUM.AREA","lane":"CULTURE","relation":"OBSERVED","state":"T.20","value":300000,"unit":"SQUARE.FEET","period_start":"2026-09-20","period_end":"2026-09-20","event_status":"OBSERVED","source_ids":["CBS.SUNDAY.2026.09.20"]},
+    {"claim_id":"MUSEUM.US.ADULT.INCIDENCE.LOW","lane":"CULTURE","relation":"OBSERVED","state":"T.20","value":32,"unit":"PERCENT","period_start":"2026-01-01","period_end":"2026-09-20","event_status":"OBSERVED","source_ids":["AAM.ATTENDANCE.2026"]},
+    {"claim_id":"MUSEUM.US.ADULT.INCIDENCE.HIGH","lane":"CULTURE","relation":"OBSERVED","state":"T.20","value":33,"unit":"PERCENT","period_start":"2026-01-01","period_end":"2026-09-20","event_status":"OBSERVED","source_ids":["AAM.ATTENDANCE.2026"]},
+    {"claim_id":"MUSEUM.BELOW.2019","lane":"CULTURE","relation":"OBSERVED","state":"T.20","value":55,"unit":"PERCENT","period_start":"2025-01-01","period_end":"2025-12-31","event_status":"OBSERVED","source_ids":["AAM.ATTENDANCE.2026"]},
+    {"claim_id":"US.ADULTS.CREATE.OR.PERFORM.ART","lane":"CULTURE","relation":"OBSERVED","state":"T.20","value":52,"unit":"PERCENT","period_start":"2022-01-01","period_end":"2022-12-31","event_status":"OBSERVED","source_ids":["NEA.PARTICIPATION.2022"]},
+    {"claim_id":"GLOBAL.ART.SALES","lane":"ART","relation":"OBSERVED","state":"T.20","value":59.6,"unit":"USD.BILLION","period_start":"2025-01-01","period_end":"2025-12-31","event_status":"OBSERVED","source_ids":["REUTERS.ART.MARKET.2026"]},
+    {"claim_id":"SERPENTINE.FELLOWS.SELECTED","lane":"ART","relation":"OBSERVED","state":"T.20","value":4,"unit":"PEOPLE","period_start":"2026-01-01","period_end":"2026-09-15","event_status":"OBSERVED","source_ids":["SERPENTINE.AI.ART.2026"]},
+    {"claim_id":"SPORTS.DOES.NOT.PROVE.ART.ACCURACY","lane":"SPORTS","relation":"CORRELATED","state":"U.21","value":0,"unit":"CROSS.LANE.PROMOTION","period_start":"2026-09-14","period_end":"2026-09-20","event_status":"OBSERVED","source_ids":["MLB.SCORES.2026.09.19","NFL.SCHEDULE.2026.W2"]}
+  ],
+  "derivations": [
+    {"derivation_id":"EXHIBITION.QUANTIFIED.LOWER.BOUND","operator":"SUM","inputs":[200,170,120,100],"declared_result":590,"unit":"OBJECTS.MINIMUM","source_ids":["VOGUE.EXHIBITIONS.2026.09.20"]},
+    {"derivation_id":"ART.DEALER.OPTIMISM.DELTA","operator":"DIFFERENCE","inputs":[43,33],"declared_result":10,"unit":"PERCENTAGE.POINTS","source_ids":["REUTERS.ART.MARKET.2026"]},
+    {"derivation_id":"SERPENTINE.MAX.SELECTION.RATE","operator":"MAXIMUM.SELECTION.PERCENT","inputs":[4,1000],"declared_result":0.40,"unit":"PERCENT.MAXIMUM","source_ids":["SERPENTINE.AI.ART.2026"]}
+  ],
+  "scoreboards": [
+    {
+      "board_id":"MLB.2026.09.19.FINALS",
+      "source_ids":["MLB.SCORES.2026.09.19"],
+      "declared":{"final_count":15,"total_points":141},
+      "games":[
+        {"game_id":"DET.CWS","event_date":"2026-09-19","status":"FINAL","away_score":1,"home_score":3},
+        {"game_id":"MIL.BAL","event_date":"2026-09-19","status":"FINAL","away_score":1,"home_score":0},
+        {"game_id":"PHI.NYM","event_date":"2026-09-19","status":"FINAL","away_score":3,"home_score":10},
+        {"game_id":"BOS.TB","event_date":"2026-09-19","status":"FINAL","away_score":1,"home_score":2},
+        {"game_id":"ATH.CLE","event_date":"2026-09-19","status":"FINAL","away_score":6,"home_score":12},
+        {"game_id":"KC.PIT","event_date":"2026-09-19","status":"FINAL","away_score":5,"home_score":6},
+        {"game_id":"CHC.CIN","event_date":"2026-09-19","status":"FINAL","away_score":5,"home_score":2},
+        {"game_id":"TOR.TEX","event_date":"2026-09-19","status":"FINAL","away_score":2,"home_score":6},
+        {"game_id":"ATL.HOU","event_date":"2026-09-19","status":"FINAL","away_score":6,"home_score":3},
+        {"game_id":"WSH.STL","event_date":"2026-09-19","status":"FINAL","away_score":8,"home_score":5},
+        {"game_id":"SEA.COL","event_date":"2026-09-19","status":"FINAL","away_score":3,"home_score":5},
+        {"game_id":"NYY.AZ","event_date":"2026-09-19","status":"FINAL","away_score":3,"home_score":5},
+        {"game_id":"MIA.SD","event_date":"2026-09-19","status":"FINAL","away_score":6,"home_score":7},
+        {"game_id":"SF.LAD","event_date":"2026-09-19","status":"FINAL","away_score":4,"home_score":10},
+        {"game_id":"MIN.LAA","event_date":"2026-09-19","status":"FINAL","away_score":5,"home_score":6}
+      ]
+    },
+    {
+      "board_id":"NFL.2026.W2.THURSDAY",
+      "source_ids":["NFL.SCHEDULE.2026.W2"],
+      "declared":{"final_count":1,"total_points":72},
+      "games":[{"game_id":"DET.BUF","event_date":"2026-09-17","status":"FINAL","away_score":31,"home_score":41}]
+    }
+  ],
+  "negative_controls": [
+    {
+      "control_id":"ESPN.WEEK.ROUTE.MISMATCH.0001",
+      "source_id":"ESPN.NFL.WEEK3.ROUTE",
+      "requested_week":3,
+      "displayed_week":2,
+      "displayed_start":"2026-09-24",
+      "access_state":"CONFLICTING.PAGE",
+      "expected_reasons":["FUTURE.DISPLAYED.DATE","WEEK.LABEL.MISMATCH","SOURCE.NOT.FULLY.ACCESSIBLE"]
+    }
+  ]
+}
