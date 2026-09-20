@@ -1,0 +1,32 @@
+{
+  "record_id": "FR0333.WORK.TRUNK.BRANCH.FABRIC.0005",
+  "predecessor_record_id": "FR0333.SYSTEM.STATISTICAL.ANTI.HALLUCINATION.HARDENER.0004",
+  "base_commit": "11521564aee008ab21fdced77e75f78b93f7d912",
+  "reference_point": "2026-09-20",
+  "mode": "SHADOW",
+  "humanlock": "ACTIVE",
+  "automatic_promotion": false,
+  "external_actions": false,
+  "base_model_weights": "UNCHANGED",
+  "platform_entitlements": "UNCHANGED",
+  "controls": [
+    "DURABLE.SQLITE.WAL.QUEUE",
+    "CANONICAL.LEDGER",
+    "CHECKPOINT.RESUME",
+    "EXPIRING.WORKER.LEASE",
+    "STANDBY.FAILOVER",
+    "IDEMPOTENCY",
+    "DUPLICATE.SUPPRESSION",
+    "LANE.LOCAL.CIRCUIT.BREAKER",
+    "DEAD.LETTER.PRESERVATION",
+    "HASH.CHAINED.RECEIPTS",
+    "EXPECTED.OUTPUT.COUNT",
+    "HUMANLOCK.REPLAY"
+  ],
+  "lanes": ["CHAT", "ENGINE", "ADOBE"],
+  "continuity_target": "WORK.LOSS.ZERO",
+  "availability_claim": "NOT.ESTABLISHED",
+  "production_deployment": "NOT.PERFORMED",
+  "economic_promotion": "NOT.PERFORMED",
+  "decision": "HOLD.FOR.CI.AND.REVIEW"
+}

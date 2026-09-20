@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fr0333.invalid/schemas/work_trunk_branch_event_v5.schema.json",
+  "title": "FR0333 Work Trunk Branch Event V5",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["record_id", "parent_id", "source_hash", "lane", "intent", "authorization", "evidence_class", "humanlock", "expected_outputs"],
+  "properties": {
+    "record_id": {"type": "string", "minLength": 1},
+    "parent_id": {"type": "string", "minLength": 1},
+    "source_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "lane": {"enum": ["CHAT", "ENGINE", "ADOBE"]},
+    "intent": {"type": "string", "minLength": 1},
+    "authorization": {"enum": ["READ", "BUILD", "EXTERNAL_ACTION"]},
+    "evidence_class": {"enum": ["OBSERVED", "DERIVED", "CORRELATED", "CAUSAL"]},
+    "humanlock": {"const": "ACTIVE"},
+    "expected_outputs": {"type": "integer", "minimum": 1},
+    "idempotency_key": {"type": "string", "minLength": 1},
+    "payload": {"type": "object"}
+  }
+}
