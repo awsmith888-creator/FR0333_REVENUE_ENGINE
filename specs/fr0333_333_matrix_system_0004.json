@@ -1,0 +1,40 @@
+{
+  "id": "FR0333.333.MATRIX.SYSTEM.0004",
+  "canonical_root": "FR-0333 ZERO LION LOGIC GATE FOREVER AND A DAY 1",
+  "parent_head": "8332afe85eafee19c7973298fef0b7ea9f4cd244",
+  "golden_chain": "CANONICAL_UNCHANGED",
+  "humanlock": "ACTIVE_IMMUTABLE",
+  "external_authority": "ZERO",
+  "external_dependency": "ZERO_FOR_PROMOTION_AUTHORITY",
+  "promotion_default": "DENY",
+  "belt_semantics": {
+    "mode": "BOOLEAN_COMPLETION",
+    "pass": "ALL_MANDATORY_GATES_PASS",
+    "failure": "HOLD",
+    "partial_pass": "FORBIDDEN",
+    "probability_substitution": "FORBIDDEN",
+    "statement": "100_PERCENT_BELT_MEANS_100_PERCENT_OF_DEFINED_MANDATORY_GATES_PASS"
+  },
+  "planes": {
+    "TRUTH": ["CLAIM_ATOMIZATION","SOURCE_IDENTITY","PROVENANCE_GRAPH","COMMON_ORIGIN_COLLAPSE","INDEPENDENT_LINEAGE","EVIDENCE_ALIGNMENT","COUNTEREVIDENCE","CONTRADICTION","COUNTERFACTUAL_TEST","FACTUALITY","FAITHFULNESS","UNKNOWN_FIRST_CLASS"],
+    "EXECUTION": ["INTENT_LOCK","CONSTRAINT_LOCK","SEQUENTIAL_CONSISTENCY","COUNT_INHERITANCE","CORRECTION_INHERITANCE","CONTRACT","PERMISSION","TOOL_AUTHORIZATION","EFFECT","CAUSAL_EVENT_TRACE","RECEIPT","REPLAY","FAILURE_LOCALIZATION","LOOP_GUARD"],
+    "AUTHORITY": ["HUMANLOCK","LEAST_PRIVILEGE","IDENTITY","AUTHORIZATION","SOURCE_ALLOWLIST","EXTERNAL_AUTHORITY_ZERO","PROMOTION_DEFAULT_DENY","EGRESS_DEFAULT_DENY"],
+    "CERTIFICATION": ["SPEC_TEST","ADVERSARIAL_TEST","NEGATIVE_TEST","REGRESSION","REPLAY_TEST","TRACE_INTEGRITY","ARTIFACT_HASH","VERSION_IDENTITY","SBOM","CERTIFICATE"]
+  },
+  "fist": {"F":"FOUNDATION_HUMANLOCK","I":"IDENTITY_SOURCE_LINEAGE","S":"SUBSTANTIATION_EVIDENCE_COUNTEREVIDENCE","T":"TRACE_VERIFICATION_RECEIPT","rule":"ANY_FAIL_HOLD"},
+  "loop_guard": {"requires":["STATE_HASH","PREVIOUS_STATE_HASH","PROGRESS_DELTA"],"loop_if":["SAME_STATE","SAME_ACTION","NO_NEW_EVIDENCE"],"action":["STOP","HOLD","RECEIPT","HUMANLOCK"]},
+  "certification_levels": {
+    "L0":"SPECIFICATION_INTEGRITY",
+    "L1":"IMPLEMENTATION_CONFORMITY",
+    "L2":"RUNTIME_VALIDATION",
+    "L3":"LEGAL_USE_CLEARANCE",
+    "L4":"OPERATOR_OPERATIONAL_AUTHORIZATION"
+  },
+  "legal_boundary": {
+    "internal_certificate_not_accreditation": true,
+    "no_universal_legal_certificate_claim": true,
+    "private_ownership_claim_requires_rights_evidence": true,
+    "copyright_does_not_protect_ideas_systems_methods_or_algorithms_as_such": true,
+    "trademark_patent_trade_secret_and_contract_review_separate": true
+  }
+}

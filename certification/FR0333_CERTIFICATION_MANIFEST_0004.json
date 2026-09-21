@@ -1,0 +1,12 @@
+{
+  "id":"FR0333.CERTIFICATION.PACKAGE.0004",
+  "certificate_template":"FR-0333.CERT.RUNTIME.[SEQUENCE]",
+  "status":"CANDIDATE_PENDING_EXECUTION_EVIDENCE",
+  "required_gates":["SPEC","SCHEMA","CHAIN","MATRIX","HUMANLOCK","AUTHORITY","PROVENANCE","EVIDENCE","EXECUTION","TRACE","REPLAY","LOOP_GUARD","ADVERSARIAL","REGRESSION","SECURITY","HASH","PACKAGE"],
+  "pass_rule":"17_OF_17_PASS",
+  "otherwise":"HOLD",
+  "required_runtime_fields":["repository_digest","build_digest","environment_identity","test_corpus_digest","test_results","receipts","unresolved_findings","legal_use_clearance_reference","operator_authorization","validity_expiry","revocation_record"],
+  "package_artifacts":["CANONICAL_SPEC","MATRIX_SCHEMA","GATE_MANIFEST","AUTHORITY_MANIFEST","SOURCE_PROVENANCE_SCHEMA","CLAIM_EVIDENCE_SCHEMA","EXECUTION_CONTRACT","TRACE_SCHEMA","RECEIPT_SCHEMA","REPLAY_SPEC","LOOP_GUARD_SPEC","ADVERSARIAL_TESTS","NEGATIVE_TESTS","REGRESSION_TESTS","SECURITY_TESTS","VERSION_MANIFEST","HASH_MANIFEST","SBOM","LICENSE_NOTICE","CERTIFICATE"],
+  "claims_control":{"internal_conformity_only":true,"accredited_certification":false,"government_certification":false,"legal_opinion":false,"production_approval":false},
+  "operator_gate":"HUMANLOCK_REQUIRED_FOR_L4"
+}

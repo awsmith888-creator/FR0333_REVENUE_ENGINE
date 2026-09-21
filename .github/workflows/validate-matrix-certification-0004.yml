@@ -1,0 +1,32 @@
+name: Validate Matrix Certification 0004
+
+on:
+  push:
+    branches: [feature/matrix-certification-hardening-0004]
+  pull_request:
+    paths:
+      - 'specs/fr0333_333_matrix_system_0004.json'
+      - 'certification/**'
+      - 'tools/validate_matrix_certification_0004.py'
+      - 'tests/test_matrix_certification_0004.py'
+      - '.github/workflows/validate-matrix-certification-0004.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile
+        run: python -m py_compile tools/validate_matrix_certification_0004.py tests/test_matrix_certification_0004.py
+      - name: Validate deterministic specification
+        run: python tools/validate_matrix_certification_0004.py
+      - name: Run certification tests
+        run: python -m unittest -v tests.test_matrix_certification_0004
+      - name: Full regression suite
+        run: python -m unittest discover -s tests -v
