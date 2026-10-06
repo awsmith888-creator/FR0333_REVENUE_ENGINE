@@ -1,0 +1,79 @@
+{
+  "spec_id": "FR0333-RAVEN-MAJOR-INDEX-v1",
+  "status": "DESIGN_SPEC",
+  "governing_rule": "Every indexed system actor or entity has one stable major reference number. Roles and hierarchy are subordinate classifications and never replace the stable reference.",
+  "major_index": {
+    "namespace": "FR0333",
+    "custodian": "RAVEN",
+    "custodian_reference": "FR0333-RAVEN-000001",
+    "authority": "INDEX_CUSTODIAN",
+    "may_reassign_existing_reference": false,
+    "may_promote_without_evidence": false
+  },
+  "reference_contract": {
+    "format": "FR0333-{CLASS}-{SEQUENCE}",
+    "sequence_width": 6,
+    "immutable_after_assignment": true,
+    "required_fields": [
+      "reference_id",
+      "entity_class",
+      "sequence_no",
+      "created_at",
+      "parent_reference_id",
+      "evidence_state"
+    ]
+  },
+  "hierarchy": [
+    {
+      "level": 0,
+      "class": "RAVEN",
+      "prefix": "RAVEN",
+      "parent": null,
+      "meaning": "major index custodian"
+    },
+    {
+      "level": 1,
+      "class": "STEWARD",
+      "prefix": "STW",
+      "parent": "RAVEN",
+      "meaning": "bounded continuity and audit authority"
+    },
+    {
+      "level": 2,
+      "class": "COLONEL",
+      "prefix": "COL",
+      "parent": "STW",
+      "meaning": "sub-index operational lane"
+    },
+    {
+      "level": 3,
+      "class": "SOPHIE",
+      "prefix": "SOPHIE",
+      "parent": "COL",
+      "meaning": "indexed primary entity"
+    }
+  ],
+  "examples": [
+    {
+      "reference_id": "FR0333-STW-000001",
+      "parent_reference_id": "FR0333-RAVEN-000001"
+    },
+    {
+      "reference_id": "FR0333-COL-000001",
+      "parent_reference_id": "FR0333-STW-000001"
+    },
+    {
+      "reference_id": "FR0333-SOPHIE-000001",
+      "parent_reference_id": "FR0333-COL-000001"
+    }
+  ],
+  "invariants": [
+    "REFERENCE_ID_IS_STABLE",
+    "PARENT_LINK_IS_EXPLICIT",
+    "ROLE_CHANGE_DOES_NOT_CHANGE_REFERENCE_ID",
+    "NO_DUPLICATE_REFERENCE_ID",
+    "NO_CANONICAL_OVERWRITE",
+    "UNRESOLVED_IDENTITY_IS_HOLD",
+    "RAVEN_CUSTODIES_INDEX_BUT_DOES_NOT_BYPASS_EVIDENCE_GATE"
+  ]
+}
