@@ -1,0 +1,39 @@
+{
+  "identifier": "FR.0333.DELTA.REFERENCE.POINT.SPEC.0001",
+  "state": "HARD_LOCK",
+  "canonical_symbol_codepoint": "U+2206",
+  "canonical_grammar_ascii": "1.<DELTA_U+2206>.1.<ADDRESS_DIGITS>",
+  "field_order": [
+    "GOVERNING_REFERENCE",
+    "DELTA_CONTROL",
+    "BOUND_REFERENCE",
+    "ADDRESS"
+  ],
+  "reference_point_count": 3,
+  "examples": [
+    "1.∆.1.26",
+    "1.∆.1.27",
+    "1.∆.1.28"
+  ],
+  "laws": [
+    "REFERENCE_TOKENS_ARE_EXACT_STRINGS",
+    "REFERENCE_POINTS_ARE_STRUCTURAL_SEPARATORS",
+    "DELTA_MUST_BE_BOUNDED_BY_REFERENCE_POINTS",
+    "BOUND_REFERENCE_1_IS_REQUIRED_AFTER_DELTA",
+    "ADDRESS_IS_NOT_DELTA_MAGNITUDE",
+    "ADDRESS_IS_NOT_PERCENTAGE",
+    "DOTS_DO_NOT_IMPLY_DECIMAL_ARITHMETIC",
+    "NUMERIC_NORMALIZATION_OF_REFERENCE_TOKENS_IS_FORBIDDEN",
+    "TRAILING_ZERO_PRESERVATION_IS_REQUIRED"
+  ],
+  "prohibited_semantics": [
+    "PERCENTAGE_INFERENCE",
+    "DECIMAL_COLLAPSE",
+    "FLOAT_NORMALIZATION",
+    "INDEX_AS_MAGNITUDE",
+    "DROPPED_REFERENCE_POINT",
+    "DROPPED_BOUND_REFERENCE",
+    "GREEK_DELTA_U0394_GLYPH_DRIFT"
+  ],
+  "gate": "RavenCloudTaskbar/fr0333_reference_point_gate.py"
+}
