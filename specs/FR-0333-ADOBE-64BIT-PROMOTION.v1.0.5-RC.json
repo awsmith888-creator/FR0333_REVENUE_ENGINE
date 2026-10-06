@@ -1,0 +1,20 @@
+{
+  "identifier": "FR-0333-ADOBE-64BIT-PROMOTION",
+  "version": "1.0.5-RC",
+  "state": "RUNTIME_COMPONENTS_CI_VALIDATED/HOLD_EXTERNAL_PRODUCTION_EVIDENCE",
+  "verified": {
+    "REGISTER_64_OF_64": "PASS",
+    "INDEX_A": "PASS",
+    "INDEX_B": "PASS",
+    "INDEX_C_C2PA_RUNTIME": "PASS",
+    "INDEX_D_HARD_PURGE_RUNTIME": "PASS",
+    "INDEX_E_PRODUCTION_GATE_STATIC_AUDIT": "PASS_PENDING_CI_ON_THIS_HEAD",
+    "INDEX_E_FALSE_POSITIVE_SELF_TEST": "PASS_PENDING_CI_ON_THIS_HEAD"
+  },
+  "external_evidence_holds": {
+    "ADOBE_PRODUCTION_RAW_ASSET_C2PA_VALIDATION": "HOLD",
+    "DEPLOYED_STORAGE_BACKEND_PURGE_INTEGRATION": "HOLD"
+  },
+  "promotion_rule": "DO_NOT_PROMOTE_EXTERNAL_EVIDENCE_HOLDS_BY_SIMULATION_OR_DECLARATION",
+  "next_verified_action": "Run INDEX.E against a raw Adobe-exported asset with embedded Content Credentials; separately verify purge behavior against the deployed storage backend when one exists."
+}

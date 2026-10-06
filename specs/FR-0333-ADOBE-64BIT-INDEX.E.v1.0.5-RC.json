@@ -1,0 +1,71 @@
+{
+  "identifier": "FR-0333-ADOBE-64BIT-INDEX.E",
+  "version": "1.0.5-RC",
+  "role": "ADOBE_PRODUCTION_EVIDENCE_GATE",
+  "source_spec": "FR-0333-ADOBE-64BIT-REG",
+  "cross_audits": [
+    "FR-0333-ADOBE-64BIT-INDEX.A",
+    "FR-0333-ADOBE-64BIT-INDEX.B",
+    "FR-0333-ADOBE-64BIT-INDEX.C",
+    "FR-0333-ADOBE-64BIT-INDEX.D"
+  ],
+  "required_external_input": "RAW_ADOBE_EXPORTED_ASSET_WITH_EMBEDDED_C2PA",
+  "public_repo_secret_policy": "DO_NOT_COMMIT_ACCOUNT_IDS_PRESIGNED_URLS_PRIVATE_KEYS_OR_PRODUCTION_CREDENTIALS",
+  "evidence_boundaries": [
+    "ADOBE_SOFTWARE_AGENT_DECLARATION != ADOBE_SIGNER_VERIFICATION",
+    "ISSUER_ADOBE_INC_PLUS_VALID_C2PA != HUMAN_IDENTITY",
+    "PRODUCTION_SIGNER_EVIDENCE != AUTHORIZATION",
+    "SELF_TEST_PASS != PRODUCTION_ASSET_PASS",
+    "CONNECTED_LIBRARY_ASSET_EXISTENCE != RAW_C2PA_MANIFEST_VALIDATION"
+  ],
+  "checks": [
+    {
+      "check_id": "AP_01_RAW_ASSET_HASH",
+      "description": "Compute SHA-256 over the exact raw asset supplied to the production evidence gate",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_07", "BIT_09"]
+    },
+    {
+      "check_id": "AP_02_C2PA_MANIFEST_PRESENT",
+      "description": "Require an active C2PA manifest in the raw asset",
+      "evidence_class": "E_OBS",
+      "observes_bits": ["BIT_11", "BIT_13", "BIT_41"]
+    },
+    {
+      "check_id": "AP_03_SIGNATURE_AND_BINDING_VALID",
+      "description": "Require successful C2PA claim-signature validation and data-hash binding",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_12", "BIT_14", "BIT_16", "BIT_37", "BIT_42", "BIT_44"]
+    },
+    {
+      "check_id": "AP_04_ADOBE_ISSUER",
+      "description": "Require active-manifest signature issuer Adobe Inc.",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_25", "BIT_26", "BIT_27", "BIT_28"]
+    },
+    {
+      "check_id": "AP_05_FIREFLY_AGENT_BINDING",
+      "description": "Require Adobe Firefly claim-generator, common-name, or software-agent evidence in the same active manifest",
+      "evidence_class": "E_OBS",
+      "observes_bits": ["BIT_19", "BIT_21", "BIT_25", "BIT_27"]
+    },
+    {
+      "check_id": "AP_06_CERT_CHAIN_EXTRACTABLE",
+      "description": "Require an extractable PEM signing certificate chain",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_25", "BIT_27", "BIT_28", "BIT_29", "BIT_30"]
+    },
+    {
+      "check_id": "AP_07_NO_TEST_SIGNER_FALSE_POSITIVE",
+      "description": "CI self-test labels a built-in test-signed fixture as Adobe Firefly but must still reject it because the signer issuer is not Adobe Inc.",
+      "evidence_class": "E_MES",
+      "observes_bits": ["BIT_25", "BIT_26", "BIT_27", "BIT_28"]
+    },
+    {
+      "check_id": "AP_08_BOUNDARY_RECEIPT",
+      "description": "Receipt records cryptographic provenance only and makes no human-identity, ownership, or authorization claim",
+      "evidence_class": "E_DER",
+      "observes_bits": ["BIT_31", "BIT_32", "BIT_39", "BIT_42"]
+    }
+  ]
+}
