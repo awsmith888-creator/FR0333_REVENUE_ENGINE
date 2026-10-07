@@ -69,6 +69,17 @@ class ProviderChangeMonitorTests(unittest.TestCase):
         self.assertIn("FAILURE.RECOVERY.TOOL.WORKFLOW", mapping["workload_candidates"])
         self.assertIn("PROVIDER_ELIGIBILITY_GATE", mapping["assumption_candidates"][0])
 
+    def test_openai_library_doc_maps_to_packaging_and_file_workflows(self):
+        source = next(item for item in SOURCES if item["id"] == "OPENAI.CHATGPT.LIBRARY")
+        passage = "Library is available to Free, Go, Plus, Pro, and Business users. Pro has up to 100 GB of Library storage. Google Drive files and folders can be browsed in Library."
+        candidate = diff_candidate(source, "", passage, BENCHMARK_MAP)
+        self.assertEqual(candidate["benchmark_lane_candidate"], "PACKAGING")
+        self.assertEqual(candidate["surface_identity"]["affected_surface_candidate"], "CHATGPT_LIBRARY_FILE_WORKFLOW")
+        mapping = candidate["benchmark_map_comparison"]
+        self.assertEqual(mapping["provider_id"], "P01.OPENAI.CHATGPT")
+        self.assertIn("LARGE.FILE.ANALYSIS", mapping["workload_candidates"])
+        self.assertIn("PROVIDER_ELIGIBILITY_GATE", mapping["assumption_candidates"][0])
+
     def test_all_watched_providers_resolve_to_existing_map_rows(self):
         expected = {"openai": "P01.OPENAI.CHATGPT", "anthropic": "P02.ANTHROPIC.CLAUDE", "google": "P03.GOOGLE.GEMINI", "xai": "P04.XAI.GROK"}
         for source in SOURCES:
@@ -92,7 +103,7 @@ class ProviderChangeMonitorTests(unittest.TestCase):
 
     def test_manifest_binds_existing_sonar_without_new_taskbar_slot(self):
         self.assertEqual(CONFIG["taskbar_binding"], "TB.SONAR")
-        self.assertEqual(len(SOURCES), 13)
+        self.assertEqual(len(SOURCES), 14)
         self.assertFalse(CONFIG["historical_baseline_mutation"])
 
     def test_active_status_page_on_first_observation_creates_review_candidate(self):
