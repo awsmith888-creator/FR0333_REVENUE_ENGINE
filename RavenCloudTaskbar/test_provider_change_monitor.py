@@ -58,6 +58,17 @@ class ProviderChangeMonitorTests(unittest.TestCase):
         self.assertEqual(candidate["benchmark_map_comparison"]["provider_id"], "P02.ANTHROPIC.CLAUDE")
         self.assertIn("PROVIDER_ELIGIBILITY_GATE", candidate["benchmark_map_comparison"]["assumption_candidates"][0])
 
+    def test_openai_status_incident_maps_to_desktop_workflow_lane(self):
+        source = next(item for item in SOURCES if item["id"] == "OPENAI.CHATGPT.STATUS")
+        incident = "We're currently experiencing issues. Unable to create new ChatGPT Work threads in the latest desktop app. Identified, partial outage. Updated Linux and macOS apps are available; fix rolling out for Windows."
+        candidate = diff_candidate(source, "", incident, BENCHMARK_MAP)
+        self.assertEqual(candidate["benchmark_lane_candidate"], "ACCESS")
+        self.assertEqual(candidate["surface_identity"]["affected_surface_candidate"], "CHATGPT_WORK_THREAD_CREATION")
+        mapping = candidate["benchmark_map_comparison"]
+        self.assertEqual(mapping["provider_id"], "P01.OPENAI.CHATGPT")
+        self.assertIn("FAILURE.RECOVERY.TOOL.WORKFLOW", mapping["workload_candidates"])
+        self.assertIn("PROVIDER_ELIGIBILITY_GATE", mapping["assumption_candidates"][0])
+
     def test_all_watched_providers_resolve_to_existing_map_rows(self):
         expected = {"openai": "P01.OPENAI.CHATGPT", "anthropic": "P02.ANTHROPIC.CLAUDE", "google": "P03.GOOGLE.GEMINI", "xai": "P04.XAI.GROK"}
         for source in SOURCES:
@@ -81,8 +92,28 @@ class ProviderChangeMonitorTests(unittest.TestCase):
 
     def test_manifest_binds_existing_sonar_without_new_taskbar_slot(self):
         self.assertEqual(CONFIG["taskbar_binding"], "TB.SONAR")
-        self.assertEqual(len(SOURCES), 12)
+        self.assertEqual(len(SOURCES), 13)
         self.assertFalse(CONFIG["historical_baseline_mutation"])
+
+    def test_active_status_page_on_first_observation_creates_review_candidate(self):
+        with tempfile.TemporaryDirectory() as temp:
+            state = Path(temp) / "state.json"
+            receipt = Path(temp) / "receipt.json"
+            benchmark_map = Path(temp) / "benchmark.json"
+            benchmark_map.write_text(json.dumps(BENCHMARK_MAP))
+            status_url = next(item["url"] for item in SOURCES if item["id"] == "OPENAI.CHATGPT.STATUS")
+
+            def fake_fetch(url):
+                if url == status_url:
+                    return "<p>We're currently experiencing issues. Unable to create new ChatGPT Work threads. Partial outage.</p>"
+                return "<p>Stable provider page.</p>"
+
+            first = run_monitor(fake_fetch, state, receipt, benchmark_map)
+            second = run_monitor(fake_fetch, state, receipt, benchmark_map)
+            status_candidate = next(item for item in first["candidates"] if item["source_id"] == "OPENAI.CHATGPT.STATUS")
+            self.assertEqual(first["run_state"], "SOURCE_CHANGE_CANDIDATES")
+            self.assertEqual(status_candidate["source_state"], "ACTIVE_INCIDENT_ON_FIRST_OBSERVATION")
+            self.assertEqual(second["run_state"], "STAY")
 
 
 if __name__ == "__main__":
