@@ -13,18 +13,29 @@
   "scope": {
     "providers": ["openai", "anthropic", "google", "xai"],
     "change_classes": ["PRODUCT_LAUNCH", "PRICE", "PLAN", "ACCESS", "PACKAGING"],
-    "surface_dimensions": ["provider", "product", "surface", "transport", "model_reported", "account_context", "personalization_state", "session_context"]
+    "surface_dimensions": ["provider", "product", "surface", "transport", "model_reported", "model_version_reported", "account_context", "personalization_state", "session_id", "repeat_index"]
   },
-  "workbench_map_state": "UNRESOLVED_DISTINCT_WORKBENCH_MAP_NOT_LOCATED",
+  "benchmark_map": {
+    "identifier": "FR0333.FRONTIER.MODEL.MASTER.BENCHMARK.0001",
+    "path": "RavenCloudTaskbar/fr0333_frontier_model_master_benchmark_0001.json",
+    "surface_identity_reference": "FR-0333 Vector Production Spine: Surface identity needs to be first-class data",
+    "workbench_identity_state": "PROVIDER_ROW_MATCHED_SURFACE_REVIEW_REQUIRED",
+    "promotion_boundary": "PUBLIC.DOCUMENTATION != RUNTIME.PROOF; PLAN.ACCESS != FR0333.PERFORMANCE.DELTA"
+  },
+  "workbench_map_state": "BENCHMARK_MAP_PRESENT_SURFACE_MATCH_REVIEW_REQUIRED",
   "sources": [
     {"id":"OPENAI.NEWS","provider":"openai","product":"OpenAI products","url":"https://openai.com/news/","lane_hint":"MODEL_CAPABILITY"},
     {"id":"OPENAI.API.PRICING","provider":"openai","product":"OpenAI API","url":"https://developers.openai.com/api/docs/pricing","lane_hint":"COST"},
+    {"id":"OPENAI.CHATGPT.PLANS","provider":"OpenAI","product":"ChatGPT plans","url":"https://help.openai.com/en/articles/9793128-what-is-chatgpt-pro/","lane_hint":"PACKAGING"},
     {"id":"ANTHROPIC.NEWS","provider":"anthropic","product":"Claude products","url":"https://www.anthropic.com/news","lane_hint":"MODEL_CAPABILITY"},
     {"id":"ANTHROPIC.API.PRICING","provider":"anthropic","product":"Claude API","url":"https://docs.anthropic.com/en/docs/about-claude/pricing","lane_hint":"COST"},
+    {"id":"ANTHROPIC.CLAUDE.PLANS","provider":"Anthropic","product":"Claude plans","url":"https://support.anthropic.com/en/articles/11049762-choosing-a-claude-ai-plan","lane_hint":"PACKAGING"},
     {"id":"GOOGLE.DEEPMIND.NEWS","provider":"google","product":"Google DeepMind products","url":"https://deepmind.google/blog/","lane_hint":"MODEL_CAPABILITY"},
     {"id":"GOOGLE.GEMINI.API.PRICING","provider":"google","product":"Gemini API","url":"https://ai.google.dev/gemini-api/docs/pricing","lane_hint":"COST"},
+    {"id":"GOOGLE.GEMINI.PLANS","provider":"Google","product":"Google AI plans","url":"https://support.google.com/googleone/answer/14534406","lane_hint":"PACKAGING"},
     {"id":"XAI.NEWS","provider":"xai","product":"Grok products","url":"https://x.ai/news","lane_hint":"MODEL_CAPABILITY"},
-    {"id":"XAI.API.PRICING","provider":"xai","product":"Grok API","url":"https://docs.x.ai/developers/pricing","lane_hint":"COST"}
+    {"id":"XAI.API.PRICING","provider":"xai","product":"Grok API","url":"https://docs.x.ai/developers/pricing","lane_hint":"COST"},
+    {"id":"XAI.SUPERGROK.PLANS","provider":"xAI","product":"SuperGrok plans","url":"https://x.ai/pricing","lane_hint":"PACKAGING"}
   ],
   "evidence_boundary": "PAGE_CHANGE != VERIFIED_PRODUCT_CHANGE; OBSERVED != CORRELATED != CAUSAL",
   "notification_surface": "GITHUB_ACTION_SUMMARY_AND_JSON_RECEIPT",
