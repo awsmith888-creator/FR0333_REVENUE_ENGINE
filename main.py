@@ -1,6 +1,9 @@
+from typing import Any, Dict
+
 from fastapi import FastAPI, status
 
 from camera_package import CameraCaptureSpec, package_manifest, validate_camera_job
+from src.provider_change_gate import evaluate_provider_change
 
 app = FastAPI(title="FR0333 Revenue Engine Pipeline")
 
@@ -24,3 +27,8 @@ def get_camera_package():
 @app.post("/camera/validate", status_code=status.HTTP_200_OK)
 def validate_camera_capture(spec: CameraCaptureSpec):
     return validate_camera_job(spec.model_dump(mode="json"))
+
+
+@app.post("/provider-change/evaluate", status_code=status.HTTP_200_OK)
+def evaluate_provider_change_candidate(candidate: Dict[str, Any]):
+    return evaluate_provider_change(candidate)
