@@ -12,7 +12,7 @@
   },
   "scope": {
     "providers": ["openai", "anthropic", "google", "xai"],
-    "change_classes": ["PRODUCT_LAUNCH", "PRICE", "PLAN", "ACCESS", "PACKAGING"],
+    "change_classes": ["PRODUCT_LAUNCH", "PRICE", "PLAN", "ACCESS", "PACKAGING", "SERVICE_INCIDENT"],
     "surface_dimensions": ["provider", "product", "surface", "transport", "model_reported", "model_version_reported", "account_context", "personalization_state", "session_id", "repeat_index"]
   },
   "benchmark_map": {
@@ -27,6 +27,7 @@
     {"id":"OPENAI.NEWS","provider":"openai","product":"OpenAI products","url":"https://openai.com/news/","lane_hint":"MODEL_CAPABILITY"},
     {"id":"OPENAI.API.PRICING","provider":"openai","product":"OpenAI API","url":"https://developers.openai.com/api/docs/pricing","lane_hint":"COST"},
     {"id":"OPENAI.CHATGPT.PLANS","provider":"OpenAI","product":"ChatGPT plans","url":"https://help.openai.com/en/articles/9793128-what-is-chatgpt-pro/","lane_hint":"PACKAGING"},
+    {"id":"OPENAI.CHATGPT.STATUS","provider":"OpenAI","product":"ChatGPT","url":"https://status.openai.com/","lane_hint":"ACCESS","source_type":"STATUS_PAGE","observed_surface":"PROVIDER_STATUS_PAGE","observed_transport":"PUBLIC_WEB_PAGE","affected_surface_candidate":"CHATGPT_WORK_THREAD_CREATION","affected_surface_transport_candidate":"DESKTOP_APPLICATION"},
     {"id":"ANTHROPIC.NEWS","provider":"anthropic","product":"Claude products","url":"https://www.anthropic.com/news","lane_hint":"MODEL_CAPABILITY"},
     {"id":"ANTHROPIC.API.PRICING","provider":"anthropic","product":"Claude API","url":"https://docs.anthropic.com/en/docs/about-claude/pricing","lane_hint":"COST"},
     {"id":"ANTHROPIC.CLAUDE.PLANS","provider":"Anthropic","product":"Claude plans","url":"https://support.anthropic.com/en/articles/11049762-choosing-a-claude-ai-plan","lane_hint":"PACKAGING"},
