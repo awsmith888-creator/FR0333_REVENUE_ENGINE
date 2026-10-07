@@ -29,6 +29,8 @@ jobs:
           python-version: '3.13'
       - name: Build and validate taskbar
         run: python RavenCloudTaskbar/build.py
+      - name: Test provider change monitor
+        run: python RavenCloudTaskbar/test_provider_change_monitor.py
       - name: Verify no provisioned cloud credentials
         run: |
           python - <<'PY'
@@ -41,7 +43,7 @@ jobs:
           PY
 
       - name: Restore Raven monitoring state
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
         uses: actions/cache@v4
         with:
           path: .raven-cache
@@ -50,11 +52,24 @@ jobs:
             sebring-monitor-
 
       - name: Run Sebring public-record monitor
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
         run: python RavenCloudTaskbar/monitor_sebring.py
 
+      - name: Run provider source screen
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+        run: python RavenCloudTaskbar/provider_change_monitor.py
+
+      - name: Upload provider change receipt
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+        uses: actions/upload-artifact@v4
+        with:
+          name: FR0333-Provider-Change-Screen-${{ github.run_id }}
+          path: RavenCloudTaskbar/dist/provider_change_monitor.json
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Write Raven monitoring summary
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
         run: |
           python - <<'PY'
           import json, os
@@ -79,7 +94,7 @@ jobs:
           PY
 
       - name: Upload Raven monitoring receipt
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
         uses: actions/upload-artifact@v4
         with:
           name: FR0333-Raven-Sebring-Monitor-${{ github.run_id }}
@@ -90,7 +105,7 @@ jobs:
       - name: Package taskbar artifact
         run: |
           cd RavenCloudTaskbar
-          zip -qr ../FR0333_RAVEN_CLOUD_TASKBAR_v1.zip dist README.md taskbars.json lumen_gateway.json cloud_provider_slots.json build.py monitor_sebring.py
+          zip -qr ../FR0333_RAVEN_CLOUD_TASKBAR_v1.zip dist README.md README_provider_change_watch_0001.md fr0333_provider_change_watch_0001.json taskbars.json lumen_gateway.json cloud_provider_slots.json build.py monitor_sebring.py provider_change_monitor.py
           cd ..
           sha256sum FR0333_RAVEN_CLOUD_TASKBAR_v1.zip > FR0333_RAVEN_CLOUD_TASKBAR_v1.zip.sha256
       - name: Upload taskbar artifact
