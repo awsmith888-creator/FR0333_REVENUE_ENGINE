@@ -15,7 +15,7 @@ class ProviderChangeMonitorTests(unittest.TestCase):
         source = next(item for item in SOURCES if item["id"] == "OPENAI.NEWS")
         candidate = diff_candidate(source, "Old release.", "Old release. Introducing a new model now available.")
         self.assertEqual(candidate["status"], "SOURCE_CHANGE_CANDIDATE_REVIEW_REQUIRED")
-        self.assertEqual(candidate["benchmark_lane_candidate"], "ACCESS")
+        self.assertEqual(candidate["benchmark_lane_candidate"], "MODEL_CAPABILITY")
         self.assertEqual(candidate["workbench_map_state"], "UNRESOLVED_DISTINCT_WORKBENCH_MAP_NOT_LOCATED")
         self.assertIn("does not establish", candidate["interpretation"])
 
