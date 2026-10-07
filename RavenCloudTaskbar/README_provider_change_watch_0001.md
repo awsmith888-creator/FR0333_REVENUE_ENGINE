@@ -8,6 +8,8 @@
 
 The engine fetches eight allowlisted official pages: product/news pages and API pricing pages for OpenAI, Anthropic, Google DeepMind/Gemini, and xAI. It stores page-text hashes and prior text in the workflow's existing Raven cache. The first successful run establishes the baseline. Later runs compare each current page with its last successful observation and emit a receipt for page changes.
 
+The separate `fr0333_provider_change_watch_0001.json` manifest binds the screen to existing `TB.SONAR`; the hash-pinned `taskbars.json` record is left unchanged.
+
 Changed pricing pages map to the `COST` review lane. News-page diffs are screened for model, availability, access, cost, and packaging terms. If the changed text does not support a lane, the record is held as unresolved. The source identity fields retain provider, product, surface, and transport separately.
 
 ## Evidence and notification boundary
