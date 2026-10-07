@@ -105,8 +105,8 @@ def compare_to_benchmark_map(source, lane, benchmark_map):
         "performance_delta": benchmark["measured_cross_provider_performance_delta"],
         "surface_comparison": {
             "observed_source_surface": "OFFICIAL_PROVIDER_PUBLIC_WEB_PAGE",
-            "affected_product_surface": "API" if source["lane_hint"] == "COST" else "UNRESOLVED_UNTIL_PRODUCT_IS_IDENTIFIED",
-            "affected_product_transport": "API" if source["lane_hint"] == "COST" else "UNRESOLVED_UNTIL_PRODUCT_IS_IDENTIFIED",
+            "affected_product_surface": source.get("affected_surface_candidate", "API" if source["lane_hint"] == "COST" else "UNRESOLVED_UNTIL_PRODUCT_IS_IDENTIFIED"),
+            "affected_product_transport": source.get("affected_surface_transport_candidate", "API" if source["lane_hint"] == "COST" else "UNRESOLVED_UNTIL_PRODUCT_IS_IDENTIFIED"),
             "runtime_comparability": provider.get("runtime_in_this_master"),
             "identity_dimensions_required": CONFIG["scope"]["surface_dimensions"],
         },
@@ -115,7 +115,9 @@ def compare_to_benchmark_map(source, lane, benchmark_map):
 MATERIAL_TERMS = re.compile(
     r"\b(launch|launched|introducing|available|availability|rollout|preview|"
     r"general availability|pricing|price|per million|token|subscription|plan|"
-    r"enterprise|model|API|access|rate limit|context window)\b|[$€£]",
+    r"enterprise|model|API|access|rate limit|context window|incident|outage|"
+    r"degraded|disruption|currently experiencing issues|partial outage|major outage|"
+    r"investigating|identified|working on a fix|rolling out the fix|resolved)\b|[$€£]",
     re.IGNORECASE,
 )
 
@@ -152,6 +154,8 @@ def classify_lane(source, added_text):
         return "COST", "Published API pricing may have changed; exact model, token units, and effective date require source review."
     if source["lane_hint"] == "PACKAGING":
         return "PACKAGING", "Published subscription or packaging terms may have changed; included products, usage limits, eligibility, and effective date require source review."
+    if source["lane_hint"] == "ACCESS":
+        return "ACCESS", "A provider-reported service incident or availability change may affect workflow execution; exact cohort, platform/version, and interval require source review."
     lowered = added_text.lower()
     if any(term in lowered for term in ("pricing", "price", "per million", "token", "$", "€", "£")):
         return "COST", "A pricing-related source passage changed; exact price and scope require source review."
@@ -172,6 +176,16 @@ def observe_source(source, fetcher=None):
     text = extract_text(body)
     digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
     return {"source_id": source["id"], "text": text, "sha256": digest}
+
+
+def has_active_status_signal(text):
+    return bool(re.search(
+        r"currently experiencing issues|degraded performance|partial outage|major outage|"
+        r"investigating (?:an? )?issue|identified (?:an? )?issue|working on (?:a )?fix|"
+        r"rolling out the fix",
+        text,
+        re.IGNORECASE,
+    ))
 
 
 def diff_candidate(source, previous_text, current_text, benchmark_map=None):
@@ -197,8 +211,10 @@ def diff_candidate(source, previous_text, current_text, benchmark_map=None):
         "surface_identity": {
             "provider": source["provider"],
             "product": source["product"],
-            "surface": "PROVIDER_NEWS_OR_PRICING_PAGE",
-            "transport": "PUBLIC_WEB_PAGE",
+            "surface": source.get("observed_surface", "PROVIDER_NEWS_OR_PRICING_PAGE"),
+            "transport": source.get("observed_transport", "PUBLIC_WEB_PAGE"),
+            "affected_surface_candidate": source.get("affected_surface_candidate", "UNRESOLVED_UNTIL_PRODUCT_IS_IDENTIFIED"),
+            "affected_surface_transport_candidate": source.get("affected_surface_transport_candidate", "UNRESOLVED_UNTIL_PRODUCT_IS_IDENTIFIED"),
             "model_reported": "REQUIRES_SOURCE_REVIEW",
             "account_context": "PUBLIC_PAGE",
             "personalization_state": "NOT_APPLICABLE_OR_UNKNOWN",
@@ -230,9 +246,17 @@ def run_monitor(fetcher=None, state_path=STATE_PATH, receipt_path=RECEIPT_PATH, 
         old = previous.get(source["id"])
         if old and old.get("sha256") != observed["sha256"]:
             candidate = diff_candidate(source, old.get("text", ""), observed["text"], benchmark_map)
+            if source.get("source_type") == "STATUS_PAGE" and candidate is None and has_active_status_signal(observed["text"]):
+                candidate = diff_candidate(source, "", observed["text"], benchmark_map)
             if candidate:
                 candidate["prior_sha256"] = old["sha256"]
                 candidate["current_sha256"] = observed["sha256"]
+                candidates.append(candidate)
+        elif not old and source.get("source_type") == "STATUS_PAGE" and has_active_status_signal(observed["text"]):
+            candidate = diff_candidate(source, "", observed["text"], benchmark_map)
+            if candidate:
+                candidate["current_sha256"] = observed["sha256"]
+                candidate["source_state"] = "ACTIVE_INCIDENT_ON_FIRST_OBSERVATION"
                 candidates.append(candidate)
         next_state[source["id"]] = observed
 
@@ -245,7 +269,7 @@ def run_monitor(fetcher=None, state_path=STATE_PATH, receipt_path=RECEIPT_PATH, 
         "benchmark_map_id": benchmark_map["identifier"],
         "benchmark_map_sha256": hashlib.sha256(Path(benchmark_map_path).read_bytes()).hexdigest(),
         "workbench_map_state": "CROSS_PROVIDER_BENCHMARK_MAP_LOADED",
-        "run_state": "BASELINE_INITIALIZED" if first_run else ("SOURCE_CHANGE_CANDIDATES" if candidates else "STAY"),
+        "run_state": "SOURCE_CHANGE_CANDIDATES" if candidates else ("BASELINE_INITIALIZED" if first_run else "STAY"),
         "source_count": len(SOURCES),
         "sources_observed": len(next_state),
         "candidates": candidates,
