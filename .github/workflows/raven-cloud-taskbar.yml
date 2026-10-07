@@ -105,7 +105,7 @@ jobs:
       - name: Package taskbar artifact
         run: |
           cd RavenCloudTaskbar
-          zip -qr ../FR0333_RAVEN_CLOUD_TASKBAR_v1.zip dist README.md README_provider_change_watch_0001.md taskbars.json lumen_gateway.json cloud_provider_slots.json build.py monitor_sebring.py provider_change_monitor.py
+          zip -qr ../FR0333_RAVEN_CLOUD_TASKBAR_v1.zip dist README.md README_provider_change_watch_0001.md fr0333_provider_change_watch_0001.json taskbars.json lumen_gateway.json cloud_provider_slots.json build.py monitor_sebring.py provider_change_monitor.py
           cd ..
           sha256sum FR0333_RAVEN_CLOUD_TASKBAR_v1.zip > FR0333_RAVEN_CLOUD_TASKBAR_v1.zip.sha256
       - name: Upload taskbar artifact
