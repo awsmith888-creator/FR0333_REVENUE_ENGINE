@@ -74,11 +74,13 @@ def classify_lane(source, added_text):
     lowered = added_text.lower()
     if any(term in lowered for term in ("pricing", "price", "per million", "token", "$", "€", "£")):
         return "COST", "A pricing-related source passage changed; exact price and scope require source review."
+    if any(term in lowered for term in ("launch", "launched", "introducing", "new model", "model release", "model")):
+        return "MODEL_CAPABILITY", "A product or model announcement passage changed; exact model and benchmark effect require source review."
     if any(term in lowered for term in ("available", "availability", "access", "rollout", "preview", "general availability")):
         return "ACCESS", "A source passage about access or availability changed; eligibility and release state require source review."
     if any(term in lowered for term in ("plan", "subscription", "enterprise", "package", "tier")):
         return "PACKAGING", "A source passage about plans or packaging changed; included features and limits require source review."
-    if any(term in lowered for term in ("launch", "launched", "introducing", "model", "api")):
+    if "api" in lowered:
         return "MODEL_CAPABILITY", "A product or model announcement passage changed; exact model and benchmark effect require source review."
     return "UNRESOLVED", "The page changed, but no benchmark lane can be assigned from the changed text."
 
