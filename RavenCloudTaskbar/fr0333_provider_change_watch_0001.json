@@ -1,0 +1,33 @@
+{
+  "identifier": "FR0333.PROVIDER.CHANGE.SOURCE.SCREEN.0001",
+  "version": "1.0.0",
+  "status": "ENGINE_SOURCE_SCREEN / HUMAN_REVIEW_REQUIRED",
+  "taskbar_binding": "TB.SONAR",
+  "execution": {
+    "workflow": ".github/workflows/raven-cloud-taskbar.yml",
+    "cadence": "EXISTING_HOURLY_ENGINE_RUN",
+    "first_successful_run": "INITIALIZE_BASELINE",
+    "state_path": ".raven-cache/provider-change/provider-pages.json",
+    "receipt_path": "RavenCloudTaskbar/dist/provider_change_monitor.json"
+  },
+  "scope": {
+    "providers": ["openai", "anthropic", "google", "xai"],
+    "change_classes": ["PRODUCT_LAUNCH", "PRICE", "PLAN", "ACCESS", "PACKAGING"],
+    "surface_dimensions": ["provider", "product", "surface", "transport", "model_reported", "account_context", "personalization_state", "session_context"]
+  },
+  "workbench_map_state": "UNRESOLVED_DISTINCT_WORKBENCH_MAP_NOT_LOCATED",
+  "sources": [
+    {"id":"OPENAI.NEWS","provider":"openai","product":"OpenAI products","url":"https://openai.com/news/","lane_hint":"MODEL_CAPABILITY"},
+    {"id":"OPENAI.API.PRICING","provider":"openai","product":"OpenAI API","url":"https://developers.openai.com/api/docs/pricing","lane_hint":"COST"},
+    {"id":"ANTHROPIC.NEWS","provider":"anthropic","product":"Claude products","url":"https://www.anthropic.com/news","lane_hint":"MODEL_CAPABILITY"},
+    {"id":"ANTHROPIC.API.PRICING","provider":"anthropic","product":"Claude API","url":"https://docs.anthropic.com/en/docs/about-claude/pricing","lane_hint":"COST"},
+    {"id":"GOOGLE.DEEPMIND.NEWS","provider":"google","product":"Google DeepMind products","url":"https://deepmind.google/blog/","lane_hint":"MODEL_CAPABILITY"},
+    {"id":"GOOGLE.GEMINI.API.PRICING","provider":"google","product":"Gemini API","url":"https://ai.google.dev/gemini-api/docs/pricing","lane_hint":"COST"},
+    {"id":"XAI.NEWS","provider":"xai","product":"Grok products","url":"https://x.ai/news","lane_hint":"MODEL_CAPABILITY"},
+    {"id":"XAI.API.PRICING","provider":"xai","product":"Grok API","url":"https://docs.x.ai/developers/pricing","lane_hint":"COST"}
+  ],
+  "evidence_boundary": "PAGE_CHANGE != VERIFIED_PRODUCT_CHANGE; OBSERVED != CORRELATED != CAUSAL",
+  "notification_surface": "GITHUB_ACTION_SUMMARY_AND_JSON_RECEIPT",
+  "external_message": "NOT_SENT",
+  "historical_baseline_mutation": false
+}
