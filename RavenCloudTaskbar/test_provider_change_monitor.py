@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from provider_change_monitor import SOURCES, diff_candidate, extract_text, run_monitor
+from provider_change_monitor import CONFIG, SOURCES, diff_candidate, extract_text, run_monitor
 
 
 class ProviderChangeMonitorTests(unittest.TestCase):
@@ -34,6 +34,11 @@ class ProviderChangeMonitorTests(unittest.TestCase):
             self.assertEqual(first["run_state"], "BASELINE_INITIALIZED")
             self.assertEqual(second["run_state"], "STAY")
             self.assertEqual(json.loads(receipt.read_text())["source_count"], len(SOURCES))
+
+    def test_manifest_binds_existing_sonar_without_new_taskbar_slot(self):
+        self.assertEqual(CONFIG["taskbar_binding"], "TB.SONAR")
+        self.assertEqual(len(SOURCES), 8)
+        self.assertFalse(CONFIG["historical_baseline_mutation"])
 
 
 if __name__ == "__main__":
