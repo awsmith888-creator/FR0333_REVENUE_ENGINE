@@ -6,11 +6,13 @@
 
 ## What runs
 
-The engine fetches eight allowlisted official pages: product/news pages and API pricing pages for OpenAI, Anthropic, Google DeepMind/Gemini, and xAI. It stores page-text hashes and prior text in the workflow's existing Raven cache. The first successful run establishes the baseline. Later runs compare each current page with its last successful observation and emit a receipt for page changes.
+The engine fetches twelve allowlisted official pages: provider product/news pages, API pricing pages, and consumer plan pages for OpenAI, Anthropic, Google DeepMind/Gemini, and xAI. It stores page-text hashes and prior text in the workflow's existing Raven cache. The first successful run establishes the baseline. Later runs compare each current page with its last successful observation and emit a receipt for page changes.
 
 The separate `fr0333_provider_change_watch_0001.json` manifest binds the screen to existing `TB.SONAR`; the hash-pinned `taskbars.json` record is left unchanged.
 
-Changed pricing pages map to the `COST` review lane. News-page diffs are screened for model, availability, access, cost, and packaging terms. If the changed text does not support a lane, the record is held as unresolved. The source identity fields retain provider, product, surface, and transport separately.
+Each run loads the existing `FR0333.FRONTIER.MODEL.MASTER.BENCHMARK.0001` provider inventory and workload benchmark, records its SHA-256 in the receipt, and matches each candidate to the provider row. Candidate records carry that row's documented frontier options, plan signal, strength tags, existing workload candidates, comparator assumptions, and the unchanged `U.21.UNMEASURED` performance state. Cost candidates point to the `COST` measure and `cost_or_plan_context`; plan/access candidates point to `PROVIDER_ELIGIBILITY_GATE` and plan-access boundaries; model candidates map from existing provider strength tags to workload candidates. These are review routes, not measured outcomes.
+
+The surface comparison keeps the observed official web page separate from the affected product surface. API-price pages map as API observations; news-page candidates keep product/surface unresolved until the exact announcement is identified. Provider row matches therefore return `PROVIDER_ROW_MATCHED_SURFACE_REVIEW_REQUIRED`. The cross-provider map's runtime states remain controlling: OpenAI is scoped to the current ChatGPT environment, while Anthropic, Google, and xAI remain `U.21.NOT_CONNECTED` in the master. The evidence does not establish cross-provider runtime access.
 
 ## Evidence and notification boundary
 
@@ -18,7 +20,7 @@ Changed pricing pages map to the `COST` review lane. News-page diffs are screene
 - `PAGE_CHANGE != VERIFIED_PRODUCT_CHANGE`.
 - The monitor does not claim that a launch, price, eligibility change, or general availability occurred.
 - `benchmark_lane_candidate` and `benchmark_assumption_candidate` are screening labels for human review.
-- The distinct Workbench cross-provider map remains unresolved; the receipt says so and does not invent its assumptions.
+- The receipt names and hashes the existing benchmark map. It does not rewrite that baseline or promote candidates into verified map updates.
 - Facts from provider announcements and interpretation remain separate.
 - Findings appear in the GitHub Actions run summary and a downloadable JSON receipt. No message, issue, or public post is sent.
 
