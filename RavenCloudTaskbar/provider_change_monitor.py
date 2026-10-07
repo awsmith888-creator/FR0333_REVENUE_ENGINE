@@ -21,17 +21,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 STATE_PATH = Path(".raven-cache/provider-change/provider-pages.json")
 RECEIPT_PATH = ROOT / "dist/provider_change_monitor.json"
-
-SOURCES = [
-    {"id": "OPENAI.NEWS", "provider": "openai", "product": "OpenAI products", "url": "https://openai.com/news/", "lane_hint": "MODEL_CAPABILITY"},
-    {"id": "OPENAI.API.PRICING", "provider": "openai", "product": "OpenAI API", "url": "https://developers.openai.com/api/docs/pricing", "lane_hint": "COST"},
-    {"id": "ANTHROPIC.NEWS", "provider": "anthropic", "product": "Claude products", "url": "https://www.anthropic.com/news", "lane_hint": "MODEL_CAPABILITY"},
-    {"id": "ANTHROPIC.API.PRICING", "provider": "anthropic", "product": "Claude API", "url": "https://docs.anthropic.com/en/docs/about-claude/pricing", "lane_hint": "COST"},
-    {"id": "GOOGLE.DEEPMIND.NEWS", "provider": "google", "product": "Google DeepMind products", "url": "https://deepmind.google/blog/", "lane_hint": "MODEL_CAPABILITY"},
-    {"id": "GOOGLE.GEMINI.API.PRICING", "provider": "google", "product": "Gemini API", "url": "https://ai.google.dev/gemini-api/docs/pricing", "lane_hint": "COST"},
-    {"id": "XAI.NEWS", "provider": "xai", "product": "Grok products", "url": "https://x.ai/news", "lane_hint": "MODEL_CAPABILITY"},
-    {"id": "XAI.API.PRICING", "provider": "xai", "product": "Grok API", "url": "https://docs.x.ai/developers/pricing", "lane_hint": "COST"},
-]
+CONFIG_PATH = ROOT / "fr0333_provider_change_watch_0001.json"
+CONFIG = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+SOURCES = CONFIG["sources"]
 
 MATERIAL_TERMS = re.compile(
     r"\b(launch|launched|introducing|available|availability|rollout|preview|"
@@ -156,6 +148,8 @@ def run_monitor(fetcher=None, state_path=STATE_PATH, receipt_path=RECEIPT_PATH):
     receipt = {
         "identifier": "FR0333.PROVIDER.CHANGE.SOURCE.SCREEN.0001",
         "observed_at_utc": datetime.now(timezone.utc).isoformat(),
+        "taskbar_binding": CONFIG["taskbar_binding"],
+        "workbench_map_state": CONFIG["workbench_map_state"],
         "run_state": "BASELINE_INITIALIZED" if first_run else ("SOURCE_CHANGE_CANDIDATES" if candidates else "STAY"),
         "source_count": len(SOURCES),
         "sources_observed": len(next_state),
