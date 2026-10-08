@@ -1,0 +1,19 @@
+{
+  "id": "FR0333.ADOBE.MARIAH.CAREY.CHOMP.0001",
+  "parent_id": "FR0333.AI.IMAGE.TOOL.METRICS.0001",
+  "version": "1.0.0",
+  "state": "LOCAL_TEST_VERIFIED",
+  "binding": "CHILD_REFERENCE_PACK_NO_NEW_GLOBAL_POSITION",
+  "statistical_bits": 51,
+  "money_bits": 9,
+  "total_bits": 60,
+  "human_line_periods": 9,
+  "data_holds": 7,
+  "queue_contract": "N_IN_N_OUT_ONE_9_16_CANVAS_PER_SLOT_NO_COLLAGE_NO_DUPLICATE",
+  "identity_gate": "ATTACHED_IMAGE_REQUIRED_REFERENCE_PACK_NOT_AUTHORIZATION",
+  "money_gate": "NO_CROSS_TYPE_AGGREGATION_NO_NET_WORTH_INFERENCE",
+  "runtime_gate": "LOCAL_SCHEMA_VALIDATION_NOT_EXTERNAL_ADOBE_EXECUTION",
+  "automation": "NONE",
+  "humanlock": true,
+  "evidence_gate": "OBSERVED != CORRELATED != CAUSAL"
+}

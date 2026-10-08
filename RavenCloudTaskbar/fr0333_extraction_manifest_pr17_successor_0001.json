@@ -1,0 +1,140 @@
+{
+  "manifest_id": "FR0333.EXTRACTION.MANIFEST.PR17.SUCCESSOR.0001",
+  "source_lane": "PASSIVE.WITNESS",
+  "target_lane": "ACTIVE.EXPERIMENTAL",
+  "source": {
+    "repository": "awsmith888-creator/FR0333_REVENUE_ENGINE",
+    "pr": 17,
+    "head_sha": "628b975e58703fe11450a4e02e496168e6cc115b",
+    "changed_file_count": 12
+  },
+  "target": {
+    "base_sha": "3a85b4ed97119f9d82eb963b10b6533896a0a91f",
+    "successor_branch": "experimental-pr17-successor-0001",
+    "payload_head_sha": "e37e692861c96c216932b41647cbb096b1d36d23"
+  },
+  "protected_artifacts": {
+    "RavenCloudTaskbar/taskbars.json": "056d63083395b5d092a23c4764cc81520acad8cb"
+  },
+  "classification_balance": {
+    "source_delta": 12,
+    "copy": 9,
+    "transform": 2,
+    "omit": 1,
+    "unclassified": 0
+  },
+  "entries": [
+    {
+      "source_path": ".github/workflows/raven-cloud-taskbar.yml",
+      "destination_path": ".github/workflows/raven-cloud-taskbar.yml",
+      "classification": "TRANSFORM",
+      "source_blob_sha": "ddf6bd86e130594d8910312d854d07d2c050975e",
+      "target_blob_sha": "05ee187332dd44da9270fdd50663efe237283986",
+      "transformation_receipt": {
+        "ast_delta": "EXPLAINED",
+        "contract_delta": "EXTENDED_VALIDATION_ONLY",
+        "justification": "Preserve current-main workflow, remove stale source-branch trigger, add PR17 successor E3/E4 validation, deterministic migrated tests, and Stronghold blob pin check.",
+        "expected_behavioral_delta": "Adds bounded repository validation only; does not add external provider execution or autonomous promotion.",
+        "review_state": "PENDING_E3_E4"
+      }
+    },
+    {
+      "source_path": "RavenCloudTaskbar/README.md",
+      "destination_path": "RavenCloudTaskbar/README.md",
+      "classification": "TRANSFORM",
+      "source_blob_sha": "f2fa1bf0854d84e26507f0b59f0d95ed87a14dd2",
+      "target_blob_sha": "d50171b262800e7cef52b755539da7b435b267e9",
+      "transformation_receipt": {
+        "ast_delta": "NOT_APPLICABLE_DOCUMENTATION",
+        "contract_delta": "NONE",
+        "justification": "Apply PR17 documentation additively to current-main README without replacing newer Stronghold and Find Hub material.",
+        "expected_behavioral_delta": "NONE",
+        "review_state": "PENDING_E3_E4"
+      }
+    },
+    {
+      "source_path": "RavenCloudTaskbar/README_ai_image_tool_metrics.md",
+      "destination_path": "RavenCloudTaskbar/README_ai_image_tool_metrics.md",
+      "classification": "COPY",
+      "source_blob_sha": "7d4da30d4af6cde9bb82e65a484eccc4c36f911b",
+      "target_blob_sha": "7d4da30d4af6cde9bb82e65a484eccc4c36f911b",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/README_mariah_carey_chomp.md",
+      "destination_path": "RavenCloudTaskbar/README_mariah_carey_chomp.md",
+      "classification": "COPY",
+      "source_blob_sha": "581c89a6a9fa7860e647ccdf89da4677d264867c",
+      "target_blob_sha": "581c89a6a9fa7860e647ccdf89da4677d264867c",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/ai_image_tool_metrics.py",
+      "destination_path": "RavenCloudTaskbar/ai_image_tool_metrics.py",
+      "classification": "COPY",
+      "source_blob_sha": "9fce3f359413e240ed5fdf5dcaa5e11459697d39",
+      "target_blob_sha": "9fce3f359413e240ed5fdf5dcaa5e11459697d39",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/ai_image_tool_metrics_inventory.json",
+      "destination_path": "RavenCloudTaskbar/ai_image_tool_metrics_inventory.json",
+      "classification": "COPY",
+      "source_blob_sha": "5205d91792726c32688615d0e031a72b5216caf8",
+      "target_blob_sha": "5205d91792726c32688615d0e031a72b5216caf8",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/mariah_carey_chomp.py",
+      "destination_path": "RavenCloudTaskbar/mariah_carey_chomp.py",
+      "classification": "COPY",
+      "source_blob_sha": "07aec8b63a490df1120af817377600b445a16847",
+      "target_blob_sha": "07aec8b63a490df1120af817377600b445a16847",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/mariah_carey_chomp_inventory.json",
+      "destination_path": "RavenCloudTaskbar/mariah_carey_chomp_inventory.json",
+      "classification": "COPY",
+      "source_blob_sha": "9aea0a4b437c6e2647b690c9a891657ead837e29",
+      "target_blob_sha": "9aea0a4b437c6e2647b690c9a891657ead837e29",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/mariah_carey_chomp_register.json",
+      "destination_path": "RavenCloudTaskbar/mariah_carey_chomp_register.json",
+      "classification": "COPY",
+      "source_blob_sha": "deb027081b8890c7e1ad11bed4db66c2c17a3900",
+      "target_blob_sha": "deb027081b8890c7e1ad11bed4db66c2c17a3900",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/taskbars.json",
+      "classification": "OMIT",
+      "source_blob_sha": "046f5a827c939228e3f9acd1193f028850ed992a",
+      "reason": "STRONGHOLD_PROTECTED",
+      "protected_target_blob_sha": "056d63083395b5d092a23c4764cc81520acad8cb"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/test_ai_image_tool_metrics.py",
+      "destination_path": "RavenCloudTaskbar/test_ai_image_tool_metrics.py",
+      "classification": "COPY",
+      "source_blob_sha": "62b381c74dff719c3e1a6660331c2b73f887346b",
+      "target_blob_sha": "62b381c74dff719c3e1a6660331c2b73f887346b",
+      "semantic_delta": "NONE_EXPECTED"
+    },
+    {
+      "source_path": "RavenCloudTaskbar/test_mariah_carey_chomp.py",
+      "destination_path": "RavenCloudTaskbar/test_mariah_carey_chomp.py",
+      "classification": "COPY",
+      "source_blob_sha": "a03374fb56e3a2df6edc4b0c1eed7141819702ec",
+      "target_blob_sha": "a03374fb56e3a2df6edc4b0c1eed7141819702ec",
+      "semantic_delta": "NONE_EXPECTED"
+    }
+  ],
+  "controller_artifacts": [
+    "RavenCloudTaskbar/fr0333_extraction_manifest_pr17_successor_0001.json",
+    "RavenCloudTaskbar/fr0333_pr17_successor_validate.py"
+  ],
+  "promotion": "HUMANLOCK_REQUIRED"
+}
