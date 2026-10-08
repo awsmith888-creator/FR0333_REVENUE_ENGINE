@@ -1,0 +1,32 @@
+name: FR0333 AI Self Improvement 0004 Validate
+
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004.json'
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004_validate.py'
+      - 'RavenCloudTaskbar/test_fr0333_ai_self_improvement_0004_validate.py'
+      - '.github/workflows/fr0333-ai-self-improvement-0004.yml'
+  push:
+    branches:
+      - feature/ai-self-improvement-0004
+    paths:
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004.json'
+      - 'RavenCloudTaskbar/fr0333_ai_self_improvement_0004_validate.py'
+      - 'RavenCloudTaskbar/test_fr0333_ai_self_improvement_0004_validate.py'
+      - '.github/workflows/fr0333-ai-self-improvement-0004.yml'
+
+jobs:
+  validate-bounded-rsi-0004:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate candidate specification
+        working-directory: RavenCloudTaskbar
+        run: python3 fr0333_ai_self_improvement_0004_validate.py
+      - name: Run anti-bypass regression tests
+        working-directory: RavenCloudTaskbar
+        run: python3 -m unittest -v test_fr0333_ai_self_improvement_0004_validate.py
