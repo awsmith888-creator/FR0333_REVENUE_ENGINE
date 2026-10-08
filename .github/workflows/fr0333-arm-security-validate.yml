@@ -1,0 +1,25 @@
+name: FR0333 ARM Security Candidate Validate
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_arm_security_gate.py'
+      - 'RavenCloudTaskbar/test_fr0333_arm_security_gate.py'
+      - 'RavenCloudTaskbar/fr0333_audit_control_boundary_genius.py'
+      - '.github/workflows/fr0333-arm-security-validate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  security-candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: ARM security candidate tests
+        run: python -m unittest RavenCloudTaskbar.test_fr0333_arm_security_gate -v
+      - name: Existing audit boundary regression
+        run: python -m unittest RavenCloudTaskbar.test_fr0333_audit_control_boundary_genius -v
+      - name: ARM preflight receipt
+        run: python -m RavenCloudTaskbar.fr0333_arm_security_gate
