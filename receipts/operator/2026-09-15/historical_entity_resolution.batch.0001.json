@@ -1,0 +1,37 @@
+{
+  "record_id": "FR0333.HISTORICAL.ENTITY.RESOLUTION.BATCH.0001",
+  "dataset_id": "SLAVE_TRADE_INVESTOR_13K.SYNTHETIC.BENCHMARK",
+  "source_mode": "SYNTHETIC.NO.EXTERNAL.CLAIMS",
+  "cases": [
+    {
+      "case_id": "CASE.01.PERSISTENT.ID",
+      "left": {"record_id": "L1", "raw_name": "John Smith", "archive_entity_id": "INV-0001"},
+      "right": {"record_id": "R1", "raw_name": "J. Smith", "archive_entity_id": "INV-0001"},
+      "expected_decision": "T.20.SAME.ENTITY"
+    },
+    {
+      "case_id": "CASE.02.EXACT.NORMALIZED.NAME",
+      "left": {"record_id": "L2", "raw_name": "Mary Ann Brown"},
+      "right": {"record_id": "R2", "raw_name": "  mary   ann brown  "},
+      "expected_decision": "U.21.CANDIDATE.MATCH"
+    },
+    {
+      "case_id": "CASE.03.ORTHOGRAPHIC.VARIANT",
+      "left": {"record_id": "L3", "raw_name": "William Smythe"},
+      "right": {"record_id": "R3", "raw_name": "William Smyth"},
+      "expected_decision": "U.21.CANDIDATE.MATCH"
+    },
+    {
+      "case_id": "CASE.04.SHARED.CONTEXT.ONLY",
+      "left": {"record_id": "L4", "raw_name": "Edward Clarke", "title": "Director", "company": "Example Company"},
+      "right": {"record_id": "R4", "raw_name": "Thomas Green", "title": "Director", "company": "Example Company"},
+      "expected_decision": "NO.IDENTITY.INFERENCE"
+    },
+    {
+      "case_id": "CASE.05.CHRONOLOGY.CONFLICT",
+      "left": {"record_id": "L5", "raw_name": "Anne Jones", "chronology_conflict": true},
+      "right": {"record_id": "R5", "raw_name": "Anne Jones"},
+      "expected_decision": "F.6.SAME.ENTITY"
+    }
+  ]
+}
