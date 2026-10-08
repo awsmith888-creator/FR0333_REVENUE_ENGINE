@@ -1,0 +1,38 @@
+name: FR0333 Adobe Package Certificate Audit 0001
+
+on:
+  pull_request:
+    paths:
+      - "RavenCloudTaskbar/**"
+      - ".github/workflows/fr0333-adobe-package-certificate-audit-0001.yml"
+  push:
+    branches:
+      - "audit/adobe-package-certificate-hardening-0001"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout literal source revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+
+      - name: Enforce literal revision binding
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+
+      - name: Validate Adobe package and certificate bindings
+        run: |
+          python3 RavenCloudTaskbar/fr0333_adobe_package_certificate_validate.py
+
+      - name: Run fail-closed mutation tests
+        run: |
+          python3 -m unittest RavenCloudTaskbar/test_fr0333_adobe_package_certificate_validate.py -v
