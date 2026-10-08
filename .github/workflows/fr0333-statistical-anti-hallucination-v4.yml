@@ -1,0 +1,29 @@
+name: FR0333 Statistical Anti-Hallucination V4
+
+on:
+  push:
+    paths:
+      - "src/statistical_anti_hallucination_v4.py"
+      - "tests/test_statistical_anti_hallucination_v4.py"
+      - "receipts/operator/2026-09-20/statistical_anti_hallucination.fixture.v4.json"
+      - ".github/workflows/fr0333-statistical-anti-hallucination-v4.yml"
+  pull_request:
+    paths:
+      - "src/statistical_anti_hallucination_v4.py"
+      - "tests/test_statistical_anti_hallucination_v4.py"
+      - "receipts/operator/2026-09-20/statistical_anti_hallucination.fixture.v4.json"
+      - ".github/workflows/fr0333-statistical-anti-hallucination-v4.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-statistical-hardener-v4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run v4 anti-hallucination regression suite
+        run: python -m unittest -v tests.test_statistical_anti_hallucination_v4
