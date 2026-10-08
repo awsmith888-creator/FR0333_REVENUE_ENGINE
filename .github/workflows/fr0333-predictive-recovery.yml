@@ -13,4 +13,4 @@ jobs:
         with:
           python-version: '3.11'
       - name: Run isolated recovery regression suite
-        run: python -m unittest discover -s tests -p 'test_fr0333_recovery.py' -v
+        run: python -m unittest discover -s tests -p 'test_fr0333*.py' -v
