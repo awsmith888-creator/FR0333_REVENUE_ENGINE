@@ -1,0 +1,18 @@
+{
+  "fixture_suite_id": "FR0333.M365.INTENT.GATE.METRICS.FIXTURES.0001",
+  "state": "LOCAL.EVALUATION",
+  "fixtures": [
+    {"fixture_id":"F.01","source_intent":"Classify this request without creating a route","intent_class":"INTERNAL.CLASSIFICATION","confidence":"EXACT.MATCH","candidate_routes":[],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.02","source_intent":"Organize the policy documents in SharePoint","intent_class":"ROUTE.CANDIDATE","confidence":"EXACT.MATCH","candidate_routes":["SHAREPOINT"],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.03","source_intent":"Draft a Power Automate workflow candidate","intent_class":"ROUTE.CANDIDATE","confidence":"EXACT.MATCH","candidate_routes":["POWER_AUTOMATE"],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.04","source_intent":"Map the request to a Power Apps candidate","intent_class":"ROUTE.CANDIDATE","confidence":"EXACT.MATCH","candidate_routes":["POWER_APPS"],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.05","source_intent":"Map the analytics request to Power BI","intent_class":"ROUTE.CANDIDATE","confidence":"EXACT.MATCH","candidate_routes":["POWER_BI"],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.06","source_intent":"Store the document and prepare a workflow candidate","intent_class":"MULTI.ROUTE.CANDIDATE","confidence":"STRONG.MATCH","candidate_routes":["SHAREPOINT","POWER_AUTOMATE"],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.07","source_intent":"Create an analytics candidate with an Adobe cross rail","intent_class":"CROSS.RAIL.CANDIDATE","confidence":"STRONG.MATCH","candidate_routes":["POWER_BI"],"cross_rail":"ADOBE","external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.08","source_intent":"Run the external workflow now","intent_class":"EXTERNAL.ACTION.REQUESTED","confidence":"EXACT.MATCH","candidate_routes":["POWER_AUTOMATE"],"external_action_requested":true,"authorized_external_route":true},
+    {"fixture_id":"F.09","source_intent":"Put it over there in the system","intent_class":"AMBIGUOUS","confidence":"AMBIGUOUS","candidate_routes":[],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.10","source_intent":"Route this to a provider outside the matrix","intent_class":"NO.MATCH","confidence":"NO.MATCH","candidate_routes":[],"external_action_requested":false,"authorized_external_route":false},
+    {"fixture_id":"F.11","source_intent":"Use an unauthorized external route","intent_class":"UNAUTHORIZED.EXTERNAL.ROUTE","confidence":"EXACT.MATCH","candidate_routes":[],"external_action_requested":true,"authorized_external_route":false},
+    {"fixture_id":"F.12","source_intent":"Organize the policy documents in SharePoint","intent_class":"ROUTE.CANDIDATE","confidence":"STRONG.MATCH","candidate_routes":["SHAREPOINT"],"external_action_requested":false,"authorized_external_route":false}
+  ]
+}
