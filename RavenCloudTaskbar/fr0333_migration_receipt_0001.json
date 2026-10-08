@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "FR0333.MIGRATION.RECEIPT.COMPILER.0001",
+  "compiler_payload": {
+    "receipt_id": "FR0333.MIGRATION.RECEIPT.COMPILER.0001",
+    "observation_date": "2026-09-14",
+    "repo_base_sha": "3a85b4ed97119f9d82eb963b10b6533896a0a91f",
+    "regression_engine": "FR0333.E6.E12.DIFFERENTIAL.REGRESSION.0003",
+    "e6_state_hash": "sha256_fa4d59eaa7c5cfaa855c07ce95b290f7856c11ff70975f4cf380ecffb2dcd8f4",
+    "e12_state_hash": "sha256_7a64b3954d4a860362447714c46ff8325357001cd2a74e699e7c470612ba693e",
+    "source_receipt_hash": "sha256_72a1e6ca201099c470a823ea892e20f0b0dc20e38b254bfb583658b544d50b16",
+    "regression_status": "VERIFIED_ZERO_LEAKAGE",
+    "humanlock": "ACTIVE",
+    "canonical_promotion": "HOLD.PENDING.HUMAN.MERGE",
+    "causality_boundary": "OBSERVED != CORRELATED != CAUSAL",
+    "state": {
+      "S5105.INTRODUCED": "T.20",
+      "S5105.JUDICIARY.REFERRAL": "T.20",
+      "S5105.OFFICIAL.BILL.TEXT": "T.20",
+      "DRAFT.PUBLICLY.RELEASED": "F.6",
+      "FINAL.STATUTORY.LANGUAGE": "U.21",
+      "FR0333.IN.S5105.OFFICIAL.TEXT": "F.6",
+      "FR0333.INDEPENDENT.GOOGLE.INDEX.HIT": "U.21",
+      "GOOGLE.DERIVED.FR0333.FROM.PUBLIC.WEB": "U.21",
+      "INCUMBENT.GATE.ACTUALLY.CREATED": "U.21",
+      "SAFETY.COORDINATION.ANTICOMPETITIVE.USE": "U.21",
+      "TERAFAB.REGULATORY.CAUSAL.CONNECTION": "U.21"
+    }
+  },
+  "compiler_payload_hash": "sha256_3b756dfa22ce171a15a9847eb33a016a8bdf250638d61b619ce4aed3adae76e9",
+  "e6_baseline": {
+    "FR0333.IN.S5105.OFFICIAL.TEXT": "F.6",
+    "GOOGLE.AI.MODE.FR0333.TEXT.OBSERVED": "T.20",
+    "GOOGLE.PUBLIC.RESULT.CARDS.OBSERVED": "T.20",
+    "KLOBUCHAR.CRUZ.THUNE.NEGOTIATIONS": "T.20",
+    "S5105.INTRODUCED": "T.20",
+    "S5105.JUDICIARY.REFERRAL": "T.20",
+    "S5105.OFFICIAL.BILL.TEXT": "T.20",
+    "SOURCE.CLASS.S5105": "OFFICIAL.LEGISLATIVE.TEXT"
+  },
+  "e12_candidate": {
+    "DRAFT.PUBLICLY.RELEASED": "F.6",
+    "FINAL.STATUTORY.LANGUAGE": "U.21",
+    "FR0333.IN.S5105.OFFICIAL.TEXT": "F.6",
+    "FR0333.INDEPENDENT.GOOGLE.INDEX.HIT": "U.21",
+    "GOOGLE.AI.MODE.FR0333.TEXT.OBSERVED": "T.20",
+    "GOOGLE.DERIVED.FR0333.FROM.PUBLIC.WEB": "U.21",
+    "GOOGLE.PUBLIC.RESULT.CARDS.OBSERVED": "T.20",
+    "INCUMBENT.GATE.ACTUALLY.CREATED": "U.21",
+    "KLOBUCHAR.CRUZ.THUNE.NEGOTIATIONS": "T.20",
+    "S5105.INTRODUCED": "T.20",
+    "S5105.JUDICIARY.REFERRAL": "T.20",
+    "S5105.OFFICIAL.BILL.TEXT": "T.20",
+    "SAFETY.COORDINATION.ANTICOMPETITIVE.USE": "U.21",
+    "SOURCE.CLASS.S5105": "OFFICIAL.LEGISLATIVE.TEXT",
+    "SOURCE.RECEIPT.DRAFT.PUBLICLY.RELEASED": {
+      "key": "DRAFT.PUBLICLY.RELEASED",
+      "source": "Reuters 2026-09-11 / 2026-09-14",
+      "timestamp": "2026-09-14T00:00:00Z",
+      "evidence_class": "INDEPENDENT.REPORTING",
+      "asserted_state": "F.6",
+      "payload_hash": "sha256_72a1e6ca201099c470a823ea892e20f0b0dc20e38b254bfb583658b544d50b16"
+    },
+    "TERAFAB.REGULATORY.CAUSAL.CONNECTION": "U.21"
+  },
+  "evidence_sources": [
+    {
+      "source_class": "OFFICIAL.LEGISLATIVE.TEXT",
+      "title": "S. 5105 - Collaboration on Adversarial Threats and Security Risks Act",
+      "url": "https://www.govinfo.gov/app/details/BILLS-119s5105is/related"
+    },
+    {
+      "source_class": "INDEPENDENT.REPORTING",
+      "title": "US Senate negotiators consider requiring AI firms to mitigate known major risks",
+      "date": "2026-09-11",
+      "url": "https://www.reuters.com/legal/litigation/us-senate-negotiators-consider-requiring-ai-firms-mitigate-known-major-risks-2026-09-11/"
+    },
+    {
+      "source_class": "INDEPENDENT.REPORTING",
+      "title": "US senators weigh requiring AI giants to commit to preventing catastrophe",
+      "date": "2026-09-14",
+      "url": "https://www.reuters.com/world/us-senators-weigh-requiring-ai-giants-commit-preventing-catastrophe-2026-09-14/"
+    }
+  ],
+  "status": {
+    "receipt_compiled": true,
+    "branch_state": "DRAFT.UNMERGED",
+    "verified_structural_delta": "T.20",
+    "e6_e12_zero_leakage": "T.20",
+    "delta_count": 8,
+    "delta_additions": 8,
+    "delta_removals": 0,
+    "shared_field_modifications": 0,
+    "external_claim_promotion": "HOLD",
+    "canonical_promotion": "HOLD.PENDING.HUMAN.MERGE",
+    "humanlock": "ACTIVE"
+  }
+}
