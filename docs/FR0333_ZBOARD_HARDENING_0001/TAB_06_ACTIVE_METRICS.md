@@ -23,3 +23,17 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Acceptance state:** U.21.HOLD until executable tests, signed/traceable receipts, and HumanLock review establish compliance.
 
 **Backlink:** [Eight-tab index](README.md). **Scope:** proposal only; not a claim of installed control.
+
+## Recovery subcategory / RECOVERY.06
+
+**Recovery reference pin:** PIN.RECOVERY.06 (subordinate to PIN.HARD.06; original certificate unchanged).
+
+**Category:** Analysis and Conversion.
+
+**Proposed recovery function:** ACTIVE.METRICS evaluates provenance, authenticity claims, functional behavior, contradictions, vulnerabilities and salvage feasibility with reproducible, versioned tests. Track fabricated references and simulated capabilities presented as real using proposed PIN.EVOLUTION.HALLUCINATION.001.
+
+**Recovery safety invariant:** No verified-function claim without a linked test receipt and declared test scope; unknown dependencies HOLD.
+
+**Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
