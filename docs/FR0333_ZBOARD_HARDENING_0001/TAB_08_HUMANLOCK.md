@@ -37,3 +37,15 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
 
 **Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
+
+## Anti-looping cross-reference / PIN.HARD.04.ANTI.LOOP.001
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Cross-tab pin anchored to TAB.04; no ninth tab and no executable loop breaker claimed.
+
+**Rule:** REPEAT.DETECT -> COMPARE.DELTA -> INTERRUPT -> HOLD -> VERIFY.CHANGE -> RECOVER.
+
+**Authority:** PIN.HARD.08 / PIN.RECOVERY.08. Manual override or increase of a loop budget is a restricted change: require identified approver, justification, scope, expiry and a signed or traceable receipt. No automatic promotion after a local anti-loop test passes.
+
+**Test candidate:** Simulate autonomous threshold override (deny); verify documented authorized review path.
+
+**Required receipt:** Cycle identity, input/output/state digests, iteration number, elapsed window, progress delta, versioned policy threshold, affected dependency scope, decision, original evidence link and restart authorization when applicable.
