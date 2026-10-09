@@ -37,3 +37,15 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
 
 **Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
+
+## Anti-looping cross-reference / PIN.HARD.04.ANTI.LOOP.001
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Cross-tab pin anchored to TAB.04; no ninth tab and no executable loop breaker claimed.
+
+**Rule:** REPEAT.DETECT -> COMPARE.DELTA -> INTERRUPT -> HOLD -> VERIFY.CHANGE -> RECOVER.
+
+**Authority:** PIN.HARD.06 / PIN.RECOVERY.06. Compare a versioned operation identity, state fingerprint, output fingerprint, dependency path, and measurable progress delta over a configured observation window. Distinguish legitimate periodic work, bounded retries and idempotent repeats from non-progress loops, recursion cycles, or oscillation. Use a configurable retry/time/recurrence budget rather than an invented universal threshold.
+
+**Test candidate:** Distinguish a legitimate 10-cycle scheduled poll from 10 no-progress retries; flag A->B->A dependency cycle and alternating A/B state flapping.
+
+**Required receipt:** Cycle identity, input/output/state digests, iteration number, elapsed window, progress delta, versioned policy threshold, affected dependency scope, decision, original evidence link and restart authorization when applicable.
