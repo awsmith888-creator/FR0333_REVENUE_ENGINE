@@ -8,14 +8,14 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 
 | Tab | Certificate | Reference pin | Gate |
 |---|---|---|---|
-| 01 | [Detect anomalous signal, missing heartbeat, latency, or interrupted data before propagation.](TAB_01_Detect anomalous signal, missing heartbeat, latency, or interrupted data before propagation..md) | PIN.HARD.01 | U.21.HOLD |
-| 02 | [Enforce lane permissions, execution limits, and integrity of the shared control kernel.](TAB_02_Enforce lane permissions, execution limits, and integrity of the shared control kernel..md) | PIN.HARD.02 | U.21.HOLD |
-| 03 | [Prevent faulty processing node from contaminating other nodes or lanes.](TAB_03_Prevent faulty processing node from contaminating other nodes or lanes..md) | PIN.HARD.03 | U.21.HOLD |
-| 04 | [Give one authoritative supervisory gate the ability to interrupt faulty operations.](TAB_04_Give one authoritative supervisory gate the ability to interrupt faulty operations..md) | PIN.HARD.04 | U.21.HOLD |
-| 05 | [Maintain immutable or tamper-evident evidence of original inputs, transitions, and recovery.](TAB_05_Maintain immutable or tamper-evident evidence of original inputs, transitions, and recovery..md) | PIN.HARD.05 | U.21.HOLD |
-| 06 | [Evaluate signals continuously against fixed, versioned rules and produce traceable decisions.](TAB_06_Evaluate signals continuously against fixed, versioned rules and produce traceable decisions..md) | PIN.HARD.06 | U.21.HOLD |
-| 07 | [Resume only after remediation, regression, independent verification, and authorized approval.](TAB_07_Resume only after remediation, regression, independent verification, and authorized approval..md) | PIN.HARD.07 | U.21.HOLD |
-| 08 | [Prevent autonomous promotion, deployment, financial, permission, or other restricted actions.](TAB_08_Prevent autonomous promotion, deployment, financial, permission, or other restricted actions..md) | PIN.HARD.08 | U.21.HOLD |
+| 01 | [SONAR](TAB_01_SONAR.md) | PIN.HARD.01 | U.21.HOLD |
+| 02 | [KERNEL_GUARD](TAB_02_KERNEL_GUARD.md) | PIN.HARD.02 | U.21.HOLD |
+| 03 | [NODE_ISOLATION](TAB_03_NODE_ISOLATION.md) | PIN.HARD.03 | U.21.HOLD |
+| 04 | [MAIN_CIRCUIT_BREAKER](TAB_04_MAIN_CIRCUIT_BREAKER.md) | PIN.HARD.04 | U.21.HOLD |
+| 05 | [PASSIVE_MATRIX](TAB_05_PASSIVE_MATRIX.md) | PIN.HARD.05 | U.21.HOLD |
+| 06 | [ACTIVE_METRICS](TAB_06_ACTIVE_METRICS.md) | PIN.HARD.06 | U.21.HOLD |
+| 07 | [RECOVERY_GATE](TAB_07_RECOVERY_GATE.md) | PIN.HARD.07 | U.21.HOLD |
+| 08 | [HUMANLOCK](TAB_08_HUMANLOCK.md) | PIN.HARD.08 | U.21.HOLD |
 
 ## Control sequence
 
@@ -46,3 +46,22 @@ Every PIN.HARD.XX links a certificate, affected node/lane, baseline version, fau
 ## Change control
 
 This branch contains documentation only. No live gate is installed, no background monitor is running, and no production certification is asserted. Proposed promotion remains U.21.HOLD.
+
+## Eight-tab conversion train recovery index
+
+Existing hardening certificates and PIN.HARD.01-08 remain authoritative and unchanged. Recovery categories are subordinate annotations inside those eight tabs; no ninth tab, extra main board, or separate engine is introduced. Preserve 8 IN -> 8 OUT.
+
+| Existing tab | Recovery category | Subordinate recovery pin | State |
+|---|---|---|---|
+| 01 / SONAR | Discovery and Intake | PIN.RECOVERY.01 | U.21.HOLD |
+| 02 / KERNEL_GUARD | Authenticity and Integrity | PIN.RECOVERY.02 | U.21.HOLD |
+| 03 / NODE_ISOLATION | Crypto Salvage | PIN.RECOVERY.03 | U.21.HOLD |
+| 04 / MAIN_CIRCUIT_BREAKER | Interruption and Recovery | PIN.RECOVERY.04 | U.21.HOLD |
+| 05 / PASSIVE_MATRIX | Evidence Preservation | PIN.RECOVERY.05 | U.21.HOLD |
+| 06 / ACTIVE_METRICS | Analysis and Conversion | PIN.RECOVERY.06 | U.21.HOLD |
+| 07 / RECOVERY_GATE | Golden Chain and Lineage | PIN.RECOVERY.07 | U.21.HOLD |
+| 08 / HUMANLOCK | Authorization and Final Pin | PIN.RECOVERY.08 | U.21.HOLD |
+
+Conversion-train research path (proposed, not runtime execution): intake -> CHOMP/source preservation -> passive evidence quarantine -> active metrics verification -> principle extraction/conversion -> main-circuit gate -> recovery lineage -> HumanLock authorization and final reference pin. The existing safety control sequence above remains authoritative; this is an evidence-processing view, not a replacement execution order.
+
+**Invariant:** PASSIVE.ACCEPT != ACTIVE.VERIFIED != ENGINE.PROMOTED. Hashes verify consistency, not truth. Unknown provenance, unsupported claims, fabricated references, and unverified functionality remain HOLD. Proposed cross-reference: PIN.EVOLUTION.HALLUCINATION.001; not a deployed detector. All changes here are documentation-only and require independent implementation and test receipts before certification.
