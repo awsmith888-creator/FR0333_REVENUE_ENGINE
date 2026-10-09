@@ -23,3 +23,17 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Acceptance state:** U.21.HOLD until executable tests, signed/traceable receipts, and HumanLock review establish compliance.
 
 **Backlink:** [Eight-tab index](README.md). **Scope:** proposal only; not a claim of installed control.
+
+## Recovery subcategory / RECOVERY.05
+
+**Recovery reference pin:** PIN.RECOVERY.05 (subordinate to PIN.HARD.05; original certificate unchanged).
+
+**Category:** Evidence Preservation.
+
+**Proposed recovery function:** PASSIVE.MATRIX may accept an uncertain artifact as untrusted evidence, preserving original bytes, metadata, source/finding separation and lineage. It never independently certifies truth or authorizes execution.
+
+**Recovery safety invariant:** PASSIVE.ACCEPT != ACTIVE.VERIFIED != ENGINE.PROMOTED; no silent mutation of evidence.
+
+**Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
