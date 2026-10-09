@@ -23,3 +23,17 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Acceptance state:** U.21.HOLD until executable tests, signed/traceable receipts, and HumanLock review establish compliance.
 
 **Backlink:** [Eight-tab index](README.md). **Scope:** proposal only; not a claim of installed control.
+
+## Recovery subcategory / RECOVERY.02
+
+**Recovery reference pin:** PIN.RECOVERY.02 (subordinate to PIN.HARD.02; original certificate unchanged).
+
+**Category:** Authenticity and Integrity.
+
+**Proposed recovery function:** Record CHOMP source preservation, SHA-256 digest, optional verified digital signature and signer-key provenance, and versioned integrity policy. A matching hash proves byte consistency, not factual truth or safety.
+
+**Recovery safety invariant:** A missing or invalid signature is not equivalent to an authenticated origin; do not execute untrusted artifacts.
+
+**Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
