@@ -23,3 +23,17 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Acceptance state:** U.21.HOLD until executable tests, signed/traceable receipts, and HumanLock review establish compliance.
 
 **Backlink:** [Eight-tab index](README.md). **Scope:** proposal only; not a claim of installed control.
+
+## Recovery subcategory / RECOVERY.08
+
+**Recovery reference pin:** PIN.RECOVERY.08 (subordinate to PIN.HARD.08; original certificate unchanged).
+
+**Category:** Authorization and Final Pin.
+
+**Proposed recovery function:** Require explicit HumanLock approval for restricted changes and final promotion. Record approving authority, decision, scope, source evidence, verification receipts and cross-links to the eight recovery pins.
+
+**Recovery safety invariant:** No autonomous merge, deployment, financial transaction, permission change or operational promotion.
+
+**Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
