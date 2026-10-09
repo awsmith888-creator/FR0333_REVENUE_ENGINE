@@ -1,0 +1,32 @@
+name: FR0333 Green Dot Certification Repository Validate
+
+on:
+  pull_request:
+    paths:
+      - "certifications/FR0333.GREEN.DOT.*.md"
+      - "certifications/FR0333.SPORTS.METRICS.SPINE.0001.md"
+      - "certifications/FR0333.SUNDAY.SPORTS.METRICS.0001.md"
+      - "scripts/validate_green_dot_tabs.py"
+      - ".github/workflows/fr0333-green-dot-certification-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-repository-record:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out exact event commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Validate indexed certification documents
+        run: python scripts/validate_green_dot_tabs.py --receipt green_dot_repository_validation_receipt.json
+      - name: Upload repository validation receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: green-dot-repository-validation-${{ github.sha }}
+          path: green_dot_repository_validation_receipt.json
+          if-no-files-found: warn
