@@ -23,3 +23,17 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Acceptance state:** U.21.HOLD until executable tests, signed/traceable receipts, and HumanLock review establish compliance.
 
 **Backlink:** [Eight-tab index](README.md). **Scope:** proposal only; not a claim of installed control.
+
+## Recovery subcategory / RECOVERY.01
+
+**Recovery reference pin:** PIN.RECOVERY.01 (subordinate to PIN.HARD.01; original certificate unchanged).
+
+**Category:** Discovery and Intake.
+
+**Proposed recovery function:** Register recovered conversion-train discoveries, artifacts, source URLs or file IDs, source dates, intake time, and claimed origin. Distinguish an observed artifact from the claims made about it.
+
+**Recovery safety invariant:** Do not silently accept unverifiable source identities as authenticated.
+
+**Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
