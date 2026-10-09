@@ -23,3 +23,17 @@ Authority: one main Z-Board, 64 ACTIVE.METRICS and 64 PASSIVE.MATRIX logical lan
 **Acceptance state:** U.21.HOLD until executable tests, signed/traceable receipts, and HumanLock review establish compliance.
 
 **Backlink:** [Eight-tab index](README.md). **Scope:** proposal only; not a claim of installed control.
+
+## Recovery subcategory / RECOVERY.04
+
+**Recovery reference pin:** PIN.RECOVERY.04 (subordinate to PIN.HARD.04; original certificate unchanged).
+
+**Category:** Interruption and Recovery.
+
+**Proposed recovery function:** Route fault signals, conversion interruptions, isolation failures, rollback requests and dependency faults through the one authoritative main-board circuit breaker.
+
+**Recovery safety invariant:** A quarantined artifact cannot bypass HOLD or restart itself.
+
+**Required recovery receipt:** Source identifier, original-artifact digest, paired passive evidence reference, active test scope and result, decision state, lineage backlink, and HumanLock approval if promotion is requested. Unknown or unverified inputs remain U.21.HOLD.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no executable salvage pipeline or certification established.
