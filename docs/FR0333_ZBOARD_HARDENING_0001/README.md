@@ -65,3 +65,15 @@ Existing hardening certificates and PIN.HARD.01-08 remain authoritative and unch
 Conversion-train research path (proposed, not runtime execution): intake -> CHOMP/source preservation -> passive evidence quarantine -> active metrics verification -> principle extraction/conversion -> main-circuit gate -> recovery lineage -> HumanLock authorization and final reference pin. The existing safety control sequence above remains authoritative; this is an evidence-processing view, not a replacement execution order.
 
 **Invariant:** PASSIVE.ACCEPT != ACTIVE.VERIFIED != ENGINE.PROMOTED. Hashes verify consistency, not truth. Unknown provenance, unsupported claims, fabricated references, and unverified functionality remain HOLD. Proposed cross-reference: PIN.EVOLUTION.HALLUCINATION.001; not a deployed detector. All changes here are documentation-only and require independent implementation and test receipts before certification.
+
+## Anti-looping reference pin
+
+**Primary pin:** PIN.HARD.04.ANTI.LOOP.001 anchored to PIN.HARD.04 / PIN.RECOVERY.04; cross-linked in tabs 05 PASSIVE_MATRIX, 06 ACTIVE_METRICS, 07 RECOVERY_GATE and 08 HUMANLOCK. This is a cross-tab control, not a ninth tab or engine.
+
+**Control path:** REPEAT.DETECT -> COMPARE.DELTA -> INTERRUPT -> HOLD -> VERIFY.CHANGE -> RECOVER.
+
+**Classification:** Legitimate scheduled/idempotent repetition and bounded retries are not automatically faults. Active Metrics measures recurrence, state fingerprints, progress delta, dependency cycles and versioned budgets. Passive Matrix retains immutable source/transition receipts without operational authority. Main Circuit Breaker interrupts no-progress loops; Recovery Gate requires a verified change before restart; HumanLock authorizes restricted overrides. Unknown progress or missing evidence -> U.21.HOLD, not a false PASS.
+
+**Acceptance tests required:** bounded retries, legitimate scheduled repetition, self-loop, A->B->A dependency cycle, oscillating state, repeated unchanged failure, missing progress telemetry, audit receipt preservation, restart after verified remediation, unauthorized override denial. All are proposed tests, not completed tests.
+
+**Status:** DESIGN.CANDIDATE / U.21.HOLD. Documentation only; no installed detector, running watchdog, CI proof or deployment is established.
