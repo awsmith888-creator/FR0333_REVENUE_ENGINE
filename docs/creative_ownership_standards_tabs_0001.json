@@ -9,9 +9,7 @@
   "review_gate": "Open compatibility review only when a published change affects mapped fields, serialization, validation, signatures, package fixity, or preservation-assessment interpretation. Editorial changes/no mapped impact are REFERENCE + STAY.",
   "tabs": [
     {
-      "id": "TAB.CO.MAP",
       "title": "Field Map",
-      "pin": "PIN.CO.COMPATIBILITY.0001",
       "summary": "Standards are reference inputs. They do not rewrite FR-0333 identity, ownership assertions, promotion rules, or historical records.",
       "fields": [
         "standards_ref[]",
@@ -19,18 +17,20 @@
         "source_version",
         "review_receipt_id",
         "humanlock_state"
-      ]
+      ],
+      "tab_id": "TAB.CO.MAP",
+      "pin_id": "PIN.CO.COMPATIBILITY.0001"
     },
     {
-      "id": "DCMI",
       "title": "DCMI Metadata Terms",
-      "pin": "PIN.CO.DCMI.0001",
-      "tab": "TAB.CO.DCMI",
-      "source": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
-      "defined": [
+      "tab_id": "TAB.CO.DCMI",
+      "standards_id": "DCMI",
+      "pin_id": "PIN.CO.DCMI.0001",
+      "source_url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+      "source_defined": [
         "DCMI term URIs, labels, definitions, term type, and specified domain/range"
       ],
-      "fields": [
+      "mapped_fields": [
         "title",
         "creator",
         "date.created",
@@ -44,7 +44,7 @@
         "license",
         "provenance"
       ],
-      "extensions": [
+      "fr0333_extensions": [
         "asset_id",
         "batch_id",
         "sha256",
@@ -54,19 +54,19 @@
         "evidence_class",
         "claim_boundary"
       ],
-      "implication": "Descriptive vocabulary only; it does not adjudicate ownership. Preserve term URIs and value semantics. Review if definitions, identifiers, ranges, or recommended encoding practices alter a mapped field.",
-      "status": "DCMI Metadata Terms is listed as a current DCMI Recommendation; current release identified as 2020-01-20."
+      "compatibility_implication": "Descriptive vocabulary only; it does not adjudicate ownership. Preserve term URIs and value semantics. Review if definitions, identifiers, ranges, or recommended encoding practices alter a mapped field.",
+      "source_status_observed": "DCMI Metadata Terms is listed as a current DCMI Recommendation; current release identified as 2020-01-20."
     },
     {
-      "id": "PREMIS",
       "title": "PREMIS",
-      "pin": "PIN.CO.PREMIS.0001",
-      "tab": "TAB.CO.PREMIS",
-      "source": "https://www.loc.gov/standards/premis/v3/",
-      "defined": [
+      "tab_id": "TAB.CO.PREMIS",
+      "standards_id": "PREMIS",
+      "pin_id": "PIN.CO.PREMIS.0001",
+      "source_url": "https://www.loc.gov/standards/premis/v3/",
+      "source_defined": [
         "PREMIS v3.0 semantic units for Objects (including Intellectual Entity as an Object category), Events, Agents, and Rights"
       ],
-      "fields": [
+      "mapped_fields": [
         "object.identifier",
         "object.category",
         "object.format",
@@ -80,7 +80,7 @@
         "rights.statement",
         "relationship"
       ],
-      "extensions": [
+      "fr0333_extensions": [
         "asset_id",
         "humanlock_state",
         "ownership_assertion_state",
@@ -89,19 +89,19 @@
         "review_receipt_id",
         "promotion_state"
       ],
-      "implication": "Preservation metadata only. Rights statements record rights information; they do not independently establish legal ownership. Track dictionary and schema versions separately and never equate validation with legal proof.",
-      "status": "Library of Congress publishes PREMIS Data Dictionary v3.0 and errata; schema versions are separately listed."
+      "compatibility_implication": "Preservation metadata only. Rights statements record rights information; they do not independently establish legal ownership. Track dictionary and schema versions separately and never equate validation with legal proof.",
+      "source_status_observed": "Library of Congress publishes PREMIS Data Dictionary v3.0 and errata; schema versions are separately listed."
     },
     {
-      "id": "PROV",
       "title": "W3C PROV-O",
-      "pin": "PIN.CO.PROV.0001",
-      "tab": "TAB.CO.PROV",
-      "source": "https://www.w3.org/TR/prov-o/",
-      "defined": [
+      "tab_id": "TAB.CO.PROV",
+      "standards_id": "PROV",
+      "pin_id": "PIN.CO.PROV.0001",
+      "source_url": "https://www.w3.org/TR/prov-o/",
+      "source_defined": [
         "PROV-O Entity, Activity, Agent classes and standard provenance properties/relations"
       ],
-      "fields": [
+      "mapped_fields": [
         "entity.asset",
         "activity.create",
         "activity.edit",
@@ -114,7 +114,7 @@
         "wasDerivedFrom",
         "generatedAtTime"
       ],
-      "extensions": [
+      "fr0333_extensions": [
         "human_selection_arrangement",
         "prompt_reference",
         "ai_assistance_description",
@@ -123,19 +123,19 @@
         "evidence_class",
         "canonical_promotion_state"
       ],
-      "implication": "PROV-O expresses provenance relationships, not copyright allocation or truth. Preserve standard IRIs and relation direction; keep FR-0333 contribution and decision terms in a separate namespace.",
-      "status": "W3C PROV-O is a W3C Recommendation dated 2013-04-30."
+      "compatibility_implication": "PROV-O expresses provenance relationships, not copyright allocation or truth. Preserve standard IRIs and relation direction; keep FR-0333 contribution and decision terms in a separate namespace.",
+      "source_status_observed": "W3C PROV-O is a W3C Recommendation dated 2013-04-30."
     },
     {
-      "id": "C2PA",
       "title": "C2PA",
-      "pin": "PIN.CO.C2PA.0001",
-      "tab": "TAB.CO.C2PA",
-      "source": "https://spec.c2pa.org/specifications/specifications/2.4/index.html",
-      "defined": [
+      "tab_id": "TAB.CO.C2PA",
+      "standards_id": "C2PA",
+      "pin_id": "PIN.CO.C2PA.0001",
+      "source_url": "https://spec.c2pa.org/specifications/specifications/2.4/index.html",
+      "source_defined": [
         "Version-specific C2PA manifest, claim, assertion, ingredient, signature, hard-binding, and validation concepts"
       ],
-      "fields": [
+      "mapped_fields": [
         "manifest.reference",
         "claim.generator",
         "claim.created",
@@ -146,7 +146,7 @@
         "signer.certificate_reference",
         "validator.version"
       ],
-      "extensions": [
+      "fr0333_extensions": [
         "asset_id",
         "ownership_claim_id",
         "human_contribution_note",
@@ -155,19 +155,19 @@
         "evidence_class",
         "claim_boundary"
       ],
-      "implication": "A valid signature can support integrity and signer-attribution checks under a trust policy; it does not alone prove copyright ownership, complete history, or truth of all assertions. Review spec, algorithm, assertion, trust-list, or validator changes; preserve original bytes and validation receipts.",
-      "status": "C2PA specification portal exposes v2.4; record exact spec and validator versions for any future implementation."
+      "compatibility_implication": "A valid signature can support integrity and signer-attribution checks under a trust policy; it does not alone prove copyright ownership, complete history, or truth of all assertions. Review spec, algorithm, assertion, trust-list, or validator changes; preserve original bytes and validation receipts.",
+      "source_status_observed": "C2PA specification portal exposes v2.4; record exact spec and validator versions for any future implementation."
     },
     {
-      "id": "BAGIT",
       "title": "BagIt",
-      "pin": "PIN.CO.BAGIT.0001",
-      "tab": "TAB.CO.BAGIT",
-      "source": "https://www.rfc-editor.org/rfc/rfc8493.html",
-      "defined": [
+      "tab_id": "TAB.CO.BAGIT",
+      "standards_id": "BAGIT",
+      "pin_id": "PIN.CO.BAGIT.0001",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "source_defined": [
         "RFC 8493 BagIt v1.0 package layout, payload/tag manifests, tag files, and checksum validation concepts"
       ],
-      "fields": [
+      "mapped_fields": [
         "bagit.txt",
         "bag-info.txt",
         "manifest-algorithm",
@@ -176,7 +176,7 @@
         "payload-file-path",
         "fixity-result"
       ],
-      "extensions": [
+      "fr0333_extensions": [
         "creative_batch_id",
         "asset_id",
         "ownership_record_id",
@@ -184,19 +184,19 @@
         "receipt_id",
         "humanlock_state"
       ],
-      "implication": "BagIt packages files and records checksums for transfer/preservation; it does not establish authorship or ownership. Review checksum algorithms, tag handling, package validation rules, or path semantics that change import/export acceptance.",
-      "status": "RFC 8493 defines BagIt v1.0 and explicitly is not an Internet Standards Track specification."
+      "compatibility_implication": "BagIt packages files and records checksums for transfer/preservation; it does not establish authorship or ownership. Review checksum algorithms, tag handling, package validation rules, or path semantics that change import/export acceptance.",
+      "source_status_observed": "RFC 8493 defines BagIt v1.0 and explicitly is not an Internet Standards Track specification."
     },
     {
-      "id": "NDSA",
       "title": "NDSA Levels",
-      "pin": "PIN.CO.NDSA.0001",
-      "tab": "TAB.CO.NDSA",
-      "source": "https://ndsa.org/publications/levels-of-digital-preservation/",
-      "defined": [
+      "tab_id": "TAB.CO.NDSA",
+      "standards_id": "NDSA",
+      "pin_id": "PIN.CO.NDSA.0001",
+      "source_url": "https://ndsa.org/publications/levels-of-digital-preservation/",
+      "source_defined": [
         "NDSA Levels recommendations and supporting guidance for the cited version"
       ],
-      "fields": [
+      "mapped_fields": [
         "preservation_assessment.version",
         "storage.level",
         "integrity.level",
@@ -206,20 +206,18 @@
         "assessment.date",
         "evidence.reference"
       ],
-      "extensions": [
+      "fr0333_extensions": [
         "asset_cohort",
         "local_risk_state",
         "humanlock_state",
         "exception_receipt",
         "community_access_priority"
       ],
-      "implication": "An assessment framework, not an interchange schema or ownership standard. Version 2.1 adds environmental sustainability guidance and revises some matrix text and working definitions; record the cited version and do not infer conformance from a local score.",
-      "status": "NDSA lists Levels of Digital Preservation v2.1 as current."
+      "compatibility_implication": "An assessment framework, not an interchange schema or ownership standard. Version 2.1 adds environmental sustainability guidance and revises some matrix text and working definitions; record the cited version and do not infer conformance from a local score.",
+      "source_status_observed": "NDSA lists Levels of Digital Preservation v2.1 as current."
     },
     {
-      "id": "TAB.CO.WRITE_ME",
       "title": "Write Me",
-      "pin": "PIN.CO.REVIEW.0001",
       "summary": "On an explicitly requested review, capture issuer, source/version/date, and changed text/schema; compare with version pins and mapped fields; tag each change SOURCE_DEFINED or FR0333_EXTENSION; no mapped effect means REFERENCE + STAY; if affected, record impacted tab/fields, dual-read/migration needs, tests, rollback point, and HumanLock disposition. Do not edit the certificate or infer ownership from compatibility.",
       "fields": [
         "REVIEW.ID",
@@ -234,7 +232,9 @@
         "TEST.RESULT",
         "ROLLBACK.REFERENCE",
         "HUMANLOCK.DISPOSITION"
-      ]
+      ],
+      "tab_id": "TAB.CO.WRITE_ME",
+      "pin_id": "PIN.CO.REVIEW.0001"
     }
   ],
   "global_pins": [
