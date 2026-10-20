@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FR0333.ZERO.LION.CORROBORATION.1",
+  "title": "FR-0333 Zero Lion Corroboration Claim Register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "claims"],
+  "properties": {
+    "artifact_type": {"const": "FR0333.ZERO.LION.CORROBORATION.REGISTER"},
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "CLAIM.ID",
+          "SOURCE.ORIGIN",
+          "SOURCE.DERIVATION",
+          "SOURCE.INDEPENDENCE",
+          "SOURCE.CLASS",
+          "CLAIM.CLASS",
+          "CORROBORATION.STATE",
+          "CONTRADICTION.STATE",
+          "CAUSATION.STATE",
+          "PROMOTION.STATE",
+          "SOURCES"
+        ],
+        "properties": {
+          "CLAIM.ID": {"type": "string", "minLength": 1},
+          "SOURCE.ORIGIN": {"type": ["string", "null"]},
+          "SOURCE.DERIVATION": {"enum": ["ORIGINAL", "DERIVED", "MIXED", "UNKNOWN"]},
+          "SOURCE.INDEPENDENCE": {"enum": ["NONE", "NOT_DEMONSTRATED", "PRESENT", "CONVERGENT"]},
+          "SOURCE.CLASS": {"enum": ["FIRSTHAND", "PRIMARY_DOCUMENT", "OFFICIAL", "DATASET", "SECONDARY", "SOCIAL", "UNKNOWN"]},
+          "CLAIM.CLASS": {"enum": ["OBSERVED", "QUOTE", "ALLEGATION", "DOCUMENTED_EVENT", "SYSTEMIC", "CAUSAL"]},
+          "CORROBORATION.STATE": {"enum": ["C0", "C1", "C2", "C3", "C4", "C5", "C6"]},
+          "CONTRADICTION.STATE": {"enum": ["NOT_RUN", "PASS", "CONFLICT", "UNRESOLVED"]},
+          "CAUSATION.STATE": {"enum": ["NOT_RUN", "PASS", "FAIL", "HOLD"]},
+          "PROMOTION.STATE": {"enum": ["BLOCKED", "AUTHENTICITY_ONLY", "INDEPENDENT_CORROBORATION_PRESENT", "HIGHER_EVIDENTIARY_CONFIDENCE", "FACT", "PROVEN", "VERIFIED_TRUE", "CAUSAL", "CAUSATION.PROVEN"]},
+          "SOURCES": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "origin", "derivation"],
+              "properties": {
+                "source_id": {"type": "string", "minLength": 1},
+                "origin": {"type": "string", "minLength": 1},
+                "derivation": {"enum": ["ORIGINAL", "DERIVED"]}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "hard_gates": [
+    "MEDIA_COUNT_NE_EVIDENCE_INDEPENDENCE",
+    "C1_C2_NE_FACT",
+    "C3_PLUS_REQUIRES_TWO_ORIGINS",
+    "C6_HIGHER_CONFIDENCE_REQUIRES_CONTRADICTION_PASS",
+    "CAUSATION_REQUIRES_SEPARATE_PASS"
+  ]
+}
