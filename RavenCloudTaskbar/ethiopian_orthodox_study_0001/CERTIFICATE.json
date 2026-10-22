@@ -1,0 +1,28 @@
+{
+  "id": "CERT.FR0333.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "issued_at": "2026-10-22T08:41:17.807483-04:00",
+  "issuer": "Assistant-generated internal self-issued record",
+  "scope": "Local artifact structure, preserved prior index entries, traceability fields and stated holds",
+  "result": "PASS_WITH_EXPLICIT_HOLDS",
+  "bindings_sha256": {
+    "ethiopian_orthodox_study_0001/BASELINE_INDEX.json": "2bd6aed2e9e2aeeea92735d9f84d62b16f65725249299ba81f1b3f28cad72397",
+    "ethiopian_orthodox_study_0001/METRICS.json": "2a664088e9c78dca0c5043b30abe5d49260ae0bc57dddad64ef6f87c145806f2",
+    "ethiopian_orthodox_study_0001/PIN.json": "5ad1f73cf6334317e029423af415a8fa5ac124c29700443d4a3e80713a95e835",
+    "ethiopian_orthodox_study_0001/README.md": "29d252884c10f7aca21f1bec9c3d9b8172e4aeec42bc8760e0e0e788420d621e",
+    "ethiopian_orthodox_study_0001/SOURCES.json": "d7c3f2c99f1e643254f7042207c65fdac736db6fc52f0e5b617276013fc02b0c",
+    "ethiopian_orthodox_study_0001/STUDY.0001.md": "92d86369ba60611b441647570c11f0542f5c74b436ae3d1342336a17d60d833e",
+    "ethiopian_orthodox_study_0001/WRITE_ME.md": "df2e293748da1f21f963dff21bcab3068216e0dddb174c38c1d7d60194d052b4",
+    "ethiopian_orthodox_study_0001/validate.py": "04512fe49b3656411a4c9eeb32ab19c6194bb3316cf951e301bd9029b842a6d6",
+    "fr0333_golden_chain_index_0001.json": "1a0fa669043e77f77df69c2d6949feba13e7c1822b323b6a1aff152b50e8f62d"
+  },
+  "receipt_sha256": "7aba9c6f265d4a93f3023ed9f9c2b72372a2e3306ab4135bdce4528ed572c8ab",
+  "exclusions": [
+    "Church endorsement",
+    "Independent theological verification",
+    "Exact Ge'ez or Andemta collation",
+    "Original source-byte archiving",
+    "Mainline promotion",
+    "External runtime or CI pass"
+  ],
+  "humanlock": "REQUIRED_FOR_MAINLINE_PROMOTION"
+}

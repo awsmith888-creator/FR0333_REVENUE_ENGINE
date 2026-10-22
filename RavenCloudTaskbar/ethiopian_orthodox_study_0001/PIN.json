@@ -1,0 +1,21 @@
+{
+  "pin": "PIN.FR0333.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "tab": "TAB.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "chain_entry": "0.9",
+  "before": {
+    "instruction": "On-demand metric and Golden Chain record; no scheduling",
+    "recovered_chain_commit": "417f4094e1df8fe3c332177d2ac3698af62317c7"
+  },
+  "after": {
+    "readme": "README.md",
+    "metric": "METRICS.json",
+    "sources": "SOURCES.json",
+    "study": "STUDY.0001.md",
+    "receipt": "RECEIPT.json",
+    "certificate": "CERTIFICATE.json",
+    "state": "RESEARCH_RECORDED_GEEZ_ANDEMTA_HOLD"
+  },
+  "recovery_rule": "Read README then exact artifacts; on disagreement HOLD; no renumbering",
+  "separate_pen_definition": "NOT_RECOVERED_USING_EXISTING_PIN_PROTOCOL"
+}
+

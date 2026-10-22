@@ -1,0 +1,34 @@
+{
+  "id": "RECEIPT.FR0333.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "timestamp": "2026-10-22T08:41:17.807483-04:00",
+  "action": "LOCAL_DOCUMENTATION_VALIDATION",
+  "checks": {
+    "prior_entries_preserved": true,
+    "prior_public_index_preserved": true,
+    "prior_rules_preserved": true,
+    "new_entry_resolves": true,
+    "unique_source_identifiers": true,
+    "gate_sources_resolve": true,
+    "collation_holds_preserved": true,
+    "no_fabricated_geez_or_andemta": true,
+    "no_unnamed_base_translation": true,
+    "one_unanswered_question": true,
+    "on_demand_only": true,
+    "count_units_preserved": true
+  },
+  "mutation_checks": {
+    "reject_prior_entry_mutation": true,
+    "reject_geez_hold_promotion": true,
+    "reject_unresolved_source": true,
+    "reject_missing_question": true,
+    "reject_fabricated_andemta": true
+  },
+  "passed": 17,
+  "failed": 0,
+  "research_access_date": "2026-10-22",
+  "source_access_details": "SOURCES.json",
+  "source_snapshot_policy": "Summaries and locators only; original webpage/PDF bytes not archived",
+  "base_commit": "417f4094e1df8fe3c332177d2ac3698af62317c7",
+  "remote_commit_status": "NOT_ESTABLISHED_BY_THIS_LOCAL_RECEIPT",
+  "boundary": "LOCAL_CHECKS_NE_CI_NE_CHURCH_ENDORSEMENT_NE_TEXTUAL_COLLATION"
+}

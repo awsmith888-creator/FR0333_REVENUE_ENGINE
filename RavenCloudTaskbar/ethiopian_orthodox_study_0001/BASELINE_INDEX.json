@@ -1,0 +1,89 @@
+{
+  "identifier": "FR0333.GOLDEN.CHAIN.INDEX.0001",
+  "state": "APPEND_ONLY_INDEX",
+  "public_index": [
+    "0.1.FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
+    "0.2.FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+    "0.3.FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
+    "0.4.FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001",
+    "0.5.FR.0333.GOLDEN.CHAIN.AI.CAPABILITY.EVOLUTION.0001",
+    "0.6.FR.0333.GOLDEN.CHAIN.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
+    "0.7.FR.0333.GOLDEN.CHAIN.AI.SAFE.SPEC.ADOPTION.0001",
+    "0.8.FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.FAILURE.CLOSURE.0001"
+  ],
+  "entries": [
+    {
+      "index": "0.1",
+      "identifier": "FR.0333.GOLDEN.CHAIN.ANDALUSIA.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_andalusia_golden_chain_metrics_0001.json",
+      "state": "EXISTING_MAINLINE_REFERENCE"
+    },
+    {
+      "index": "0.2",
+      "identifier": "FR.0333.GOLDEN.CHAIN.CENSUS.BLACK.DETAILED.ORIGIN.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_census_black_detailed_origin_0001.json",
+      "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.3",
+      "identifier": "FR.0333.GOLDEN.CHAIN.TWO.LANE.HIGHWAY.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_two_lane_highway_0001.json",
+      "state": "PROMOTED_WORKING_SPEC_RUNTIME_HOLD"
+    },
+    {
+      "index": "0.4",
+      "identifier": "FR.0333.GOLDEN.CHAIN.RED.SEA.DUAL.CHOKEPOINT.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_red_sea_dual_chokepoint_0001.json",
+      "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.5",
+      "identifier": "FR.0333.GOLDEN.CHAIN.AI.CAPABILITY.EVOLUTION.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_ai_capability_evolution_0001.json",
+      "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.6",
+      "identifier": "FR.0333.GOLDEN.CHAIN.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_ai_frontier_evolution_anatomy_0001.json",
+      "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.7",
+      "identifier": "FR.0333.GOLDEN.CHAIN.AI.SAFE.SPEC.ADOPTION.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_ai_safe_spec_adoption_0001.json",
+      "state": "WORKING_BRANCH_SOURCE_AUDITED_LOCAL_VALIDATION"
+    },
+    {
+      "index": "0.8",
+      "identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.FAILURE.CLOSURE.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_image_queue_failure_closure_0001.json",
+      "state": "DIAGNOSIS_VERIFIED_LOCAL_TEST_PASS_LIVE_REVERIFICATION_HOLD"
+    }
+  ],
+  "rules": [
+    "APPEND_ONLY",
+    "NO_RENUMBERING_PRIOR_ENTRIES",
+    "SOURCE_LOCK_REQUIRED",
+    "REFERENCE_POINT_LOCK_REQUIRED",
+    "GENIUS_GATE_REQUIRED",
+    "HUMANLOCK_REQUIRED_FOR_PROMOTION",
+    "RUNTIME_CLAIM_REQUIRES_EMPIRICAL_RECEIPT",
+    "TEMPORAL_OVERLAP_NE_CAUSATION",
+    "POLITICAL_PLEDGE_NE_ENACTED_POLICY",
+    "CAPABILITY_GROWTH_NE_TRUTH_GROWTH",
+    "NEW_CAPABILITY_MUST_NOT_DELETE_OLD_FAILURE_EVIDENCE",
+    "BENCHMARK_LEADER_NE_GENERAL_DOMINANCE",
+    "INTELLIGENCE_NE_BENEVOLENCE",
+    "SMARTER_NE_HARMLESS",
+    "SAFETY_FRAMEWORK_NE_ZERO_RISK",
+    "AGENT_BENCHMARK_SUCCESS_NE_UNRESTRICTED_AUTONOMY",
+    "DIGITAL_TASK_SUCCESS_NE_PHYSICAL_WORLD_MASTERY",
+    "PUBLIC_SPEC_READING_NE_PROVIDER_SYSTEM_ACCESS",
+    "AGENT_ACTION_CANNOT_EXCEED_OPERATOR_PERMISSION",
+    "MUTATING_ACTION_REQUIRES_AUTHORIZATION",
+    "OPERATOR_SHUTDOWN_MUST_REMAIN_POSSIBLE",
+    "HUMAN_OPERATOR_CONTINUITY_MUST_NOT_BE_ERASED"
+  ]
+}
+
