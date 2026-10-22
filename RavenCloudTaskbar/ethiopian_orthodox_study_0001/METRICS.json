@@ -1,0 +1,191 @@
+{
+  "identifier": "FR.0333.GOLDEN.CHAIN.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "golden_chain_index": "0.9",
+  "record_kind": "RESEARCH_AND_STUDY_PROTOCOL",
+  "created_date": "2026-10-22",
+  "timezone": "America/New_York",
+  "mode": "ON_DEMAND",
+  "schedule_created": false,
+  "root": "ZERO LION LOGIC GATE FOREVER AND A DAY.1",
+  "pin": "PIN.FR0333.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "tab": "TAB.ETHIOPIAN.ORTHODOX.STUDY.0001",
+  "numbering_scope": "Local study namespace; does not create architectural rails or renumber existing chain entries",
+  "observations": [
+    {
+      "id": "M.1",
+      "source": "S.1",
+      "metric": "Old Testament enumerated book units",
+      "value": 46,
+      "unit": "source-defined canonical book units",
+      "scope": "this page's enumeration",
+      "evidence": "SOURCE_REPORTED"
+    },
+    {
+      "id": "M.2",
+      "source": "S.1",
+      "metric": "New Testament enumerated book units",
+      "value": 35,
+      "unit": "source-defined canonical book units",
+      "scope": "this page's enumeration",
+      "evidence": "SOURCE_REPORTED"
+    },
+    {
+      "id": "M.3",
+      "source": "S.1",
+      "metric": "Canon total",
+      "value": 81,
+      "unit": "source-defined canonical book units",
+      "scope": "this page's stated total",
+      "evidence": "SOURCE_REPORTED"
+    },
+    {
+      "id": "M.4",
+      "sources": [
+        "S.1"
+      ],
+      "metric": "Arithmetic reconciliation",
+      "expression": "46 + 35 = 81",
+      "unit": "same source-defined book units",
+      "evidence": "DERIVED"
+    },
+    {
+      "id": "M.5",
+      "source": "S.2",
+      "metric": "Lesson PDF length",
+      "value": 38,
+      "unit": "PDF pages",
+      "evidence": "OBSERVED_RETRIEVAL_METADATA"
+    },
+    {
+      "id": "M.6",
+      "source": "S.3",
+      "metric": "Liturgy PDF length",
+      "value": 185,
+      "unit": "PDF pages",
+      "evidence": "OBSERVED_RETRIEVAL_METADATA"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G.1",
+      "name": "SOURCE.IDENTITY",
+      "state": "PASS",
+      "basis": [
+        "S.1",
+        "S.2",
+        "S.3"
+      ]
+    },
+    {
+      "id": "G.2",
+      "name": "AUTHORITY.SCOPE.LABELED",
+      "state": "PASS",
+      "basis": [
+        "S.1",
+        "S.2",
+        "S.3",
+        "S.4",
+        "S.5"
+      ]
+    },
+    {
+      "id": "G.3",
+      "name": "EDITION.LANGUAGE.DISTINCTION",
+      "state": "PASS",
+      "basis": [
+        "S.2",
+        "S.3",
+        "S.5"
+      ]
+    },
+    {
+      "id": "G.4",
+      "name": "GEEZ.VERSE.COLLATION",
+      "state": "HOLD",
+      "basis": [
+        "S.6",
+        "S.7"
+      ]
+    },
+    {
+      "id": "G.5",
+      "name": "ANDEMTA.VERSE.ATTRIBUTION",
+      "state": "HOLD",
+      "basis": [
+        "S.6",
+        "S.7"
+      ]
+    },
+    {
+      "id": "G.6",
+      "name": "INTERPRETATION.SEPARATED",
+      "state": "PASS",
+      "basis": [
+        "S.2",
+        "S.5"
+      ]
+    },
+    {
+      "id": "G.7",
+      "name": "HISTORICAL.UNCERTAINTY",
+      "state": "PASS",
+      "basis": [
+        "S.4"
+      ]
+    },
+    {
+      "id": "G.8",
+      "name": "NO.UNREQUESTED.KJV.OR.WESTERN.COMMENTARY.BASE",
+      "state": "PASS",
+      "basis": [
+        "S.2",
+        "S.5",
+        "S.8"
+      ]
+    },
+    {
+      "id": "G.9",
+      "name": "ONE.UNANSWERED.QUESTION",
+      "state": "PASS",
+      "basis": [
+        "S.2",
+        "S.5"
+      ]
+    },
+    {
+      "id": "G.10",
+      "name": "CHURCH.ENDORSEMENT.OF.PACKAGE",
+      "state": "NOT_SOUGHT_NOT_ESTABLISHED",
+      "basis": []
+    }
+  ],
+  "study": {
+    "id": "STUDY.0001",
+    "passage": "Psalm 23:1–4",
+    "reference_system": "Chapter/verse label used in S.2; actual Ge'ez edition numbering remains uncollated",
+    "primary_interpretive_source": "S.2",
+    "original_language_check": "S.5",
+    "geez_text": null,
+    "andemta_quote": null,
+    "english_base_translation": null
+  },
+  "rules": [
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "SOURCE_REPORT_NE_INDEPENDENT_VERIFICATION",
+    "TEXT_NE_TRANSLATION_NE_INTERPRETATION",
+    "GEEZ_WITNESS_NE_ORIGINAL_AUTOGRAPH",
+    "CERTIFICATE_NE_CHURCH_ENDORSEMENT",
+    "HASH_MATCH_NE_THEOLOGICAL_TRUTH",
+    "APPEND_ONLY",
+    "NO_RENUMBERING_PRIOR_ENTRIES",
+    "HUMANLOCK_REQUIRED_FOR_PROMOTION",
+    "NO_NEW_VERIFIED_DELTA_RETAIN_PIN_AND_STAY"
+  ],
+  "holds": [
+    "Exact Ge'ez Psalm passage and edition-level numbering",
+    "Verse-specific traditional Andemta wording and folio",
+    "Church endorsement not established",
+    "No assessment of learner understanding until response"
+  ]
+}
+
