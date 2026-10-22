@@ -1,3 +1,7 @@
+# Current-state correction
+
+The current dispatcher uses singleton calls for both operations. The earlier 4 + 4 + 2 descriptions below are historical and superseded by current code and receipt 0003. See `fr0333_image_queue_failure_closure_0001.json` for the preserved September 13 failure and separately verified local test closure. Existing receipt 0003 records a later bounded external run; this audit has not reverified its image bytes.
+
 # FR0333 Image Queue Runtime 0001
 
 `FR0333.IMAGE.QUEUE.RUNTIME.0001` is the provider-neutral queue dispatcher and reconciler for multi-image requests.
@@ -86,3 +90,4 @@ OVERALL.SYSTEM.STATUS=U.21.HOLD
 ```
 
 The baseline is patched, not frozen. External ten-slot Adobe runtime remains unproven until real provider receipts establish it.
+

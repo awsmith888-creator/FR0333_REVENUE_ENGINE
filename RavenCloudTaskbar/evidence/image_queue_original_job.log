@@ -1,0 +1,300 @@
+﻿2026-09-13T19:07:59.9835382Z Current runner version: '2.337.0'
+2026-09-13T19:07:59.9851306Z ##[group]Runner Image Provisioner
+2026-09-13T19:07:59.9851984Z Hosted Compute Agent
+2026-09-13T19:07:59.9852384Z Version: 20260828.587
+2026-09-13T19:07:59.9852827Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-13T19:07:59.9853338Z Build Date: 2026-08-28T16:44:25Z
+2026-09-13T19:07:59.9854040Z Worker ID: {e9ea2258-1745-42e7-8a47-8b5031551df0}
+2026-09-13T19:07:59.9854610Z Azure Region: centralus
+2026-09-13T19:07:59.9855013Z ##[endgroup]
+2026-09-13T19:07:59.9855924Z ##[group]Operating System
+2026-09-13T19:07:59.9856356Z Ubuntu
+2026-09-13T19:07:59.9856732Z 24.04.5
+2026-09-13T19:07:59.9857108Z LTS
+2026-09-13T19:07:59.9857466Z ##[endgroup]
+2026-09-13T19:07:59.9857825Z ##[group]Runner Image
+2026-09-13T19:07:59.9858252Z Image: ubuntu-24.04
+2026-09-13T19:07:59.9858654Z Version: 20260907.300.1
+2026-09-13T19:07:59.9859544Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-13T19:07:59.9860560Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+2026-09-13T19:07:59.9861234Z ##[endgroup]
+2026-09-13T19:07:59.9862047Z ##[group]GITHUB_TOKEN Permissions
+2026-09-13T19:07:59.9863648Z Contents: read
+2026-09-13T19:07:59.9864061Z Metadata: read
+2026-09-13T19:07:59.9864460Z ##[endgroup]
+2026-09-13T19:07:59.9865854Z Secret source: Actions
+2026-09-13T19:07:59.9866465Z Cache mode: write
+2026-09-13T19:07:59.9866968Z Prepare workflow directory
+2026-09-13T19:08:00.0092494Z Prepare all required actions
+2026-09-13T19:08:00.0127039Z Getting action download info
+2026-09-13T19:08:00.2187489Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-09-13T19:08:00.9559962Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-09-13T19:08:01.2478733Z Complete job name: validate
+2026-09-13T19:08:01.3151925Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-13T19:08:01.3159633Z ##[group]Run actions/checkout@v4
+2026-09-13T19:08:01.3160607Z with:
+2026-09-13T19:08:01.3161469Z   repository: awsmith888-creator/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:01.3167631Z   token: ***
+2026-09-13T19:08:01.3168410Z   ssh-strict: true
+2026-09-13T19:08:01.3169144Z   ssh-user: git
+2026-09-13T19:08:01.3169901Z   persist-credentials: true
+2026-09-13T19:08:01.3170716Z   clean: true
+2026-09-13T19:08:01.3171457Z   sparse-checkout-cone-mode: true
+2026-09-13T19:08:01.3172317Z   fetch-depth: 1
+2026-09-13T19:08:01.3173040Z   fetch-tags: false
+2026-09-13T19:08:01.3174044Z   show-progress: true
+2026-09-13T19:08:01.3174837Z   lfs: false
+2026-09-13T19:08:01.3175624Z   submodules: false
+2026-09-13T19:08:01.3176400Z   set-safe-directory: true
+2026-09-13T19:08:01.3177272Z   allow-unsafe-pr-checkout: false
+2026-09-13T19:08:01.3178306Z ##[endgroup]
+2026-09-13T19:08:01.3942033Z Syncing repository: awsmith888-creator/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:01.3944649Z ##[group]Getting Git version info
+2026-09-13T19:08:01.3945912Z Working directory is '/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE'
+2026-09-13T19:08:01.3947695Z [command]/usr/bin/git version
+2026-09-13T19:08:02.2986520Z git version 2.55.0
+2026-09-13T19:08:02.3003073Z ##[endgroup]
+2026-09-13T19:08:02.3017275Z Temporarily overriding HOME='/home/runner/work/_temp/c6a419d8-42aa-47ad-a13d-495baf7fbc3c' before making global git config changes
+2026-09-13T19:08:02.3018351Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-13T19:08:02.3022902Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:02.3063589Z Deleting the contents of '/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE'
+2026-09-13T19:08:02.3067069Z ##[group]Initializing the repository
+2026-09-13T19:08:02.3071559Z [command]/usr/bin/git init /home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:02.8851309Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-13T19:08:02.8852018Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-13T19:08:02.8852578Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-13T19:08:02.8852905Z hint: call:
+2026-09-13T19:08:02.8853178Z hint:
+2026-09-13T19:08:02.8853725Z hint: 	git config --global init.defaultBranch <name>
+2026-09-13T19:08:02.8854133Z hint:
+2026-09-13T19:08:02.8854545Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-13T19:08:02.8855198Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-13T19:08:02.8855802Z hint:
+2026-09-13T19:08:02.8856111Z hint: 	git branch -m <name>
+2026-09-13T19:08:02.8856475Z hint:
+2026-09-13T19:08:02.8856879Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-13T19:08:02.8857593Z Initialized empty Git repository in /home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/.git/
+2026-09-13T19:08:02.8861609Z [command]/usr/bin/git remote add origin https://github.com/awsmith888-creator/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:02.8900132Z ##[endgroup]
+2026-09-13T19:08:02.8901228Z ##[group]Disabling automatic garbage collection
+2026-09-13T19:08:02.8904141Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-13T19:08:02.8925966Z ##[endgroup]
+2026-09-13T19:08:02.8926639Z ##[group]Setting up auth
+2026-09-13T19:08:02.8931305Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-13T19:08:02.8954668Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-13T19:08:02.9996314Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-13T19:08:03.0019835Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-13T19:08:03.0169052Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-13T19:08:03.0192093Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-13T19:08:03.0339480Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-13T19:08:03.0412645Z ##[endgroup]
+2026-09-13T19:08:03.0413426Z ##[group]Fetching the repository
+2026-09-13T19:08:03.0420331Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +72b3d48c01a429047b392802e21d156f25cdbe56:refs/remotes/pull/33/merge
+2026-09-13T19:08:04.1562803Z From https://github.com/awsmith888-creator/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:04.1563655Z  * [new ref]         72b3d48c01a429047b392802e21d156f25cdbe56 -> pull/33/merge
+2026-09-13T19:08:04.1567584Z ##[endgroup]
+2026-09-13T19:08:04.1569982Z ##[group]Determining the checkout info
+2026-09-13T19:08:04.1570551Z ##[endgroup]
+2026-09-13T19:08:04.1575916Z [command]/usr/bin/git sparse-checkout disable
+2026-09-13T19:08:04.1620146Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-13T19:08:04.1648742Z ##[group]Checking out the ref
+2026-09-13T19:08:04.1651540Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/33/merge
+2026-09-13T19:08:04.1738941Z Note: switching to 'refs/remotes/pull/33/merge'.
+2026-09-13T19:08:04.1739158Z 
+2026-09-13T19:08:04.1739412Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-09-13T19:08:04.1739862Z changes and commit them, and you can discard any commits you make in this
+2026-09-13T19:08:04.1740441Z state without impacting any branches by switching back to a branch.
+2026-09-13T19:08:04.1740674Z 
+2026-09-13T19:08:04.1740826Z If you want to create a new branch to retain commits you create, you may
+2026-09-13T19:08:04.1741210Z do so (now or later) by using -c with the switch command. Example:
+2026-09-13T19:08:04.1741430Z 
+2026-09-13T19:08:04.1741535Z   git switch -c <new-branch-name>
+2026-09-13T19:08:04.1741729Z 
+2026-09-13T19:08:04.1741860Z Or undo this operation with:
+2026-09-13T19:08:04.1742009Z 
+2026-09-13T19:08:04.1742121Z   git switch -
+2026-09-13T19:08:04.1742258Z 
+2026-09-13T19:08:04.1742557Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-09-13T19:08:04.1742807Z 
+2026-09-13T19:08:04.1743076Z HEAD is now at 72b3d48 Merge dd1f2a883e8d3af43b4fde4e39ecb429861202c5 into 5c02d0c313f53244fd98dccffe11bbb97f6be2e1
+2026-09-13T19:08:04.2071407Z ##[endgroup]
+2026-09-13T19:08:04.2102565Z [command]/usr/bin/git log -1 --format=%H
+2026-09-13T19:08:04.2119785Z 72b3d48c01a429047b392802e21d156f25cdbe56
+2026-09-13T19:08:04.2320413Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-13T19:08:04.2321902Z ##[group]Run actions/setup-python@v5
+2026-09-13T19:08:04.2322187Z with:
+2026-09-13T19:08:04.2322432Z   python-version: 3.11
+2026-09-13T19:08:04.2322676Z   check-latest: false
+2026-09-13T19:08:04.2324629Z   token: ***
+2026-09-13T19:08:04.2324891Z   update-environment: true
+2026-09-13T19:08:04.2325143Z   allow-prereleases: false
+2026-09-13T19:08:04.2325392Z   freethreaded: false
+2026-09-13T19:08:04.2325620Z ##[endgroup]
+2026-09-13T19:08:04.3275140Z ##[group]Installed versions
+2026-09-13T19:08:04.3511486Z (node:2040) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-13T19:08:04.3512360Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-13T19:08:04.3512744Z Successfully set up CPython (3.11.16)
+2026-09-13T19:08:04.3513373Z ##[endgroup]
+2026-09-13T19:08:04.3642523Z ##[group]Run python -m json.tool RavenCloudTaskbar/fr0333_image_queue_runtime_0001.json >/dev/null
+2026-09-13T19:08:04.3643080Z [36;1mpython -m json.tool RavenCloudTaskbar/fr0333_image_queue_runtime_0001.json >/dev/null[0m
+2026-09-13T19:08:04.3892477Z shell: /usr/bin/bash -e {0}
+2026-09-13T19:08:04.3892754Z env:
+2026-09-13T19:08:04.3893061Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:04.3893721Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+2026-09-13T19:08:04.3894205Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:04.3894571Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:04.3894932Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:04.3895323Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+2026-09-13T19:08:04.3895636Z ##[endgroup]
+2026-09-13T19:08:05.2830919Z ##[group]Run python RavenCloudTaskbar/fr0333_image_queue_runtime.py
+2026-09-13T19:08:05.2831385Z [36;1mpython RavenCloudTaskbar/fr0333_image_queue_runtime.py[0m
+2026-09-13T19:08:05.2853601Z shell: /usr/bin/bash -e {0}
+2026-09-13T19:08:05.2853930Z env:
+2026-09-13T19:08:05.2854252Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.2854686Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+2026-09-13T19:08:05.2855138Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.2855508Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.2855876Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.2856265Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+2026-09-13T19:08:05.2856701Z ##[endgroup]
+2026-09-13T19:08:05.3214304Z FR0333.IMAGE.QUEUE.RUNTIME.0001 provider-neutral dispatcher loaded
+2026-09-13T19:08:05.3214897Z IMAGE_GENERATE.TEN_SLOT_PLAN=4+4+2
+2026-09-13T19:08:05.3215230Z QUEUE.RUNTIME=U.21.NOT.PROVEN
+2026-09-13T19:08:05.3285567Z ##[group]Run python RavenCloudTaskbar/test_fr0333_image_queue_runtime.py
+2026-09-13T19:08:05.3286054Z [36;1mpython RavenCloudTaskbar/test_fr0333_image_queue_runtime.py[0m
+2026-09-13T19:08:05.3301409Z shell: /usr/bin/bash -e {0}
+2026-09-13T19:08:05.3301678Z env:
+2026-09-13T19:08:05.3301995Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.3302367Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib/pkgconfig
+2026-09-13T19:08:05.3302723Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.3303120Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.3303631Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.16/x64
+2026-09-13T19:08:05.3304025Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.16/x64/lib
+2026-09-13T19:08:05.3304324Z ##[endgroup]
+2026-09-13T19:08:05.9379144Z test_contact_sheet_slot_is_rejected (__main__.ImageQueueRuntimeTests.test_contact_sheet_slot_is_rejected) ... ERROR
+2026-09-13T19:08:05.9380061Z test_count_mismatch_fails_closed (__main__.ImageQueueRuntimeTests.test_count_mismatch_fails_closed) ... ERROR
+2026-09-13T19:08:05.9389829Z test_duplicate_output_asset_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_output_asset_is_rejected) ... ERROR
+2026-09-13T19:08:05.9390674Z test_duplicate_visual_fingerprint_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_visual_fingerprint_is_rejected) ... ERROR
+2026-09-13T19:08:05.9391612Z test_failed_q04_retries_q04_only (__main__.ImageQueueRuntimeTests.test_failed_q04_retries_q04_only) ... ERROR
+2026-09-13T19:08:05.9392565Z test_queue_is_one_request_per_slot_not_one_request_ten_variants (__main__.ImageQueueRuntimeTests.test_queue_is_one_request_per_slot_not_one_request_ten_variants) ... ERROR
+2026-09-13T19:08:05.9393783Z test_receipt_slot_mismatch_is_rejected_before_reconciliation (__main__.ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation) ... ERROR
+2026-09-13T19:08:05.9394911Z test_ten_slot_dispatch_produces_ten_independent_receipts (__main__.ImageQueueRuntimeTests.test_ten_slot_dispatch_produces_ten_independent_receipts) ... ERROR
+2026-09-13T19:08:05.9395444Z 
+2026-09-13T19:08:05.9395633Z ======================================================================
+2026-09-13T19:08:05.9396168Z ERROR: test_contact_sheet_slot_is_rejected (__main__.ImageQueueRuntimeTests.test_contact_sheet_slot_is_rejected)
+2026-09-13T19:08:05.9396629Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9396983Z Traceback (most recent call last):
+2026-09-13T19:08:05.9400835Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 78, in test_contact_sheet_slot_is_rejected
+2026-09-13T19:08:05.9401514Z     receipts = dispatch_slots(self.slots, self.provider_ok)
+2026-09-13T19:08:05.9401884Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9402427Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9402958Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9403282Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9403937Z TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9404249Z 
+2026-09-13T19:08:05.9404389Z ======================================================================
+2026-09-13T19:08:05.9404817Z ERROR: test_count_mismatch_fails_closed (__main__.ImageQueueRuntimeTests.test_count_mismatch_fails_closed)
+2026-09-13T19:08:05.9405271Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9405776Z Traceback (most recent call last):
+2026-09-13T19:08:05.9406502Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 57, in test_count_mismatch_fails_closed
+2026-09-13T19:08:05.9407110Z     receipts = dispatch_slots(self.slots, self.provider_ok)[:-1]
+2026-09-13T19:08:05.9407438Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9407960Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9408482Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9408784Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9409223Z TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9409497Z 
+2026-09-13T19:08:05.9409634Z ======================================================================
+2026-09-13T19:08:05.9410100Z ERROR: test_duplicate_output_asset_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_output_asset_is_rejected)
+2026-09-13T19:08:05.9410569Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9410944Z Traceback (most recent call last):
+2026-09-13T19:08:05.9411585Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 64, in test_duplicate_output_asset_is_rejected
+2026-09-13T19:08:05.9412167Z     receipts = dispatch_slots(self.slots, self.provider_ok)
+2026-09-13T19:08:05.9412491Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9413009Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9413734Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9414066Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9414486Z TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9414748Z 
+2026-09-13T19:08:05.9414928Z ======================================================================
+2026-09-13T19:08:05.9415412Z ERROR: test_duplicate_visual_fingerprint_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_visual_fingerprint_is_rejected)
+2026-09-13T19:08:05.9415904Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9416226Z Traceback (most recent call last):
+2026-09-13T19:08:05.9416801Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 71, in test_duplicate_visual_fingerprint_is_rejected
+2026-09-13T19:08:05.9417421Z     receipts = dispatch_slots(self.slots, self.provider_ok)
+2026-09-13T19:08:05.9417742Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9418242Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9418818Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9419107Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9419528Z TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9419795Z 
+2026-09-13T19:08:05.9419945Z ======================================================================
+2026-09-13T19:08:05.9420343Z ERROR: test_failed_q04_retries_q04_only (__main__.ImageQueueRuntimeTests.test_failed_q04_retries_q04_only)
+2026-09-13T19:08:05.9420791Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9421091Z Traceback (most recent call last):
+2026-09-13T19:08:05.9421634Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 86, in test_failed_q04_retries_q04_only
+2026-09-13T19:08:05.9422330Z     receipts = dispatch_slots(self.slots, self.provider_ok)
+2026-09-13T19:08:05.9422625Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9423203Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9423928Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9424247Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9424637Z TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9424938Z 
+2026-09-13T19:08:05.9425061Z ======================================================================
+2026-09-13T19:08:05.9425622Z ERROR: test_queue_is_one_request_per_slot_not_one_request_ten_variants (__main__.ImageQueueRuntimeTests.test_queue_is_one_request_per_slot_not_one_request_ten_variants)
+2026-09-13T19:08:05.9426191Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9426508Z Traceback (most recent call last):
+2026-09-13T19:08:05.9427137Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 113, in test_queue_is_one_request_per_slot_not_one_request_ten_variants
+2026-09-13T19:08:05.9427781Z     receipts = dispatch_slots(self.slots, counting_provider)
+2026-09-13T19:08:05.9428114Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9428620Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9429142Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9429441Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9430016Z TypeError: ImageQueueRuntimeTests.test_queue_is_one_request_per_slot_not_one_request_ten_variants.<locals>.counting_provider() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9430488Z 
+2026-09-13T19:08:05.9430633Z ======================================================================
+2026-09-13T19:08:05.9431172Z ERROR: test_receipt_slot_mismatch_is_rejected_before_reconciliation (__main__.ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation)
+2026-09-13T19:08:05.9431762Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9432072Z Traceback (most recent call last):
+2026-09-13T19:08:05.9432672Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 104, in test_receipt_slot_mismatch_is_rejected_before_reconciliation
+2026-09-13T19:08:05.9433313Z     dispatch_slots(self.slots, bad_provider)
+2026-09-13T19:08:05.9433986Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9434526Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9434828Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9435358Z TypeError: ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation.<locals>.bad_provider() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9435793Z 
+2026-09-13T19:08:05.9435935Z ======================================================================
+2026-09-13T19:08:05.9436464Z ERROR: test_ten_slot_dispatch_produces_ten_independent_receipts (__main__.ImageQueueRuntimeTests.test_ten_slot_dispatch_produces_ten_independent_receipts)
+2026-09-13T19:08:05.9437004Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9437316Z Traceback (most recent call last):
+2026-09-13T19:08:05.9437906Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 42, in test_ten_slot_dispatch_produces_ten_independent_receipts
+2026-09-13T19:08:05.9438605Z     receipts = dispatch_slots(self.slots, self.provider_ok)
+2026-09-13T19:08:05.9439015Z                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9439512Z   File "/home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+2026-09-13T19:08:05.9440026Z     batch_receipts = provider_call(batch, batch_index)
+2026-09-13T19:08:05.9440324Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T19:08:05.9440718Z TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+2026-09-13T19:08:05.9441034Z 
+2026-09-13T19:08:05.9441161Z ----------------------------------------------------------------------
+2026-09-13T19:08:05.9441506Z Ran 8 tests in 0.002s
+2026-09-13T19:08:05.9441659Z 
+2026-09-13T19:08:05.9441771Z FAILED (errors=8)
+2026-09-13T19:08:05.9463174Z ##[error]Process completed with exit code 1.
+2026-09-13T19:08:05.9575680Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-13T19:08:05.9576711Z Post job cleanup.
+2026-09-13T19:08:06.0203904Z [command]/usr/bin/git version
+2026-09-13T19:08:06.0236055Z git version 2.55.0
+2026-09-13T19:08:06.0266719Z Temporarily overriding HOME='/home/runner/work/_temp/17990e05-fd7b-448c-89a2-86426a8bdc73' before making global git config changes
+2026-09-13T19:08:06.0267448Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-13T19:08:06.0271632Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/FR0333_REVENUE_ENGINE/FR0333_REVENUE_ENGINE
+2026-09-13T19:08:06.0301842Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-13T19:08:06.0326802Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-13T19:08:06.0490209Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-13T19:08:06.0508840Z http.https://github.com/.extraheader
+2026-09-13T19:08:06.0518542Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-13T19:08:06.0542837Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-13T19:08:06.0705475Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-13T19:08:06.0729671Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-13T19:08:06.1003230Z Cleaning up orphan processes
+2026-09-13T19:08:06.1195844Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

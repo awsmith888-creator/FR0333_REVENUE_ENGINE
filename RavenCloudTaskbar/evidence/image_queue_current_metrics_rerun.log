@@ -1,0 +1,15 @@
+test_contact_sheet_slot_is_rejected (__main__.ImageQueueRuntimeTests.test_contact_sheet_slot_is_rejected) ... ok
+test_count_mismatch_fails_closed (__main__.ImageQueueRuntimeTests.test_count_mismatch_fails_closed) ... ok
+test_duplicate_output_asset_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_output_asset_is_rejected) ... ok
+test_duplicate_visual_fingerprint_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_visual_fingerprint_is_rejected) ... ok
+test_failed_q09_retries_q09_only (__main__.ImageQueueRuntimeTests.test_failed_q09_retries_q09_only) ... ok
+test_instruct_edit_uses_observed_singleton_cap (__main__.ImageQueueRuntimeTests.test_instruct_edit_uses_observed_singleton_cap) ... ok
+test_native_1072_1920_requires_dimension_normalization (__main__.ImageQueueRuntimeTests.test_native_1072_1920_requires_dimension_normalization) ... ok
+test_per_slot_readback_fields_are_independent_gates (__main__.ImageQueueRuntimeTests.test_per_slot_readback_fields_are_independent_gates) ... ok
+test_receipt_slot_mismatch_is_rejected_before_reconciliation (__main__.ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation) ... ok
+test_ten_slot_generate_dispatch_uses_effective_singleton_cap (__main__.ImageQueueRuntimeTests.test_ten_slot_generate_dispatch_uses_effective_singleton_cap) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+OK

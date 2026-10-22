@@ -1,0 +1,108 @@
+test_contact_sheet_slot_is_rejected (__main__.ImageQueueRuntimeTests.test_contact_sheet_slot_is_rejected) ... ERROR
+test_count_mismatch_fails_closed (__main__.ImageQueueRuntimeTests.test_count_mismatch_fails_closed) ... ERROR
+test_duplicate_output_asset_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_output_asset_is_rejected) ... ERROR
+test_duplicate_visual_fingerprint_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_visual_fingerprint_is_rejected) ... ERROR
+test_failed_q04_retries_q04_only (__main__.ImageQueueRuntimeTests.test_failed_q04_retries_q04_only) ... ERROR
+test_queue_is_one_request_per_slot_not_one_request_ten_variants (__main__.ImageQueueRuntimeTests.test_queue_is_one_request_per_slot_not_one_request_ten_variants) ... ERROR
+test_receipt_slot_mismatch_is_rejected_before_reconciliation (__main__.ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation) ... ERROR
+test_ten_slot_dispatch_produces_ten_independent_receipts (__main__.ImageQueueRuntimeTests.test_ten_slot_dispatch_produces_ten_independent_receipts) ... ERROR
+
+======================================================================
+ERROR: test_contact_sheet_slot_is_rejected (__main__.ImageQueueRuntimeTests.test_contact_sheet_slot_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 78, in test_contact_sheet_slot_is_rejected
+    receipts = dispatch_slots(self.slots, self.provider_ok)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_count_mismatch_fails_closed (__main__.ImageQueueRuntimeTests.test_count_mismatch_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 57, in test_count_mismatch_fails_closed
+    receipts = dispatch_slots(self.slots, self.provider_ok)[:-1]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_duplicate_output_asset_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_output_asset_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 64, in test_duplicate_output_asset_is_rejected
+    receipts = dispatch_slots(self.slots, self.provider_ok)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_duplicate_visual_fingerprint_is_rejected (__main__.ImageQueueRuntimeTests.test_duplicate_visual_fingerprint_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 71, in test_duplicate_visual_fingerprint_is_rejected
+    receipts = dispatch_slots(self.slots, self.provider_ok)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_failed_q04_retries_q04_only (__main__.ImageQueueRuntimeTests.test_failed_q04_retries_q04_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 86, in test_failed_q04_retries_q04_only
+    receipts = dispatch_slots(self.slots, self.provider_ok)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_queue_is_one_request_per_slot_not_one_request_ten_variants (__main__.ImageQueueRuntimeTests.test_queue_is_one_request_per_slot_not_one_request_ten_variants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 113, in test_queue_is_one_request_per_slot_not_one_request_ten_variants
+    receipts = dispatch_slots(self.slots, counting_provider)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.test_queue_is_one_request_per_slot_not_one_request_ten_variants.<locals>.counting_provider() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_receipt_slot_mismatch_is_rejected_before_reconciliation (__main__.ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 104, in test_receipt_slot_mismatch_is_rejected_before_reconciliation
+    dispatch_slots(self.slots, bad_provider)
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.test_receipt_slot_mismatch_is_rejected_before_reconciliation.<locals>.bad_provider() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_ten_slot_dispatch_produces_ten_independent_receipts (__main__.ImageQueueRuntimeTests.test_ten_slot_dispatch_produces_ten_independent_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py", line 42, in test_ten_slot_dispatch_produces_ten_independent_receipts
+    receipts = dispatch_slots(self.slots, self.provider_ok)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/83c638c21bbb/metrics/historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py", line 134, in dispatch_slots
+    batch_receipts = provider_call(batch, batch_index)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+FAILED (errors=8)

@@ -1,0 +1,64 @@
+{
+  "identifier": "FR0333.IMAGE.QUEUE.REMAINS.CERTIFICATE.0001",
+  "certificate_type": "SELF_ISSUED_NOT_EXTERNAL_ATTESTATION",
+  "parent_identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.METRICS.0001",
+  "meaning": "Certificate of recorded gaps only. No external authority or approval asserted.",
+  "items": [
+    {
+      "id": "R.1",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "INDEPENDENT_PROVENANCE",
+      "gap": "Independent retrieval/attestation for retained job log and execution records",
+      "evidence_needed": "Source retrieval receipt binding repository/run/job/checkout plus reviewer identity and timestamp"
+    },
+    {
+      "id": "R.2",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "ANNOTATIONS",
+      "gap": "Two original annotation bodies remain unavailable",
+      "evidence_needed": "Original annotation JSON tied to run 34776743553 and job 103776125864"
+    },
+    {
+      "id": "R.3",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "LIVE_OUTPUT_BYTES",
+      "gap": "Receipt 0003 output-byte verification has not occurred",
+      "evidence_needed": "For Q01 through Q10: final_output_url \u00b7 resolved asset identity \u00b7 nonzero byte length \u00b7 decode result \u00b7 SHA256 \u00b7 measured width 1080 \u00b7 height 1920 \u00b7 retrieval timestamp"
+    },
+    {
+      "id": "R.4",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "PROVIDER_BINDING",
+      "gap": "Provider request identifiers are observed document content only",
+      "evidence_needed": "Retained provider response matching slot_id \u00b7 generation_request_id or retry_generation_request_id \u00b7 normalization_request_id \u00b7 output URL and bytes; initial and retry Q09 records"
+    },
+    {
+      "id": "R.5",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "VISUAL_READBACK",
+      "gap": "Anatomy/realism/intent and uniqueness remain unreviewed in this task",
+      "evidence_needed": "Dated reviewer record tied to output SHA256 and source intent; no collage or multiple panels; distinct content"
+    },
+    {
+      "id": "R.6",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "QUALITY_ACCEPTANCE",
+      "gap": "User aesthetic acceptance has not been observed",
+      "evidence_needed": "Explicit operator acceptance receipt bound to reviewed output hashes; does not imply universal model quality"
+    },
+    {
+      "id": "R.7",
+      "lane": "PASSIVE",
+      "state": "HOLD",
+      "metric": "MAINLINE",
+      "gap": "Draft branch integration is separate from mainline merge",
+      "evidence_needed": "Authorized merge record and resulting mainline commit; no automatic merge"
+    }
+  ]
+}

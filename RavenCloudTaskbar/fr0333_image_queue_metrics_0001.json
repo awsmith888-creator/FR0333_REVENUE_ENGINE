@@ -1,0 +1,187 @@
+{
+  "identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.METRICS.0001",
+  "certificate_type": "SELF_ISSUED_NOT_EXTERNAL_ATTESTATION",
+  "reference_commit": "417f4094e1df8fe3c332177d2ac3698af62317c7",
+  "parent_entry": {
+    "index": "0.8",
+    "identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.FAILURE.CLOSURE.0001",
+    "artifact": "RavenCloudTaskbar/fr0333_image_queue_failure_closure_0001.json",
+    "state": "DIAGNOSIS_VERIFIED_LOCAL_TEST_PASS_LIVE_REVERIFICATION_HOLD"
+  },
+  "lanes": {
+    "active": {
+      "scope": "AUTHORIZED_OFFLINE_CHECKS_ONLY",
+      "metrics": [
+        {
+          "id": "A.1",
+          "metric": "source_hashes",
+          "matched": 4,
+          "expected": 4,
+          "class": "VERIFIED"
+        },
+        {
+          "id": "A.2",
+          "metric": "current_control_plane_tests",
+          "passed": 10,
+          "total": 10,
+          "class": "SIMULATED_FIXTURE"
+        },
+        {
+          "id": "A.3",
+          "metric": "historical_reproduction",
+          "errors": 8,
+          "tests": 8,
+          "exit_code": 1,
+          "class": "LOCAL_EXECUTION"
+        },
+        {
+          "id": "A.4",
+          "metric": "retained_job_log_hash",
+          "matched": 1,
+          "expected": 1,
+          "class": "VERIFIED_BYTES_ONLY"
+        },
+        {
+          "id": "A.5",
+          "metric": "later_receipt_blob",
+          "matched": 1,
+          "expected": 1,
+          "class": "VERIFIED_DOCUMENT_ONLY"
+        },
+        {
+          "id": "A.6",
+          "metric": "prior_index_entries_preserved",
+          "count": 8,
+          "class": "VERIFIED_AGAINST_BOUND_SNAPSHOT"
+        }
+      ]
+    },
+    "passive": {
+      "scope": "PRESERVED_CLAIMS_AND_REMAINS_NO_EXECUTION",
+      "automatic_execution": false,
+      "metrics": [
+        {
+          "id": "P.1",
+          "metric": "receipt_0003_final_outputs",
+          "claimed": 10,
+          "bytes_reverified_this_task": 0,
+          "class": "HOLD"
+        },
+        {
+          "id": "P.2",
+          "metric": "quality_acceptance",
+          "state": "NOT_OBSERVED",
+          "class": "HOLD"
+        },
+        {
+          "id": "P.3",
+          "metric": "external_attestation",
+          "state": "NOT_ESTABLISHED",
+          "class": "HOLD"
+        }
+      ]
+    }
+  },
+  "provider_calls": 0,
+  "workflow_dispatches": 0,
+  "quality_promotion": "HOLD",
+  "execution_receipt": "fr0333_image_queue_metrics_execution_0001.json",
+  "remains_certificate": "fr0333_image_queue_remains_certificate_0001.json",
+  "anti_loop": {
+    "bounded_attempts_per_suite": 1,
+    "reopen_only_on": "NEW_EVIDENCE_OR_CODE_CHANGE_OR_EXPLICIT_USER_AUTHORIZATION",
+    "passive_lane_cannot_schedule_or_invoke": true,
+    "successful_slots_regenerated": 0
+  },
+  "limits": [
+    "Hash agreement proves byte consistency with the bound record; source authenticity remains separate.",
+    "Self-issued receipt and retained logs are not independent external attestation.",
+    "Fixture PASS and dimension metadata replacement do not establish an image transformation.",
+    "No composite score or provider quality promotion."
+  ],
+  "bound_files": [
+    {
+      "path": "RavenCloudTaskbar/evidence/image_queue_index_at_417f409.json",
+      "sha256": "f5cdafeed9bca98b1579b3a6fa045219f6381b28549d57ba9a8750e0b6a9b85c"
+    },
+    {
+      "path": "RavenCloudTaskbar/evidence/image_queue_original_job.log",
+      "sha256": "8c9d292318dfe713b481c12aa751644feebaef4a0afc521c3d4e485aa75ba3e0"
+    },
+    {
+      "path": "RavenCloudTaskbar/fr0333_image_queue_failure_closure_0001.json",
+      "sha256": "128a6f86ec62a9b5b3459509c7bc511ef045577288a38a8e467e26121dbb08a8"
+    },
+    {
+      "path": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json",
+      "sha256": "6958e65c6ac6b39838f85f92146fb391ef469ae2a4e0bd9f847b32b9dd322a83"
+    },
+    {
+      "path": "RavenCloudTaskbar/fr0333_image_queue_remains_certificate_0001.json",
+      "sha256": "ec5ef57bde3964f60942503d12eb8087feb199f0075a7f2593529a060bb0b275"
+    },
+    {
+      "path": "RavenCloudTaskbar/validate_image_queue_failure_closure_0001.py",
+      "sha256": "d9eb66444eb8ad31eb70bb042c8a6b3b25566af0c8a3f13e37105bb6c4f5c9df"
+    },
+    {
+      "path": "RavenCloudTaskbar/validate_image_queue_metrics_0001.py",
+      "sha256": "cd46e500b4513ac6773cf8c35aeaa14853dde3453a3790325a95fea5930770bc"
+    },
+    {
+      "path": "RavenCloudTaskbar/test_image_queue_metrics_0001.py",
+      "sha256": "4912c9316c0f6bf189bac3fca04216e890d33d653dbfcfc7e473156df1bef047"
+    },
+    {
+      "path": "RavenCloudTaskbar/README_image_queue_metrics_0001.md",
+      "sha256": "73bd483e3da8afd10bb269b7d71d6caec753b09375dcc44aefd46e7dbc1eb898"
+    },
+    {
+      "path": "RavenCloudTaskbar/thumbnails/image_queue_active_metrics_0001.svg",
+      "sha256": "79c88374f6430420f07efe651382c65ac760c5ae29d46c54cbcb787d6099d6a7"
+    },
+    {
+      "path": "RavenCloudTaskbar/thumbnails/image_queue_passive_metrics_0001.svg",
+      "sha256": "678a60358f9b76a0061783c4b0b27c4e5422653b09da1fcacf5480b9e82fc439"
+    },
+    {
+      "path": "RavenCloudTaskbar/fr0333_image_queue_metrics_execution_0001.json",
+      "sha256": "cf2f31fbde8b65c181181f2ceaf940f9a67c120ae992402cc282282ad56f0b7f"
+    }
+  ],
+  "operational_readback_gate": {
+    "identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.LIVE.READBACK.0001",
+    "parent_golden_chain_index": "0.9",
+    "evidence_parent_golden_chain_index": "0.8",
+    "gate_file": "RavenCloudTaskbar/verify_image_queue_live_readback_0001.py",
+    "regression_tests": "RavenCloudTaskbar/test_image_queue_live_readback_0001.py",
+    "readme": "RavenCloudTaskbar/README_image_queue_live_readback_0001.md",
+    "receipt": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json",
+    "active_lane": {
+      "execution_mode": "OPERATOR_ON_DEMAND_READ_ONLY",
+      "provider_calls": 0,
+      "workflow_dispatches": 0,
+      "required_output_count": 10,
+      "required_distinct_sha256": 10,
+      "required_provider_record_bindings": 10,
+      "required_dimensions": [
+        1080,
+        1920
+      ],
+      "implementation": "COMMITTED_TO_PR70_BRANCH",
+      "regression_test_execution": "NOT_EXECUTED_IN_THIS_AUDIT"
+    },
+    "passive_lane": {
+      "evidence_class": "BOUNDED_EXISTING_CLAIM",
+      "current_state": "U.21.HOLD",
+      "sample_existing_url_readback": "Q01_AND_Q02_NOT_FOUND_2026_10_22",
+      "source_output_bytes_reverified": 0,
+      "recovered_provider_response_exports": 0,
+      "quality_promotion": "U.21.HOLD",
+      "independent_external_attestation": "U.21.HOLD",
+      "mainline_merge": "U.21.HOLD",
+      "automatic_retry": false
+    },
+    "acceptance_boundary": "GATE_IS_READY_FOR_OFFLINE_EXISTING_OUTPUT_VERIFICATION; NO_PROVEN_LIVE_DELIVERY_WITHOUT_ORIGINAL_IMAGE_BYTES_AND_PROVIDER_RESPONSE_RECORDS"
+  }
+}
