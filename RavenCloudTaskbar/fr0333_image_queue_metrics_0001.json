@@ -148,5 +148,40 @@
       "path": "RavenCloudTaskbar/fr0333_image_queue_metrics_execution_0001.json",
       "sha256": "cf2f31fbde8b65c181181f2ceaf940f9a67c120ae992402cc282282ad56f0b7f"
     }
-  ]
+  ],
+  "operational_readback_gate": {
+    "identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.LIVE.READBACK.0001",
+    "parent_golden_chain_index": "0.9",
+    "evidence_parent_golden_chain_index": "0.8",
+    "gate_file": "RavenCloudTaskbar/verify_image_queue_live_readback_0001.py",
+    "regression_tests": "RavenCloudTaskbar/test_image_queue_live_readback_0001.py",
+    "readme": "RavenCloudTaskbar/README_image_queue_live_readback_0001.md",
+    "receipt": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json",
+    "active_lane": {
+      "execution_mode": "OPERATOR_ON_DEMAND_READ_ONLY",
+      "provider_calls": 0,
+      "workflow_dispatches": 0,
+      "required_output_count": 10,
+      "required_distinct_sha256": 10,
+      "required_provider_record_bindings": 10,
+      "required_dimensions": [
+        1080,
+        1920
+      ],
+      "implementation": "COMMITTED_TO_PR70_BRANCH",
+      "regression_test_execution": "NOT_EXECUTED_IN_THIS_AUDIT"
+    },
+    "passive_lane": {
+      "evidence_class": "BOUNDED_EXISTING_CLAIM",
+      "current_state": "U.21.HOLD",
+      "sample_existing_url_readback": "Q01_AND_Q02_NOT_FOUND_2026_10_22",
+      "source_output_bytes_reverified": 0,
+      "recovered_provider_response_exports": 0,
+      "quality_promotion": "U.21.HOLD",
+      "independent_external_attestation": "U.21.HOLD",
+      "mainline_merge": "U.21.HOLD",
+      "automatic_retry": false
+    },
+    "acceptance_boundary": "GATE_IS_READY_FOR_OFFLINE_EXISTING_OUTPUT_VERIFICATION; NO_PROVEN_LIVE_DELIVERY_WITHOUT_ORIGINAL_IMAGE_BYTES_AND_PROVIDER_RESPONSE_RECORDS"
+  }
 }
