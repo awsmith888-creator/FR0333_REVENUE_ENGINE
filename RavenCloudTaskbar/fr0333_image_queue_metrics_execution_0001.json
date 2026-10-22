@@ -1,0 +1,38 @@
+{
+  "certificate_type": "SELF_ISSUED_NOT_EXTERNAL_ATTESTATION",
+  "recorded_at": "2026-10-22T12:43:47.923994+00:00",
+  "python": "3.12.14",
+  "evidence_class": "LOCAL_EXECUTION_SIMULATED_FIXTURE",
+  "independent_attestation": false,
+  "provider_calls": 0,
+  "workflow_dispatches": 0,
+  "current": {
+    "command": "python test_fr0333_image_queue_runtime.py",
+    "cwd": "RavenCloudTaskbar",
+    "tests": 10,
+    "errors": 0,
+    "exit_code": 0,
+    "log": "evidence/image_queue_current_metrics_rerun.log",
+    "sha256": "5c99c7685d43c435c98e0b0e7467ad236ffc9cd4a0af57f1d94b7340c56ebac9",
+    "attempts": 1
+  },
+  "historical": {
+    "command": "python test_fr0333_image_queue_runtime.py",
+    "cwd": "historical/RavenCloudTaskbar",
+    "tests": 8,
+    "errors": 8,
+    "exit_code": 1,
+    "log": "evidence/image_queue_historical_metrics_rerun.log",
+    "sha256": "aa71f531ae1ea253c3c1e65c5abb7cbee4d15c55a01acc971d4763a3524948f3",
+    "attempts": 1
+  },
+  "metrics_regression": {
+    "command": "python RavenCloudTaskbar/test_image_queue_metrics_0001.py",
+    "tests": 9,
+    "errors": 0,
+    "exit_code": 0,
+    "log": "evidence/image_queue_metrics_regression.log",
+    "sha256": "1df52cd3d253ab401f77bbde0e83e2e5b2039170f1d444a33cb527d9ac50849a",
+    "scope": "OFFLINE_VALIDATOR_POSITIVE_AND_NEGATIVE_CHECKS_NORMAL_AND_OPTIMIZED"
+  }
+}

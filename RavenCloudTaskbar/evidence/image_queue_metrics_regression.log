@@ -1,0 +1,15 @@
+PASS: source/log/receipt hashes · index links · active/passive metrics · self-issued boundaries
+test_active_metric_cannot_inflate (__main__.MetricsTests.test_active_metric_cannot_inflate) ... ok
+test_artifact_binding_cannot_drift (__main__.MetricsTests.test_artifact_binding_cannot_drift) ... ok
+test_live_claim_cannot_be_promoted (__main__.MetricsTests.test_live_claim_cannot_be_promoted) ... ok
+test_output_claim_cannot_change (__main__.MetricsTests.test_output_claim_cannot_change) ... ok
+test_passive_cannot_execute (__main__.MetricsTests.test_passive_cannot_execute) ... ok
+test_prior_index_cannot_change (__main__.MetricsTests.test_prior_index_cannot_change) ... ok
+test_public_index_cannot_drift (__main__.MetricsTests.test_public_index_cannot_drift) ... ok
+test_recorded_counts_cannot_drift (__main__.MetricsTests.test_recorded_counts_cannot_drift) ... ok
+test_valid_normal_and_optimized (__main__.MetricsTests.test_valid_normal_and_optimized) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.043s
+
+OK
