@@ -10,7 +10,8 @@
     "0.6.FR.0333.GOLDEN.CHAIN.AI.FRONTIER.EVOLUTION.ANATOMY.0001",
     "0.7.FR.0333.GOLDEN.CHAIN.AI.SAFE.SPEC.ADOPTION.0001",
     "0.8.FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.FAILURE.CLOSURE.0001",
-    "0.9.FR.0333.GOLDEN.CHAIN.ETHIOPIAN.ORTHODOX.STUDY.0001"
+    "0.9.FR.0333.GOLDEN.CHAIN.ETHIOPIAN.ORTHODOX.STUDY.0001",
+    "0.10.FR.0333.GOLDEN.CHAIN.ASTRA.PROBABILITY.0001"
   ],
   "entries": [
     {
@@ -66,6 +67,13 @@
       "identifier": "FR.0333.GOLDEN.CHAIN.ETHIOPIAN.ORTHODOX.STUDY.0001",
       "artifact": "RavenCloudTaskbar/ethiopian_orthodox_study_0001/METRICS.json",
       "state": "SOURCE_RESEARCH_RECORDED_TEXTUAL_COLLATION_HOLD"
+    },
+    {
+      "index": "0.10",
+      "identifier": "FR.0333.GOLDEN.CHAIN.ASTRA.PROBABILITY.0001",
+      "artifact": "RavenCloudTaskbar/fr0333_astra_probability_golden_chain_0010.json",
+      "certificate": "RavenCloudTaskbar/fr0333_astra_probability_golden_chain_0010_certificate.json",
+      "state": "OWNER_DESIGN_SPEC_RECORDED_RUNTIME_HOLD"
     }
   ],
   "rules": [
@@ -93,4 +101,3 @@
     "HUMAN_OPERATOR_CONTINUITY_MUST_NOT_BE_ERASED"
   ]
 }
-
