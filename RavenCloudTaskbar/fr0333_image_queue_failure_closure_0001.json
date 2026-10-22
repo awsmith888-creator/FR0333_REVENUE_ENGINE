@@ -1,0 +1,114 @@
+{
+  "identifier": "FR.0333.GOLDEN.CHAIN.IMAGE.QUEUE.FAILURE.CLOSURE.0001",
+  "evidence_class": "LOCAL_EXECUTION_AND_RETRIEVED_GITHUB_LOG",
+  "certificate_type": "SELF_ISSUED_VERIFICATION_RECORD_NOT_EXTERNAL_ATTESTATION",
+  "reference_point": {
+    "repository": "awsmith888-creator/FR0333_REVENUE_ENGINE",
+    "run_id": 34776743553,
+    "workflow_id": 357219458,
+    "job_id": 103776125864,
+    "head_sha": "dd1f2a883e8d3af43b4fde4e39ecb429861202c5",
+    "checkout_sha": "72b3d48c01a429047b392802e21d156f25cdbe56",
+    "current_baseline_sha": "91a0cc6e5177b320c1de31438df6ad099e9592e2",
+    "source_pdf": "https://drive.google.com/file/d/1s5TRE02TImK5reFywy0_c8GeAtmwnVoZ/view",
+    "job_url": "https://github.com/awsmith888-creator/FR0333_REVENUE_ENGINE/actions/runs/34776743553/job/103776125864"
+  },
+  "observed": {
+    "failed_step_number": 6,
+    "failed_step": "Run queue runtime receipt-count tests",
+    "command": "python RavenCloudTaskbar/test_fr0333_image_queue_runtime.py",
+    "python_version": "3.11.16",
+    "error": "TypeError: ImageQueueRuntimeTests.provider_ok() takes 1 positional argument but 2 were given",
+    "call": "provider_call(batch, batch_index)",
+    "errors": 8,
+    "exit_code": 1,
+    "preceding_steps_passed": [
+      "Validate queue runtime specification JSON",
+      "Load queue runtime dispatcher"
+    ]
+  },
+  "derived": {
+    "cause": "Batch dispatcher callback signature incompatible with singleton test callbacks",
+    "scope": "CONTROL_PLANE_TEST_INTERFACE",
+    "adobe_generation_failure_established": false
+  },
+  "verification": {
+    "historical_reproduction": {
+      "tests": 8,
+      "errors": 8,
+      "exit_code": 1
+    },
+    "current_tests": {
+      "tests": 10,
+      "errors": 0,
+      "exit_code": 0,
+      "evidence_class": "SIMULATED_FIXTURE",
+      "scope": "DISPATCH_AND_RECONCILIATION_ONLY"
+    },
+    "current_dispatch": "SINGLETON_CALLBACK",
+    "annotation_contents": "NOT_RETRIEVED_ENDPOINT_UNSUPPORTED",
+    "local_python_version": "3.12.14"
+  },
+  "later_receipt": {
+    "path": "RavenCloudTaskbar/fr0333_adobe_image_queue_runtime_receipt_0003.json",
+    "git_blob_sha": "397788fd7d7fafda31e7d7c4d839b3fa5f54ae75",
+    "observed_at": "2026-09-14",
+    "claim": "BOUNDED_TEN_SLOT_EXTERNAL_RUNTIME_PASS",
+    "this_audit": "DOCUMENT_CONTENT_OBSERVED_OUTPUT_BYTES_NOT_REVERIFIED",
+    "supersedes_original_failure": false
+  },
+  "anti_loop": {
+    "key_fields": [
+      "repository",
+      "run_id",
+      "job_id",
+      "checkout_sha"
+    ],
+    "historical_test_attempts": 1,
+    "current_test_attempts": 1,
+    "retry_policy": "STOP_AFTER_REPRODUCTION_OR_PASS_REOPEN_ONLY_ON_NEW_EVIDENCE_OR_CODE_CHANGE",
+    "automatic_provider_calls": false,
+    "automatic_workflow_reruns": false,
+    "successful_slot_regeneration": false,
+    "duplicate_sources_count_as_independent": false
+  },
+  "closure": {
+    "historical_failure": "PRESERVED",
+    "failure_diagnosis": "VERIFIED",
+    "current_test_interface": "PASS_LOCAL",
+    "live_provider_delivery": "HOLD_NOT_REEXECUTED",
+    "quality_promotion": "HOLD",
+    "global_system_health": "NOT_INFERRED"
+  },
+  "remains": [
+    "Original two annotation bodies not retrieved; exact exception independently available in job log.",
+    "Later Adobe receipt is an existing claim; output bytes and quality were not reverified in this audit.",
+    "No new live provider invocation or image delivery occurred.",
+    "Golden Chain entry is working-branch integration; mainline merge and quality promotion remain separate."
+  ],
+  "next_verification": "If live delivery promotion is requested, resolve and hash existing later-receipt output files before considering a new provider run.",
+  "rollback": "Drop the audit branch; original mainline and failure evidence remain intact.",
+  "source_files": [
+    {
+      "path": "RavenCloudTaskbar/fr0333_image_queue_runtime.py",
+      "git_blob_sha": "c232ef02a612532f34bb35bb6eae818e2dbf1f64",
+      "sha256": "6465c5b160f44cb87f507d7317d552e49718366124e39f54f32758c4b68552e9"
+    },
+    {
+      "path": "RavenCloudTaskbar/test_fr0333_image_queue_runtime.py",
+      "git_blob_sha": "f620ad4ed4a8534b2702e2710e4de9b44657205d",
+      "sha256": "de7e511009162b3086179c7c793045f4653d7a3559b723217d208d3886e2f84c"
+    },
+    {
+      "path": "historical/RavenCloudTaskbar/fr0333_image_queue_runtime.py",
+      "git_blob_sha": "17438110577a827d951495ec7176f9a2780e5c7c",
+      "sha256": "0bb6ac3b78ee545a20ccc5b57b511588117c8a3f248db97a50b6ca118c4971b1"
+    },
+    {
+      "path": "historical/RavenCloudTaskbar/test_fr0333_image_queue_runtime.py",
+      "git_blob_sha": "53938ad09303b06de4f6e8607fd762883d2e6d08",
+      "sha256": "35c93c871c2978557b4e21e6ef7a9ce44f60058304bfa5fbf4c9d66f00505d02"
+    }
+  ],
+  "original_job_log_sha256": "8c9d292318dfe713b481c12aa751644feebaef4a0afc521c3d4e485aa75ba3e0"
+}
