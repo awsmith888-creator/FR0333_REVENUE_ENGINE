@@ -35,3 +35,7 @@ jobs:
         run: python -m pip install 'Pillow>=10,<13'
       - name: Validate bounded existing-output readback gate with synthetic fixtures
         run: python RavenCloudTaskbar/test_image_queue_live_readback_0001.py
+      - name: Validate immutable historical closure and source hashes
+        run: python RavenCloudTaskbar/validate_image_queue_failure_closure_0001.py
+      - name: Validate Golden Chain 0.9 metrics and readback linkage
+        run: python RavenCloudTaskbar/validate_image_queue_metrics_0001.py
