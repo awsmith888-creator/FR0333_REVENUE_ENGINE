@@ -1,0 +1,46 @@
+{
+  "receipt_id": "RECEIPT.FR0333.GOLDEN.CHAIN.ASTRA.PROBABILITY.0010",
+  "date": "2026-10-22",
+  "branch": "record/astra-probability-golden-chain-0010",
+  "parent_branch": "research/ethiopian-orthodox-study-0001",
+  "parent_head_at_branch_creation": "834b41dcc58a0b3f5e7b5f6450ed83ad212636c5",
+  "index": "0.10",
+  "source_commit_spec": "f50c485e0edbb54f4dbb57005c93148500296e1c",
+  "source_commit_certificate": "68e72da22687934b3efd6c99e703e6aeea241517",
+  "source_commit_index": "865e052baaf35e8c4d9cb7e20a6f434708f71ecf",
+  "observed_git_blob_sha": {
+    "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json": "64e9ce3c2fedacc6ab54787e498807728217a60a",
+    "RavenCloudTaskbar/fr0333_astra_probability_golden_chain_0010.json": "875159d639708b332853b20253c15d3426843aed",
+    "RavenCloudTaskbar/fr0333_astra_probability_golden_chain_0010_certificate.json": "038d3197d27df8df189d62b948e0f2083a45e1e5"
+  },
+  "connector_readback_checks": {
+    "preserves_old_entries": true,
+    "preserves_old_public_index": true,
+    "preserves_old_rules": true,
+    "valid_append": true,
+    "spec_correspondence": true,
+    "spec_blob_in_certificate": true,
+    "runtime_on_hold": true,
+    "copyright_non_transfer": true
+  },
+  "metrics": {
+    "checks_run": 8,
+    "checks_passed": 8,
+    "prior_entries": 9,
+    "current_entries": 10,
+    "prior_rules_preserved": 22
+  },
+  "classification": "DOCUMENTED_AND_GITHUB_READBACK_VERIFIED",
+  "scope": "Git text records and existing chain invariants only",
+  "exclusions": [
+    "No real Astra runtime created",
+    "No automated provider or image run",
+    "No comparative '10x' measurement",
+    "No legal registration or external certificate",
+    "No mainline merge",
+    "No background watch/task"
+  ],
+  "state": "SPEC_INDEXED_CERTIFIED_INTERNALLY_RUNTIME_HOLD",
+  "rollback": "Revert new branch changes without mutating prior Golden Chain 0.1–0.9",
+  "next": "On an explicit owner-directed future request append a new evidence Δ; do not rewrite prior entry"
+}

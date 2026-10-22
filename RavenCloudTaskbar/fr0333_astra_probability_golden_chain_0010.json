@@ -1,0 +1,242 @@
+{
+  "identifier": "FR.0333.GOLDEN.CHAIN.ASTRA.PROBABILITY.0001",
+  "golden_chain_index": "0.10",
+  "date": "2026-10-22",
+  "timezone": "America/New_York",
+  "status": "OWNER_DIRECTED_DESIGN_RECORD_RUNTIME_HOLD",
+  "record_kind": "APPEND_ONLY_DESIGN_SPECIFICATION_NOT_A_RUNNING_SYSTEM",
+  "title": "Astra probability logic and evidence-first image/library governance",
+  "root": "ZERO LION LOGIC GATE FOREVER AND A DAY.1",
+  "operator": "Alfred William Smith Jr. / FR-0333 creator and architect",
+  "assistant_role": "scribe / implementation support / evidence review; not owner or independent authority",
+  "intended_beneficiaries": "owner-directed creative workflow and family, youth, community initiatives",
+  "source_refs": [
+    {
+      "id": "S.1",
+      "type": "OWNER_INSTRUCTION",
+      "reference": "User-directed FR-0333/Astra/Golden Chain specification in ChatGPT on 2026-10-22",
+      "class": "SOURCE_REPORTED"
+    },
+    {
+      "id": "S.2",
+      "type": "EXISTING_GIT_ARTIFACT",
+      "reference": "RavenCloudTaskbar/fr0333_golden_chain_index_0001.json; parent 0.1 through 0.9; PR #71 head 834b41dcc58a0b3f5e7b5f6450ed83ad212636c5",
+      "class": "READ_AT_BRANCH"
+    },
+    {
+      "id": "S.3",
+      "type": "EXISTING_GIT_ARTIFACT",
+      "reference": "RavenCloudTaskbar/fr0333_image_queue_failure_closure_0001.json; diagnosis/control-plane receipts; live delivery HOLD",
+      "class": "READ_AT_BRANCH"
+    }
+  ],
+  "immutable_chain": "ANCHOR → CHOMP → OBSERVE → TIMESTAMP → Δ → REPORT → STAY",
+  "constraints": {
+    "append_only": true,
+    "no_renumber_existing": true,
+    "owner_humanlock": "REQUIRED_FOR_PROMOTION",
+    "living_definition": "On-demand append and recovery from verified Δ events; 'alive' expresses maintained design intent, not sentience, autonomous execution, or continuous observation",
+    "automatic_tasks": false,
+    "automatic_background_execution": false,
+    "provider_dispatch": false,
+    "workflow_dispatch": false,
+    "auto_delete": false,
+    "external_system_access_claim": false,
+    "claim_separation": [
+      "OBSERVED ≠ CORRELATED ≠ CAUSAL",
+      "PROPOSED ≠ IMPLEMENTED ≠ TESTED ≠ LIVE_VERIFIED",
+      "SIMILAR ≠ DUPLICATE ≠ SAFE_TO_DELETE",
+      "EXTERNAL_SYSTEM ≠ AUTHORSHIP",
+      "CERTIFICATE ≠ THIRD_PARTY_APPROVAL"
+    ]
+  },
+  "intended_operating_design": {
+    "mode": "Astra / Golden Chain metric rail (spec only)",
+    "lanes": {
+      "ACTIVE.1": {
+        "purpose": "Requested ingestion, inventory, exact duplicate proof, and owner-authorized cleanup only",
+        "pipeline": [
+          "CAPTURE_SOURCE_FILE_ID",
+          "READ_CONTENT_BYTES",
+          "HASH_SHA256",
+          "DECODE_IMAGE",
+          "NORMALIZE_RGB_OR_RGBA_AND_DIMENSIONS",
+          "PIXEL_DIGEST",
+          "GROUP_EXACT_MATCHES",
+          "PRESERVE_CANONICAL_COPY",
+          "REQUIRE_SCOPED_DELETION_AUTHORIZATION",
+          "LOG_PER_FILE_RESULT",
+          "READ_BACK_RETAINED_ORIGINAL"
+        ]
+      },
+      "PASSIVE.2": {
+        "purpose": "Hypothesis-only near-duplicate discovery, alternative quality ranking, and missing-evidence tracking",
+        "pipeline": [
+          "PERCEPTUAL_HASH_CANDIDATES_ONLY",
+          "GEOMETRIC_OR_PIXEL_COMPARISON",
+          "METADATA_AND_LINEAGE_DIFFERENCE_CHECK",
+          "HOLD_UNCERTAIN_CANDIDATES",
+          "PROPOSE_REVIEW_NOT_DELETE"
+        ]
+      }
+    },
+    "canonical_copy_priority": [
+      "preserve owner-identified original or reference image",
+      "preserve highest-fidelity unique master and editable source",
+      "preserve provenance, captions, metadata and dates where needed",
+      "preserve variants with meaningful visual differences",
+      "when truly identical and same retention class, retain earliest owner-stated or oldest verified Library copy"
+    ],
+    "receipt_schema": [
+      "index",
+      "source_ref",
+      "timestamp_utc",
+      "library_file_id",
+      "source_sha256",
+      "decoded_pixel_sha256",
+      "image_dimensions",
+      "candidate_file_ids",
+      "comparison_class",
+      "kept_file_id",
+      "deleted_file_ids",
+      "deletion_result",
+      "retained_readback",
+      "backup_status",
+      "evidence_class",
+      "owner_authorization_scope",
+      "tool_run_receipt",
+      "exception_and_remains"
+    ],
+    "anti_loop": {
+      "duplicate_key": "sha256(source_bytes) OR sha256(normalized_pixel_bytes|width|height|mode), scoped to documented equivalence",
+      "durable_decision_key": "scope+sorted_candidate_ids+canonical_id+evidence_version",
+      "repeated_delete_attempt": "BLOCK_IF_ALREADY_SUCCESSFULLY_DELETED",
+      "library_reupload_for_review": "PROHIBITED",
+      "uncertainty_action": "HOLD"
+    },
+    "design_for_quality": {
+      "user_constraints": [
+        "INDIVIDUAL_IMAGE_FILES",
+        "9:16_TARGET_WHEN_USER_REQUESTS",
+        "NO_UNREQUESTED_COLLAGE",
+        "NO_UNREQUESTED_TEXT_OR_WATERMARK",
+        "IDENTITY_AND_REFERENCE_PRESERVATION",
+        "SEPARATE_OUTPUT_BYTES_FOR_EACH_SLOT"
+      ],
+      "promotion_gate": "SOURCE_IMAGE → SPEC_CONSTRAINTS → PER_FILE_BYTES → VALIDATED_RATIO → VISUAL_QC → USER_ACCEPTANCE_RECEIPT",
+      "failed_output": "retain failure receipt, no fabricated image success or invisible queue"
+    }
+  },
+  "probability_machine": {
+    "role": "Calibrated decision support; never independent evidence of image delivery, authorship, ownership, or safe deletion",
+    "measured_event": "P(two files represent one materially identical image | audited pairwise features)",
+    "features": [
+      "SHA256_IDENTITY",
+      "DECODED_PIXEL_IDENTITY",
+      "PERCEPTUAL_HASH_DISTANCE",
+      "STRUCTURAL_SIMILARITY",
+      "DIMENSIONS_AND_CROP",
+      "COLOR_PROFILE",
+      "EDIT_HISTORY",
+      "SOURCE_PROVENANCE"
+    ],
+    "hierarchy": {
+      "exact_file_hash_equal": "EXACT_BYTE_DUPLICATE",
+      "pixel_hash_equal_and_mode_size_match": "EXACT_PIXEL_DUPLICATE",
+      "otherwise_high_similarity": "POTENTIAL_VARIANT_REVIEW_ONLY",
+      "inconclusive": "HOLD"
+    },
+    "controls": [
+      "PERCEPTUAL_SIMILARITY_ALONE_NEVER_AUTHORIZES_DELETE",
+      "HARD_IDENTITY_EVIDENCE_OUTRANKS_ANY_MODEL_SCORE",
+      "NO_ARBITRARY_PROBABILITIES_PASSED_OFF_AS_CALIBRATED",
+      "TRACK_FALSE_POSITIVE_DELETE_RATE",
+      "COMPARE_BRIER_SCORE_AND_ECE_AGAINST_LABELED_REFERENCE_SET"
+    ],
+    "promotion_thresholds": "NOT_CALIBRATED; no numeric decision thresholds until signed dataset and holdout evaluation",
+    "metric_register": [
+      {
+        "ref": "M.1",
+        "metric": "duplicate_precision",
+        "unit": "verified matches / all proposed duplicate matches",
+        "state": "NOT_MEASURED"
+      },
+      {
+        "ref": "M.2",
+        "metric": "unique_original_retention",
+        "unit": "originals retained / originals eligible",
+        "state": "NOT_MEASURED"
+      },
+      {
+        "ref": "M.3",
+        "metric": "unsafe_delete_count",
+        "unit": "confirmed nonduplicates deleted",
+        "state": "NOT_MEASURED"
+      },
+      {
+        "ref": "M.4",
+        "metric": "output_slot_receipt_completeness",
+        "unit": "file receipts / requested files",
+        "state": "NOT_MEASURED"
+      },
+      {
+        "ref": "M.5",
+        "metric": "quality_acceptance",
+        "unit": "owner-accepted files / delivered files",
+        "state": "NOT_MEASURED"
+      },
+      {
+        "ref": "M.6",
+        "metric": "repeated_reupload_count",
+        "unit": "unnecessary Library review reuploads",
+        "state": "NOT_MEASURED"
+      }
+    ],
+    "comparative_target": {
+      "phrase": "10x better than baseline",
+      "status": "ASPIRATIONAL_UNTESTED",
+      "required_method": "pre-register same dataset, hardware/provider constraints, quality rubric, costs, latency, reliability and statistical uncertainty; compare against measured baseline; never report 10x without results"
+    }
+  },
+  "provenance_and_rights": {
+    "creator_assertion": "Owner states original FR-0333-specific selection, arrangement and authored enhancements are their project specifications.",
+    "scope": "FR-0333/Astra architecture and owner-origin text/design choices; third-party tools, code, model weights, trademarks, patents, and platform functionality are excluded unless separately documented.",
+    "copyright_boundary": "Self-issued record documents a claim and timestamped repository history; it is not a copyright registration, patent, title determination, license, or independent legal opinion.",
+    "ownership_transfer_claim": false,
+    "third_party_source_copying": false,
+    "confidential_information_note": "GitHub repository is public; no secrets, proprietary external source code, or personal photographs embedded in this spec."
+  },
+  "evidence_gate": {
+    "requirements": [
+      "SOURCE",
+      "VERIFICATION",
+      "EVIDENCE.CLASS",
+      "RECEIPT",
+      "HUMANLOCK_FOR_PROMOTION"
+    ],
+    "status": {
+      "owner_design": "SOURCE_REPORTED",
+      "repository_spec": "DOCUMENTED_PENDING_COMMIT_READBACK",
+      "probability_calibration": "HOLD",
+      "astra_runtime": "HOLD",
+      "tenfold_gain": "HOLD",
+      "live_image_delivery": "HOLD",
+      "legal_ownership_adjudication": "NOT_ESTABLISHED"
+    },
+    "next_admissible_evidence": [
+      "independent file-byte readback",
+      "owner-identified source/version lineage",
+      "paired annotated image benchmarks",
+      "signed acceptance records",
+      "runtime receipt with provider ID and actual output hash"
+    ]
+  },
+  "remains": [
+    "No automated external tool or provider runtime is created by this document.",
+    "No autonomous 'living AI' or sentient system is established.",
+    "Photo duplication examples and prior 0.9 records are not rewritten.",
+    "Rights of third-party technology remain with their respective rightsholders.",
+    "Draft branch is not merged into main."
+  ],
+  "state_machine": "RECOVER → READ_OWNER_PIN → PROPOSE_DELTA → VERIFY_SOURCE → CLASSIFY → HUMANLOCK → APPEND_OR_HOLD → STAY"
+}
