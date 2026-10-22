@@ -7,6 +7,10 @@ on:
       - "RavenCloudTaskbar/fr0333_image_queue_runtime.py"
       - "RavenCloudTaskbar/test_fr0333_image_queue_runtime.py"
       - "RavenCloudTaskbar/README_image_queue_runtime_0001.md"
+      - "RavenCloudTaskbar/verify_image_queue_live_readback_0001.py"
+      - "RavenCloudTaskbar/test_image_queue_live_readback_0001.py"
+      - "RavenCloudTaskbar/README_image_queue_live_readback_0001.md"
+      - "RavenCloudTaskbar/fr0333_image_queue_metrics_0001.json"
       - ".github/workflows/fr0333-image-queue-runtime-validate.yml"
   workflow_dispatch:
 
@@ -27,3 +31,7 @@ jobs:
         run: python RavenCloudTaskbar/fr0333_image_queue_runtime.py
       - name: Run queue runtime receipt-count tests
         run: python RavenCloudTaskbar/test_fr0333_image_queue_runtime.py
+      - name: Install offline image-decoding dependency
+        run: python -m pip install 'Pillow>=10,<13'
+      - name: Validate bounded existing-output readback gate with synthetic fixtures
+        run: python RavenCloudTaskbar/test_image_queue_live_readback_0001.py
