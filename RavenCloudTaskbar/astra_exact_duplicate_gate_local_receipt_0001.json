@@ -1,0 +1,45 @@
+{
+  "identifier": "FR0333.ASTRA.EXACT.DUPLICATE.GATE.LOCAL.RECEIPT.0001",
+  "date": "2026-10-22",
+  "scope": "READ_ONLY_LOCAL_EXACT_BYTE_DUPLICATE_AUDIT",
+  "branch": "record/astra-probability-golden-chain-0010",
+  "evidence_class": "LOCAL_TEST_EXECUTION_AND_GITHUB_SOURCE_READBACK",
+  "active_lane": {
+    "new_source": "RavenCloudTaskbar/astra_exact_duplicate_gate.py",
+    "test_source": "RavenCloudTaskbar/test_astra_exact_duplicate_gate.py",
+    "committed_blob_sha": {
+      "source": "82fed9b8f89370761c517dc0e05fbf3e0f0526ea",
+      "test": "18198d83d6aef26d9cbc9886c7a80dfcbbf076c4"
+    },
+    "source_sha256_local": {
+      "source": "16e8db9dfb3440b706e0fbc7090a85f25fa57d71818be59ded4a0dc5cc7ec166",
+      "test": "e4491fdfb75e7f5fbc3cd16b833dd87b540fe74a30a05af5dcc59272c13c610d"
+    },
+    "local_command": "python -m unittest -v test_astra_exact_duplicate_gate",
+    "local_test_cases": 6,
+    "local_test_passes": 6,
+    "local_test_failures": 0,
+    "real_local_sample_paths_checked": 12,
+    "real_sample_exact_byte_duplicate_groups": 0,
+    "sample_limitation": "These 12 already materialized image files are not the entire ChatGPT Library."
+  },
+  "passive_lane": {
+    "pixel_equivalence": "NOT_TESTED_BY_THIS_GATE",
+    "near_duplicate_visual_similarity": "REVIEW_ONLY",
+    "canonical_selection": "HOLD_NO_SELECTION",
+    "provider_image_generation": "NOT_PERFORMED",
+    "actual_library_inventory": "NOT_COMPLETE",
+    "actual_library_deletion": "NOT_PERFORMED",
+    "runtime_provider_receipt": "NOT_ESTABLISHED",
+    "quality_promotion": "HOLD"
+  },
+  "anti_loop": {
+    "automatic_file_deletion": false,
+    "automatic_reupload": false,
+    "automatic_task_creation": false,
+    "script_writes_no_file": false,
+    "report_is_read_only": true
+  },
+  "evidence_boundary": "LOCAL_TEST_PASS != ALL_LIBRARY_DUPLICATE_DISCOVERY != PROVIDER_DELIVERY",
+  "promotion": "HUMANLOCK_REQUIRED_MAIN_UNMERGED"
+}
