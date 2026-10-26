@@ -1,0 +1,372 @@
+{
+  "identifier": "FR0333.ZERO.LION.CYBERPHYSICAL.AI.MATRIX.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.CYBERPHYSICAL.AI.MATRIX.0001",
+  "proposed_public_index": "0.10.FR.0333.GOLDEN.CHAIN.CYBERPHYSICAL.AI.MATRIX.0001",
+  "research_date": "2026-10-26",
+  "lineage": "FR0333.TWO_LANE.HIGHWAY.0001",
+  "purpose": "Index transferable public engineering measurement patterns from LG, OCP, DMTF and NIST without copying proprietary designs or claiming runtime integration.",
+  "passive_lane": {
+    "mode": "APPEND_ONLY_NUMERIC_MATRIX",
+    "can_control_equipment": false,
+    "numeric_rows": 10,
+    "evidence": "PUBLIC_SPEC_ABSTRACTION"
+  },
+  "active_lane": {
+    "mode": "METRIC_DEFINITIONS_NOT_EXECUTED",
+    "can_control_equipment": false,
+    "metric_count": 10,
+    "all_current_readings": "NULL_PENDING_REAL_RECEIPTS"
+  },
+  "source_catalog": [
+    {
+      "id": "S01",
+      "publisher": "LG Electronics",
+      "title": "WM6998H*A service manual: test mode, page 29",
+      "url": "https://www.manualslib.com/manual/4184222/Lg-Wm6998h-A-Series.html?page=29",
+      "kind": "MANUFACTURER_SERVICE_MANUAL_REPOST",
+      "publication_status": "PUBLISHED_SERVICE_MANUAL",
+      "usage": "FACTUAL_ABSTRACTION_ONLY_NO_FIGURE_OR_MANUAL_REPRODUCTION"
+    },
+    {
+      "id": "S02",
+      "publisher": "Open Compute Project",
+      "title": "ACS Liquid Cooling Cold Plate Requirements, Rev 1.0, sections 6.5-6.6",
+      "url": "https://www.opencompute.org/documents/ocp-acs-liquid-cooling-cold-plate-requirements-pdf",
+      "kind": "OPEN_INDUSTRY_REQUIREMENTS",
+      "publication_status": "PUBLISHED_2019"
+    },
+    {
+      "id": "S03",
+      "publisher": "DMTF",
+      "title": "Redfish schema bundle DSP8010 2026.1",
+      "url": "https://redfish.dmtf.org/schemas/DSP8010_2026.1.html",
+      "kind": "INDUSTRY_DATA_MODEL",
+      "publication_status": "PUBLISHED_2026_1"
+    },
+    {
+      "id": "S04",
+      "publisher": "NIST",
+      "title": "SP 800-82 Rev 3 Guide to OT Security",
+      "url": "https://csrc.nist.gov/pubs/sp/800/82/r3/final",
+      "kind": "GOVERNMENT_SECURITY_GUIDANCE",
+      "publication_status": "FINAL"
+    },
+    {
+      "id": "S05",
+      "publisher": "NIST",
+      "title": "SP 800-82 Rev 4 initial public draft (September 2026)",
+      "url": "https://csrc.nist.gov/pubs/sp/800/82/r4/ipd",
+      "kind": "GOVERNMENT_SECURITY_GUIDANCE",
+      "publication_status": "DRAFT_NOT_FINAL"
+    }
+  ],
+  "passive_matrix": [
+    {
+      "index": 1,
+      "id": "M01",
+      "specification": "LG.WATER_LEVEL.FREQUENCY",
+      "unit": "kHz",
+      "source_id": "S01",
+      "documented_claim": "Service-manual test-mode display example: 241 corresponds to 24.1 kHz; not FR-0333 telemetry",
+      "reference_example_value": 24.1,
+      "example_scope": "MANUAL_EXAMPLE_ONLY",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 2,
+      "id": "M02",
+      "specification": "LG.FIRMWARE.DIAGNOSTICS",
+      "unit": "count",
+      "source_id": "S01",
+      "documented_claim": "Independent controller and firmware identifiers; enumeration requires real device-specific readback",
+      "reference_example_value": null,
+      "example_scope": "DESCRIPTIVE_ONLY",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 3,
+      "id": "M03",
+      "specification": "LG.ACTUATOR.TEST",
+      "unit": "ms",
+      "source_id": "S01",
+      "documented_claim": "Service test steps exercise components; no external command acknowledgement latency supplied",
+      "reference_example_value": null,
+      "example_scope": "NO_TIMING_MEASUREMENT",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 4,
+      "id": "M04",
+      "specification": "OCP.LIQUID.INLET.TEMPERATURE",
+      "unit": "degC",
+      "source_id": "S02",
+      "documented_claim": "Supply and inlet temperature are recognized cooling sensors",
+      "reference_example_value": null,
+      "example_scope": "NO_SITE_VALUE",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 5,
+      "id": "M05",
+      "specification": "OCP.COOLANT.FLOW",
+      "unit": "L/min",
+      "source_id": "S02",
+      "documented_claim": "Cooling-loop volumetric flow is a measurable quantity",
+      "reference_example_value": null,
+      "example_scope": "NO_SITE_VALUE",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 6,
+      "id": "M06",
+      "specification": "OCP.COOLANT.PRESSURE",
+      "unit": "kPa",
+      "source_id": "S02",
+      "documented_claim": "Supply and return pressures are recognized cooling sensors",
+      "reference_example_value": null,
+      "example_scope": "NO_SITE_VALUE",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 7,
+      "id": "M07",
+      "specification": "OCP.LEAK.INTERVENTION",
+      "unit": "ms",
+      "source_id": "S02",
+      "documented_claim": "Leak detection and potential intervention architecture; response time not specified universally",
+      "reference_example_value": null,
+      "example_scope": "NO_SITE_TIMING",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 8,
+      "id": "M08",
+      "specification": "DMTF.COOLING.UNIT.TELEMETRY",
+      "unit": "ratio",
+      "source_id": "S03",
+      "documented_claim": "Redfish models pumps, cooling equipment and sensor telemetry; implementation is vendor-dependent",
+      "reference_example_value": null,
+      "example_scope": "SCHEMA_NOT_IMPLEMENTATION",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 9,
+      "id": "M09",
+      "specification": "DMTF.LEAK.DETECTION",
+      "unit": "ratio",
+      "source_id": "S03",
+      "documented_claim": "Redfish leak-detection resources define reportable conditions; actual sensor not established",
+      "reference_example_value": null,
+      "example_scope": "SCHEMA_NOT_IMPLEMENTATION",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    },
+    {
+      "index": 10,
+      "id": "M10",
+      "specification": "NIST.OT.SAFETY.COVERAGE",
+      "unit": "ratio",
+      "source_id": "S04",
+      "documented_claim": "Safety, reliability and security controls must be assessed for the actual OT deployment",
+      "reference_example_value": null,
+      "example_scope": "GUIDANCE_NOT_CERTIFICATION",
+      "actual_fr0333_observation": null,
+      "qualification_threshold": null
+    }
+  ],
+  "active_metrics": [
+    {
+      "index": 1,
+      "id": "A01",
+      "passive_reference_id": "M01",
+      "name": "WATER_SENSOR_DELTA",
+      "formula": "abs(measured_frequency_khz - validated_baseline_khz)",
+      "unit": "kHz",
+      "required_runtime_fields": [
+        "measured_frequency_khz",
+        "validated_baseline_khz"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 2,
+      "id": "A02",
+      "passive_reference_id": "M02",
+      "name": "FIRMWARE_RECEIPT_COVERAGE",
+      "formula": "verified_version_receipts / expected_controller_versions",
+      "unit": "ratio",
+      "required_runtime_fields": [
+        "verified_version_receipts",
+        "expected_controller_versions"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 3,
+      "id": "A03",
+      "passive_reference_id": "M03",
+      "name": "ACTUATOR_ACK_LATENCY",
+      "formula": "ack_timestamp_ms - command_timestamp_ms",
+      "unit": "ms",
+      "required_runtime_fields": [
+        "ack_timestamp_ms",
+        "command_timestamp_ms"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 4,
+      "id": "A04",
+      "passive_reference_id": "M04",
+      "name": "TEMPERATURE_SAFETY_MARGIN",
+      "formula": "validated_max_inlet_temp_c - measured_inlet_temp_c",
+      "unit": "degC",
+      "required_runtime_fields": [
+        "validated_max_inlet_temp_c",
+        "measured_inlet_temp_c"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 5,
+      "id": "A05",
+      "passive_reference_id": "M05",
+      "name": "FLOW_DEVIATION_PERCENT",
+      "formula": "100 * (actual_flow_lpm - validated_target_flow_lpm) / validated_target_flow_lpm",
+      "unit": "percent",
+      "required_runtime_fields": [
+        "actual_flow_lpm",
+        "validated_target_flow_lpm"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 6,
+      "id": "A06",
+      "passive_reference_id": "M06",
+      "name": "COOLANT_PRESSURE_DROP",
+      "formula": "measured_supply_pressure_kpa - measured_return_pressure_kpa",
+      "unit": "kPa",
+      "required_runtime_fields": [
+        "measured_supply_pressure_kpa",
+        "measured_return_pressure_kpa"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 7,
+      "id": "A07",
+      "passive_reference_id": "M07",
+      "name": "LEAK_TO_SAFE_STATE_LATENCY",
+      "formula": "safe_state_timestamp_ms - detected_leak_timestamp_ms",
+      "unit": "ms",
+      "required_runtime_fields": [
+        "safe_state_timestamp_ms",
+        "detected_leak_timestamp_ms"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 8,
+      "id": "A08",
+      "passive_reference_id": "M08",
+      "name": "COOLING_TELEMETRY_COVERAGE",
+      "formula": "valid_required_sensor_samples / required_sensor_samples",
+      "unit": "ratio",
+      "required_runtime_fields": [
+        "valid_required_sensor_samples",
+        "required_sensor_samples"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 9,
+      "id": "A09",
+      "passive_reference_id": "M09",
+      "name": "LEAK_FALSE_NEGATIVE_RATE",
+      "formula": "missed_test_leaks / injected_test_leaks",
+      "unit": "ratio",
+      "required_runtime_fields": [
+        "missed_test_leaks",
+        "injected_test_leaks"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    },
+    {
+      "index": 10,
+      "id": "A10",
+      "passive_reference_id": "M10",
+      "name": "OT_SAFETY_CONTROL_COVERAGE",
+      "formula": "independently_tested_controls / required_controls",
+      "unit": "ratio",
+      "required_runtime_fields": [
+        "independently_tested_controls",
+        "required_controls"
+      ],
+      "measurement_value": null,
+      "test_status": "U.21.HOLD",
+      "safety_threshold": null,
+      "controller_access": "NOT_REQUESTED"
+    }
+  ],
+  "promotion": {
+    "indexing_authorized_by_request": true,
+    "canonical_promotion_authorized": false,
+    "operator_promotion_receipt": null,
+    "humanlock": "REQUIRED",
+    "runtime_claim": "U.21.HOLD",
+    "external_provider_run": "F.6.NONE",
+    "equipment_control": "F.6.NONE",
+    "mainline_merge": "F.6.NONE",
+    "automatic_promotion": "F.6.NONE"
+  },
+  "boundaries": [
+    "DOCUMENTED_NE_EXECUTED",
+    "EXECUTED_NE_VERIFIED",
+    "VERIFIED_NE_PROMOTED",
+    "OBSERVED_NE_CORRELATED_NE_CAUSAL",
+    "SOURCE_ONE_NE_CORROBORATION",
+    "STANDARD_SCHEMA_NE_VENDOR_IMPLEMENTATION",
+    "SOURCE_MEASUREMENT_NE_FR0333_MEASUREMENT",
+    "PHYSICAL_SAFETY_THRESHOLD_REQUIRES_DEVICE_SPECIFIC_VALIDATION",
+    "NO_COPYRIGHTED_SCHEMATICS_REPRODUCED",
+    "NO_LIVE_DEVICE_ACCESS",
+    "NO_SILENT_PROMOTION"
+  ],
+  "validation_note": "This candidate can pass structural indexing checks while canonical promotion remains blocked at HumanLock. No real sensor reading, equipment action, CI run, or physical safety certification is claimed."
+}

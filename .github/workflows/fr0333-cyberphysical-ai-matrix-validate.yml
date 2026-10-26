@@ -1,0 +1,24 @@
+name: FR0333 Cyberphysical AI Matrix Index Gate
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_cyberphysical_ai_matrix_0001.json'
+      - 'RavenCloudTaskbar/README_cyberphysical_ai_matrix_0001.md'
+      - 'RavenCloudTaskbar/validate_cyberphysical_ai_matrix_0001.py'
+      - 'RavenCloudTaskbar/test_cyberphysical_ai_matrix_0001.py'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_index_0001.json'
+      - '.github/workflows/fr0333-cyberphysical-ai-matrix-validate.yml'
+permissions:
+  contents: read
+jobs:
+  index-only-offline-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run read-only research matrix index gate
+        run: python3 RavenCloudTaskbar/validate_cyberphysical_ai_matrix_0001.py
+      - name: Run negative mutation controls
+        run: python3 RavenCloudTaskbar/test_cyberphysical_ai_matrix_0001.py
