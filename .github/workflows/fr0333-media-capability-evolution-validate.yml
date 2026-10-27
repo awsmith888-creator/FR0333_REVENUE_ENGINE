@@ -1,0 +1,28 @@
+name: FR0333 Media Capability Evolution Validate
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_media_capability_evolution_0001.json'
+      - 'RavenCloudTaskbar/fr0333_media_evolution_runtime_0001.py'
+      - 'RavenCloudTaskbar/test_fr0333_media_evolution_runtime_0001.py'
+      - 'RavenCloudTaskbar/validate_media_capability_evolution_0001.py'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_index_0001.json'
+      - '.github/workflows/fr0333-media-capability-evolution-validate.yml'
+permissions:
+  contents: read
+jobs:
+  offline-media-verification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensure local video probing tools installed
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Validate ten-lane source-to-metric architecture
+        run: python3 RavenCloudTaskbar/validate_media_capability_evolution_0001.py
+      - name: Run real offline video smoke test and negative cases
+        run: python3 RavenCloudTaskbar/test_fr0333_media_evolution_runtime_0001.py
