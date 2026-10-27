@@ -56,9 +56,8 @@ with tempfile.TemporaryDirectory() as folder:
     external=root.parent/"unsafe-external-file.mp4"
     try:
         (root/"link.mp4").symlink_to(external)
-        assert False,"symlink fixture should not pass"
     except OSError:
-        pass
+        pass  # Environments without symlink privileges do not exercise this case.
     else:
         try:
             resolved_local_file(root,"link.mp4")
