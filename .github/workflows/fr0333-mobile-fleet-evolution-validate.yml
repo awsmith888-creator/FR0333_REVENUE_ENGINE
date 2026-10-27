@@ -1,0 +1,24 @@
+name: FR0333 Mobile Fleet Evolution Validate
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_mobile_fleet_evolution_0001.json'
+      - 'RavenCloudTaskbar/fr0333_mobile_fleet_inventory_0001.py'
+      - 'RavenCloudTaskbar/test_fr0333_mobile_fleet_inventory_0001.py'
+      - 'RavenCloudTaskbar/validate_mobile_fleet_evolution_0001.py'
+      - 'RavenCloudTaskbar/fr0333_golden_chain_index_0001.json'
+      - '.github/workflows/fr0333-mobile-fleet-evolution-validate.yml'
+permissions:
+  contents: read
+jobs:
+  offline-inventory-index-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify indexed passive and active lanes
+        run: python3 RavenCloudTaskbar/validate_mobile_fleet_evolution_0001.py
+      - name: Verify read-only inventory parser with synthetic device states
+        run: python3 RavenCloudTaskbar/test_fr0333_mobile_fleet_inventory_0001.py
