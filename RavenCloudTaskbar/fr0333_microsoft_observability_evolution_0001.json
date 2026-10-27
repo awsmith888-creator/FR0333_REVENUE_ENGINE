@@ -1,0 +1,268 @@
+{
+  "identifier": "FR0333.MICROSOFT.OBSERVABILITY.EVOLUTION.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.MICROSOFT.OBSERVABILITY.0001",
+  "proposed_public_index": "0.12.FR.0333.GOLDEN.CHAIN.MICROSOFT.OBSERVABILITY.0001",
+  "reference_date": "2026-10-27",
+  "base_spec": "FR0333.TWO_LANE.HIGHWAY.0001",
+  "research_scope": "PUBLIC_SPEC_EXTRACTION_NOT_MICROSOFT_RUNTIME_ACCESS",
+  "screenshot": {
+    "origin": "USER_SUPPLIED_FACEBOOK_FRAME",
+    "observation": "Microsoft sign and ABC World News Tonight watermark only",
+    "underlying_video_transcript": "U.21.HOLD",
+    "url": "https://www.facebook.com/share/v/1CF1MQZFqW/",
+    "video_event_claim": "UNDETERMINED_DO_NOT_EQUATE_WITH_REPORT"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "publisher": "Microsoft",
+      "title": "Foundry observability overview",
+      "url": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/observability",
+      "type": "PUBLIC_VENDOR_ENGINEERING_DOCUMENTATION",
+      "claim": "AI evaluation, monitoring, tracing, agent task accuracy, token use, latency and errors"
+    },
+    {
+      "id": "S02",
+      "publisher": "Microsoft",
+      "title": "Foundry tracing and data handling",
+      "url": "https://learn.microsoft.com/azure/foundry/observability/concepts/trace-data",
+      "type": "PUBLIC_VENDOR_PRIVACY_DOCUMENTATION",
+      "claim": "Model inputs and outputs can appear in traces; trace access needs data protection"
+    },
+    {
+      "id": "S03",
+      "publisher": "Microsoft",
+      "title": "Foundry Observability generally available",
+      "url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760",
+      "type": "DATED_VENDOR_RELEASE",
+      "publication_date": "2026-03-16",
+      "claim": "Evaluations, monitoring and tracing GA announcement"
+    },
+    {
+      "id": "S04",
+      "publisher": "Microsoft",
+      "title": "Introducing a Voluntary Exit Offer",
+      "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer/",
+      "type": "DATED_OFFICIAL_WORKFORCE_NEWS",
+      "publication_date": "2026-10-26",
+      "claim": "Workforce policy signal, NOT engineering capability proof"
+    },
+    {
+      "id": "S05",
+      "publisher": "ABC News / Associated Press",
+      "title": "Microsoft offers quarter of global workforce voluntary buyouts",
+      "url": "https://abcnews.com/Technology/wireStory/microsoft-offers-quarter-global-workforce-voluntary-buyouts-ai-137578868",
+      "type": "DATED_PUBLIC_REPORT",
+      "publication_date": "2026-10-26",
+      "claim": "Independent reporting on Microsoft workforce change, NOT a new AI technical spec"
+    }
+  ],
+  "passive_matrix": [
+    {
+      "index": 1,
+      "id": "T01",
+      "name": "TRACE_IDENTITY",
+      "unit": "ids",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 2,
+      "id": "T02",
+      "name": "TASK_OUTCOME",
+      "unit": "categorical",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 3,
+      "id": "T03",
+      "name": "RUN_LATENCY",
+      "unit": "ms",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 4,
+      "id": "T04",
+      "name": "INPUT_TOKEN_COUNT",
+      "unit": "tokens",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 5,
+      "id": "T05",
+      "name": "OUTPUT_TOKEN_COUNT",
+      "unit": "tokens",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 6,
+      "id": "T06",
+      "name": "TOOL_ERROR_COUNT",
+      "unit": "count",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 7,
+      "id": "T07",
+      "name": "EVALUATION_RECEIPT",
+      "unit": "sha256",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 8,
+      "id": "T08",
+      "name": "ESTIMATED_TASK_COST",
+      "unit": "microUSD",
+      "source_ref": "S01",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 9,
+      "id": "T09",
+      "name": "EVIDENCE_ATTRIBUTION",
+      "unit": "sha256",
+      "source_ref": "S02",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    },
+    {
+      "index": 10,
+      "id": "T10",
+      "name": "TRACE_DATA_MINIMIZATION",
+      "unit": "boolean",
+      "source_ref": "S02",
+      "mode": "DOCUMENTED_SPEC_COMPARATOR"
+    }
+  ],
+  "active_metrics": [
+    {
+      "index": 1,
+      "id": "A01",
+      "passive_ref": "T01",
+      "name": "UNIQUE_TRACE_COUNT",
+      "definition": "number of unique trace IDs",
+      "unit": "count",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 2,
+      "id": "A02",
+      "passive_ref": "T02",
+      "name": "ATTESTED_TASK_PASS_COUNT",
+      "definition": "count(pass outcome with receipt)",
+      "unit": "count",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 3,
+      "id": "A03",
+      "passive_ref": "T03",
+      "name": "MEAN_LATENCY_MS",
+      "definition": "sum(latency_ms) / total_events",
+      "unit": "ms",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 4,
+      "id": "A04",
+      "passive_ref": "T04",
+      "name": "TOTAL_INPUT_TOKENS",
+      "definition": "sum(input_tokens)",
+      "unit": "tokens",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 5,
+      "id": "A05",
+      "passive_ref": "T05",
+      "name": "TOTAL_OUTPUT_TOKENS",
+      "definition": "sum(output_tokens)",
+      "unit": "tokens",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 6,
+      "id": "A06",
+      "passive_ref": "T06",
+      "name": "TOTAL_TOOL_ERRORS",
+      "definition": "sum(tool_errors)",
+      "unit": "count",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 7,
+      "id": "A07",
+      "passive_ref": "T07",
+      "name": "ATTESTED_EVALUATION_COVERAGE",
+      "definition": "events with eval outcome + receipt / total_events",
+      "unit": "ratio",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 8,
+      "id": "A08",
+      "passive_ref": "T08",
+      "name": "ESTIMATED_MICROUSD_PER_ATTESTED_PASS",
+      "definition": "sum(estimated_cost_microusd) / attested_pass_count, NULL if count zero",
+      "unit": "microUSD",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 9,
+      "id": "A09",
+      "passive_ref": "T09",
+      "name": "SOURCE_HASH_COVERAGE",
+      "definition": "events with 64-char source hash / total_events",
+      "unit": "ratio",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 10,
+      "id": "A10",
+      "passive_ref": "T10",
+      "name": "PRIVACY_SCHEMA_REJECTIONS",
+      "definition": "test count of rejected payloads containing nonallowed keys",
+      "unit": "count",
+      "observed_value": null,
+      "status": "U.21.HOLD"
+    }
+  ],
+  "boundaries": {
+    "no_private_user_prompts": true,
+    "no_provider_tokens": true,
+    "no_microsoft_login": true,
+    "no_provider_calls": true,
+    "no_background_monitor": true,
+    "no_autonomous_promotion": true,
+    "humanlock_required": true,
+    "mainline_merge": "F.6.NONE",
+    "live_ai_telemetry": "U.21.HOLD",
+    "real_source_integrity": "U.21.HOLD",
+    "billing_verification": "U.21.HOLD",
+    "claim_of_microsoft_integration": "F.6.NONE"
+  },
+  "rules": [
+    "SCREENSHOT_NE_VERIFIED_VIDEO_STORY",
+    "WORKFORCE_NE_PRODUCT_SPECIFICATION",
+    "PUBLISHED_OBSERVABILITY_NE_CONNECTED_RUNTIME",
+    "AGGREGATED_DECLARED_FIELDS_NE_PROVIDER_ATTESTATION",
+    "COST_ESTIMATE_NE_BILLED_COST",
+    "TRACE_HASH_NE_INDEPENDENT_CONTENT_VALIDATION",
+    "OFFLINE_SYNTHETIC_PASS_NE_LIVE_PASS",
+    "STAY_NO_AUTO_PROMOTION"
+  ]
+}
