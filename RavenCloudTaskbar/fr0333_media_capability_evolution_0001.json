@@ -1,0 +1,261 @@
+{
+  "identifier": "FR0333.MEDIA.CAPABILITY.EVOLUTION.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.MEDIA.CAPABILITY.EVOLUTION.0001",
+  "proposed_public_index": "0.11.FR.0333.GOLDEN.CHAIN.MEDIA.CAPABILITY.EVOLUTION.0001",
+  "reference_date": "2026-10-27",
+  "parent_specification": "FR0333.TWO_LANE.HIGHWAY.0001",
+  "source_catalog": [
+    {
+      "source_id": "S01",
+      "publisher": "Meta",
+      "title": "Instagram for TV Gets Bigger, With New Ways to Watch Together",
+      "date": "2026-06-11",
+      "url": "https://about.fb.com/news/2026/06/instagram-for-tv-gets-bigger-with-new-ways-to-watch-together/amp/",
+      "source_class": "PUBLISHED_VENDOR_PREVIEW",
+      "claim": "Testing longer horizontal TV video and episodic creator content"
+    },
+    {
+      "source_id": "S02",
+      "publisher": "TechCrunch",
+      "title": "Watch out, YouTube; Instagram goes from short-form to 90-minute videos",
+      "date": "2026-10-26",
+      "url": "https://techcrunch.com/2026/10/26/watch-out-youtube-instagram-goes-from-short-form-to-90-minute-videos/",
+      "source_class": "INDEPENDENT_TECH_REPORT",
+      "claim": "Limited pilot of Features, up to 90-minute horizontal videos and clips linking to parents"
+    },
+    {
+      "source_id": "S03",
+      "publisher": "TheWrap",
+      "title": "Instagram Tests Out 90-Minute Horizontal Videos in Push for TV Viewing",
+      "date": "2026-10-26",
+      "url": "https://www.thewrap.com/media-platforms/tv/instagram-90-minute-horizontal-videos-tv/",
+      "source_class": "INDEPENDENT_TECH_REPORT",
+      "claim": "Select creators in Brazil and US; long horizontal video is being tested"
+    }
+  ],
+  "passive_matrix": [
+    {
+      "id": "M01",
+      "signal": "FEATURES_PILOT_MAX_DURATION_MS",
+      "value": 5400000,
+      "unit": "ms",
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "scope": "SELECTED_CREATOR_PILOT_ONLY"
+    },
+    {
+      "id": "M02",
+      "signal": "ORIENTATION_SUPPORT",
+      "value": "LANDSCAPE",
+      "unit": "category",
+      "source_ids": [
+        "S01",
+        "S03"
+      ],
+      "scope": "FEATURES_TEST"
+    },
+    {
+      "id": "M03",
+      "signal": "LONG_TO_SHORT_RELATION",
+      "value": "CLIP_LINKS_TO_PARENT",
+      "unit": "relation",
+      "source_ids": [
+        "S02"
+      ],
+      "scope": "FEATURES_TEST"
+    },
+    {
+      "id": "M04",
+      "signal": "EPISODIC_ORGANIZATION",
+      "value": "EXPERIMENTAL",
+      "unit": "category",
+      "source_ids": [
+        "S01",
+        "S02"
+      ],
+      "scope": "NON_UNIVERSAL"
+    },
+    {
+      "id": "M05",
+      "signal": "MULTI_SCREEN_DISCOVERY",
+      "value": "EXPERIMENTAL",
+      "unit": "category",
+      "source_ids": [
+        "S01"
+      ],
+      "scope": "PLATFORM_BEHAVIOR_NOT_FR0333_INTEGRATION"
+    },
+    {
+      "id": "M06",
+      "signal": "MEDIA_INTEGRITY",
+      "value": "SHA256",
+      "unit": "algorithm",
+      "source_ids": [
+        "S02"
+      ],
+      "scope": "FR0333_INDEPENDENT_DESIGN_NOT_PLATFORM_FEATURE"
+    },
+    {
+      "id": "M07",
+      "signal": "MEDIA_DIMENSIONS",
+      "value": "WIDTH_HEIGHT",
+      "unit": "pixels",
+      "source_ids": [
+        "S02"
+      ],
+      "scope": "FR0333_INDEPENDENT_DESIGN"
+    },
+    {
+      "id": "M08",
+      "signal": "SOURCE_OFFSETS",
+      "value": "START_END",
+      "unit": "milliseconds",
+      "source_ids": [
+        "S02"
+      ],
+      "scope": "FR0333_INDEPENDENT_DESIGN"
+    },
+    {
+      "id": "M09",
+      "signal": "PROVENANCE",
+      "value": "INDEPENDENT_RECEIPT_REQUIRED",
+      "unit": "gate",
+      "source_ids": [
+        "S02"
+      ],
+      "scope": "FR0333_INDEPENDENT_DESIGN"
+    },
+    {
+      "id": "M10",
+      "signal": "EXTERNAL_PUBLISHING",
+      "value": "NOT_AUTHORIZED",
+      "unit": "gate",
+      "source_ids": [
+        "S01"
+      ],
+      "scope": "FR0333_LOCAL_CONTROL"
+    }
+  ],
+  "active_metrics": [
+    {
+      "id": "A01",
+      "ref": "M01",
+      "name": "LOCAL_DURATION_MS",
+      "unit": "ms",
+      "formula": "round(ffprobe.format.duration * 1000)",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A02",
+      "ref": "M02",
+      "name": "ORIENTATION",
+      "unit": "category",
+      "formula": "width > height ? LANDSCAPE : OTHER",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A03",
+      "ref": "M03",
+      "name": "VALID_PARENT_CLIP_LINKS",
+      "unit": "count",
+      "formula": "count(validated parent-child offset links)",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A04",
+      "ref": "M04",
+      "name": "EPISODE_GROUPS",
+      "unit": "count",
+      "formula": "count(unique episode IDs)",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A05",
+      "ref": "M05",
+      "name": "PLATFORM_PROFILES",
+      "unit": "count",
+      "formula": "count(declared export profiles)",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A06",
+      "ref": "M06",
+      "name": "HASH_VERIFICATION",
+      "unit": "ratio",
+      "formula": "verified_file_hashes / required_files",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A07",
+      "ref": "M07",
+      "name": "PROBED_DIMENSION_MATCHES",
+      "unit": "count",
+      "formula": "count(width and height matches)",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A08",
+      "ref": "M08",
+      "name": "OFFSET_VALIDITY",
+      "unit": "count",
+      "formula": "count(valid start/end bounds)",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A09",
+      "ref": "M09",
+      "name": "PROVEN_TRANSFORMATIONS",
+      "unit": "count",
+      "formula": "independently evidenced parent-to-clip transformations",
+      "value": null,
+      "state": "U.21.HOLD"
+    },
+    {
+      "id": "A10",
+      "ref": "M10",
+      "name": "PUBLISHING_EXECUTIONS",
+      "unit": "count",
+      "formula": "count(provider-signed approved publishing receipts)",
+      "value": null,
+      "state": "U.21.HOLD"
+    }
+  ],
+  "external_feature": {
+    "name": "Meta Instagram Features",
+    "phase": "LIMITED_PILOT",
+    "max_reported_duration_ms": 5400000,
+    "universal_availability": "U.21.HOLD",
+    "external_api": "NOT_ESTABLISHED"
+  },
+  "control": {
+    "runtime": "LOCAL_ON_DEMAND_ONLY",
+    "external_api_access": "F.6.NONE",
+    "external_upload": "F.6.NONE",
+    "auto_publish": "F.6.NONE",
+    "self_modification": "F.6.NONE",
+    "humanlock": "REQUIRED_FOR_PROMOTION",
+    "canonical_promotion": "U.21.HOLD",
+    "provider_receipt": "U.21.HOLD",
+    "content_derivation": "U.21.HOLD"
+  },
+  "evidence_laws": [
+    "PLATFORM_ANNOUNCEMENT_NE_INTERNAL_CAPABILITY",
+    "PILOT_NE_GENERAL_ACCESS",
+    "SOURCE_METADATA_NE_PROVEN_DERIVATION",
+    "HASHED_BYTES_NE_SOURCE_IDENTITY_PROOF",
+    "OFFLINE_PROBE_NE_PLATFORM_UPLOAD",
+    "FORMAT_CANDIDATE_NE_PROVIDER_ELIGIBILITY",
+    "INDEX_VALIDATION_NE_CANONICAL_PROMOTION",
+    "NO_CROSS_PLATFORM_AUTOMATED_PUBLISHING"
+  ]
+}
