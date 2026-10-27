@@ -1,0 +1,296 @@
+{
+  "identifier": "FR0333.MOBILE.FLEET.CONTROL.EVOLUTION.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.MOBILE.FLEET.CONTROL.0001",
+  "proposed_public_index": "0.13.FR.0333.GOLDEN.CHAIN.MOBILE.FLEET.CONTROL.0001",
+  "research_date": "2026-10-27",
+  "source_input": {
+    "kind": "USER_SUPPLIED_SCREENSHOT_AND_FACEBOOK_SHARE_LINK",
+    "link": "https://www.facebook.com/share/r/1E8Z4SU5Yj/",
+    "visible": "Rear of dark enclosure with apparent RJ45 ports and cable, overlaid caption about centralized computer management",
+    "model_number": "NOT_OBSERVED",
+    "actual_power_rating": "NOT_OBSERVED",
+    "hardware_brand": "NOT_VERIFIED",
+    "video_audio_or_transcript": "NOT_AVAILABLE",
+    "validation_boundary": "VISUAL_RESEMBLANCE_NE_DEVICE_IDENTITY"
+  },
+  "purpose": "Evolve passive source-index and active read-only fleet metric capability for authorized physical/virtual Android test nodes; prohibit bulk platform engagement automation and control without HumanLock.",
+  "sources": [
+    {
+      "id": "S01",
+      "publisher": "Phones Farm",
+      "title": "DIY Phone Farm Box Kit USB OTG Ethernet",
+      "url": "https://phones.farm/products/diy-phone-farm-box-kit-usb-otg-ethernet",
+      "evidence_class": "VENDOR_PRODUCT_SPECIFICATION",
+      "scope": "SPECIFIC_20_PORT_KIT_NOT_IDENTIFIED_SCREENSHOT"
+    },
+    {
+      "id": "S02",
+      "publisher": "Phone Farm Shop",
+      "title": "Phone farm manual",
+      "url": "https://phonefarm.shop/manual/",
+      "evidence_class": "VENDOR_HARDWARE_DOCUMENTATION",
+      "scope": "VENDOR_CLAIMS_NO_LIVE_BENCHMARK"
+    },
+    {
+      "id": "S03",
+      "publisher": "Android Developers",
+      "title": "Android Debug Bridge",
+      "url": "https://developer.android.com/tools/adb",
+      "evidence_class": "PLATFORM_PRIMARY_TECH_DOC",
+      "scope": "ADB_DEVICE_LIST_AND_SERIAL_SELECTION"
+    },
+    {
+      "id": "S04",
+      "publisher": "Android Developers",
+      "title": "Run apps on a hardware device",
+      "url": "https://developer.android.com/studio/run/device",
+      "evidence_class": "PLATFORM_PRIMARY_SECURITY_DOC",
+      "scope": "USB_DEBUGGING_DEVICE_RSA_AUTHORIZATION"
+    },
+    {
+      "id": "S05",
+      "publisher": "Google Firebase",
+      "title": "Firebase Test Lab",
+      "url": "https://firebase.google.com/docs/test-lab",
+      "evidence_class": "PLATFORM_PRIMARY_SERVICE_DOC",
+      "scope": "MULTI_DEVICE_TESTING_COMPARATOR_NOT_FR0333_CONNECTION"
+    },
+    {
+      "id": "S06",
+      "publisher": "USB-IF",
+      "title": "USB-C Source Power Test Specification (overcurrent)",
+      "url": "https://www.usb.org/sites/default/files/USB-C%20Source%20Power%20Test%20Specification%202021%2005%2024.pdf",
+      "evidence_class": "STANDARDS_CONFORMANCE_TEST",
+      "scope": "TEST_METHODOLOGY_NOT_THIS_BOX_CERTIFICATION"
+    }
+  ],
+  "passive_matrix": [
+    {
+      "index": 1,
+      "id": "M01",
+      "measure": "VENDOR.CHANNEL.COUNT",
+      "unit": "channels",
+      "source_id": "S01",
+      "published_reference_value": 20,
+      "evidence_scope": "VENDOR_CLAIM",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 2,
+      "id": "M02",
+      "measure": "VENDOR.POWER.VOLTAGE",
+      "unit": "V",
+      "source_id": "S01",
+      "published_reference_value": 5,
+      "evidence_scope": "VENDOR_RATING",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 3,
+      "id": "M03",
+      "measure": "VENDOR.MAX.CURRENT",
+      "unit": "A",
+      "source_id": "S01",
+      "published_reference_value": 40,
+      "evidence_scope": "VENDOR_RATING",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 4,
+      "id": "M04",
+      "measure": "VENDOR.RATED.POWER",
+      "unit": "W",
+      "source_id": "S01",
+      "published_reference_value": 200,
+      "evidence_scope": "VENDOR_RATING",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 5,
+      "id": "M05",
+      "measure": "VENDOR.FAN.COUNT",
+      "unit": "fans",
+      "source_id": "S01",
+      "published_reference_value": 3,
+      "evidence_scope": "VENDOR_CLAIM",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 6,
+      "id": "M06",
+      "measure": "USB.UPLINK",
+      "unit": "category",
+      "source_id": "S01",
+      "published_reference_value": null,
+      "evidence_scope": "REFERENCE_DESIGN_ONLY",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 7,
+      "id": "M07",
+      "measure": "ETHERNET.OPTION",
+      "unit": "category",
+      "source_id": "S01",
+      "published_reference_value": null,
+      "evidence_scope": "OPTIONAL_NOT_SCREENSHOT_IDENTIFICATION",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 8,
+      "id": "M08",
+      "measure": "ADB.DEVICE.SELECT",
+      "unit": "category",
+      "source_id": "S03",
+      "published_reference_value": null,
+      "evidence_scope": "OFFICIAL_PLATFORM_CAPABILITY",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 9,
+      "id": "M09",
+      "measure": "ADB.DEVICE.AUTHORIZATION",
+      "unit": "category",
+      "source_id": "S04",
+      "published_reference_value": null,
+      "evidence_scope": "OFFICIAL_PLATFORM_SECURITY",
+      "actual_fr0333_measurement": null
+    },
+    {
+      "index": 10,
+      "id": "M10",
+      "measure": "HOSTED.DEVICE.TESTING",
+      "unit": "category",
+      "source_id": "S05",
+      "published_reference_value": null,
+      "evidence_scope": "COMPARATOR_NOT_ATTACHED_SERVICE",
+      "actual_fr0333_measurement": null
+    }
+  ],
+  "active_metrics": [
+    {
+      "index": 1,
+      "id": "A01",
+      "passive_reference_id": "M01",
+      "measure": "ATTACHED.NODE.COUNT",
+      "formula": "count of distinct parsed device entries",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 2,
+      "id": "A02",
+      "passive_reference_id": "M02",
+      "measure": "AUTHORIZED.DEBUG.STATE.COUNT",
+      "formula": "count of 'device' state; not authorization for operation",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 3,
+      "id": "A03",
+      "passive_reference_id": "M03",
+      "measure": "UNAUTHORIZED.STATE.COUNT",
+      "formula": "count of 'unauthorized' state",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 4,
+      "id": "A04",
+      "passive_reference_id": "M04",
+      "measure": "OFFLINE.STATE.COUNT",
+      "formula": "count of 'offline' state",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 5,
+      "id": "A05",
+      "passive_reference_id": "M05",
+      "measure": "OTHER.STATE.COUNT",
+      "formula": "count of recognized recovery/bootloader/sideload states",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 6,
+      "id": "A06",
+      "passive_reference_id": "M06",
+      "measure": "ONLINE.NODE.RATIO",
+      "formula": "debug_ready_count / node_count or null if node_count zero",
+      "unit": "ratio",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 7,
+      "id": "A07",
+      "passive_reference_id": "M07",
+      "measure": "UNKNOWN.STATE.REJECTIONS",
+      "formula": "count of rejected malformed/unrecognized input samples",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 8,
+      "id": "A08",
+      "passive_reference_id": "M08",
+      "measure": "DUPLICATE.IDENTITY.REJECTIONS",
+      "formula": "count of rejected repeated serial tokens in a sample",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 9,
+      "id": "A09",
+      "passive_reference_id": "M09",
+      "measure": "PHYSICAL.SENSOR.COVERAGE",
+      "formula": "readback values with attested voltage/current/thermal sensors / required sensor values",
+      "unit": "ratio",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    },
+    {
+      "index": 10,
+      "id": "A10",
+      "passive_reference_id": "M10",
+      "measure": "AUTHORIZED.MUTATIONS",
+      "formula": "count of actual independently authorized executed commands",
+      "unit": "count",
+      "live_value": null,
+      "status": "U.21.HOLD"
+    }
+  ],
+  "safety": {
+    "adb_commands_executed": 0,
+    "net_requests": 0,
+    "bulk_social_automation": "F.6.REJECT",
+    "fake_engagement": "F.6.REJECT",
+    "external_devices_connected": "U.21.HOLD",
+    "unsafe_power_control": "F.6.REJECT",
+    "hardware_electrical_certification": "U.21.HOLD",
+    "physical_safety_thresholds": "U.21.HOLD",
+    "operator_humanlock": "REQUIRED",
+    "canonical_promotion": "U.21.HOLD",
+    "mainline_merge": "F.6.NONE"
+  },
+  "rules": [
+    "SINGLE_SCREENSHOT_NE_EXACT_DEVICE_MODEL",
+    "VENDOR_RATINGS_NE_MEASURED_OUTPUT",
+    "USB_LINK_NE_DEBUG_AUTHORIZATION",
+    "DEBUG_AUTHORIZATION_NE_ACTION_PERMISSION",
+    "DEVICE_FARM_NE_SOCIAL_CLICK_FARM",
+    "PHYSICAL_SAFETY_REQUIRES_ELECTRICAL_TESTS",
+    "LOCAL_STATE_PARSER_NE_LIVE_PHONE_ACCESS",
+    "OBSERVED_NE_CAUSAL",
+    "APPEND_ONLY_NO_RENUMBERING",
+    "NO_AUTOMATED_PUBLICATION_OR_VIEW_MANIPULATION"
+  ]
+}
