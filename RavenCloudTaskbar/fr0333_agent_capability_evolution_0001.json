@@ -1,0 +1,48 @@
+{
+  "identifier": "FR0333.AGENT.CAPABILITY.EVOLUTION.0001",
+  "golden_chain_identifier": "FR.0333.GOLDEN.CHAIN.AGENT.CAPABILITY.EVOLUTION.0001",
+  "proposed_public_index": "0.14.FR.0333.GOLDEN.CHAIN.AGENT.CAPABILITY.EVOLUTION.0001",
+  "reference_date": "2026-10-30",
+  "sources": [
+    {"id":"S01","publisher":"Meta AI Research","title":"Introducing Muse Glimmer: An Open Agentic Model That Runs on Your Device","url":"https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model","evidence_class":"ORIGINAL_VENDOR_MODEL_REPORT","scope":"30B model, Apache 2.0 weights, local agent workflows; vendor statements, not FR0333 runtime proof"},
+    {"id":"S02","publisher":"Meta","title":"The Future Is for Everyone: Muse for Small Business","url":"https://about.fb.com/news/2026/09/introducing-muse-small-business/","evidence_class":"ORIGINAL_VENDOR_PRODUCT_REPORT","scope":"connector examples and user approval claims; no account-level connector state inferred"},
+    {"id":"S03","publisher":"Meta","title":"Muse Connector Guidelines","url":"https://platform.muse.ai/docs","evidence_class":"ORIGINAL_VENDOR_DEVELOPER_SPEC","scope":"connector submission, permissions, risk review and QA"},
+    {"id":"S04","publisher":"Meta","title":"Muse Connector Terms","url":"https://platform.muse.ai/terms","evidence_class":"ORIGINAL_VENDOR_TERMS","scope":"no reverse engineering of Muse or Meta connector interfaces"},
+    {"id":"S05","publisher":"Adobe Creative Cloud connector in ChatGPT","title":"Session tool routing instructions","url":"https://developer-stage.adobe.com/adobe-for-creativity/","evidence_class":"SESSION_CONNECTION_BOUNDARY","scope":"Adobe tools work in this chat; their internal endpoint and credentials are not exposed to the FR0333 runtime"}
+  ],
+  "passive_matrix": [
+    {"id":"M01","signal":"MODEL_LINEAGE","value":"Muse Glimmer 30B","unit":"model identifier","source_ids":["S01"],"scope":"VENDOR_SPEC_ONLY"},
+    {"id":"M02","signal":"MODEL_LICENSE","value":"Apache-2.0","unit":"license","source_ids":["S01"],"scope":"VERIFY_PINNED_WEIGHTS_AND_LICENSE_FILE_BEFORE_DEPLOYMENT"},
+    {"id":"M03","signal":"MODEL_CAPABILITIES","value":["tool calling","image input","multi-step planning"],"unit":"declared capabilities","source_ids":["S01"],"scope":"NOT_FR0333_VERIFIED"},
+    {"id":"M04","signal":"ADOBE_CONNECTION_INTERFACE","value":"MCP-compatible operator-managed HTTPS endpoint required","unit":"connection contract","source_ids":["S03","S05"],"scope":"CURRENT_CHAT_CONNECTOR_IS_NOT_A_RUNTIME_ENDPOINT"},
+    {"id":"M05","signal":"ADOBE_READ_WRITE_BOUNDARY","value":"read tools may be inspected; sensitive writes require direct approval","unit":"gate","source_ids":["S03"],"scope":"LOCAL_POLICY_DESIGN"},
+    {"id":"M06","signal":"MODEL_NETWORK_BOUNDARY","value":"loopback-only local inference by default","unit":"gate","source_ids":["S01"],"scope":"FR0333_POLICY_NOT_META_FEATURE"},
+    {"id":"M07","signal":"TOOL_ALLOWLIST","value":["read_asset","read_board","generate_image","add_board_item"],"unit":"action names","source_ids":["S03"],"scope":"FR0333_POLICY_NOT_META_FEATURE"},
+    {"id":"M08","signal":"MEDIA_QUEUE_RULE","value":"one source request per queue slot; sequential and singleton","unit":"gate","source_ids":["S05"],"scope":"FR0333_POLICY"},
+    {"id":"M09","signal":"PROBABILITY_BASIS","value":"independent verified binary receipts with minimum sample count","unit":"estimator rule","source_ids":["S01"],"scope":"FR0333_POLICY_NOT_MODEL_CONFIDENCE"},
+    {"id":"M10","signal":"PROMOTION_BOUNDARY","value":"no runtime, Adobe connection, malware-free, or quality claim without a matching receipt","unit":"evidence gate","source_ids":["S03","S04","S05"],"scope":"FR0333_POLICY"}
+  ],
+  "active_metrics": [
+    {"id":"A01","ref":"M01","name":"LOADED_MODEL_ID","unit":"string","formula":"read exact model id from configured local server metadata","value":null,"state":"U.21.HOLD"},
+    {"id":"A02","ref":"M02","name":"WEIGHT_AND_LICENSE_DIGESTS","unit":"sha256 count","formula":"hash pinned local model metadata and license files","value":null,"state":"U.21.HOLD"},
+    {"id":"A03","ref":"M03","name":"FIXTURE_TOOL_AND_IMAGE_PASS_RATE","unit":"ratio","formula":"passed independent fixtures / executed fixtures","value":null,"state":"U.21.HOLD"},
+    {"id":"A04","ref":"M04","name":"ADOBE_MCP_HANDSHAKE_STATE","unit":"enum","formula":"initialize and tools/list response from configured Adobe endpoint","value":null,"state":"U.21.HOLD"},
+    {"id":"A05","ref":"M05","name":"SENSITIVE_WRITE_APPROVAL_COVERAGE","unit":"ratio","formula":"sensitive writes with matching direct operator approval / sensitive writes attempted","value":null,"state":"U.21.HOLD"},
+    {"id":"A06","ref":"M06","name":"NON_LOOPBACK_MODEL_REQUESTS_BLOCKED","unit":"count","formula":"count rejected non-loopback model endpoint configurations","value":null,"state":"U.21.HOLD"},
+    {"id":"A07","ref":"M07","name":"UNALLOWLISTED_TOOL_CALLS_BLOCKED","unit":"count","formula":"count rejected actions absent from fixed local allowlist","value":null,"state":"U.21.HOLD"},
+    {"id":"A08","ref":"M08","name":"QUEUE_ORDER_AND_SINGLETON_PASS_RATE","unit":"ratio","formula":"valid singleton sequential outputs / requested queue slots","value":null,"state":"U.21.HOLD"},
+    {"id":"A09","ref":"M09","name":"VERIFIED_OUTCOME_PROBABILITY","unit":"probability plus interval","formula":"Wilson score estimate from independently verified binary receipts; null below 10 trials","value":null,"state":"U.21.HOLD"},
+    {"id":"A10","ref":"M10","name":"RECEIPT_COMPLETENESS","unit":"ratio","formula":"receipts with source, model, action, result hash and operator gate / completed actions","value":null,"state":"U.21.HOLD"}
+  ],
+  "implementation_evidence": {
+    "local_dependencies": [],
+    "model_calls_made": 0,
+    "adobe_calls_made": 0,
+    "external_network_calls": 0,
+    "shell_execution": false,
+    "dynamic_code_loading": false,
+    "virus_free_claim": "NOT_ESTABLISHED",
+    "adobe_runtime_connection": "U.21.HOLD.DISCONNECTED_UNTIL_ENDPOINT_AND_OPERATOR_TOKEN_ARE_CONFIGURED",
+    "canonical_promotion": "HUMANLOCK_HOLD"
+  }
+}
