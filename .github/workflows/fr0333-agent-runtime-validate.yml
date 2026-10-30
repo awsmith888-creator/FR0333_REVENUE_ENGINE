@@ -1,0 +1,23 @@
+name: FR0333 Agent Runtime Candidate Validate
+on:
+  pull_request:
+    paths:
+      - 'RavenCloudTaskbar/fr0333_agent_runtime_0001.py'
+      - 'RavenCloudTaskbar/test_fr0333_agent_runtime_0001.py'
+      - 'RavenCloudTaskbar/fr0333_agent_capability_evolution_0001.json'
+      - 'RavenCloudTaskbar/validate_fr0333_agent_capability_evolution_0001.py'
+      - '.github/workflows/fr0333-agent-runtime-validate.yml'
+permissions:
+  contents: read
+jobs:
+  offline-agent-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Validate passive and active lanes
+        run: python3 RavenCloudTaskbar/validate_fr0333_agent_capability_evolution_0001.py
+      - name: Run offline safety and probability fixtures
+        run: python3 -m unittest -v RavenCloudTaskbar/test_fr0333_agent_runtime_0001.py
