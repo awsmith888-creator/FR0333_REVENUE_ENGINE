@@ -25,7 +25,7 @@ No Adobe MCP endpoint or OAuth credential was provided in this change, so a live
 
 ## Probabilities
 
-Probabilities are estimates over independently verified binary receipts for one named task class. The program emits no probability below ten verified trials. At ten or more it reports the observed proportion and a 95% Wilson interval. Model self-reported confidence, vendor benchmark numbers, and synthetic fixtures do not count as runtime success receipts.
+Probabilities are estimates over distinct receipt hashes for one named task class. The program emits no probability below ten receipt records. At ten or more it reports the observed proportion and a 95% Wilson interval. It validates that callers marked each outcome independently verified, but this prototype does not cryptographically authenticate that declaration. Model self-reported confidence, vendor benchmark numbers, and synthetic fixtures do not count as runtime success receipts.
 
 ## Evidence states
 
