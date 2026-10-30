@@ -13,21 +13,31 @@ from fr0333_agent_runtime_0001 import (
 
 class AgentGateTests(unittest.TestCase):
     def test_no_probability_is_claimed_without_minimum_receipts(self):
-        result = probability_from_receipts(0, 0)
+        result = probability_from_receipts([], task_class="single-image-output")
         self.assertIsNone(result["probability"])
         self.assertEqual(result["state"], "U.21.HOLD.INSUFFICIENT_VERIFIED_TRIALS")
 
     def test_receipt_probability_has_interval_and_evidence_basis(self):
-        result = probability_from_receipts(8, 10)
+        receipts = [{"task_class":"single-image-output", "outcome":i < 8,
+                     "verification_state":"INDEPENDENTLY_VERIFIED",
+                     "receipt_sha256":f"{i + 1:064x}"} for i in range(10)]
+        result = probability_from_receipts(receipts, task_class="single-image-output")
         self.assertEqual(result["probability"], 0.8)
         self.assertLessEqual(result["interval_95"][0], 0.8)
         self.assertGreaterEqual(result["interval_95"][1], 0.8)
-        self.assertEqual(result["evidence_basis"], "INDEPENDENTLY_VERIFIED_RECEIPTS_ONLY")
+        self.assertEqual(result["evidence_basis"], "CALLER_DECLARED_INDEPENDENTLY_VERIFIED_RECEIPTS")
+        self.assertEqual(result["receipt_authenticity"], "NOT_CRYPTOGRAPHICALLY_AUTHENTICATED")
 
-    def test_probability_rejects_invalid_receipt_counts(self):
-        for success, trials in [(-1, 2), (3, 2), (1.0, 2), (1, -1)]:
-            with self.subTest(success=success, trials=trials), self.assertRaises(GateError):
-                probability_from_receipts(success, trials)
+    def test_probability_rejects_invalid_receipts(self):
+        cases = [
+            ([{"task_class":"other", "outcome":True, "verification_state":"INDEPENDENTLY_VERIFIED", "receipt_sha256":"1"*64}], "expected"),
+            ([{"task_class":"expected", "outcome":1, "verification_state":"INDEPENDENTLY_VERIFIED", "receipt_sha256":"1"*64}], "expected"),
+            ([{"task_class":"expected", "outcome":True, "verification_state":"UNVERIFIED", "receipt_sha256":"1"*64}], "expected"),
+            ([{"task_class":"expected", "outcome":True, "verification_state":"INDEPENDENTLY_VERIFIED", "receipt_sha256":"1"*64}]*2, "expected"),
+        ]
+        for receipts, task_class in cases:
+            with self.subTest(receipts=receipts), self.assertRaises(GateError):
+                probability_from_receipts(receipts, task_class=task_class)
 
     def test_model_endpoint_is_loopback_only(self):
         self.assertEqual(validate_local_model_url("http://localhost:8000/v1"), "http://localhost:8000/v1")
@@ -49,10 +59,15 @@ class AgentGateTests(unittest.TestCase):
 
     def test_self_check_is_disconnected_and_makes_no_network_calls(self):
         result = config_status({})
+        self.assertEqual(result["model_adapter"], "DEFAULT_LOOPBACK_URL_NOT_PROBED")
         self.assertEqual(result["adobe_adapter"], "HOLD.DISCONNECTED")
         self.assertEqual(result["network_calls"], 0)
         self.assertEqual(result["tool_calls"], 0)
         self.assertEqual(result["writes"], 0)
+
+    def test_probability_requires_task_class(self):
+        with self.assertRaises(GateError):
+            probability_from_receipts([], task_class="")
 
     def test_passive_active_spec_pairs_ten_to_ten(self):
         path = Path(__file__).with_name("fr0333_agent_capability_evolution_0001.json")
