@@ -17,6 +17,7 @@ from typing import Any
 
 MODEL_NAME = "meta-models/Muse-Glimmer-30B"
 MAX_RESPONSE_BYTES = 1_000_000
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 ALLOWED_ACTIONS = {"read_asset", "read_board", "generate_image", "add_board_item"}
 SENSITIVE_ACTIONS = {"generate_image", "add_board_item"}
 
@@ -25,19 +26,36 @@ class GateError(ValueError):
     pass
 
 
-def probability_from_receipts(successes: int, trials: int, *, min_trials: int = 10) -> dict[str, Any]:
-    """Wilson interval over independently verified binary outcomes.
+def probability_from_receipts(receipts: list[dict[str, Any]], *, task_class: str,
+                              min_trials: int = 10) -> dict[str, Any]:
+    """Wilson interval over distinct, caller-declared verified binary receipts.
 
+    Receipt authenticity is not cryptographically authenticated by this prototype.
     No probability is emitted below min_trials. Model self-confidence is not an input.
     """
-    if type(successes) is not int or type(trials) is not int or trials < 0 or not 0 <= successes <= trials:
-        raise GateError("invalid receipt counts")
+    if not isinstance(receipts, list) or not isinstance(task_class, str) or not task_class.strip():
+        raise GateError("receipts must be a list and task_class must be non-empty")
     if type(min_trials) is not int or min_trials < 1:
         raise GateError("min_trials must be a positive integer")
+    seen_hashes: set[str] = set()
+    outcomes: list[bool] = []
+    for receipt in receipts:
+        if not isinstance(receipt, dict) or receipt.get("task_class") != task_class:
+            raise GateError("receipt task class mismatch")
+        digest = receipt.get("receipt_sha256")
+        if not isinstance(digest, str) or not SHA256_RE.fullmatch(digest) or digest in seen_hashes:
+            raise GateError("receipt hash is invalid or duplicated")
+        if receipt.get("verification_state") != "INDEPENDENTLY_VERIFIED" or type(receipt.get("outcome")) is not bool:
+            raise GateError("receipt lacks an independent-verification declaration or binary outcome")
+        seen_hashes.add(digest)
+        outcomes.append(receipt["outcome"])
+    trials = len(outcomes)
+    successes = sum(outcomes)
     if trials < min_trials:
         return {"state": "U.21.HOLD.INSUFFICIENT_VERIFIED_TRIALS", "probability": None,
                 "interval_95": None, "verified_successes": successes,
-                "verified_trials": trials, "minimum_trials": min_trials}
+                "verified_trials": trials, "minimum_trials": min_trials,
+                "task_class": task_class, "receipt_authenticity": "CALLER_DECLARED_NOT_CRYPTOGRAPHICALLY_AUTHENTICATED"}
     z = 1.959963984540054
     p = successes / trials
     denom = 1 + z * z / trials
@@ -46,7 +64,9 @@ def probability_from_receipts(successes: int, trials: int, *, min_trials: int = 
     return {"state": "T.20.PASS.EMPIRICAL_RECEIPT_ESTIMATE", "probability": round(p, 6),
             "interval_95": [round(max(0.0, center - margin), 6), round(min(1.0, center + margin), 6)],
             "verified_successes": successes, "verified_trials": trials,
-            "method": "WILSON_SCORE_95_PERCENT", "evidence_basis": "INDEPENDENTLY_VERIFIED_RECEIPTS_ONLY"}
+            "task_class": task_class, "method": "WILSON_SCORE_95_PERCENT",
+            "evidence_basis": "CALLER_DECLARED_INDEPENDENTLY_VERIFIED_RECEIPTS",
+            "receipt_authenticity": "NOT_CRYPTOGRAPHICALLY_AUTHENTICATED"}
 
 
 def validate_local_model_url(value: str) -> str:
@@ -207,7 +227,8 @@ def config_status(env: dict[str, str] | None = None) -> dict[str, Any]:
     model_url = env.get("FR0333_LOCAL_MODEL_URL", "http://127.0.0.1:8000/v1")
     try:
         validate_local_model_url(model_url)
-        model_state = "CONFIGURED_LOCAL_ENDPOINT_NOT_PROBED"
+        model_state = ("CONFIGURED_LOOPBACK_URL_NOT_PROBED" if "FR0333_LOCAL_MODEL_URL" in env
+                       else "DEFAULT_LOOPBACK_URL_NOT_PROBED")
     except GateError as exc:
         model_state = "HOLD:" + str(exc)
     adobe_url = env.get("FR0333_ADOBE_MCP_URL", "")
@@ -218,7 +239,7 @@ def config_status(env: dict[str, str] | None = None) -> dict[str, Any]:
         adobe_state = "HOLD:" + str(exc)
     return {"model": MODEL_NAME, "model_adapter": model_state, "adobe_adapter": adobe_state,
             "network_calls": 0, "tool_calls": 0, "writes": 0,
-            "probability": probability_from_receipts(0, 0)}
+            "probability": probability_from_receipts([], task_class="UNSPECIFIED")}
 
 
 def main() -> int:
