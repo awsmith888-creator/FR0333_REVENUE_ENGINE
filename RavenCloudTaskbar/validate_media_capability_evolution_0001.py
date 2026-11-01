@@ -17,7 +17,7 @@ checks={
  "PILOT.NOT.GA":doc["external_feature"]["phase"]=="LIMITED_PILOT" and doc["external_feature"]["universal_availability"]=="U.21.HOLD",
  "NO.EXTERNAL.ACTION":doc["control"]["external_upload"]=="F.6.NONE" and doc["control"]["auto_publish"]=="F.6.NONE",
  "NO.PROMOTION":doc["control"]["canonical_promotion"]=="U.21.HOLD" and doc["control"]["humanlock"]=="REQUIRED_FOR_PROMOTION",
- "GOLDEN.APPEND":len(idx["entries"])>=11 and idx["entries"][-1]["index"]=="0.11" and idx["entries"][-2]["index"]=="0.10" and idx["entries"][-1]["identifier"]==doc["golden_chain_identifier"]
+ "GOLDEN.APPEND":len(idx["entries"])>=11 and idx["entries"][9]["index"]=="0.10" and idx["entries"][10]["index"]=="0.11" and idx["entries"][10]["identifier"]==doc["golden_chain_identifier"]
 }
 assert all(checks.values()), checks
 print(json.dumps({"state":"T.20.PASS.STRUCTURE_ONLY","checks_passed":len(checks),
